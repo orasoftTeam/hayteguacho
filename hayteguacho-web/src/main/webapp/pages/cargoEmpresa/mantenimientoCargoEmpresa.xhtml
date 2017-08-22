@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content">
+            <h:form id="cargosForm">
+                <b:tabView tabPosition="left" contentStyle="padding:10px">
+                    <b:tab title="" style="background-color: white;">
+                        <b:row>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true" actionListener="#{cargoEmpresaController.actualizarPais}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true" actionListener="#{cargoEmpresaController.validareliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true" actionListener="#{cargoEmpresaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                            </b:column>
+                        </b:row>
+                        <b:modal  id="amodal" title="#{bundle['titleCargoEmpresa']}" styleClass="modalPseudoClass">
+                            <p>#{bundle['lblRegEliminar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false" actionListener="#{cargoEmpresaController.cerrarDialogo}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton  ajax="false" actionListener="#{cargoEmpresaController.eliminar}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                            </f:facet>
+                        </b:modal>
+                    </b:tab>
+                </b:tabView>
+                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
+                    <b:tab title="#{bundle['titleCargoEmpresa']}">
+                        <b:messages  />
+                        <b:inputText size="10" id="nomCargo" value="#{cargoEmpresaController.cemp.nombrecargoempresa}" label="#{bundle['lblNombreCargoEmpresa']}" placeholder="#{bundle['lblNombreReqCargoEmpresa']}"/>
+                        <p:separator></p:separator>
+                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="cargoTbl" value="#{cargoEmpresaController.listaCargos}" 
+                                     var="cargo" 
+                                     select="true"
+                                     selectionMode="single"
+                                     onselect="ajax:cargoEmpresaController.onSelect(cargo)"
+                                     ondeselect="ajax:cargoEmpresaController.unSelect()"
+                                     >
+                            <b:dataTableColumn label="#{bundle['lblName']}" value="#{cargo.nombrecargoempresa}" />
+                        </b:dataTable>
+                    </b:tab>
+                </b:tabView>
+            </h:form> 
+        </ui:define>
+    </ui:composition>
+
+</html>
