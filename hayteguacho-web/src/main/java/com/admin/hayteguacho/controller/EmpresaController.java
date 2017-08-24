@@ -25,6 +25,11 @@ import com.hayteguacho.facade.EmpresaFacade;
 import com.hayteguacho.facade.MunicipioFacade;
 import com.hayteguacho.facade.PaisFacade;
 import com.hayteguacho.facade.TipologiaFacade;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
@@ -33,6 +38,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -42,6 +49,8 @@ import lombok.Setter;
 @ManagedBean(name = "empresaController")
 public class EmpresaController {
     private @Getter @Setter EmpresaForm empresa= new EmpresaForm();
+    
+    private String destination="C:\\Users\\LAP\\Documents\\ArchivosASubir\\";
     
     @EJB
     PaisFacade paisFacade;
@@ -67,6 +76,8 @@ public class EmpresaController {
     @EJB 
     EmpresaFacade empresaFacade;
     
+    private @Getter @Setter UploadedFile archivo;
+    private @Getter @Setter String msgFile;
     private @Getter @Setter List<DepartamentoForm> listaDepto;
     private @Getter @Setter List<MunicipioForm> listaMuni;
     private @Getter @Setter String idDepto;
@@ -96,7 +107,7 @@ public class EmpresaController {
     
     public void changeDepartamento(){
         listaMuni= muniFacade.obtenerMunicipios(idDepto);
-        validationBean.updateComponent("cargosForm:cmbMuni");
+        validationBean.updateComponent("empresaForm:cmbMuni");
     }
     
     public void actualizarEmpresa() {
@@ -110,7 +121,7 @@ public class EmpresaController {
                 && validationBean.validarEmail(empresa.getEmail(), "warn", "titleEmpresa", "lblEmailValido")
                 &&
                 validationBean.validarCampoVacio(empresa.getPassword().replace(" ", ""), "warn", "titleEmpresa", "lblClaveReqEmpresa")
-                && validationBean.validarLongitudCampo(empresa.getPassword().replace(" ", ""), 5, 10,"warn", "titleEmpresa", "lblLongitudClaveEmpresa")
+                && validationBean.validarLongitudCampo(empresa.getPassword().replace(" ", ""), 5, 20,"warn", "titleEmpresa", "lblLongitudClaveEmpresa")
                 &&
                 validationBean.validarCampoVacio(empresa.getNombrecontacto().replace(" ", ""), "warn", "titleEmpresa", "lblNomContactoReqEmpresa")
                 && validationBean.validarSoloLetras(empresa.getNombrecontacto().replace(" ", ""), "warn", "titleEmpresa", "lblSoloLetras")
@@ -145,14 +156,18 @@ public class EmpresaController {
                 validationBean.validarLongitudCampo(empresa.getDescripcionempresa(), 15, 255,"warn", "titleEmpresa", "lblLongitudDescripcionEmpresa")){
             
             if(empresa.getIdempresa()==null || empresa.getIdempresa().equals("0")){
-               flag= empresaFacade.actualizarEmpresa(empresa, "A"); 
-               if(flag.equals("0")){
-                   validationBean.lanzarMensaje("info", "titleEmpresa", "lblGuardarSuccess");
-                   limpiar();
-               }
-               else{
-                   validationBean.lanzarMensaje("info", "titleEmpresa", "lblGuardarError");
-               }
+               empresa.setPassword(validationBean.encriptar(empresa.getPassword(), empresa.getEmail()));
+                    flag= empresaFacade.actualizarEmpresa(empresa, "A"); 
+                    if(flag.equals("0")){
+                        validationBean.lanzarMensaje("info", "titleEmpresa", "lblGuardarSuccess");
+                        limpiar();
+                    }
+                    else if(flag.equals("-1")){
+                        validationBean.lanzarMensaje("warn", "titleEmpresa", "lblExistReg");
+                    }
+                    else{
+                        validationBean.lanzarMensaje("error", "titleEmpresa", "lblGuardarError");
+                    }
             }
             
             
@@ -161,5 +176,37 @@ public class EmpresaController {
     public void limpiar() {
        empresa= new EmpresaForm();
        empresa.setIdempresa("0");
+       msgFile="";
+    }
+    
+    public void handleFileUpload(FileUploadEvent event) {
+        try {
+            if(archivo==null){
+                archivo=event.getFile();
+                validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
+                msgFile= validationBean.getMsgBundle("lblFileSuccess");
+                validationBean.updateComponent("empresaForm:msgFile");
+                empresa.setLogo(destination+event.getFile().getFileName());
+            }
+            else{
+                if(validationBean.deleteFile(destination+archivo.getFileName())){
+                  archivo=event.getFile();
+                  validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
+                  msgFile= validationBean.getMsgBundle("lblFileSuccess");
+                  validationBean.updateComponent("empresaForm:msgFile");
+                  empresa.setLogo(destination+event.getFile().getFileName());                  
+                }
+            }
+        } catch (IOException e) {
+            msgFile= validationBean.getMsgBundle("lblFileUploadError");
+            validationBean.updateComponent("empresaForm:msgFile");
+            if(archivo!=null){
+                if(validationBean.deleteFile(destination+archivo.getFileName())){
+                    archivo=null;
+                }
+            }
+            empresa.setLogo(""); 
+            e.printStackTrace();
+        }
     }
 }
