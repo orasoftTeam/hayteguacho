@@ -48,9 +48,9 @@ public class PaisController {
     public void actualizarPais() {
         
         String flag=""; 
-        if(validationBean.validarCampoVacio(pais.getNombrepais(), "warn", "titlePais", "lblReqNombrePais")
-                && validationBean.validarSoloLetras(pais.getNombrepais(), "warn", "titlePais", "lblSoloLetras")
-                && validationBean.validarLongitudCampo(pais.getNombrepais(), 4, 25,"warn", "titlePais", "lblLongitudNombrePais")){
+        if(validationBean.validarCampoVacio(pais.getNombrepais().replace(" ", ""), "warn", "titlePais", "lblReqNombrePais")
+                && validationBean.validarSoloLetras(pais.getNombrepais().replace(" ", ""), "warn", "titlePais", "lblSoloLetras")
+                && validationBean.validarLongitudCampo(pais.getNombrepais().replace(" ", ""), 4, 25,"warn", "titlePais", "lblLongitudNombrePais")){
             if(pais.getIdpais()==null || pais.getIdpais().equals("0")){
                flag= paisFacade.actualizarPais(pais, "A"); 
                if(flag.equals("0"))

@@ -63,9 +63,9 @@ public class MunicipioController {
         }
         
         else
-            if(validationBean.validarCampoVacio(muni.getNombreciudad(), "warn", "titleMuni", "lblReqNombreMuni")
-                    && validationBean.validarSoloLetras(muni.getNombreciudad(), "warn", "titleMuni", "lblSoloLetras")
-                    && validationBean.validarLongitudCampo(muni.getNombreciudad(), 4, 25,"warn", "titleMuni", "lblLongitudNombreMuni")){
+            if(validationBean.validarCampoVacio(muni.getNombreciudad().replace(" ", ""), "warn", "titleMuni", "lblReqNombreMuni")
+                    && validationBean.validarSoloLetras(muni.getNombreciudad().replace(" ", ""), "warn", "titleMuni", "lblSoloLetras")
+                    && validationBean.validarLongitudCampo(muni.getNombreciudad().replace(" ", ""), 4, 25,"warn", "titleMuni", "lblLongitudNombreMuni")){
                 if(muni.getIdciudad()==null || muni.getIdciudad().equals("0")){
                     flag=muniFacade.actualizarMunicipios(muni, iddepto, "A");
                    if(flag.equals("0")){

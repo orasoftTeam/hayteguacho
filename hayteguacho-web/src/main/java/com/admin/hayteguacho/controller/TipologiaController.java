@@ -46,9 +46,9 @@ public class TipologiaController {
     public void actualizarPais() {
         
         String flag=""; 
-        if(validationBean.validarCampoVacio(tipologia.getNombretipologia(), "warn", "titleTipologiaEmpresa", "lblNombreReqTipologiaEmpresa")
-                && validationBean.validarSoloLetras(tipologia.getNombretipologia(), "warn", "titleTipologiaEmpresa", "lblSoloLetras")
-                && validationBean.validarLongitudCampo(tipologia.getNombretipologia(), 4, 25,"warn", "titleTipologiaEmpresa", "lblLongitudNombreTipologia")){
+        if(validationBean.validarCampoVacio(tipologia.getNombretipologia().replace(" ", ""), "warn", "titleTipologiaEmpresa", "lblNombreReqTipologiaEmpresa")
+                && validationBean.validarSoloLetras(tipologia.getNombretipologia().replace(" ", ""), "warn", "titleTipologiaEmpresa", "lblSoloLetras")
+                && validationBean.validarLongitudCampo(tipologia.getNombretipologia().replace(" ", ""), 4, 25,"warn", "titleTipologiaEmpresa", "lblLongitudNombreTipologia")){
             if(tipologia.getIdtipologia()==null || tipologia.getIdtipologia().equals("0")){
                flag= tipologiaFacade.actualizarTipologia(tipologia, "A"); 
                if(flag.equals("0"))

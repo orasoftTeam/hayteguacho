@@ -53,9 +53,9 @@ public class DepartamentoController {
         }
         
         else
-            if(validationBean.validarCampoVacio(depto.getNombredepartamento(), "warn", "titleDepto", "lblReqNombreDepto")
-                    && validationBean.validarSoloLetras(depto.getNombredepartamento(), "warn", "titleDepto", "lblSoloLetras")
-                    && validationBean.validarLongitudCampo(depto.getNombredepartamento(), 4, 25,"warn", "titleDepto", "lblLongitudNombreDepto")){
+            if(validationBean.validarCampoVacio(depto.getNombredepartamento().replace(" ", ""), "warn", "titleDepto", "lblReqNombreDepto")
+                    && validationBean.validarSoloLetras(depto.getNombredepartamento().replace(" ", ""), "warn", "titleDepto", "lblSoloLetras")
+                    && validationBean.validarLongitudCampo(depto.getNombredepartamento().replace(" ", ""), 4, 25,"warn", "titleDepto", "lblLongitudNombreDepto")){
                 if(depto.getIddepartamento()==null || depto.getIddepartamento().equals("0")){
                    flag= deptoFacade.actualizarDepartamento(depto, idpais, "A");
                    if(flag.equals("0")){

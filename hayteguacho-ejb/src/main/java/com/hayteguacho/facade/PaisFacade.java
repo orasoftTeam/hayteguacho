@@ -57,6 +57,26 @@ public class PaisFacade extends AbstractFacade<TblPais, PaisForm> {
 
         return listaEntityForm;
     }
+    
+    public List<PaisForm> obtenerPaisesPorNombre(String nompais) {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_pais where nombrepais=?", TblPais.class);
+        q.setParameter(1, nompais);
+        List<TblPais> listaEntity;
+        List<PaisForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<PaisForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new PaisForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<PaisForm>();
+        }
+
+        return listaEntityForm;
+    }
 
     public String actualizarPais(PaisForm pf, String op) {
         String flag = "";

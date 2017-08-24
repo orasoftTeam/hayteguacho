@@ -45,9 +45,9 @@ public class CategoriaEmpresaController {
     public void actualizarPais() {
         
         String flag=""; 
-        if(validationBean.validarCampoVacio(cemp.getNombrecategoria(), "warn", "titleCategoriaEmpresa", "lblReqNombreCategoria")
-                && validationBean.validarSoloLetras(cemp.getNombrecategoria(), "warn", "titleCategoriaEmpresa", "lblSoloLetras")
-                && validationBean.validarLongitudCampo(cemp.getNombrecategoria(), 4, 25,"warn", "titleCategoriaEmpresa", "lblLongitudNombreCategoria")){
+        if(validationBean.validarCampoVacio(cemp.getNombrecategoria().replace(" ", ""), "warn", "titleCategoriaEmpresa", "lblReqNombreCategoria")
+                && validationBean.validarSoloLetras(cemp.getNombrecategoria().replace(" ", ""), "warn", "titleCategoriaEmpresa", "lblSoloLetras")
+                && validationBean.validarLongitudCampo(cemp.getNombrecategoria().replace(" ", ""), 4, 25,"warn", "titleCategoriaEmpresa", "lblLongitudNombreCategoria")){
             if(cemp.getIdcategoria()==null || cemp.getIdcategoria().equals("0")){
                flag= catFacade.actualizarCategoria(cemp, "A"); 
                if(flag.equals("0"))

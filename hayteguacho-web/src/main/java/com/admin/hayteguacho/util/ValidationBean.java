@@ -86,6 +86,15 @@ public class ValidationBean {
         }
         return flag;
     }
+    
+    public boolean validarSeleccion(String c, String tipoMsg, String tituloMsg, String descMsg) {
+        boolean flag= true;
+        if(c==null || c.equals("")){
+            flag=false;
+            lanzarMensaje(tipoMsg, tituloMsg, descMsg);
+        }
+        return flag;
+    }
 
     public boolean validarSoloNumeros(String c, String tipoMsg, String tituloMsg, String descMsg) {
         Pattern patron = Pattern.compile("[^0-9]");

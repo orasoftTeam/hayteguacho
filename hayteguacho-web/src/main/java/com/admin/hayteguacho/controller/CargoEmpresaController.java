@@ -47,9 +47,9 @@ public class CargoEmpresaController {
     public void actualizarPais() {
         
         String flag=""; 
-        if(validationBean.validarCampoVacio(cemp.getNombrecargoempresa(), "warn", "titleCargoEmpresa", "lblNombreReqCargoEmpresa")
-                && validationBean.validarSoloLetras(cemp.getNombrecargoempresa(), "warn", "titleCargoEmpresa", "lblSoloLetras")
-                && validationBean.validarLongitudCampo(cemp.getNombrecargoempresa(), 4, 25,"warn", "titleCargoEmpresa", "lblLongitudNombreCargo")){
+        if(validationBean.validarCampoVacio(cemp.getNombrecargoempresa().replace(" ", ""), "warn", "titleCargoEmpresa", "lblNombreReqCargoEmpresa")
+                && validationBean.validarSoloLetras(cemp.getNombrecargoempresa().replace(" ", ""), "warn", "titleCargoEmpresa", "lblSoloLetras")
+                && validationBean.validarLongitudCampo(cemp.getNombrecargoempresa().replace(" ", ""), 4, 25,"warn", "titleCargoEmpresa", "lblLongitudNombreCargo")){
             if(cemp.getIdcargoempresa()==null || cemp.getIdcargoempresa().equals("0")){
                flag= cargoFacade.actualizarCargo(cemp, "A"); 
                if(flag.equals("0"))
