@@ -1,0 +1,183 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.admin.hayteguacho.controller;
+
+import com.admin.hayteguacho.form.CandidatoForm;
+import com.admin.hayteguacho.form.CargoEmpresaForm;
+import com.admin.hayteguacho.form.CategoriaEmpresaForm;
+import com.admin.hayteguacho.form.EmpresaForm;
+import com.admin.hayteguacho.form.PaisForm;
+import com.admin.hayteguacho.form.PuestoTrabajoForm;
+import com.admin.hayteguacho.util.ValidationBean;
+import com.hayteguacho.facade.CandidatoFacade;
+import com.hayteguacho.facade.CargoEmpresaFacade;
+import com.hayteguacho.facade.PaisFacade;
+import com.hayteguacho.facade.PuestoTrabajoFacade;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import lombok.Getter;
+import lombok.Setter;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
+
+/**
+ *
+ * @author LAP
+ */
+@ViewScoped
+@ManagedBean(name = "candidatoController")
+public class CandidatoController {
+
+    @EJB
+    CandidatoFacade candidatoFacade;
+    
+    @EJB
+    ValidationBean validationBean;
+    
+    @EJB
+    PuestoTrabajoFacade puestoFacade;
+    
+    @EJB
+    PaisFacade paisFacade;
+    
+    private String destination="C:\\Users\\LAP\\Documents\\ArchivosASubir\\";
+
+    private @Getter @Setter UploadedFile archivo;
+    private @Getter @Setter List<CandidatoForm> listaCandidatos = new ArrayList<>();
+    private @Getter @Setter CandidatoForm candidato = new CandidatoForm();
+    private @Getter @Setter String msgFile;
+    private @Getter @Setter List<PuestoTrabajoForm> listaPuestos= new ArrayList<>();
+    private @Getter @Setter String idcategoria;
+    
+    @PostConstruct
+    public void init() {
+        String pais= Locale.getDefault().getDisplayCountry();
+        List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
+        if(!tmp.isEmpty()){
+            candidato.setIdpaistbl(tmp.get(0).getIdpais());
+        }
+        candidato.setIdcandidato("0");
+    }
+    
+    public void actualizarCandidato(){
+        String flag=""; 
+        if (validationBean.validarCampoVacio(candidato.getCorreocandidato(), "warn", "titleCandidato", "lblEmailReqEmpresa")
+                && validationBean.validarEmail(candidato.getCorreocandidato(), "warn", "titleCandidato", "lblEmailValido")
+                && validationBean.validarCampoVacio(candidato.getContrasenacandidato(), "warn", "titleCandidato", "lblClaveReqEmpresa")
+                && validationBean.validarLongitudCampo(candidato.getContrasenacandidato(), 5, 20,"warn", "titleCandidato", "lblLongitudClaveEmpresa")
+                && 
+                validationBean.validarCampoVacio(candidato.getNombrecandidato(), "warn", "titleCandidato", "lblNomCandidatoReq")
+                && validationBean.validarSoloLetras(candidato.getNombrecandidato().replace(" ", ""), "warn", "titleCandidato", "lblSoloLetras")
+                && validationBean.validarLongitudCampo(candidato.getNombrecandidato(), 4, 30,"warn", "titleCandidato", "lblLongitudNomCandidato")
+                &&
+                validationBean.validarCampoVacio(candidato.getApellidocandidato(), "warn", "titleCandidato", "lblApeCandidatoReq")
+                && validationBean.validarSoloLetras(candidato.getApellidocandidato().replace(" ", ""), "warn", "titleCandidato", "lblSoloLetras")
+                && validationBean.validarLongitudCampo(candidato.getApellidocandidato(), 4, 30,"warn", "titleCandidato", "lblLongitudApellidoCandidato")
+                && validationBean.validarCampoVacio(candidato.getTelefono1candidato(), "warn", "titleCandidato", "lblTelReq")
+                &&  validationBean.validarSeleccion(candidato.getGenerocandidato(),"warn", "titleCandidato", "lblGenSelectReq")
+                &&  validationBean.validarSeleccion(candidato.getIdpuestotrabajotbl(),"warn", "titleCandidato", "lblPuestoSelectReq")
+                &&  validationBean.validarSeleccion(archivo==null?"":archivo.getFileName(),"warn", "titleCandidato", "lblFileUploadReq")){
+            
+            if(candidato.getIdcandidato()==null || candidato.getIdcandidato().equals("0")){
+               candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
+                    flag= candidatoFacade.actualizarCandidato(candidato, "A"); 
+                    if(flag.equals("0")){
+                        validationBean.lanzarMensaje("info", "titleCandidato", "lblGuardarSuccess");
+                        limpiar();
+                    }
+                    else if(flag.equals("-1")){
+                        validationBean.lanzarMensaje("warn", "titleCandidato", "lblExistReg");
+                    }
+                    else{
+                        validationBean.lanzarMensaje("error", "titleCandidato", "lblGuardarError");
+                    }
+            }
+        }
+    }
+    
+    public void cambiarCategoria(){
+        if(!idcategoria.equals("")){
+            listaPuestos= puestoFacade.obtenerPuestosByIdCategoria(idcategoria);
+        }
+        else{
+            listaPuestos= new ArrayList<>();
+        }
+        validationBean.updateComponent("candidatoForm:cmbPuesto");
+    }
+    
+    public void handleFileUpload(FileUploadEvent event) {
+        
+        try {
+            if(archivo==null){
+                archivo=event.getFile();
+                validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
+                msgFile= validationBean.getMsgBundle("lblFileSuccess");
+                validationBean.updateComponent("candidatoForm:msgFile");
+                candidato.setArchivocurriculum(destination+event.getFile().getFileName());
+            }
+            else{
+                if(validationBean.deleteFile(destination+archivo.getFileName())){
+                  archivo=event.getFile();
+                  validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
+                  msgFile= validationBean.getMsgBundle("lblFileSuccess");
+                  validationBean.updateComponent("candidatoForm:msgFile");
+                  candidato.setArchivocurriculum(destination+event.getFile().getFileName());                  
+                }
+            }
+        } catch (IOException e) {
+            msgFile= validationBean.getMsgBundle("lblFileUploadError");
+            validationBean.updateComponent("candidatoForm:msgFile");
+            if(archivo!=null){
+                if(validationBean.deleteFile(destination+archivo.getFileName())){
+                    archivo=null;
+                }
+            }
+            candidato.setArchivocurriculum(""); 
+            e.printStackTrace();
+        }
+        
+    }
+    
+    /*
+
+    public void actualizarPais() {
+        
+        String flag=""; 
+        if(validationBean.validarCampoVacio(cemp.getNombrecargoempresa().replace(" ", ""), "warn", "titleCargoEmpresa", "lblNombreReqCargoEmpresa")
+                && validationBean.validarSoloLetras(cemp.getNombrecargoempresa().replace(" ", ""), "warn", "titleCargoEmpresa", "lblSoloLetras")
+                && validationBean.validarLongitudCampo(cemp.getNombrecargoempresa().replace(" ", ""), 4, 25,"warn", "titleCargoEmpresa", "lblLongitudNombreCargo")){
+            if(cemp.getIdcargoempresa()==null || cemp.getIdcargoempresa().equals("0")){
+               flag= cargoFacade.actualizarCargo(cemp, "A"); 
+               if(flag.equals("0"))
+                   validationBean.lanzarMensaje("info", "titleCargoEmpresa", "lblGuardarSuccess");
+            }
+            else{
+                flag= cargoFacade.actualizarCargo(cemp, "U"); 
+               if(flag.equals("0"))
+                   validationBean.lanzarMensaje("info", "titleCargoEmpresa", "lblEditarSuccess");
+            }
+            limpiar();
+            listaCargos = cargoFacade.obtenerCargos();
+        }
+    }
+    */
+
+    public void limpiar() {
+       candidato= new CandidatoForm();
+       candidato.setIdcandidato("");
+       listaPuestos= new ArrayList<>();
+       idcategoria="";
+       msgFile="";
+    }
+    
+}

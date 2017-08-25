@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content">
+            <h:outputScript  target="body">
+                function mostrar(){
+                alert('Hola');
+                }
+
+                function soloNumeros(obj) 
+                { 
+                obj.value = (obj.value + '').replace(/[^0-9]/g, '');
+                }
+            </h:outputScript>
+            <b:jumbotron>
+                <b:container>
+                    <b:row>
+                        <b:column col-md="4">
+                        </b:column>
+                        <b:column col-md="8">
+                            <b:panel title="#{bundle['titleRegistrar']}" collapsible="false">
+                                <h:form id="candidatoForm">
+                                    <b:messages  />
+                                    <b:panelGrid columns="2">
+                                        <b:inputText size="10" id="email" fieldId="email" value="#{candidatoController.candidato.correocandidato}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}"/>
+                                        <b:inputSecret size="10" id="clave" fieldId="clave" value="#{candidatoController.candidato.contrasenacandidato}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}"/>
+                                        <b:inputText size="10" id="nomCandidato" fieldId="nomCandidato" value="#{candidatoController.candidato.nombrecandidato}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqName']}"/>
+                                        <b:inputText size="10" id="apellidoCandidato" fieldId="apellidoCandidato" value="#{candidatoController.candidato.apellidocandidato}" label="#{bundle['lblSecondName']}" placeholder="#{bundle['lblReqSecondName']}"/>
+                                        <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono1" fieldId="telefono1" value="#{candidatoController.candidato.telefono1candidato}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                                        <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono2" fieldId="telefono2" value="#{candidatoController.candidato.telefono2candidato}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                                        <b:radiobutton value="#{candidatoController.candidato.generocandidato}" itemLabel="Masculino" itemValue="M"  />
+                                        <b:radiobutton value="#{candidatoController.candidato.generocandidato}" itemLabel="Femino" itemValue="F"  />
+                                        <b:selectOneMenu value="#{candidatoController.idcategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}" 
+                                                         onchange="ajax:candidatoController.cambiarCategoria()">
+                                            <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
+                                            <f:selectItems value="#{empresaController.listaCategoria}" var="categoria" itemValue="#{categoria.idcategoria}" itemLabel="#{categoria.nombrecategoria}"/>
+                                        </b:selectOneMenu>
+                                        <b:selectOneMenu id="cmbPuesto" value="#{candidatoController.candidato.idpuestotrabajotbl}"  label="#{bundle['lblPuestoTrabajo']}" >
+                                            <f:selectItems value="#{candidatoController.listaPuestos}" var="puesto" itemValue="#{puesto.idpuestotrabajo}" itemLabel="#{puesto.nombrepuestotrabajo}"/>
+                                        </b:selectOneMenu>
+                                        <p:fileUpload label="#{bundle['lblDocUpload']}" invalidFileMessage="#{bundle['lblDocUploadInvalid']}" id="docUpload" fileUploadListener="#{candidatoController.handleFileUpload}" mode="advanced"
+                                                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(doc|docx|pdf)$/" />
+                                        <b:label id="msgFile" text="#{candidatoController.msgFile}"></b:label>
+                                    </b:panelGrid>
+                                    <p:separator></p:separator>
+                                    <b:row>
+                                        <b:column col-md="4">
+                                        </b:column>
+                                        <b:column col-md="4">
+                                            <b:commandButton update="@form" ajax="true" actionListener="#{candidatoController.actualizarCandidato}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                                        </b:column>
+                                        <b:column col-md="4">
+                                        </b:column>
+                                    </b:row>
+                                </h:form>
+                            </b:panel>
+                        </b:column>
+                    </b:row>
+                </b:container>
+
+            </b:jumbotron> 
+        </ui:define>
+    </ui:composition>
+
+</html>

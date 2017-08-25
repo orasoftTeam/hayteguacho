@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Setter;
 
 /**
  *
@@ -72,6 +73,9 @@ public class TblCandidato implements Serializable {
     @JoinColumn(name = "IDPAIS", referencedColumnName = "IDPAIS")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TblPais idpais;
+    
+    private @Setter String idpaistbl;
+    private @Setter String idpuestotrabajotbl;
 
     public TblCandidato() {
     }
@@ -194,6 +198,16 @@ public class TblCandidato implements Serializable {
     public void setIdpais(TblPais idpais) {
         this.idpais = idpais;
     }
+
+    public String getIdpuestotrabajotbl() {
+        return String.valueOf(idpuestotrabajo.getIdpuestotrabajo());
+    }
+
+    public String getIdpaistbl() {
+        return String.valueOf(idpais.getIdpais());
+    }
+    
+
 
     @Override
     public int hashCode() {

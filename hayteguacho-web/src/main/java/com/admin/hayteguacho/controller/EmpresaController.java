@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
@@ -106,7 +107,12 @@ public class EmpresaController {
     }
     
     public void changeDepartamento(){
-        listaMuni= muniFacade.obtenerMunicipios(idDepto);
+        if(idDepto.equals("")){
+            listaMuni= new ArrayList<>();
+        }
+        else{
+            listaMuni= muniFacade.obtenerMunicipios(idDepto);
+        }
         validationBean.updateComponent("empresaForm:cmbMuni");
     }
     
