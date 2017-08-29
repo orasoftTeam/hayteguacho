@@ -14,6 +14,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -32,8 +34,10 @@ public class TblTipocontratolaboral implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @Getter @Setter
     private BigDecimal idtipocontrato;
     @Basic(optional = false)
+    @Getter @Setter
     private String nombretipocontrato;
 
     public TblTipocontratolaboral() {
@@ -45,22 +49,6 @@ public class TblTipocontratolaboral implements Serializable {
 
     public TblTipocontratolaboral(BigDecimal idtipocontrato, String nombretipocontrato) {
         this.idtipocontrato = idtipocontrato;
-        this.nombretipocontrato = nombretipocontrato;
-    }
-
-    public BigDecimal getIdtipocontracto() {
-        return idtipocontrato;
-    }
-
-    public void setIdtipocontracto(BigDecimal idtipocontrato) {
-        this.idtipocontrato = idtipocontrato;
-    }
-
-    public String getNombretipocontacto() {
-        return nombretipocontrato;
-    }
-
-    public void setNombretipocontacto(String nombretipocontato) {
         this.nombretipocontrato = nombretipocontrato;
     }
 
