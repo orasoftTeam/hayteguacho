@@ -5,9 +5,8 @@
  */
 package com.hayteguacho.facade;
 
-import com.admin.hayteguacho.form.CargoEmpresaForm;
+
 import com.admin.hayteguacho.form.PuestoTrabajoForm;
-import com.hayteguacho.entity.TblCargoempresa;
 import com.hayteguacho.entity.TblPuestotrabajo;
 import com.hayteguacho.util.facade.AbstractFacade;
 import java.math.BigInteger;
@@ -61,24 +60,25 @@ public class PuestoTrabajoFacade extends AbstractFacade<TblPuestotrabajo, Puesto
 
         return listaEntityForm;
     }
-    /*
-    public String actualizarCargo(CargoEmpresaForm cef, String op) {
+    
+    public String actualizarPuesto(PuestoTrabajoForm obj, String op) {
         String flag = "";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             //cn.setAutoCommit(false);
-            CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_CARGO_EMP (?,?,?,?)}");
-            cs.setString(1, cef.getNombrecargoempresa().toUpperCase());
-            cs.setString(2, op);
-            cs.setInt(3, new Integer(cef.getIdcargoempresa()));
-            cs.registerOutParameter(4, Types.VARCHAR);
+            CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_PUESTOTRABAJO (?,?,?,?,?)}");
+            cs.setString(1, obj.getNombrepuestotrabajo());
+            cs.setInt(2, new Integer(obj.getIdpuestotrabajo()));
+            cs.setInt(3, new Integer(obj.getIdcategoria()));
+            cs.setString(4, op);
+            cs.registerOutParameter(5, Types.VARCHAR);
             cs.execute();
-            flag = cs.getString(4);
+            flag = cs.getString(5);
             System.out.println(flag);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return flag;
     }
-    */
+    
 }
