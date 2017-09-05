@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content">
+            <h:outputScript  target="body">
+                function mostrar(){
+                alert('Hola');
+                }
+
+                function soloNumeros(obj) 
+                { 
+                obj.value = (obj.value + '').replace(/[^0-9]/g, '');
+                }
+
+                function formatearFecha() {
+                d = new Date(document.getElementById("fechaContra").value);
+                dt = d.getDate();
+                mn = d.getMonth();
+                mn++;
+                yy = d.getFullYear();
+                document.getElementById("fechaContra").value = dt + "/" + mn + "/" + yy;
+                }
+            </h:outputScript>
+            <h:form id="ofertasForm">
+                <b:tabView tabPosition="left" contentStyle="padding:10px">
+                    <b:tab title="" style="background-color: white;">
+                        <b:row>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true" actionListener="#{ofertaController.actualizaOferta}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true" actionListener="#{ofertaController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true" actionListener="#{ofertaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                            </b:column>
+                        </b:row>
+                        <b:modal  id="amodal" title="#{bundle['titleOfertaEmpresa']}" styleClass="modalPseudoClass">
+                            <p>#{bundle['lblRegEliminar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false" actionListener="#{ofertaController.cerrarDialogo}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton  ajax="false" actionListener="#{ofertaController.eliminar}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                            </f:facet>
+                        </b:modal>
+                    </b:tab>
+                </b:tabView>
+                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
+                    <b:tab title="#{bundle['titleOfertaEmpresa']}">
+                        <b:messages  />
+                        <b:row>
+                            <b:column col-md="4">
+                                <b:selectOneMenu value="#{ofertaController.oferta.idjornadalaboral}"  label="#{bundle['lblNombreJornadaEmpresa']}" 
+                                                 >
+                                    <f:selectItems value="#{jornadaController.listaJornadas}" var="jornada" itemValue="#{jornada.idjornadalaboral}" itemLabel="#{jornada.nombrejornadalaboral}"/>
+                                </b:selectOneMenu>
+                                <b:selectOneMenu value="#{ofertaController.oferta.idtipocontrato}"  label="#{bundle['lblTipoContrato']}" 
+                                                 >
+                                    <f:selectItems value="#{tipoContratoLaboralController.listaTiposContrato}" var="tipoc" itemValue="#{tipoc.idtipocontrato}" itemLabel="#{tipoc.nombretipocontrato}"/>
+                                </b:selectOneMenu>
+                                <b:selectOneMenu value="#{ofertaController.idcategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}" 
+                                                 onchange="ajax:ofertaController.cambiarCategoria()">
+                                    <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
+                                    <f:selectItems value="#{empresaController.listaCategoria}" var="categoria" itemValue="#{categoria.idcategoria}" itemLabel="#{categoria.nombrecategoria}"/>
+                                </b:selectOneMenu>
+                                <b:selectOneMenu id="puestoCmb" value="#{ofertaController.oferta.idpuestotrabajo}"  label="#{bundle['lblPuestoTrabajo']}" 
+                                                 >
+                                    <f:selectItems value="#{ofertaController.listaPuestos}" var="puesto" itemValue="#{puesto.idpuestotrabajo}" itemLabel="#{puesto.nombrepuestotrabajo}"/>
+                                </b:selectOneMenu>
+                                <b:selectOneMenu value="#{ofertaController.iddepto}"  label="#{bundle['lblNombreDepto']}" 
+                                                 onchange="ajax:ofertaController.cambiarDepto()">
+                                    <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
+                                    <f:selectItems value="#{ofertaController.listaDepto}" var="depto" itemValue="#{depto.iddepartamento}" itemLabel="#{depto.nombredepartamento}"/>
+                                </b:selectOneMenu>
+                                <b:selectOneMenu id="muniCmb" value="#{ofertaController.oferta.idciudad}"  label="#{bundle['lblNombreMuni']}" 
+                                                 >
+                                    <f:selectItems value="#{ofertaController.listaMunicipio}" var="muni" itemValue="#{muni.idciudad}" itemLabel="#{muni.nombreciudad}"/>
+                                </b:selectOneMenu>
+                                <b:inputText size="10" id="nomOferta" value="#{ofertaController.oferta.tituloofertalaboral}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqNombreOferta']}"/>
+                                <b:inputText type="date" size="10" id="fechaContra" value="#{ofertaController.oferta.fechacontratacionofertalaboral}" label="#{bundle['lblOfertaFechaContra']}" placeholder="#{bundle['lblReqOfertaFechaContra']}" lang="pt_BR /opt/google/chrome/chrome" />
+                                <b:inputText size="10" onkeyup="soloNumeros(this)" id="cantidadVacante" fieldId="cantidadVacante" value="#{ofertaController.oferta.cantidadvacante}" label="#{bundle['lblOfertaCantidadVacante']}" placeholder="#{bundle['lblReqOfertaCantidadVacante']}"/>
+                                <b:inputText size="10" onkeyup="soloNumeros(this)" id="salariominimo" fieldId="salariominimo" value="#{ofertaController.oferta.salariominofertalaboral}" label="#{bundle['lblOfertaSalarioMinimo']}" placeholder="#{bundle['lblReqOfertaSalarioMinimo']}"/>
+                                <b:inputText size="10" onkeyup="soloNumeros(this)" id="salariomaximo" fieldId="salariomaximo" value="#{ofertaController.oferta.salariomaxofertalaboral}" label="#{bundle['lblOfertaSalarioMaximo']}" placeholder="#{bundle['lblReqOfertaSalarioMaximo']}"/>
+                                <b:inputTextarea value="#{ofertaController.oferta.descripcionofertalaboral}"  label="#{bundle['lblOfertaDescripcion']}" placeholder="#{bundle['lblReqOfertaDescripcion']}" />
+                                <b:inputTextarea value="#{ofertaController.oferta.requerimientosofertalaboral}"  label="#{bundle['lblOfertaRequerimiento']}" placeholder="#{bundle['lblReqOfertaRequerimiento']}" />
+                                <b:inputTextarea value="#{ofertaController.oferta.habilidadesofertalaboral}"  label="#{bundle['lblOfertaHabilidades']}" placeholder="#{bundle['lblReqOfertaHabilidades']}" />
+                                <b:inputTextarea value="#{ofertaController.oferta.conocimientoofertalaboral}"  label="#{bundle['lblOfertaConocimientos']}" placeholder="#{bundle['lblReqOfertaConocimientos']}" />
+                            </b:column>
+                            <b:column col-md="8">
+                                <b:selectOneMenu id="estadoCmb" value="#{ofertaController.estadofilter}"  label="#{bundle['lblOfertaEstado']}" 
+                                                 onchange="ajax:ofertaController.cambiarEstadoByFilter()">
+                                    <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
+                                    <f:selectItem itemLabel="#{bundle['lblOfertaActivo']}" itemValue="A" />
+                                    <f:selectItem itemLabel="#{bundle['lblOfertaInactiva']}" itemValue="I" />
+                                </b:selectOneMenu>
+                                <b:selectOneMenu id="categoriaCmb" value="#{ofertaController.idcategoriafilter}"  label="#{bundle['lblNombreCategoriaEmpresa']}" 
+                                                 onchange="ajax:ofertaController.cambiarCategoriaByFilter()">
+                                    <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
+                                    <f:selectItems value="#{empresaController.listaCategoria}" var="categoria" itemValue="#{categoria.idcategoria}" itemLabel="#{categoria.nombrecategoria}"/>
+                                </b:selectOneMenu>
+                                <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="ofertaTbl" value="#{ofertaController.listaOfertas}" 
+                                             var="oferta" 
+                                             select="false"
+                                             selectionMode="single"
+                                             onselect="ajax:ofertaController.onSelect(oferta)"
+                                             ondeselect="ajax:ofertaController.unSelect()"
+                                             update="@form"
+                                             searching="false"
+                                             page-length="5"
+                                             page-length-menu="5,10,20"
+                                             responsive="true"
+                                             
+                                             >
+                                    <b:dataTableColumn label="" orderable="false"  >
+                                        <b:panel title="#{oferta.tituloofertalaboral}" collapsible="false" look="primary" >
+                                            <b:panelGrid columns="2" colSpans="4,8" >
+                                                <h:outputText value="#{bundle['lblOfertaFechaContra']}">
+                                                </h:outputText>
+                                                <b:label  text="#{ofertaController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}"></b:label>
+                                                <h:outputText value="#{bundle['lblOfertaFechaVigencia']}">
+                                                </h:outputText>
+                                                <b:label  text="#{ofertaController.validationBean.formatearFecha(oferta.fechavigenciaofertalaboral)}"></b:label>
+                                                <h:outputText value="#{bundle['lblOfertaEstado']}">
+                                                </h:outputText>
+                                                <b:label text="#{ofertaController.validationBean.obtenerLabelEstado(oferta.estadoofertalaboral)}"></b:label>
+                                                <h:outputText value="#{bundle['lblbtnEliminar']}">
+                                                </h:outputText>
+                                                <b:selectBooleanCheckbox ajax="true" onclick="ajax:ofertaController.selectCheckbox(oferta);"  value="${ofertaController.chequeado}" disabled="#{ofertaController.estadofilter eq 'I'}"></b:selectBooleanCheckbox>
+                                            </b:panelGrid>
+                                            <p:separator></p:separator>
+                                            <b:row>
+                                                <b:column col-md="2">
+                                                    <b:commandButton size="sm" update="@form" ajax="true" actionListener="#{ofertaController.onSelect(oferta)}" value="#{bundle['lblbtnVer']}" look="primary" style="width:100%" />
+                                                </b:column> 
+                                            </b:row>
+                                        </b:panel>
+                                    </b:dataTableColumn>
+                                </b:dataTable>                               
+                            </b:column>
+                        </b:row>
+                        <p:separator></p:separator>
+                    </b:tab>
+                </b:tabView>
+            </h:form> 
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -44,7 +44,7 @@ public class CargoEmpresaController {
         cemp.setIdcargoempresa("0");
     }
 
-    public void actualizarPais() {
+    public void actualizarCargo() {
         
         String flag=""; 
         if(validationBean.validarCampoVacio(cemp.getNombrecargoempresa().replace(" ", ""), "warn", "titleCargoEmpresa", "lblNombreReqCargoEmpresa")

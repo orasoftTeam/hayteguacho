@@ -91,11 +91,11 @@ public class ValidationBean {
         }
         return flag;
     }
-    
+
     public boolean validarSeleccion(String c, String tipoMsg, String tituloMsg, String descMsg) {
-        boolean flag= true;
-        if(c==null || c.equals("")){
-            flag=false;
+        boolean flag = true;
+        if (c == null || c.equals("")) {
+            flag = false;
             lanzarMensaje(tipoMsg, tituloMsg, descMsg);
         }
         return flag;
@@ -113,9 +113,9 @@ public class ValidationBean {
         }
         return flag;
     }
-    
-    public void ejecutarJavascript(String codigo){
-        RequestContext requestContext = RequestContext.getCurrentInstance();  
+
+    public void ejecutarJavascript(String codigo) {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute(codigo);
     }
 
@@ -204,10 +204,25 @@ public class ValidationBean {
         return dateFormat.format(date);
     }
 
+    public String formatearFechaGuion(String fecha) {
+        String tmp;
+        String[] cad = fecha.split("-");
+        tmp = cad[2] + "/" + cad[1] + "/" + cad[0];
+        return tmp;
+    }
+
+    public String cambiarFormatoFecha(String fecha) {
+        String tmp;
+        String[] cad = (String[]) (fecha.contains("-") ? fecha.split("-") : (fecha.contains("/") ? fecha.split("/") : ""));
+        tmp = cad[2] + "-" + cad[1] + "-" + cad[0];
+        return tmp;
+    }
+
     public boolean validarFecha(String fecha, String tipo, String titulo, String msg) {
+
         boolean flag = true;
         if (fecha != null && fecha.length() == 10) {
-            String[] ftemp = fecha.split("/");
+            String[] ftemp = (String[]) (fecha.contains("-") ? fecha.split("-") : (fecha.contains("/") ? fecha.split("/") : ""));
             Integer dias = new Integer(ftemp[0]);
             Integer mes = new Integer(ftemp[1]);
             Integer anio = new Integer(ftemp[2]);
@@ -237,61 +252,72 @@ public class ValidationBean {
 
     public String formatearFecha(String fecha) {
         try {
-            System.err.println("Fecha al formatear fecha:    "+ fecha);
+            System.err.println("Fecha al formatear fecha:    " + fecha);
             //String dateStr = "Mon Jun 18 00:00:00 IST 2012";
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy", Locale.US);
             Date date = (Date) formatter.parse(fecha);
             System.out.println(date);
-            
+
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            String formatedDate = (cal.get(Calendar.DATE)<10?"0"+cal.get(Calendar.DATE):cal.get(Calendar.DATE)) + "/" + ((cal.get(Calendar.MONTH) + 1)<10?"0"+(cal.get(Calendar.MONTH) + 1):(cal.get(Calendar.MONTH) + 1)) + "/" + cal.get(Calendar.YEAR);
+            String formatedDate = (cal.get(Calendar.DATE) < 10 ? "0" + cal.get(Calendar.DATE) : cal.get(Calendar.DATE)) + "/" + ((cal.get(Calendar.MONTH) + 1) < 10 ? "0" + (cal.get(Calendar.MONTH) + 1) : (cal.get(Calendar.MONTH) + 1)) + "/" + cal.get(Calendar.YEAR);
             System.out.println("formatedDate : " + formatedDate);
-            fecha= formatedDate;
+            fecha = formatedDate;
         } catch (ParseException ex) {
-            System.err.println("Fecha al formatear fecha en exception:    "+ fecha);
+            System.err.println("Fecha al formatear fecha en exception:    " + fecha);
             //fecha="";
         }
         return fecha;
     }
     
-    public void updateComponent(String id){
+    public String obtenerLabelEstado(String estado){
+        String lbl="";
+        switch(estado){
+            case "A":
+                lbl= getMsgBundle("lblOfertaActivo");
+                break;
+            case "I":
+                lbl= getMsgBundle("lblOfertaInactiva");
+                break;
+        }
+        return lbl;
+    }
+
+    public void updateComponent(String id) {
         RequestContext.getCurrentInstance().update(id);
     }
-    
-    
-    public boolean copyFile(String fileName,String destination, InputStream in) {
-           boolean flag= false;
-           try {
-              
-              
-                // write the inputStream to a FileOutputStream
-                OutputStream out = new FileOutputStream(new File(destination + fileName));
-              
-                int read = 0;
-                byte[] bytes = new byte[1024];
-              
-                while ((read = in.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
-                }
-              
-                in.close();
-                out.flush();
-                out.close();
-              
-                System.out.println("New file created!");
-                flag=true;
-                } catch (IOException e) {
-                System.out.println(e.getMessage());
-                }
-           return flag;
+
+    public boolean copyFile(String fileName, String destination, InputStream in) {
+        boolean flag = false;
+        try {
+
+            // write the inputStream to a FileOutputStream
+            OutputStream out = new FileOutputStream(new File(destination + fileName));
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            in.close();
+            out.flush();
+            out.close();
+
+            System.out.println("New file created!");
+            flag = true;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return flag;
     }
-    
-    public boolean deleteFile(String file){
-        boolean flag=false;
+
+    public boolean deleteFile(String file) {
+        boolean flag = false;
         File fichero = new File(file);
         if (fichero.delete()) {
-            flag=true;
+            flag = true;
         }
         return flag;
     }

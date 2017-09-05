@@ -28,7 +28,7 @@
                             <b:panel title="#{bundle['titleRegistrar']}" collapsible="false">
                                 <h:form id="candidatoForm">
                                     <b:messages  />
-                                    <b:panelGrid columns="2">
+                                    <b:panelGrid columns="2" >
                                         <b:inputText size="10" id="email" fieldId="email" value="#{candidatoController.candidato.correocandidato}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}"/>
                                         <b:inputSecret size="10" id="clave" fieldId="clave" value="#{candidatoController.candidato.contrasenacandidato}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}"/>
                                         <b:inputText size="10" id="nomCandidato" fieldId="nomCandidato" value="#{candidatoController.candidato.nombrecandidato}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqName']}"/>

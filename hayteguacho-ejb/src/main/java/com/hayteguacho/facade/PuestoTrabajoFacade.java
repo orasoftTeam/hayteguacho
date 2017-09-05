@@ -61,6 +61,26 @@ public class PuestoTrabajoFacade extends AbstractFacade<TblPuestotrabajo, Puesto
         return listaEntityForm;
     }
     
+    public List<PuestoTrabajoForm> obtenerPuestosByIdPuesto(String idpuesto) {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_puestotrabajo where idpuestotrabajo=?", TblPuestotrabajo.class);
+        q.setParameter(1, new BigInteger(idpuesto));
+        List<TblPuestotrabajo> listaEntity;
+        List<PuestoTrabajoForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<PuestoTrabajoForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new PuestoTrabajoForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<PuestoTrabajoForm>();
+        }
+
+        return listaEntityForm;
+    }
+    
     public String actualizarPuesto(PuestoTrabajoForm obj, String op) {
         String flag = "";
         try {
