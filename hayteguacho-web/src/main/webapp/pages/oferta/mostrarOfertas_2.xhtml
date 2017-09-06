@@ -11,6 +11,45 @@
     <ui:composition template="/template/template.xhtml">
         <ui:define name="content">
             <h:outputScript  target="body">
+                $( window ).load(function() {
+                        $("#results").css('display','block');
+                        var carousel = $("#results").flipster({
+                        style: 'carousel',
+                        spacing: -0.5,
+                        nav: false,
+                        fadeIn: 0,
+                        buttons:   false,
+                        });
+                });
+
+
+                // Get the modal
+                var modal = document.getElementById('modal-results');
+
+                // When the user clicks the button, open the modal
+                $("#resultsBtn").click(function(){
+                $('.modal-box').fadeIn(800);
+                });
+
+
+                $(".close-btn").click(function(){
+                $('.modal-box').fadeOut(800);
+                });
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                if (event.target == modal) {
+                $('.modal-box').fadeOut(800);
+                }
+                }
+                $( document ).ready(function() {
+                var myFlipster = $('#coverflow').flipster({     
+                style: 'carousel',
+                spacing: -0.5,
+                nav: true}); 
+
+                });
+                
                 function mostrar(){
                 alert('Hola');
                 }
@@ -19,28 +58,17 @@
                 { 
                 obj.value = (obj.value + '').replace(/[^0-9]/g, '');
                 }
-
-
-                $(function(){
-                $('.crsl-items').carousel({
-                visible: 3,
-                itemMinWidth: 180,
-                itemEqualHeight: 370,
-                itemMargin: 9,
-                });
-
-                $("a[href=#]").on('click', function(e) {
-                e.preventDefault();
-                });
-                });
             </h:outputScript>
 
-            <h:outputStylesheet name="css/styles.css"></h:outputStylesheet>
-
+            <h:outputStylesheet name="css/demo.css"></h:outputStylesheet>
+            <h:outputStylesheet name="css/jquery.flipster.min.css"></h:outputStylesheet>
             <h:outputScript name="js/jquery-1.11.0.min.js">
 
             </h:outputScript>
-            <h:outputScript name="js/responsiveCarousel.min.js">
+            <h:outputScript name="js/jquery.min.js">
+
+            </h:outputScript>
+            <h:outputScript name="js/jquery.flipster.min.js">
 
             </h:outputScript>
             <h:form id='mostrarForm'>
@@ -80,42 +108,26 @@
                         <b:column col-md="2">
                         </b:column>
                     </b:row>
-                    <p:separator></p:separator>
-                    <b:row>
+                <div id="results">
+                    <ul class="flip-items">
                         <ui:repeat var="oferta" value="#{mostrarController.listaOferta}" varStatus="status">
-                            <b:column col-md="4" >
-                                <b:panel title="#{oferta.tituloofertalaboral}" collapsible="false" look="primary">
-                                    <b:row>
-                                        <b:column col-md="4"> 
-                                            <h:graphicImage library="images" name="Facebook.png" />
-                                        </b:column>
-                                        <b:column col-md="8">
-                                            <b:panelGrid columns="1">
-                                                <h2>#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}</h2>
-                                                <h5>#{bundle['lblDescripcionEmpresa']}</h5>
-                                                <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,20)}" escape="false"></h:outputText>
-                                                <br></br>
-                                                <h5>#{bundle['lblOfertaFechaContra']}</h5>
-                                                <h:outputText value="#{mostrarController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}"></h:outputText>                                           
-                                            </b:panelGrid>
-                                            <p:separator></p:separator>
-                                            <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" /></p>
-                                        </b:column>
-                                    </b:row>                      
-                                </b:panel>
-                            </b:column>
+                            <li>
+                                <img src="http://www.bankofinternet.com/portals/bofiusa/Images/Interactive/couple-shopping.jpg"/>
+                                <div class="#{mostrarController.cssClases[status.index]}">
+                                    <div class="text-center">
+                                        <h:outputText value="#{oferta.tituloofertalaboral.toUpperCase()}" style="margin-bottom: 30px; font-family: 'Raleway', sans-serif; font-size: 3em;color: white; line-height: 1em; font-weight: 300;"></h:outputText>
+                                        <p><strong><em>#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}</em></strong></p></div>
+                                    <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,45)}" escape="false"></h:outputText>
+                                    <br></br>
+                                    <p>#{bundle['lblOfertaFechaContra']}</p>
+                                    <p>#{mostrarController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}</p>
+                                    <p><b:commandButton  update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" /></p>
+                                </div>
+                            </li>
                         </ui:repeat>
-                        <b:row rendered="#{mostrarController.listaOferta.size() eq 0}">
-                            <b:column col-md="5">
-                            </b:column>
-                            <b:column col-md="4">
-                                <h:outputText value="#{bundle['lblRecordsNotFound']}"></h:outputText>
-                            </b:column>
-                            <b:column col-md="3">
-                            </b:column>
-                        </b:row>
-                    </b:row>
-                    <b:modal  id="amodal"  styleClass="modalPseudoClass" size="lg">
+                    </ul>
+                </div>
+                    <b:modal   id="amodal"  styleClass="modalPseudoClass" size="lg">
                         <b:panelGrid colSpans="3,9">
                             <h:outputText value="#{mostrarController.empresaForm.nombreempresa}" style="font-size: 18px; font-weight: bold;"></h:outputText>
                             <h:outputText value="#{mostrarController.empresaForm.descripcionempresa}" style="font-size: 14px;"></h:outputText>

@@ -67,10 +67,20 @@ public class MostrarOfertaController {
     
     private @Getter @Setter String iddeptofilter;
     
+    private @Getter @Setter String[] cssClases= new String[6];
+    
+    //private @Getter @Setter int contador=0;
+    
     @PostConstruct
     public void init(){
         listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
         numreg= ofertaFacade.count();
+        cssClases[0]="red result-text";
+        cssClases[1]="teal result-text";
+        cssClases[2]="green result-text";
+        cssClases[3]="blue result-text";
+        cssClases[4]="teal result-text";
+        cssClases[5]="green result-text";
     }
     
     public String cadenaConEnter(String cad, int top){
@@ -151,6 +161,23 @@ public class MostrarOfertaController {
             }
     }
     
+    /*
+    public void aumentar(){
+        contador++;
+        if(contador>6){
+            contador=6;
+        }
+        System.out.println("El valor del contador es:" + contador);
+    }
+    
+    public void atrasar(){
+        contador--;
+        if(contador<0){
+            contador=0;
+        }
+        System.out.println("El valor del contador es:" + contador);
+    }
+    */
     
     
     public void cerrarDialogo(){
@@ -165,5 +192,9 @@ public class MostrarOfertaController {
             deptoMun= deptoFacade.obtenerDepartamentoByIdCiudad(oform.getIdciudad()).get(0).getNombredepartamento();
             deptoMun= deptoMun +"  ,  " +muniFacade.obtenerMunicipio(oform.getIdciudad()).get(0).getNombreciudad();
             validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
+            //validationBean.ejecutarJavascript("$('#coverflow').flipster('destroy');");
+            //validationBean.ejecutarJavascript("$('#coverflow').flipster('index');");
+            //validationBean.ejecutarJavascript("$('#coverflow').flipster('jump',"+contador+");");
+           // validationBean.ejecutarJavascript("myFlipster.flipster('destroy'); myFlipster.flipster(); myFlipster.flipster('jump',"+contador+");");
     }
 }
