@@ -102,7 +102,7 @@ public class TblTipoperidomembresia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hayteguacho.entity.TblTipoperidomembresia[ idtipoperiodomembresia=" + idtipoperiodomembresia + " ]";
+        return String.valueOf(idtipoperiodomembresia);
     }
     
 }

@@ -92,9 +92,9 @@ public class TblEmpresa implements Serializable {
     @JoinColumn(name = "IDTIPOLOGIA", referencedColumnName = "IDTIPOLOGIA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TblTipologiaempresa idtipologia;
-    @JoinColumn(name = "IDMEMBRESIA", referencedColumnName = "IDMEMBRESIA")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private TblMembresia idmembresia;
+    //@JoinColumn(name = "IDMEMBRESIA", referencedColumnName = "IDMEMBRESIA")
+    //@ManyToOne(optional = false, fetch = FetchType.LAZY)
+    //private TblMembresia idmembresia;
     @JoinColumn(name = "IDCIUDAD", referencedColumnName = "IDCIUDAD")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TblCiudad idciudad;
@@ -290,13 +290,13 @@ public class TblEmpresa implements Serializable {
         this.idtipologia = idtipologia;
     }
 
-    public TblMembresia getIdmembresia() {
+    /*public TblMembresia getIdmembresia() {
         return idmembresia;
     }
 
     public void setIdmembresia(TblMembresia idmembresia) {
         this.idmembresia = idmembresia;
-    }
+    }*/
 
     public TblCiudad getIdciudad() {
         return idciudad;

@@ -114,6 +114,20 @@ public class ValidationBean {
         return flag;
     }
     
+    public boolean validarSoloNumerosConPunto(String c, String tipoMsg, String tituloMsg, String descMsg) {
+        Pattern patron = Pattern.compile("^\\d+(?:\\.\\d{1,2})?$");
+        Matcher validar = patron.matcher(c);
+        boolean flag;
+        if (validar.find()) {
+            flag = true;
+            
+        } else {
+            flag = false;
+            lanzarMensaje(tipoMsg, tituloMsg, descMsg);
+        }
+        return flag;
+    }
+    
     public void ejecutarJavascript(String codigo){
         RequestContext requestContext = RequestContext.getCurrentInstance();  
         requestContext.execute(codigo);
@@ -295,4 +309,6 @@ public class ValidationBean {
         }
         return flag;
     }
+    
+    
 }

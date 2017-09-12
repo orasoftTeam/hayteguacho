@@ -57,11 +57,12 @@ public class TblMembresia implements Serializable {
     private double preciomembresia;
     private Double precioxoferta;
     private BigInteger cantidadoferta;
+    private BigInteger cantidaduser;
     @JoinColumn(name = "IDTIPOPERIODOMEMBRESIA", referencedColumnName = "IDTIPOPERIODOMEMBRESIA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TblTipoperidomembresia idtipoperiodomembresia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmembresia", fetch = FetchType.LAZY)
-    private List<TblEmpresa> tblEmpresaList;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idmembresia", fetch = FetchType.LAZY)
+    //private List<TblEmpresa> tblEmpresaList;
 
     public TblMembresia() {
     }
@@ -142,14 +143,22 @@ public class TblMembresia implements Serializable {
         this.idtipoperiodomembresia = idtipoperiodomembresia;
     }
 
-    @XmlTransient
+    public BigInteger getCantidaduser() {
+        return cantidaduser;
+    }
+
+    public void setCantidaduser(BigInteger cantidaduser) {
+        this.cantidaduser = cantidaduser;
+    }
+
+   /* @XmlTransient
     public List<TblEmpresa> getTblEmpresaList() {
         return tblEmpresaList;
     }
 
     public void setTblEmpresaList(List<TblEmpresa> tblEmpresaList) {
         this.tblEmpresaList = tblEmpresaList;
-    }
+    }*/
 
     @Override
     public int hashCode() {
