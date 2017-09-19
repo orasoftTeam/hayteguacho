@@ -162,7 +162,7 @@ public class EmpresaController {
                 validationBean.validarLongitudCampo(empresa.getDescripcionempresa(), 15, 255,"warn", "titleEmpresa", "lblLongitudDescripcionEmpresa")){
             
             if(empresa.getIdempresa()==null || empresa.getIdempresa().equals("0")){
-               empresa.setPassword(validationBean.encriptar(empresa.getPassword(), empresa.getEmail()));
+               //empresa.setPassword(validationBean.encriptar(empresa.getPassword(), empresa.getEmail()));
                     flag= empresaFacade.actualizarEmpresa(empresa, "A"); 
                     if(flag.equals("0")){
                         validationBean.lanzarMensaje("info", "titleEmpresa", "lblGuardarSuccess");

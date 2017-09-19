@@ -89,7 +89,7 @@ public class CandidatoController {
                 &&  validationBean.validarSeleccion(archivo==null?"":archivo.getFileName(),"warn", "titleCandidato", "lblFileUploadReq")){
             
             if(candidato.getIdcandidato()==null || candidato.getIdcandidato().equals("0")){
-               candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
+               //candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
                     flag= candidatoFacade.actualizarCandidato(candidato, "A"); 
                     if(flag.equals("0")){
                         validationBean.lanzarMensaje("info", "titleCandidato", "lblGuardarSuccess");

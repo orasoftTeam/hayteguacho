@@ -1,40 +1,61 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:fragment xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:f="http://java.sun.com/jsf/core"
-  xmlns:b="http://bootsfaces.net/ui">
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:b="http://bootsfaces.net/ui"
+             xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-  <ui:remove>
-    <!--
-	    	Hint to editors: The menus follow the Chicago style of capitalization. Please capitalize everything but the "smaller" words. 
-	     -->
-  </ui:remove>
-    <b:navBar brand="Brand" brandHref="#" inverse="true" fixed="top">
-        <b:navbarLinks>
-            <b:navLink value="Link" href="#"></b:navLink>
-            <b:navLink value="Link" href="#"></b:navLink>
-            <b:dropMenu value="Dropdown">
-                <b:navLink value="Action" href="#"></b:navLink>
-                <b:navLink value="Another action" href="#"></b:navLink>
-                <b:navLink value="Something else here" href="#"></b:navLink>
-                <b:navLink></b:navLink>
-                <b:navLink header="Nav header"></b:navLink>
-                <b:navLink value="Separated link" href="#"></b:navLink>
-                <b:navLink value="One more separated link" href="#"></b:navLink>
-            </b:dropMenu>
+    <ui:remove>
+        <!--
+                    Hint to editors: The menus follow the Chicago style of capitalization. Please capitalize everything but the "smaller" words. 
+        -->
+    </ui:remove>
+    <b:growl id="growl"
+             globalOnly="true"
+             showDetail="true"/>
+    <b:navBar brand="#{bundle['titlePage']}" brandHref="#{request.contextPath}/index.xhtml" inverse="true" fixed="top">
+        <b:navbarLinks >
+            <b:navLink value="#{bundle['titleEmpleos']}" href="#{request.contextPath}/pages/oferta/mostrarOfertas.xhtml"></b:navLink>
+        </b:navbarLinks>
+        <b:navbarLinks rendered="#{login.loggedIn}">
+            <ui:repeat var="modulo" value="#{login.listaModulos}" varStatus="status" >
+                <b:navLink value="#{modulo.nombremenu}" href="#{request.contextPath.concat('/pages/').concat(modulo.opcion)}"
+                           rendered="#{login.obtenerListaOpciones(status.index).size() eq 0}"></b:navLink> 
+                <b:dropMenu value="#{modulo.nombremenu}" rendered="#{login.obtenerListaOpciones(status.index).size() > 0}">
+                    <ui:repeat var="menu" value="#{login.listaOpciones}" varStatus="status1">
+                        <b:navLink value="#{menu.nombremenu}" href="#{request.contextPath.concat('/pages/').concat(menu.opcion)}"></b:navLink>
+                    </ui:repeat>
+                </b:dropMenu>
+            </ui:repeat>
         </b:navbarLinks>
         <h:form styleClass="navbar-form navbar-right">
-            <div class="form-group">
-                <b:inputText placeholder="Email" fieldSize="sm"/>
-                <!--input type="text" class="form-control" placeholder="Search"/-->
-            </div>
-            <div class="form-group">
-                <b:inputText placeholder="Password" fieldSize="sm"/>
-            </div> 
-            #{' '}
-            <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+            <b:navbarLinks rendered="#{login.loggedIn}">
+                <b:dropMenu value="#{login.userLog.nombre}">
+                    <b:column col-md="12"  style="text-align: center;">
+                        <h:panelGrid columns="1">
+                            <h:graphicImage  library="images" name="usuario.png" height="100" width="100" />
+                            <h:outputText value="#{login.userLog.nombre}" style="color:green;"></h:outputText>
+
+                            <b:commandButton size="sm" type="submit" icon-rotate="l" iconAwesome="thumbs-up"
+                                             value="#{bundle['lblBtnCerrarSession']}" action="#{login.doLogout}"
+                                             look="danger" title="#{bundle['lblBtnCerrarSession']}" />
+                        </h:panelGrid>
+                    </b:column>
+                </b:dropMenu>
+            </b:navbarLinks>
+            <c:if test="#{!login.loggedIn}">
+                <div class="form-group" >
+                    <b:inputText placeholder="Email" fieldSize="sm" value="#{login.usuario}"/>
+                    <!--input type="text" class="form-control" placeholder="Search"/-->
+                </div>
+                <div class="form-group">
+                    <b:inputSecret placeholder="Password" fieldSize="sm" value="#{login.password}"/>
+                </div> 
+                #{' '}
+                <b:commandButton action="#{login.logear}" value="#{bundle['lblBtnAcceder']}" look="success" icon="chevron-right" iconAlign="right"/>
+            </c:if>
         </h:form>
     </b:navBar>
 

@@ -5,14 +5,19 @@
  */
 package com.hayteguacho.entity;
 
+import com.admin.hayteguacho.form.MenuForm;
+import com.admin.hayteguacho.form.UserForm;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import javax.persistence.Basic;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -22,6 +27,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "TBL_CANDIDATOXEMPRESA")
+
+@SqlResultSetMapping(
+        name = "MenuMapping",
+        classes = @ConstructorResult(
+                targetClass = MenuForm.class,
+                columns = {
+                    @ColumnResult(name = "identificador", type = String.class),
+                    @ColumnResult(name = "nombremenu", type = String.class),
+                    @ColumnResult(name = "opcion", type = String.class)/*,
+                    @ColumnResult(name = "producto", type = String.class)*/}))
+
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TblCandidatoxempresa.findAll", query = "SELECT t FROM TblCandidatoxempresa t"),

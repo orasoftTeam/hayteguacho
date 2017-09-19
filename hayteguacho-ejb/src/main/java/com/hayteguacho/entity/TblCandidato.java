@@ -5,10 +5,13 @@
  */
 package com.hayteguacho.entity;
 
+import com.admin.hayteguacho.form.UserForm;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -16,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,6 +32,22 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "TBL_CANDIDATO")
+
+@SqlResultSetMapping(
+        name = "UsuarioMapping",
+        classes = @ConstructorResult(
+                targetClass = UserForm.class,
+                columns = {
+                    @ColumnResult(name = "tipo", type = String.class),
+                    @ColumnResult(name = "identificador", type = String.class),
+                    @ColumnResult(name = "nombre", type = String.class),
+                    @ColumnResult(name = "correo", type = String.class),
+                    @ColumnResult(name = "contrasena", type = String.class),
+                    @ColumnResult(name = "nombrerol", type = String.class),
+                    @ColumnResult(name = "idrol", type = String.class),
+                    @ColumnResult(name = "idrolusuario", type = String.class)/*,
+                    @ColumnResult(name = "producto", type = String.class)*/}))
+
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TblCandidato.findAll", query = "SELECT t FROM TblCandidato t"),
