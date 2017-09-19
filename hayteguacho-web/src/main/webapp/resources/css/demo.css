@@ -1,0 +1,250 @@
+@import 'https://fonts.googleapis.com/css?family=Raleway:300,400,700';
+
+body {
+    font-family: 'Raleway', sans-serif;
+}
+h1, h2, p {
+    font-family: 'Raleway', sans-serif;
+    color: #fff;
+    font-weight: 300;
+}
+h1 {
+    font-size: 4.3em;
+    margin-bottom: 50px;
+}
+p {
+    font-size: 1.6em;
+    line-height: 1.4em;
+    margin-bottom: 50px;
+}
+#results p {
+margin-bottom: 25px;
+}
+button {
+color: #fff;
+}
+.blue, .red, .teal, .green, .navy {
+    color: #fff;
+    padding: 60px 30px;
+}
+.blue {
+    background: #538ab8; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#436d92, #538ab8); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#436d92, #538ab8); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#436d92, #538ab8); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#436d92, #538ab8); /* Standard syntax */
+}
+.red {
+    background: #b1181e; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#730f14, #b1181e); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#730f14, #b1181e); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#730f14, #b1181e); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#730f14, #b1181e); /* Standard syntax */
+}
+.teal {
+    background: #007789; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#006473, #007789); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#006473, #007789); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#006473, #007789); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#006473, #007789); /* Standard syntax */
+}
+.green {
+    background: #94aba0; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#7c9187, #94aba0); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#7c9187, #94aba0); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#7c9187, #94aba0); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#7c9187, #94aba0); /* Standard syntax */
+}
+.navy {
+    background: #001938; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#001938, #002a4e); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#001938, #002a4e); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#001938, #002a4e); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#001938, #002a4e); /* Standard syntax */
+}
+.hero {
+    height: 475px;
+}
+.bottom {
+    margin-bottom: -60px;
+}
+.connector {
+    display: inline-block;
+    width: 27px;
+    border: 2px #fff solid;
+    position: absolute;
+    top: 14px;
+}
+.icon {
+  cursor: pointer;
+}
+.q1-1 + .tooltip.bottom, .q2-1 + .tooltip.bottom, .q3-1 + .tooltip.bottom, .q4-1 + .tooltip.bottom, .q5-1 + .tooltip.bottom {
+	left: -15px !important;   
+}
+.q1-2 + .tooltip.bottom, .q2-2 + .tooltip.bottom, .q3-2 + .tooltip.bottom, .q4-2 + .tooltip.bottom, .q5-2 + .tooltip.bottom {
+	left: 85px !important;   
+}
+.q1-3 + .tooltip.bottom, .q2-3 + .tooltip.bottom, .q3-3 + .tooltip.bottom, .q4-3 + .tooltip.bottom, .q5-3 + .tooltip.bottom {
+	left: 185px !important;   
+}
+.q1-4 + .tooltip.bottom, .q2-4 + .tooltip.bottom, .q3-4 + .tooltip.bottom, .q4-4 + .tooltip.bottom, .q5-4 + .tooltip.bottom {
+	left: 285px !important;   
+}
+.q1-5 + .tooltip.bottom, .q2-5 + .tooltip.bottom, .q3-5 + .tooltip.bottom, .q4-5 + .tooltip.bottom, .q5-5 + .tooltip.bottom {
+	left: 385px !important;   
+}
+.tooltip.bottom {
+  padding: 5px 0;
+  margin-top: 74px;
+}  
+.tooltip.bottom .tooltip-arrow {
+  top: -5px;
+  left: 50%;
+  margin-left: -15px !important;
+  border-width: 0 15px 15px !important;
+  border-bottom-color: #fff !important;
+}
+.tooltip > .tooltip-inner {
+    background-color: #fff;
+    font-style:italic;
+    border-radius: 0;
+    padding: 10px;
+    font-weight: 700;
+    font-family: 'Raleway', sans-serif;
+    max-width: 100px !important;
+}
+.blue .tooltip > .tooltip-inner {
+ 	color: #538ab8;   
+}
+.red .tooltip > .tooltip-inner {
+ 	color: #b1181e;   
+}
+.teal .tooltip > .tooltip-inner {
+ 	color: #007789;   
+}
+.green .tooltip > .tooltip-inner {
+ 	color: #94aba0;   
+}
+.navy .tooltip > .tooltip-inner {
+ 	color: #001938;   
+}
+.slider {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+.color, .white {
+  position: absolute;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+.color {
+  opacity: 0;
+}
+.option1 {
+  left: 0;
+}
+.c1 {
+  left: 69px;
+}
+.option2 {
+  left: 99px;
+}
+.c2 {
+  left: 169px;
+}
+.option3 {
+  left: 199px;
+}
+.c3 {
+  left: 269px;
+}
+.option4 {
+  left: 298px;
+}
+.c4 {
+  left: 368px;
+}
+.option5 {
+  left: 398px;
+}
+.q1-1:hover .color, .q1-2:hover .color, .q1-3:hover .color, .q1-4:hover .color, .q1-5:hover .color, .q2-1:hover .color, .q2-2:hover .color, .q2-3:hover .color, .q2-4:hover .color, .q2-5:hover .color, .q3-1:hover .color, .q3-2:hover .color, .q3-3:hover .color, .q3-4:hover .color, .q3-5:hover .color, .q4-1:hover .color, .q4-2:hover .color, .q4-3:hover .color, .q4-4:hover .color, .q4-5:hover .color, .q5-1:hover .color, .q5-2:hover .color, .q5-3:hover .color, .q5-4:hover .color, .q5-5:hover .color {
+  opacity: 1;
+}
+.q1-1:hover .white, .q1-2:hover .white, .q1-3:hover .white, .q1-4:hover .white, .q1-5:hover .white, .q2-1:hover .white, .q2-2:hover .white, .q2-3:hover .white, .q2-4:hover .white, .q2-5:hover .white, .q3-1:hover .white, .q3-2:hover .white, .q3-3:hover .white, .q3-4:hover .white, .q3-5:hover .white, .q4-1:hover .white, .q4-2:hover .white, .q4-3:hover .white, .q4-4:hover .white, .q4-5:hover .white, .q5-1:hover .white, .q5-2:hover .white, .q5-3:hover .white, .q5-4:hover .white, .q5-5:hover .white {
+  opacity: 0;
+}
+.continue {
+    position: relative;
+    margin-top: -30px;
+    margin-bottom: -30px;
+    z-index: 30;
+}
+.circle-arrow {
+    width: 60px;
+}
+.btn-info {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 20px;
+    padding: 18px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+#results {
+  margin-bottom: 30px;
+  display:none;
+}
+.result-text {
+width: 450px;
+  padding: 24px;
+}
+.result-text p {
+  font-size: 1.2em;
+}
+.result-text a {
+  color: #dfdfdf;
+  text-decoration: underline;
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* The Modal (background) */
+.modal-box {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 5000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-box-content {
+    background-color: rgba(255,255,255,0);
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close-btn {
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+  text-transform: uppercase;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #538ab8;
+    text-decoration: none;
+    cursor: pointer;
+}

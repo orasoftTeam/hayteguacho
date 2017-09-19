@@ -10,6 +10,7 @@ import com.admin.hayteguacho.form.MembresiaxEmpresaForm;
 import com.admin.hayteguacho.form.TipoPeriodoMembresiaForm;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.MembresiaFacade;
+import com.hayteguacho.facade.MembresiaxempresaFacade;
 import com.hayteguacho.facade.TipoPeriodoMembresiaFacade;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class MembresiaController {
     ValidationBean vb;
     @EJB
     TipoPeriodoMembresiaFacade tpmfacade;
+    @EJB
+    MembresiaxempresaFacade mefacade;
     
     private @Getter @Setter boolean modalInfo = false;
     private @Getter @Setter boolean modalContratar = false;
@@ -180,13 +183,24 @@ public class MembresiaController {
       System.out.println(c.toString());
   SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
   mef.setEstado("A");
-  mef.setCantidadcontratada(String.valueOf(Integer.parseInt(membresia.getCantidadoferta()) + Integer.parseInt(mef.getCantidadofertasextra())));
+      if (mef.getCantidadofertasextra().equals("")) {
+          mef.setCantidadcontratada(membresia.getCantidadoferta());
+          mef.setCantidadofertasextra("0");
+      }else{
+       mef.setCantidadcontratada(String.valueOf(Integer.parseInt(membresia.getCantidadoferta()) + Integer.parseInt(mef.getCantidadofertasextra())));
+      }
   mef.setFechainicio(sdf.format(fechainicio));
   mef.setIdmembresia(membresia.getIdmembresia());
   mef.setIdempresa("1"); //AQUI SE SETEARA EL ID DE LA EMPRESA LOGEADA
   mef.setPrecioxofertasextra(membresia.getPrecioxoferta());
   mef.setFechavencimiento(sdf.format(c.getTime()));
-      System.out.println("com.admin.hayteguacho.controller.MembresiaController.contratar()");
+      System.out.println(mef);
+      String flag = mefacade.actualizarMembresiaxEmpresa(mef);
+      if (flag.equals("0") || flag.equals("-1")) {
+          System.out.println("exito!");
+      }else{
+      System.out.println("fail!");
+      }
   limpiarVista();
   }
     

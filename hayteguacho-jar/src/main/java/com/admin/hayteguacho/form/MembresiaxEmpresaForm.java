@@ -23,4 +23,12 @@ public class MembresiaxEmpresaForm {
     private @Getter @Setter String fechavencimiento;
     private @Getter @Setter String fechacancelacion;
     private @Getter @Setter String estado;
+
+    @Override
+    public String toString() {
+        return "MembresiaxEmpresaForm{" + "idmembresia=" + idmembresia + ", idempresa=" + idempresa + ", precioxofertasextra=" + precioxofertasextra + ", cantidadofertasextra=" + cantidadofertasextra + ", cantidadcontratada=" + cantidadcontratada + ", fechainicio=" + fechainicio + ", fechavencimiento=" + fechavencimiento + ", fechacancelacion=" + fechacancelacion + ", estado=" + estado + '}';
+    }
+    
+    
+    
 }

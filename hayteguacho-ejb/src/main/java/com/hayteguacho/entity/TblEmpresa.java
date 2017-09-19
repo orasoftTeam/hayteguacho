@@ -7,11 +7,12 @@ package com.hayteguacho.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -55,54 +56,73 @@ public class TblEmpresa implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @Column(name = "IDEMPRESA")
     private BigDecimal idempresa;
     @Basic(optional = false)
+    @Column(name = "NOMBREEMPRESA")
     private String nombreempresa;
     @Basic(optional = false)
+    @Column(name = "RAZONSOCIALEMP")
     private String razonsocialemp;
     @Basic(optional = false)
+    @Column(name = "NITEMPRESA")
     private String nitempresa;
-    @Basic(optional = false)
+    @Column(name = "CODPOSTALEMPRESA")
     private String codpostalempresa;
     @Basic(optional = false)
+    @Column(name = "DIRECCIONEMPRESA")
     private String direccionempresa;
     @Basic(optional = false)
-    private String numtrabajadoresempresa;
+    @Column(name = "NUMTRABAJADORESEMPRESA")
+    private BigInteger numtrabajadoresempresa;
     @Basic(optional = false)
     @Lob
+    @Column(name = "DESCRIPCIONEMPRESA")
     private String descripcionempresa;
+    @Column(name = "PAGINAWEBEMPRESA")
     private String paginawebempresa;
+    @Column(name = "LOGOEMPRESA")
     private String logoempresa;
     @Basic(optional = false)
+    @Column(name = "NOMBRECONTACTOEMPRESA")
     private String nombrecontactoempresa;
     @Basic(optional = false)
+    @Column(name = "APELLCONTACTOEMPRESA")
     private String apellcontactoempresa;
     @Basic(optional = false)
+    @Column(name = "TELEFONO1CONTACTOEMPRESA")
     private String telefono1contactoempresa;
+    @Column(name = "TELEFONO2CONTACTOEMPRESA")
     private String telefono2contactoempresa;
+    @Column(name = "TELEFONO3CONTACTOEMPRESA")
     private String telefono3contactoempresa;
     @Basic(optional = false)
+    @Column(name = "CORREOCONTACTOEMPRESA")
     private String correocontactoempresa;
     @Basic(optional = false)
+    @Column(name = "CONTRASENACONTACTOEMPRESA")
     private String contrasenacontactoempresa;
     @Basic(optional = false)
+    @Column(name = "ESTADOEMPRESA")
     private Character estadoempresa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idempresa", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idempresa")
+    private List<TblMembresiaxempresa> tblMembresiaxempresaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idempresa")
     private List<TblOfertalaboral> tblOfertalaboralList;
     @JoinColumn(name = "IDTIPOLOGIA", referencedColumnName = "IDTIPOLOGIA")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private TblTipologiaempresa idtipologia;
-    //@JoinColumn(name = "IDMEMBRESIA", referencedColumnName = "IDMEMBRESIA")
-    //@ManyToOne(optional = false, fetch = FetchType.LAZY)
-    //private TblMembresia idmembresia;
+    @JoinColumn(name = "IDPAIS", referencedColumnName = "IDPAIS")
+    @ManyToOne
+    private TblPais idpais;
     @JoinColumn(name = "IDCIUDAD", referencedColumnName = "IDCIUDAD")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private TblCiudad idciudad;
     @JoinColumn(name = "IDCATEGORIA", referencedColumnName = "IDCATEGORIA")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private TblCategoriaempresa idcategoria;
     @JoinColumn(name = "IDCARGOEMPRESA", referencedColumnName = "IDCARGOEMPRESA")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private TblCargoempresa idcargoempresa;
 
     public TblEmpresa() {
@@ -112,12 +132,11 @@ public class TblEmpresa implements Serializable {
         this.idempresa = idempresa;
     }
 
-    public TblEmpresa(BigDecimal idempresa, String nombreempresa, String razonsocialemp, String nitempresa, String codpostalempresa, String direccionempresa, String numtrabajadoresempresa, String descripcionempresa, String nombrecontactoempresa, String apellcontactoempresa, String telefono1contactoempresa, String correocontactoempresa, String contrasenacontactoempresa, Character estadoempresa) {
+    public TblEmpresa(BigDecimal idempresa, String nombreempresa, String razonsocialemp, String nitempresa, String direccionempresa, BigInteger numtrabajadoresempresa, String descripcionempresa, String nombrecontactoempresa, String apellcontactoempresa, String telefono1contactoempresa, String correocontactoempresa, String contrasenacontactoempresa, Character estadoempresa) {
         this.idempresa = idempresa;
         this.nombreempresa = nombreempresa;
         this.razonsocialemp = razonsocialemp;
         this.nitempresa = nitempresa;
-        this.codpostalempresa = codpostalempresa;
         this.direccionempresa = direccionempresa;
         this.numtrabajadoresempresa = numtrabajadoresempresa;
         this.descripcionempresa = descripcionempresa;
@@ -177,11 +196,11 @@ public class TblEmpresa implements Serializable {
         this.direccionempresa = direccionempresa;
     }
 
-    public String getNumtrabajadoresempresa() {
+    public BigInteger getNumtrabajadoresempresa() {
         return numtrabajadoresempresa;
     }
 
-    public void setNumtrabajadoresempresa(String numtrabajadoresempresa) {
+    public void setNumtrabajadoresempresa(BigInteger numtrabajadoresempresa) {
         this.numtrabajadoresempresa = numtrabajadoresempresa;
     }
 
@@ -274,6 +293,15 @@ public class TblEmpresa implements Serializable {
     }
 
     @XmlTransient
+    public List<TblMembresiaxempresa> getTblMembresiaxempresaList() {
+        return tblMembresiaxempresaList;
+    }
+
+    public void setTblMembresiaxempresaList(List<TblMembresiaxempresa> tblMembresiaxempresaList) {
+        this.tblMembresiaxempresaList = tblMembresiaxempresaList;
+    }
+
+    @XmlTransient
     public List<TblOfertalaboral> getTblOfertalaboralList() {
         return tblOfertalaboralList;
     }
@@ -290,13 +318,13 @@ public class TblEmpresa implements Serializable {
         this.idtipologia = idtipologia;
     }
 
-    /*public TblMembresia getIdmembresia() {
-        return idmembresia;
+    public TblPais getIdpais() {
+        return idpais;
     }
 
-    public void setIdmembresia(TblMembresia idmembresia) {
-        this.idmembresia = idmembresia;
-    }*/
+    public void setIdpais(TblPais idpais) {
+        this.idpais = idpais;
+    }
 
     public TblCiudad getIdciudad() {
         return idciudad;
@@ -344,7 +372,7 @@ public class TblEmpresa implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hayteguacho.entity.TblEmpresa[ idempresa=" + idempresa + " ]";
+        return "prueba.entity.TblEmpresa[ idempresa=" + idempresa + " ]";
     }
     
 }

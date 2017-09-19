@@ -9,6 +9,7 @@ package com.hayteguacho.facade;
 import com.admin.hayteguacho.form.EmpresaForm;
 import com.hayteguacho.entity.TblEmpresa;
 import com.hayteguacho.util.facade.AbstractFacade;
+import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
@@ -38,6 +39,26 @@ public class EmpresaFacade extends AbstractFacade<TblEmpresa, EmpresaForm> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    public List<EmpresaForm> obtenerEmpresa(String idempresa) {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_empresa where idempresa=?", TblEmpresa.class);
+        q.setParameter(1, new BigInteger(idempresa));
+        List<TblEmpresa> listaEntity;
+        List<EmpresaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<EmpresaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new EmpresaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<EmpresaForm>();
+        }
+
+        return listaEntityForm;
     }
 
     /*
@@ -72,7 +93,7 @@ public class EmpresaFacade extends AbstractFacade<TblEmpresa, EmpresaForm> {
             cs.setInt(3, new Integer(eform.getIdcategoria()));
             cs.setInt(4, new Integer(eform.getIdtipologia()));
             cs.setInt(5, new Integer(eform.getIdcargoempresa()));
-            cs.setString(6, eform.getNombreempresa());
+            cs.setString(6, eform.getNombreempresa().toUpperCase());
             cs.setString(7, eform.getRazonsocial());
             cs.setString(8, eform.getIdtributaria());
             cs.setString(9, eform.getCodigopostal());

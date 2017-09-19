@@ -21,7 +21,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -34,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TblOfertalaboral.findAll", query = "SELECT t FROM TblOfertalaboral t"),
     @NamedQuery(name = "TblOfertalaboral.findByIdofertalaboral", query = "SELECT t FROM TblOfertalaboral t WHERE t.idofertalaboral = :idofertalaboral"),
     @NamedQuery(name = "TblOfertalaboral.findByIdjornadalaboral", query = "SELECT t FROM TblOfertalaboral t WHERE t.idjornadalaboral = :idjornadalaboral"),
-    @NamedQuery(name = "TblOfertalaboral.findByIdtipocontracto", query = "SELECT t FROM TblOfertalaboral t WHERE t.idtipocontracto = :idtipocontracto"),
+    @NamedQuery(name = "TblOfertalaboral.findByIdtipocontracto", query = "SELECT t FROM TblOfertalaboral t WHERE t.idtipocontrato = :idtipocontrato"),
     @NamedQuery(name = "TblOfertalaboral.findByIdpuestotrabajo", query = "SELECT t FROM TblOfertalaboral t WHERE t.idpuestotrabajo = :idpuestotrabajo"),
     @NamedQuery(name = "TblOfertalaboral.findByIdciudad", query = "SELECT t FROM TblOfertalaboral t WHERE t.idciudad = :idciudad"),
     @NamedQuery(name = "TblOfertalaboral.findByTituloofertalaboral", query = "SELECT t FROM TblOfertalaboral t WHERE t.tituloofertalaboral = :tituloofertalaboral"),
@@ -56,7 +59,7 @@ public class TblOfertalaboral implements Serializable {
     @Basic(optional = false)
     private BigInteger idjornadalaboral;
     @Basic(optional = false)
-    private BigInteger idtipocontracto;
+    private BigInteger idtipocontrato;
     @Basic(optional = false)
     private BigInteger idpuestotrabajo;
     @Basic(optional = false)
@@ -90,10 +93,13 @@ public class TblOfertalaboral implements Serializable {
     private String conocimientoofertalaboral;
     private Character personacondiscapacidad;
     @Basic(optional = false)
-    private Character estadoofertalaboral;
+    private String estadoofertalaboral;
     @JoinColumn(name = "IDEMPRESA", referencedColumnName = "IDEMPRESA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TblEmpresa idempresa;
+    
+    @Transient
+    private @Setter String idempresa_tbl;
 
     public TblOfertalaboral() {
     }
@@ -102,10 +108,10 @@ public class TblOfertalaboral implements Serializable {
         this.idofertalaboral = idofertalaboral;
     }
 
-    public TblOfertalaboral(BigDecimal idofertalaboral, BigInteger idjornadalaboral, BigInteger idtipocontracto, BigInteger idpuestotrabajo, BigInteger idciudad, String tituloofertalaboral, Date fechahoraofertalaboral, Date fechavigenciaofertalaboral, Date fechacontratacionofertalaboral, BigInteger cantidadvacante, double salariominofertalaboral, double salariomaxofertalaboral, String descripcionofertalaboral, String requerimientosofertalaboral, Character estadoofertalaboral) {
+    public TblOfertalaboral(BigDecimal idofertalaboral, BigInteger idjornadalaboral, BigInteger idtipocontrato, BigInteger idpuestotrabajo, BigInteger idciudad, String tituloofertalaboral, Date fechahoraofertalaboral, Date fechavigenciaofertalaboral, Date fechacontratacionofertalaboral, BigInteger cantidadvacante, double salariominofertalaboral, double salariomaxofertalaboral, String descripcionofertalaboral, String requerimientosofertalaboral, String estadoofertalaboral) {
         this.idofertalaboral = idofertalaboral;
         this.idjornadalaboral = idjornadalaboral;
-        this.idtipocontracto = idtipocontracto;
+        this.idtipocontrato = idtipocontrato;
         this.idpuestotrabajo = idpuestotrabajo;
         this.idciudad = idciudad;
         this.tituloofertalaboral = tituloofertalaboral;
@@ -136,12 +142,12 @@ public class TblOfertalaboral implements Serializable {
         this.idjornadalaboral = idjornadalaboral;
     }
 
-    public BigInteger getIdtipocontracto() {
-        return idtipocontracto;
+    public BigInteger getIdtipocontrato() {
+        return idtipocontrato;
     }
 
-    public void setIdtipocontracto(BigInteger idtipocontracto) {
-        this.idtipocontracto = idtipocontracto;
+    public void setIdtipocontrato(BigInteger idtipocontrato) {
+        this.idtipocontrato = idtipocontrato;
     }
 
     public BigInteger getIdpuestotrabajo() {
@@ -256,11 +262,11 @@ public class TblOfertalaboral implements Serializable {
         this.personacondiscapacidad = personacondiscapacidad;
     }
 
-    public Character getEstadoofertalaboral() {
+    public String getEstadoofertalaboral() {
         return estadoofertalaboral;
     }
 
-    public void setEstadoofertalaboral(Character estadoofertalaboral) {
+    public void setEstadoofertalaboral(String estadoofertalaboral) {
         this.estadoofertalaboral = estadoofertalaboral;
     }
 
@@ -291,6 +297,12 @@ public class TblOfertalaboral implements Serializable {
         }
         return true;
     }
+
+    public String getIdempresa_tbl() {
+        return idempresa.getIdempresa().toString();
+    }
+    
+
 
     @Override
     public String toString() {

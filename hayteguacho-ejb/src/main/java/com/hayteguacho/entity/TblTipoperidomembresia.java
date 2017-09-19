@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -37,10 +37,12 @@ public class TblTipoperidomembresia implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @Column(name = "IDTIPOPERIODOMEMBRESIA")
     private BigDecimal idtipoperiodomembresia;
     @Basic(optional = false)
+    @Column(name = "NOMBRETIPOPERIODOMEMBRESIA")
     private String nombretipoperiodomembresia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipoperiodomembresia", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipoperiodomembresia")
     private List<TblMembresia> tblMembresiaList;
 
     public TblTipoperidomembresia() {

@@ -57,6 +57,27 @@ public class DepartamentoFacade extends AbstractFacade<TblDepartamento, Departam
         return listaEntityForm;
     }
     
+    
+    public List<DepartamentoForm> obtenerDepartamentoByIdCiudad(String idciudad) {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_departamento dep, tbl_ciudad mun where dep.iddepartamento= mun.iddepartamento and mun.idciudad=?", TblDepartamento.class);
+        q.setParameter(1, new BigDecimal(idciudad));
+        List<TblDepartamento> listaEntity;
+        List<DepartamentoForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<DepartamentoForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new DepartamentoForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<DepartamentoForm>();
+        }
+
+        return listaEntityForm;
+    }
+    
     public String actualizarDepartamento(DepartamentoForm df,String idpais, String op) {
         String flag = "";
         try {

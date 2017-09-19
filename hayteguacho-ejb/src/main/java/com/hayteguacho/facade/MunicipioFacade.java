@@ -59,6 +59,26 @@ public class MunicipioFacade extends AbstractFacade<TblCiudad, MunicipioForm> {
         return listaEntityForm;
     }
     
+    public List<MunicipioForm> obtenerMunicipio(String idmuni) {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_ciudad where idciudad=?", TblCiudad.class);
+        q.setParameter(1, new BigDecimal(idmuni));
+        List<TblCiudad> listaEntity;
+        List<MunicipioForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<MunicipioForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new MunicipioForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<MunicipioForm>();
+        }
+
+        return listaEntityForm;
+    }
+    
     public String actualizarMunicipios(MunicipioForm mf,String iddepto, String op) {
         String flag = "";
         try {

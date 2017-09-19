@@ -37,7 +37,7 @@ public class MembresiaFacade extends AbstractFacade<TblMembresia, MembresiaForm>
         return em;
     }
      public List<MembresiaForm> obtenerMembresiasOrden() {
-        Query q = getEntityManager().createNativeQuery("select * from tbl_membresia order by decode(tbl_membresia.titulomembresia,'GOLD', 1,'PLATINUM', 2,'CLASICA',3,'FREE',4,5)", TblMembresia.class);
+        Query q = getEntityManager().createNativeQuery("select * from tbl_membresia order by decode(tbl_membresia.titulomembresia,'GOLD', 1,'PLATINUM', 2,'CLASICA',3,'GRATUITA',4,5)", TblMembresia.class);
         List<TblMembresia> listaEntity;
         List<MembresiaForm> listaEntityForm;
 

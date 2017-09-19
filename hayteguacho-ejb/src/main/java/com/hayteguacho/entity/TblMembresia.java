@@ -11,8 +11,8 @@ import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -44,23 +44,32 @@ public class TblMembresia implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @Column(name = "IDMEMBRESIA")
     private BigDecimal idmembresia;
     @Basic(optional = false)
+    @Column(name = "TITULOMEMBRESIA")
     private String titulomembresia;
     @Basic(optional = false)
     @Lob
+    @Column(name = "DESCRIPCIONMEMBRESIA")
     private String descripcionmembresia;
     @Basic(optional = false)
     @Lob
+    @Column(name = "VENTAJASDEMEMBRESIA")
     private String ventajasdemembresia;
     @Basic(optional = false)
+    @Column(name = "PRECIOMEMBRESIA")
     private double preciomembresia;
+    @Column(name = "PRECIOXOFERTA")
     private Double precioxoferta;
+    @Column(name = "CANTIDADOFERTA")
     private BigInteger cantidadoferta;
     private BigInteger cantidaduser;
     @JoinColumn(name = "IDTIPOPERIODOMEMBRESIA", referencedColumnName = "IDTIPOPERIODOMEMBRESIA")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private TblTipoperidomembresia idtipoperiodomembresia;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmembresia")
+    private List<TblMembresiaxempresa> tblMembresiaxempresaList;
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idmembresia", fetch = FetchType.LAZY)
     //private List<TblEmpresa> tblEmpresaList;
 
@@ -135,6 +144,15 @@ public class TblMembresia implements Serializable {
         this.cantidadoferta = cantidadoferta;
     }
 
+    @XmlTransient
+    public List<TblMembresiaxempresa> getTblMembresiaxempresaList() {
+        return tblMembresiaxempresaList;
+    }
+
+    public void setTblMembresiaxempresaList(List<TblMembresiaxempresa> tblMembresiaxempresaList) {
+        this.tblMembresiaxempresaList = tblMembresiaxempresaList;
+    }
+
     public TblTipoperidomembresia getIdtipoperiodomembresia() {
         return idtipoperiodomembresia;
     }
@@ -182,7 +200,7 @@ public class TblMembresia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hayteguacho.entity.TblMembresia[ idmembresia=" + idmembresia + " ]";
+        return "prueba.entity.TblMembresia[ idmembresia=" + idmembresia + " ]";
     }
     
 }
