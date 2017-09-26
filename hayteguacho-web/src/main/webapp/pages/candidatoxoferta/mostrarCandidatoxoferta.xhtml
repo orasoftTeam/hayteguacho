@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content">
+            <b:form>
+    <b:carousel id="wizard" styleClass="wizardPseudoClass"
+                style="width:400px; padding-top:20px"
+                startAnimation="false"
+                showIndicators="false"
+                wrap="false">
+        <b:carouselItem style="width:400px; height:230px">
+            <b:panel title="Step 1" look="primary">
+                <b:inputText label="First name" />
+                <b:inputText label="Last name"  />
+            </b:panel>
+        </b:carouselItem>
+        <b:carouselItem style="width:400px;height:230px">
+            <b:panel title="Step 2" look="danger  ">
+                <b:inputText label="Street"  />
+            </b:panel>
+        </b:carouselItem>
+        <b:carouselItem style="width:400px;height:230px">
+            <b:panel title="Step 3" look="success">
+                <b:inputText label="Zip code"  />
+                <b:inputText label="City"  />
+            </b:panel>
+        </b:carouselItem>
+        <b:carouselControl direction="right" >
+            <b:button value="Previous step"
+                      onclick="$('.wizardPseudoClass').carousel('prev');$('.wizardPseudoClass').carousel('pause');"
+                      look="info" />
+        </b:carouselControl>
+        <b:carouselControl direction="left">
+            <b:button value="Next step" style="position:absolute;right:0px"
+                      onclick="$('.wizardPseudoClass').carousel('next');$('.wizardPseudoClass').carousel('pause');"
+                      look="success" />
+        </b:carouselControl>
+    </b:carousel>
+</b:form>
+            
+            
+        </ui:define>
+    </ui:composition>
+</html>
+

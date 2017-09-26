@@ -58,7 +58,7 @@ public class OfertaController {
     PuestoTrabajoFacade puestoFacade;
     
     
-    private @Getter @Setter String idempresa="1";
+    private @Getter @Setter String idempresa="3";
     
     private @Getter @Setter String idcategoria;
     

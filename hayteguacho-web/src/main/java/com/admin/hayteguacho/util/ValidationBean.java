@@ -127,9 +127,9 @@ public class ValidationBean {
         }
         return flag;
     }
-    
-    public void ejecutarJavascript(String codigo){
-        RequestContext requestContext = RequestContext.getCurrentInstance();  
+
+    public void ejecutarJavascript(String codigo) {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute(codigo);
     }
 
@@ -335,6 +335,8 @@ public class ValidationBean {
         }
         return flag;
     }
+
+   
     
     
 }

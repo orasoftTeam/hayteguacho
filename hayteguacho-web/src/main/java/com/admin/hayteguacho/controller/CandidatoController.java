@@ -50,7 +50,8 @@ public class CandidatoController {
     @EJB
     PaisFacade paisFacade;
     
-    private String destination="C:\\Users\\LAP\\Documents\\ArchivosASubir\\";
+    private String destination= "C:\\Users\\dell\\Desktop\\glassfish4\\glassfish\\domains\\domain1\\ArchivosASubir\\pdf\\";
+            //"C:\\Users\\LAP\\Documents\\ArchivosASubir\\";
 
     private @Getter @Setter UploadedFile archivo;
     private @Getter @Setter List<CandidatoForm> listaCandidatos = new ArrayList<>();
@@ -89,7 +90,7 @@ public class CandidatoController {
                 &&  validationBean.validarSeleccion(archivo==null?"":archivo.getFileName(),"warn", "titleCandidato", "lblFileUploadReq")){
             
             if(candidato.getIdcandidato()==null || candidato.getIdcandidato().equals("0")){
-               candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
+               //candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
                     flag= candidatoFacade.actualizarCandidato(candidato, "A"); 
                     if(flag.equals("0")){
                         validationBean.lanzarMensaje("info", "titleCandidato", "lblGuardarSuccess");
@@ -123,7 +124,7 @@ public class CandidatoController {
                 validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
                 msgFile= validationBean.getMsgBundle("lblFileSuccess");
                 validationBean.updateComponent("candidatoForm:msgFile");
-                candidato.setArchivocurriculum(destination+event.getFile().getFileName());
+                candidato.setArchivocurriculum("/pdf/"+event.getFile().getFileName());
             }
             else{
                 if(validationBean.deleteFile(destination+archivo.getFileName())){
@@ -131,14 +132,14 @@ public class CandidatoController {
                   validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
                   msgFile= validationBean.getMsgBundle("lblFileSuccess");
                   validationBean.updateComponent("candidatoForm:msgFile");
-                  candidato.setArchivocurriculum(destination+event.getFile().getFileName());                  
+                  candidato.setArchivocurriculum("/pdf/"+event.getFile().getFileName());                  
                 }
             }
         } catch (IOException e) {
             msgFile= validationBean.getMsgBundle("lblFileUploadError");
             validationBean.updateComponent("candidatoForm:msgFile");
             if(archivo!=null){
-                if(validationBean.deleteFile(destination+archivo.getFileName())){
+                if(validationBean.deleteFile("/pdf/"+archivo.getFileName())){
                     archivo=null;
                 }
             }

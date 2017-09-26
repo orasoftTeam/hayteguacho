@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:commandButton oncomplete="$('.modalPseudoClass').modal('show');" value="clic" />
+            
+            <b:dataTable
+                value="#{mostrarCandxOfertaController.listaCandidatos}"
+                var="cand"
+                >
+                <b:dataTableColumn label="Nombre" value="#{cand.nombrecandidato}"/>
+                <b:dataTableColumn label="Curriculum"  > 
+                    <p:commandButton actionListener="#{mostrarCandxOfertaController.dialogo(cand)}" value="Ver"  ajax="true" update="amodal"/>
+                </b:dataTableColumn>
+            </b:dataTable>
+            
+        </h:form>
+        
+        <b:modal  id="amodal" title="PDF" styleClass="modalPseudoClass"  close-on-escape="false" backdrop="false" >
+            <p:media value="#{mostrarCandxOfertaController.pdf}" width="100%" height="500px" rendered="#{mostrarCandxOfertaController.pdfshow}"  />            
+                        </b:modal>
+        
+        
+        
+        <!--<p:graphicImage value="/pdf/character_themuppets_gonzo_9c3596c6.jpeg"/>
+        <object type="application/pdf" data="Tarea_Evaluda.pdf?pfdrid_c=true" height="300px" width="100%" internalinstanceid="5"></object>-->
+        
+    </h:body>
+</html>
+
