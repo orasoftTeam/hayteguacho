@@ -5,11 +5,15 @@
  */
 package com.hayteguacho.entity;
 
+import com.admin.hayteguacho.form.OfertaForm;
+import com.admin.hayteguacho.form.UserForm;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -18,6 +22,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +37,35 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "TBL_OFERTALABORAL")
+
+@SqlResultSetMapping(
+        name = "OfertaMapping",
+        classes = @ConstructorResult(
+                targetClass = OfertaForm.class,
+                columns = {
+                    @ColumnResult(name = "idofertalaboral", type = String.class),
+                    @ColumnResult(name = "idempresa_tbl", type = String.class),
+                    @ColumnResult(name = "idjornadalaboral", type = String.class),
+                    @ColumnResult(name = "idtipocontrato", type = String.class),
+                    @ColumnResult(name = "idpuestotrabajo", type = String.class),
+                    @ColumnResult(name = "idciudad", type = String.class),
+                    @ColumnResult(name = "tituloofertalaboral", type = String.class),
+                    @ColumnResult(name = "fechavigenciaofertalaboral", type = String.class),
+                    @ColumnResult(name = "fechahoraofertalaboral", type = String.class),
+                    @ColumnResult(name = "fechacontratacionofertalaboral", type = String.class),
+                    @ColumnResult(name = "cantidadvacante", type = String.class),
+                    @ColumnResult(name = "salariominofertalaboral", type = String.class),
+                    @ColumnResult(name = "salariomaxofertalaboral", type = String.class),
+                    @ColumnResult(name = "descripcionofertalaboral", type = String.class),
+                    
+                    @ColumnResult(name = "requerimientosofertalaboral", type = String.class),
+                    @ColumnResult(name = "habilidadesofertalaboral", type = String.class),
+                    @ColumnResult(name = "conocimientoofertalaboral", type = String.class),
+                    @ColumnResult(name = "estadoofertalaboral", type = String.class)
+                    /*,
+                    @ColumnResult(name = "producto", type = String.class)*/}))
+
+
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TblOfertalaboral.findAll", query = "SELECT t FROM TblOfertalaboral t"),
@@ -100,6 +134,7 @@ public class TblOfertalaboral implements Serializable {
     
     @Transient
     private @Setter String idempresa_tbl;
+    
 
     public TblOfertalaboral() {
     }

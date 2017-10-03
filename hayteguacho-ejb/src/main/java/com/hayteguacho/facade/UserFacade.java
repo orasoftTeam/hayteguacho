@@ -44,7 +44,7 @@ public class UserFacade {
         "(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(company.contrasenacontactoempresa) FROM DUAL)='"+pass+"'\n" +
         "union \n" +
         "select 'C' tipo, candidato.idcandidato identificador, (candidato.nombrecandidato || candidato.apellidocandidato) as  nombre, candidato.correocandidato correo, candidato.contrasenacandidato contrasena from tbl_candidato candidato \n" +
-        "where candidato.correocandidato='"+user+"'\n" +
+        "where candidato.correocandidato='"+user+"' and candidato.estadocandidato='A' \n" +
         "and \n" +
         "(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(candidato.contrasenacandidato) FROM DUAL)='"+pass+"'\n" +
         ") usuario, tbl_rol rol\n" +

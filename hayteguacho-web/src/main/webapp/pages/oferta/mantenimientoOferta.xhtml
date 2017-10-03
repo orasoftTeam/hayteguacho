@@ -114,7 +114,7 @@
                                              searching="false"
                                              page-length="5"
                                              page-length-menu="5,10,20"
-                                             responsive="true"
+                                             responsive="false"
                                              
                                              >
                                     <b:dataTableColumn label="" orderable="false"  >
@@ -131,7 +131,9 @@
                                                 <b:label text="#{ofertaController.validationBean.obtenerLabelEstado(oferta.estadoofertalaboral)}"></b:label>
                                                 <h:outputText value="#{bundle['lblbtnEliminar']}">
                                                 </h:outputText>
-                                                <b:selectBooleanCheckbox ajax="true" onclick="ajax:ofertaController.selectCheckbox(oferta);"  value="${ofertaController.chequeado}" disabled="#{ofertaController.estadofilter eq 'I'}"></b:selectBooleanCheckbox>
+                                                <h:selectBooleanCheckbox value="#{ofertaController.chequeado}" disabled="#{ofertaController.estadofilter eq 'I'}">
+                                                    <f:ajax event="change" listener="#{ofertaController.selectCheckbox(oferta)}"></f:ajax>
+                                                </h:selectBooleanCheckbox>
                                             </b:panelGrid>
                                             <p:separator></p:separator>
                                             <b:row>

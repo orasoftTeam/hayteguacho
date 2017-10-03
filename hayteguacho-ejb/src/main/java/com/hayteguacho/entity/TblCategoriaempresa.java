@@ -99,10 +99,15 @@ public class TblCategoriaempresa implements Serializable {
         }
         return true;
     }
-
+    /*
     @Override
     public String toString() {
         return "com.hayteguacho.entity.TblCategoriaempresa[ idcategoria=" + idcategoria + " ]";
     }
+    */
     
+    @Override
+    public String toString() {
+        return idcategoria.toString();
+    }
 }

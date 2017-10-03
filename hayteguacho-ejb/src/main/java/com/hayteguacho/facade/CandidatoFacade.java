@@ -10,6 +10,7 @@ import com.admin.hayteguacho.form.CargoEmpresaForm;
 import com.hayteguacho.entity.TblCandidato;
 import com.hayteguacho.entity.TblCargoempresa;
 import com.hayteguacho.util.facade.AbstractFacade;
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
@@ -43,6 +44,31 @@ public class CandidatoFacade extends AbstractFacade<TblCandidato, CandidatoForm>
 
     public List<CandidatoForm> obtenerCandidatos() {
         Query q = getEntityManager().createNativeQuery("select * from tbl_candidato", TblCandidato.class);
+        List<TblCandidato> listaEntity;
+        List<CandidatoForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<CandidatoForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new CandidatoForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<CandidatoForm>();
+        }
+
+        return listaEntityForm;
+    }
+    
+    public List<CandidatoForm> obtenerCandidatoById(String id) {
+        String sql="select idcandidato, idpais, idpuestotrabajo, nombrecandidato, apellidocandidato, telefono1candidato, telefono2candidato, \n" +
+"                generocandidato, fechanacimientocandidato, archivocurriculum, correocandidato,(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(contrasenacandidato)from dual) contrasenacandidato,\n" +
+"                estadocandidato from tbl_candidato\n" +
+"                where idcandidato=?";
+        
+        Query q = getEntityManager().createNativeQuery(sql, TblCandidato.class);
+        q.setParameter(1, new BigDecimal(id));
         List<TblCandidato> listaEntity;
         List<CandidatoForm> listaEntityForm;
 

@@ -60,6 +60,37 @@ public class EmpresaFacade extends AbstractFacade<TblEmpresa, EmpresaForm> {
 
         return listaEntityForm;
     }
+    
+    
+    public List<EmpresaForm> obtenerEmpresaById(String idempresa) {
+        String sql="select idempresa, idciudad, idcategoria, idtipologia, idcargoempresa,\n" +
+"                nombreempresa, razonsocialemp, nitempresa, codpostalempresa,\n" +
+"                direccionempresa, numtrabajadoresempresa, descripcionempresa,\n" +
+"                paginawebempresa, logoempresa, nombrecontactoempresa,\n" +
+"                apellcontactoempresa, telefono1contactoempresa,\n" +
+"                telefono2contactoempresa, telefono3contactoempresa,\n" +
+"                correocontactoempresa,\n" +
+"                (SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(contrasenacontactoempresa)from dual) contrasenacontactoempresa,\n" +
+"                estadoempresa, idpais from tbl_empresa where idempresa=?";
+        
+        Query q = getEntityManager().createNativeQuery(sql, TblEmpresa.class);
+        q.setParameter(1, new BigInteger(idempresa));
+        List<TblEmpresa> listaEntity;
+        List<EmpresaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<EmpresaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new EmpresaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<EmpresaForm>();
+        }
+
+        return listaEntityForm;
+    }
 
     /*
     public List<CargoEmpresaForm> obtenerCargos() {

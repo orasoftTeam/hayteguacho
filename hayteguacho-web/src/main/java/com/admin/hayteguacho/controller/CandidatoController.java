@@ -11,6 +11,7 @@ import com.admin.hayteguacho.form.CategoriaEmpresaForm;
 import com.admin.hayteguacho.form.EmpresaForm;
 import com.admin.hayteguacho.form.PaisForm;
 import com.admin.hayteguacho.form.PuestoTrabajoForm;
+import com.admin.hayteguacho.form.UserForm;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.CandidatoFacade;
 import com.hayteguacho.facade.CargoEmpresaFacade;
@@ -25,6 +26,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.event.FileUploadEvent;
@@ -50,6 +52,9 @@ public class CandidatoController {
     @EJB
     PaisFacade paisFacade;
     
+    @Inject
+    LoginController loginBean;
+    
     private String destination="C:\\Users\\LAP\\Documents\\ArchivosASubir\\";
 
     private @Getter @Setter UploadedFile archivo;
@@ -67,6 +72,10 @@ public class CandidatoController {
             candidato.setIdpaistbl(tmp.get(0).getIdpais());
         }
         candidato.setIdcandidato("0");
+        UserForm usuario=loginBean.getUserLog();
+        if(usuario!=null && usuario.getTipo().equals("C")){
+            candidato= candidatoFacade.obtenerCandidatoById(usuario.getIdentificador()).get(0);
+        }
     }
     
     public void actualizarCandidato(){
@@ -91,6 +100,48 @@ public class CandidatoController {
             if(candidato.getIdcandidato()==null || candidato.getIdcandidato().equals("0")){
                //candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
                     flag= candidatoFacade.actualizarCandidato(candidato, "A"); 
+                    if(flag.equals("0")){
+                        validationBean.lanzarMensaje("info", "titleCandidato", "lblGuardarSuccess");
+                        limpiar();
+                    }
+                    else if(flag.equals("-1")){
+                        validationBean.lanzarMensaje("warn", "titleCandidato", "lblExistReg");
+                    }
+                    else{
+                        validationBean.lanzarMensaje("error", "titleCandidato", "lblGuardarError");
+                    }
+            }
+            if(!candidato.getIdcandidato().equals("0")){
+                validationBean.lanzarMensaje("warn", "titleCandidato", "lblExistReg");
+            }
+        }
+    }
+    
+    
+    public void actualizarCandidatoRegistro(){
+        String flag=""; 
+        if (validationBean.validarCampoVacio(candidato.getCorreocandidato(), "warn", "titleCandidato", "lblEmailReqEmpresa")
+                && validationBean.validarEmail(candidato.getCorreocandidato(), "warn", "titleCandidato", "lblEmailValido")
+                && validationBean.validarCampoVacio(candidato.getContrasenacandidato(), "warn", "titleCandidato", "lblClaveReqEmpresa")
+                && validationBean.validarLongitudCampo(candidato.getContrasenacandidato(), 5, 20,"warn", "titleCandidato", "lblLongitudClaveEmpresa")
+                && 
+                validationBean.validarCampoVacio(candidato.getNombrecandidato(), "warn", "titleCandidato", "lblNomCandidatoReq")
+                && validationBean.validarSoloLetras(candidato.getNombrecandidato().replace(" ", ""), "warn", "titleCandidato", "lblSoloLetras")
+                && validationBean.validarLongitudCampo(candidato.getNombrecandidato(), 4, 30,"warn", "titleCandidato", "lblLongitudNomCandidato")
+                &&
+                validationBean.validarCampoVacio(candidato.getApellidocandidato(), "warn", "titleCandidato", "lblApeCandidatoReq")
+                && validationBean.validarSoloLetras(candidato.getApellidocandidato().replace(" ", ""), "warn", "titleCandidato", "lblSoloLetras")
+                && validationBean.validarLongitudCampo(candidato.getApellidocandidato(), 4, 30,"warn", "titleCandidato", "lblLongitudApellidoCandidato")
+                && validationBean.validarCampoVacio(candidato.getTelefono1candidato(), "warn", "titleCandidato", "lblTelReq")
+                &&  validationBean.validarSeleccion(candidato.getGenerocandidato(),"warn", "titleCandidato", "lblGenSelectReq")
+                &&  validationBean.validarSeleccion(candidato.getIdpuestotrabajotbl(),"warn", "titleCandidato", "lblPuestoSelectReq")
+                /*
+                &&  validationBean.validarSeleccion(archivo==null?"":archivo.getFileName(),"warn", "titleCandidato", "lblFileUploadReq")
+                */){
+            
+            if(candidato.getIdcandidato()==null || !candidato.getIdcandidato().equals("0")){
+               //candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
+                    flag= candidatoFacade.actualizarCandidato(candidato, "U"); 
                     if(flag.equals("0")){
                         validationBean.lanzarMensaje("info", "titleCandidato", "lblGuardarSuccess");
                         limpiar();

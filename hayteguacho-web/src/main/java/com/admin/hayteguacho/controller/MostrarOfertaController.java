@@ -5,6 +5,7 @@
  */
 package com.admin.hayteguacho.controller;
 
+import com.admin.hayteguacho.form.AplicarOfertaForm;
 import com.admin.hayteguacho.form.EmpresaForm;
 import com.admin.hayteguacho.form.OfertaForm;
 import com.admin.hayteguacho.util.ValidationBean;
@@ -18,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +31,8 @@ import lombok.Setter;
 @ManagedBean (name = "mostrarController")
 @SessionScoped
 public class MostrarOfertaController {
+    @Inject
+    LoginController loginBean;
     
     @EJB
     OfertaFacade ofertaFacade;
@@ -44,6 +48,9 @@ public class MostrarOfertaController {
     @EJB
     
     MunicipioFacade muniFacade;
+    
+    private @Getter @Setter String pretension="0";
+    private @Getter @Setter boolean isTrabajando;
     
     @EJB
     @Getter @Setter
@@ -69,6 +76,7 @@ public class MostrarOfertaController {
     
     private @Getter @Setter String[] cssClases= new String[6];
     
+    private @Setter boolean puedeAplicar;
     //private @Getter @Setter int contador=0;
     
     @PostConstruct
@@ -152,6 +160,37 @@ public class MostrarOfertaController {
             }
     }
     
+    public void aplicarOferta(){
+        AplicarOfertaForm ao= new AplicarOfertaForm();
+        String flag="";
+        ao.setIdaplica("0");
+        ao.setIdcandidato(loginBean.getUserLog().getIdentificador());
+        ao.setIdoferta(ofertaForm.getIdofertalaboral());
+        ao.setPretension(getPretension());
+        if(isTrabajando())
+            ao.setTrabajando("S");
+        else
+            ao.setTrabajando("N");
+        flag=ofertaFacade.aplicarOferta(ao, "A");
+        switch(flag){
+            case "0":
+                
+                validationBean.lanzarMensaje("info", "titleAplicaOferta", "lblAplicaExito");
+                break;
+            case "-1":
+                validationBean.lanzarMensaje("info", "titleAplicaOferta", "lblAplicaExist");
+                break;
+            case "-2":
+                validationBean.lanzarMensaje("info", "titleAplicaOferta", "lblAplicaError");
+                break;
+        }
+        validationBean.ejecutarJavascript("$('.aplicarOferta').modal('hide'); ");
+        pretension="0";
+        isTrabajando=false;
+        ofertaForm= new OfertaForm();
+        
+    }
+    
     public void atras(){
         if(listaOferta.size()>0)
             if(count>6 && ini>1){
@@ -159,6 +198,11 @@ public class MostrarOfertaController {
                 ini= ini-6;
                 listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
             }
+    }
+    
+    public boolean getPuedeAplicar(){
+       return loginBean.isLoggedIn() && loginBean.getUserLog()!=null 
+               && loginBean.getUserLog().getIdentificador()!=null && loginBean.getUserLog().getTipo().equals("C");
     }
     
     /*
@@ -192,6 +236,15 @@ public class MostrarOfertaController {
             deptoMun= deptoFacade.obtenerDepartamentoByIdCiudad(oform.getIdciudad()).get(0).getNombredepartamento();
             deptoMun= deptoMun +"  ,  " +muniFacade.obtenerMunicipio(oform.getIdciudad()).get(0).getNombreciudad();
             validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
+            //validationBean.ejecutarJavascript("$('#coverflow').flipster('destroy');");
+            //validationBean.ejecutarJavascript("$('#coverflow').flipster('index');");
+            //validationBean.ejecutarJavascript("$('#coverflow').flipster('jump',"+contador+");");
+           // validationBean.ejecutarJavascript("myFlipster.flipster('destroy'); myFlipster.flipster(); myFlipster.flipster('jump',"+contador+");");
+    }
+    
+    public void seleccionarAplicacion(OfertaForm oform){
+            ofertaForm= oform;
+            validationBean.ejecutarJavascript("$('.aplicarOferta').modal('show');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('destroy');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('index');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('jump',"+contador+");");

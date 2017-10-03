@@ -34,9 +34,9 @@
                 });
                 });
             </h:outputScript>
-
+            <!--
             <h:outputStylesheet name="css/styles.css"></h:outputStylesheet>
-
+            -->
             <h:outputScript name="js/jquery-1.11.0.min.js">
 
             </h:outputScript>
@@ -99,7 +99,11 @@
                                                 <h:outputText value="#{mostrarController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}"></h:outputText>                                           
                                             </b:panelGrid>
                                             <p:separator></p:separator>
-                                            <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" /></p>
+                                            <h:panelGrid columns="1">
+                                                <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}" look="warning" style="width:100%" rendered="#{mostrarController.puedeAplicar}" /></p>
+                                                <p:separator rendered="#{mostrarController.puedeAplicar}"></p:separator>
+                                                <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" /></p>
+                                            </h:panelGrid>
                                         </b:column>
                                     </b:row>                      
                                 </b:panel>
@@ -115,6 +119,17 @@
                             </b:column>
                         </b:row>
                     </b:row>
+                    <b:modal title="#{bundle['titleAplicaOferta']}"  id="aplica"  styleClass="aplicarOferta" size="380">
+                        <b:panelGrid colSpans="3,9" >
+                            <h:outputText value="#{bundle['lblPretensionLaboral']}" ></h:outputText>
+                            <b:inputText onkeyup="soloNumeros(this)" value="#{mostrarController.pretension}" ></b:inputText>
+                            <h:outputText value="#{bundle['lblSituacionLaboral']}" ></h:outputText>
+                            <b:selectBooleanCheckbox value="#{mostrarController.trabajando}"></b:selectBooleanCheckbox>
+                        </b:panelGrid>
+                        <f:facet name="footer">
+                            <b:commandButton type="submit" ajax="false" look="info" action="#{mostrarController.aplicarOferta}" value="#{bundle['lblAplicar']}"  />
+                        </f:facet>
+                    </b:modal>
                     <b:modal  id="amodal"  styleClass="modalPseudoClass" size="lg">
                         <b:panelGrid colSpans="3,9">
                             <h:outputText value="#{mostrarController.empresaForm.nombreempresa}" style="font-size: 18px; font-weight: bold;"></h:outputText>
@@ -168,7 +183,7 @@
                             </b:panelGrid>
                         </b:panelGrid>
                         <f:facet name="footer">
-                            <b:button value="Close" dismiss="modal" />
+                            <b:button value="#{bundle['lblBtnCerrar']}" dismiss="modal" />
                         </f:facet>
                     </b:modal>
                     <p:separator></p:separator>

@@ -5,14 +5,15 @@
  */
 package com.admin.hayteguacho.controller;
 
-import com.admin.hayteguacho.form.CategoriaEmpresaForm;
+
+import com.admin.hayteguacho.form.AplicarOfertaForm;
 import com.admin.hayteguacho.form.DepartamentoForm;
 import com.admin.hayteguacho.form.MunicipioForm;
 import com.admin.hayteguacho.form.OfertaForm;
 import com.admin.hayteguacho.form.PaisForm;
 import com.admin.hayteguacho.form.PuestoTrabajoForm;
+import com.admin.hayteguacho.form.UserForm;
 import com.admin.hayteguacho.util.ValidationBean;
-import com.hayteguacho.facade.CategoriaEmpresaFacade;
 import com.hayteguacho.facade.DepartamentoFacade;
 import com.hayteguacho.facade.MunicipioFacade;
 import com.hayteguacho.facade.OfertaFacade;
@@ -23,10 +24,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,8 +36,8 @@ import lombok.Setter;
  * @author LAP
  */
 @ViewScoped
-@ManagedBean(name = "ofertaController")
-public class OfertaController {
+@ManagedBean(name = "ofertaCandidatoController")
+public class OfertaCandidatoController {
 
     @EJB
     OfertaFacade ofertaFacade;
@@ -59,7 +60,11 @@ public class OfertaController {
     PuestoTrabajoFacade puestoFacade;
     
     
-    private @Getter @Setter String idempresa="3";
+    @Inject
+    LoginController loginBean;
+    
+    
+    private @Getter @Setter String idempresa;
     
     private @Getter @Setter String idcategoria;
     
@@ -80,19 +85,30 @@ public class OfertaController {
     private @Getter @Setter List<DepartamentoForm> listaDepto= new ArrayList<>();
     private @Getter @Setter List<MunicipioForm> listaMunicipio= new ArrayList<>();
     
+    private @Getter @Setter String fechaFormateada;
+    
+    private @Getter @Setter boolean esEmpresa;
+    
 
     @PostConstruct
     public void init() {
-        String pais= Locale.getDefault().getDisplayCountry();
-        List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
-        if(!tmp.isEmpty()){
-            listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
-        }
-        oferta.setIdofertalaboral("0");
-        listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+        idempresa= loginBean.getUserLog().getIdentificador();
+            String pais= Locale.getDefault().getDisplayCountry();
+            List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
+            if(!tmp.isEmpty()){
+                listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
+            }
+            oferta.setIdofertalaboral("0");
+            if(loginBean.getUserLog().getTipo().equals("E")){
+                listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+                esEmpresa= true;
+            }
+            else if(loginBean.getUserLog().getTipo().equals("C")){
+                listaOfertas = ofertaFacade.obtenerOfertasByIdCandidato(idempresa);
+                esEmpresa= false;
+            }
     }
     
-     
     public void cambiarCategoria(){
         if(!idcategoria.equals("")){
             listaPuestos= puestoFacade.obtenerPuestosByIdCategoria(idcategoria);
@@ -110,7 +126,6 @@ public class OfertaController {
         else{
             listaOfertas= ofertaFacade.obtenerOfertas();
         }
-        setChequeado(false);
         listaOfertasEliminar.clear();
         validationBean.updateComponent("ofertasForm:ofertaTbl");
         setEstadofilter("");
@@ -124,12 +139,23 @@ public class OfertaController {
         else{
             listaOfertas= ofertaFacade.obtenerOfertas();
         }
-        setChequeado(false);
         listaOfertasEliminar.clear();
         validationBean.updateComponent("ofertasForm:ofertaTbl");
         setIdcategoriafilter("");
         validationBean.updateComponent("ofertasForm:categoriaCmb");
     } 
+
+    
+    public void cambiarEstadoOfertaByFilter(){
+        if(!estadofilter.equals("")){
+            listaOfertas= ofertaFacade.obtenerOfertasByIdCandidato(estadofilter,idempresa);
+        }
+        else{
+            listaOfertas = ofertaFacade.obtenerOfertasByIdCandidato(idempresa);
+        }
+        listaOfertasEliminar.clear();
+        validationBean.updateComponent("ofertasForm:ofertaTbl");
+    }     
     
     public void selectCheckbox(OfertaForm obj){
         if(chequeado){
@@ -139,6 +165,7 @@ public class OfertaController {
             if(listaOfertasEliminar.contains(obj))
                 listaOfertasEliminar.remove(obj);
         }
+        
     }
     
     public void cambiarDepto(){
@@ -151,6 +178,7 @@ public class OfertaController {
         validationBean.updateComponent("ofertasForm:muniCmb");
     }
     
+    /*
     public void actualizaOferta(){
         String flag="";
         if(validationBean.validarSeleccion(oferta.getIdjornadalaboral(), "warn", "titleOfertaEmpresa", "lblSelectRegJornada")
@@ -207,48 +235,58 @@ public class OfertaController {
                
         }
     }
+    */
     
     public void validarEliminar(){
         if(listaOfertasEliminar.isEmpty()){
             validationBean.lanzarMensaje("warn", "titleCategoriaEmpresa", "lblSelectRegOfertas");
         }
         else{
-            validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
             setChequeado(false);
+            validationBean.ejecutarJavascript("$('.modalPseudoClassEliminar').modal('show');");
+            
         }
-        
     }
     
     public void cerrarDialogo(){
         limpiar();
         setChequeado(false);
         listaOfertasEliminar= new ArrayList<>();
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        validationBean.ejecutarJavascript("$('.modalPseudoClassEliminar').modal('hide'); ");
     }
     
     public void eliminar(){
         for(OfertaForm ofer: listaOfertasEliminar){
-            String flag= ofertaFacade.actualizarOferta(ofer, "D");
+            AplicarOfertaForm ao= new AplicarOfertaForm();
+            ao.setIdaplica(ofer.getIdofertalaboral());
+            ao.setIdcandidato(loginBean.getUserLog().getIdentificador());
+            ao.setIdoferta("0");
+            ao.setPretension("0");
+            ao.setTrabajando("S");
+            String flag= ofertaFacade.aplicarOferta(ao, "U");
             if(flag.equals("0"))
                 validationBean.lanzarMensaje("info", "titleCategoriaEmpresa", "lblEliminarSuccess");
 
             else if(flag.equals("-1") || flag.equals("-2"))
                 validationBean.lanzarMensaje("error", "titleCategoriaEmpresa", "lblEliminarError");            
         }
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        validationBean.ejecutarJavascript("$('.modalPseudoClassEliminar').modal('hide'); ");
+        setEstadofilter("");
         listaOfertasEliminar= new ArrayList<>();
-        listaOfertas= ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
-        limpiar();
+        listaOfertas = ofertaFacade.obtenerOfertasByIdCandidato(idempresa);
+        //limpiar();
         
     }
 
     public void onSelect(OfertaForm obj) {
         oferta=obj;
-        oferta.setFechacontratacionofertalaboral(validationBean.cambiarFormatoFecha(validationBean.formatearFecha(oferta.getFechacontratacionofertalaboral())));
+        //oferta.setFechacontratacionofertalaboral(validationBean.cambiarFormatoFecha(validationBean.formatearFecha(oferta.getFechacontratacionofertalaboral())));
+        fechaFormateada=validationBean.cambiarFormatoFecha(validationBean.formatearFecha(oferta.getFechacontratacionofertalaboral()));
         idcategoria= puestoFacade.obtenerPuestosByIdPuesto(oferta.getIdpuestotrabajo()).get(0).getIdcategoria();
         iddepto= deptoFacade.obtenerDepartamentoByIdCiudad(oferta.getIdciudad()).get(0).getIddepartamento();
         cambiarCategoria();
         cambiarDepto();
+        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
         /*
         cemp.setIdcategoria(obj.getIdcategoria());
         cemp.setNombrecategoria(obj.getNombrecategoria());
@@ -270,6 +308,17 @@ public class OfertaController {
        cemp.setIdcategoria("0");
        cemp.setNombrecategoria("");
        */
+    }
+    
+    public String validarEstado(int i,String e){
+        Integer num= Integer.parseInt(e);
+        if(i<num){
+            return "complete";
+        }
+        else if(i==num){
+            return "active";
+        }
+        return "disabled";
     }
     
 
