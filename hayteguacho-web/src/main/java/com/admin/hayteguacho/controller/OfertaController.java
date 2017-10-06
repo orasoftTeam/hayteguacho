@@ -27,6 +27,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,8 +59,11 @@ public class OfertaController {
     @EJB
     PuestoTrabajoFacade puestoFacade;
     
+    @Inject
+    LoginController loginBean;
     
-    private @Getter @Setter String idempresa="3";
+    
+    private @Getter @Setter String idempresa;
     
     private @Getter @Setter String idcategoria;
     
@@ -89,6 +93,7 @@ public class OfertaController {
             listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
         }
         oferta.setIdofertalaboral("0");
+        idempresa= loginBean.getUserLog().getIdentificador();
         listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
     }
     
