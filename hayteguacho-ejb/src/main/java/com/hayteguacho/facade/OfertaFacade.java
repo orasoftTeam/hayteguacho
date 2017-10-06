@@ -85,6 +85,25 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
         return listaEntityForm;
     }
     
+     public List<OfertaForm> obtenerOfertas(String idempresa) {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where idempresa  = " + idempresa, TblOfertalaboral.class);
+        List<TblOfertalaboral> listaEntity;
+        List<OfertaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<OfertaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new OfertaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<OfertaForm>();
+        }
+
+        return listaEntityForm;
+    }
+    
     
     public List<OfertaForm> obtenerOfertasByCategoria(String idcategoria, String idempresa) {
         String sql="select oferta.* from TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto, TBL_OFERTALABORAL oferta\n" +

@@ -65,13 +65,12 @@ public class TblMembresia implements Serializable {
     @Column(name = "CANTIDADOFERTA")
     private BigInteger cantidadoferta;
     private BigInteger cantidaduser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmembresia")
+    private List<TblMembresiaxempresa> tblMembresiaxempresaList;
     @JoinColumn(name = "IDTIPOPERIODOMEMBRESIA", referencedColumnName = "IDTIPOPERIODOMEMBRESIA")
     @ManyToOne(optional = false)
     private TblTipoperidomembresia idtipoperiodomembresia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmembresia")
-    private List<TblMembresiaxempresa> tblMembresiaxempresaList;
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idmembresia", fetch = FetchType.LAZY)
-    //private List<TblEmpresa> tblEmpresaList;
+    
 
     public TblMembresia() {
     }
@@ -177,6 +176,7 @@ public class TblMembresia implements Serializable {
     public void setTblEmpresaList(List<TblEmpresa> tblEmpresaList) {
         this.tblEmpresaList = tblEmpresaList;
     }*/
+
 
     @Override
     public int hashCode() {

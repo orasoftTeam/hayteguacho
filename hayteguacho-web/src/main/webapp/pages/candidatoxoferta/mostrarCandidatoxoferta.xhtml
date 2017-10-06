@@ -5,47 +5,140 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/template/template.xhtml">
         <ui:define name="content">
-            <b:form>
-    <b:carousel id="wizard" styleClass="wizardPseudoClass"
-                style="width:400px; padding-top:20px"
-                startAnimation="false"
-                showIndicators="false"
-                wrap="false">
-        <b:carouselItem style="width:400px; height:230px">
-            <b:panel title="Step 1" look="primary">
-                <b:inputText label="First name" />
-                <b:inputText label="Last name"  />
-            </b:panel>
-        </b:carouselItem>
-        <b:carouselItem style="width:400px;height:230px">
-            <b:panel title="Step 2" look="danger  ">
-                <b:inputText label="Street"  />
-            </b:panel>
-        </b:carouselItem>
-        <b:carouselItem style="width:400px;height:230px">
-            <b:panel title="Step 3" look="success">
-                <b:inputText label="Zip code"  />
-                <b:inputText label="City"  />
-            </b:panel>
-        </b:carouselItem>
-        <b:carouselControl direction="right" >
-            <b:button value="Previous step"
-                      onclick="$('.wizardPseudoClass').carousel('prev');$('.wizardPseudoClass').carousel('pause');"
-                      look="info" />
-        </b:carouselControl>
-        <b:carouselControl direction="left">
-            <b:button value="Next step" style="position:absolute;right:0px"
-                      onclick="$('.wizardPseudoClass').carousel('next');$('.wizardPseudoClass').carousel('pause');"
-                      look="success" />
-        </b:carouselControl>
-    </b:carousel>
-</b:form>
-            
-            
+
+
+
+
+            <h:form id="CxofertaForm">
+                
+                <b:panel id="btns" >
+                    <b:growl id="growl"
+             globalOnly="true"
+             showDetail="true"/>
+                     <b:row rendered="#{mostrarCandxOfertaController.selectedCxoferta.idcandidatoxofertalaboral != null}" >
+                       <b:column span="2">
+                           <h:outputText value="#{bundle['lblCxoSeleccion']}" />
+                           <h:outputText value="#{mostrarCandxOfertaController.fullName(mostrarCandxOfertaController.selectedCandidato)}"/>
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoProcesar']}" look="info"   actionListener="#{mostrarCandxOfertaController.procesar}" style="width:100%"/>
+                               
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoFinalizar']}" look="warning" actionListener="#{mostrarCandxOfertaController.finalizar}" style="width:100%"/>
+                            
+                            </b:column>
+                            <b:column span="2">
+                                 <b:commandButton ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoEliminar']}"  look="danger" actionListener="#{mostrarCandxOfertaController.validarEliminar}" style="width:100%"/>
+                                
+                            </b:column>
+                         <b:column span="2">
+                             <b:commandButton   rendered="#{mostrarCandxOfertaController.mostrarGuardar}"  ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoGuardar']}" look="success"  actionListener="#{mostrarCandxOfertaController.guardarEnBase(login.userLog.identificador)}" style="width:100%"/>
+                                
+                            </b:column>
+                        </b:row>
+                     <b:modal  id="bmodal" title="#{bundle['lblVisorOfertas']}" styleClass="modalPseudoClass2">
+                            <p>#{bundle['lblRegEliminar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  ajax="false"  actionListener="#{mostrarCandxOfertaController.cerrarDialogo()}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton  ajax="false"  actionListener="#{mostrarCandxOfertaController.eliminar()}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                            </f:facet>
+                        </b:modal>
+                </b:panel>
+                
+                
+              
+                
+              
+                <b:carousel id="wizard" styleClass="wizardPseudoClass"
+                            style="width:100%; padding-top:20px"
+                            startAnimation="false"
+                            showIndicators="false"
+                            wrap="false">
+                    <b:carouselItem style="width:100%; height:100%">
+                        <b:panel title="#{bundle['lblCxOfertasActuales']}" look="primary" collapsible="false">
+
+                            <b:dataTable
+                                value="#{mostrarCandxOfertaController.listaOferta}"
+                                var="oferta"
+                                >
+
+                                <b:dataTableColumn label="#{bundle['titleOfertaEmpresa']}" value="#{oferta.tituloofertalaboral}" />
+                                <b:dataTableColumn label="#{bundle['lblOfertaFechaVigencia']}" value="#{oferta.fechavigenciaofertalaboral}" />
+                                <b:dataTableColumn label="#{bundle['lblCxoOperacion']}" >
+                                    <b:commandButton ajax="true"   value="#{bundle['lblCxoVerCands']}" 
+                                              onclick="$('.wizardPseudoClass').carousel('next');
+                                                      $('.wizardPseudoClass').carousel('pause');
+                                                      ajax:mostrarCandxOfertaController.cargarCandidatosxoferta(oferta);"
+                                              look="success" />
+                                </b:dataTableColumn>
+                            </b:dataTable>
+                        </b:panel>
+                    </b:carouselItem>
+                    <b:carouselItem     style="width:100%;height:100%">
+                        <b:panel  id="panelCxoferta"   title="#{mostrarCandxOfertaController.selectedOferta.tituloofertalaboral}" look="info" collapsible="false">
+                            
+                            <b:commandButton ajax="true" value="#{bundle['lblCxoRegresar']}" icon="chevron-left" iconAlign="left"
+                                      onclick="$('.wizardPseudoClass').carousel('prev');$('.wizardPseudoClass').carousel('pause');
+                                      ajax:mostrarCandxOfertaController.limpiar();"
+                                      look="info" />
+                            <b:dataTable
+                                value="#{mostrarCandxOfertaController.listaCandidatoxoferta}"
+                                var="cxoferta"
+                                responsive="true"
+                                select="true"
+                                selectionMode="single"
+                                onselect="ajax:mostrarCandxOfertaController.onSelect(cxoferta);"
+                                >
+
+                                
+                                <b:dataTableColumn label="#{bundle['lblCxoNombre']}" value="#{mostrarCandxOfertaController.fullName(mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato))}"   />
+                                
+                                <b:dataTableColumn label="#{bundle['lblCxoEmail']}" value="#{mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato).correocandidato}"   />
+                                <b:dataTableColumn label="#{bundle['lblCxoTel']}" value="#{mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato).telefono1candidato}"   />
+                                <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
+                                    <b:commandButton onclick="ajax:mostrarCandxOfertaController.dialogo(mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato),cxoferta);" value="Ver"  ajax="true" 
+                                                     look="info" />
+                                </b:dataTableColumn>
+                                <b:dataTableColumn label="#{bundle['lblCxoPretension']}" value="$ #{cxoferta.pretensionsalarial}" />
+                                
+                                <b:dataTableColumn label="#{bundle['lblCxoSituation']}" value="#{mostrarCandxOfertaController.getSituation(cxoferta.situacionlaboral)}" />
+                                
+                                <b:dataTableColumn label="#{bundle['lblCxoEstado']}" value="#{mostrarCandxOfertaController.getEstadoCxoferta(cxoferta.estadocandidatoxofertalaboral)}" />
+                             
+                            </b:dataTable>
+                            
+                        </b:panel>
+                    </b:carouselItem>
+                    <!-- <b:carouselItem style="width:400px;height:230px">
+                         <b:panel title="Step 3" look="success">
+                             <b:inputText label="Zip code"  />
+                             <b:inputText label="City"  />
+                         </b:panel>
+                     </b:carouselItem>-->
+                    <b:carouselControl direction="right" >
+                        <!-- <b:button value="Previous step"
+                                   onclick="$('.wizardPseudoClass').carousel('prev');$('.wizardPseudoClass').carousel('pause');"
+                                   look="info" />-->
+                    </b:carouselControl>
+                    <b:carouselControl direction="left">
+                        <!-- <b:button value="Next step" style="position:absolute;right:0px"
+                                   onclick="$('.wizardPseudoClass').carousel('next');$('.wizardPseudoClass').carousel('pause');"
+                                   look="success" />-->
+                    </b:carouselControl>
+                </b:carousel>
+                
+                <b:modal  id="amodal" title="#{mostrarCandxOfertaController.fullName(mostrarCandxOfertaController.selectedCandidato)}" styleClass="modalPseudoClass"  close-on-escape="false" backdrop="false"  >
+                    <p:media value="#{mostrarCandxOfertaController.selectedCandidato.archivocurriculum}" width="100%" height="500px" rendered="#{mostrarCandxOfertaController.pdfshow}"  />            
+                        </b:modal>
+            </h:form>
+
+
         </ui:define>
     </ui:composition>
 </html>

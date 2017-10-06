@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,6 +51,9 @@ public class MembresiaController {
     private @Getter @Setter String opentag="<div data-carousel-3d>";
     private @Getter @Setter String closetag="</div>";
     private @Getter @Setter String periodo="";
+    
+    @Inject
+    private LoginController login;
     
     
     @PostConstruct
@@ -191,7 +195,7 @@ public class MembresiaController {
       }
   mef.setFechainicio(sdf.format(fechainicio));
   mef.setIdmembresia(membresia.getIdmembresia());
-  mef.setIdempresa("1"); //AQUI SE SETEARA EL ID DE LA EMPRESA LOGEADA
+  mef.setIdempresa(login.getUserLog().getIdentificador()); //AQUI SE SETEARA EL ID DE LA EMPRESA LOGEADA
   mef.setPrecioxofertasextra(membresia.getPrecioxoferta());
   mef.setFechavencimiento(sdf.format(c.getTime()));
       System.out.println(mef);

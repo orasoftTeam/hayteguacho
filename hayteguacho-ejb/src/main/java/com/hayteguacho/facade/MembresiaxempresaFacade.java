@@ -12,9 +12,12 @@ import com.hayteguacho.util.facade.AbstractFacade;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -59,5 +62,33 @@ public class MembresiaxempresaFacade extends AbstractFacade<TblMembresiaxempresa
         }
     
         return flag;
+    }
+    
+    
+    public MembresiaxEmpresaForm obtenerMembresia(String idempresa){
+        MembresiaxEmpresaForm mf = new MembresiaxEmpresaForm();
+        List<MembresiaxEmpresaForm> listaForm;
+            List<TblMembresiaxempresa> listaEntity;
+        try {
+            Query q = em.createNativeQuery("select * from tbl_membresiaxempresa where idempresa = ? and estado = 'A'", TblMembresiaxempresa.class);
+            q.setParameter(1, idempresa);
+            
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaForm = new ArrayList<>();
+            }else{
+            listaForm = entityToDtoList(listaEntity, new MembresiaxEmpresaForm());
+            mf = listaForm.get(0);
+            mf.setIdempresa(String.valueOf(listaEntity.get(0).getIdempresa().getIdempresa()));
+            mf.setIdmembresia(String.valueOf(listaEntity.get(0).getIdmembresia().getIdmembresia()));
+            }
+            
+        } catch (Exception e) {
+            listaForm = new ArrayList<>();
+            System.out.println("com.hayteguacho.facade.MembresiaxempresaFacade.obtenerMembresia()");
+            e.printStackTrace();
+        }
+        return mf;
+    
     }
 }

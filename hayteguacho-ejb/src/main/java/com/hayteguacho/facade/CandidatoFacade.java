@@ -10,6 +10,7 @@ import com.admin.hayteguacho.form.CargoEmpresaForm;
 import com.hayteguacho.entity.TblCandidato;
 import com.hayteguacho.entity.TblCargoempresa;
 import com.hayteguacho.util.facade.AbstractFacade;
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
@@ -88,6 +89,25 @@ public class CandidatoFacade extends AbstractFacade<TblCandidato, CandidatoForm>
             e.printStackTrace();
         }
         return flag;
+    }
+    
+    public CandidatoForm obtenerCand(String idcand) {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_candidato where idcandidato = " + idcand, TblCandidato.class);
+        List<TblCandidato> listaEntity;
+        List<CandidatoForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<CandidatoForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new CandidatoForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<CandidatoForm>();
+        }
+
+        return listaEntityForm.get(0);
     }
     
 }
