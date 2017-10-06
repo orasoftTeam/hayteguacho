@@ -21,8 +21,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -124,6 +127,21 @@ public class TblEmpresa implements Serializable {
     @JoinColumn(name = "IDCARGOEMPRESA", referencedColumnName = "IDCARGOEMPRESA")
     @ManyToOne(optional = false)
     private TblCargoempresa idcargoempresa;
+    
+    
+    private @Transient @Setter String razonsocial;
+    private @Transient @Setter String idtributaria;
+    private @Transient @Setter String codigopostal;
+    private @Transient @Setter String numtrabajadores;
+    private @Transient @Setter String paginaweb;
+    private @Transient @Setter String logo;
+    private @Transient @Setter String nombrecontacto;
+    private @Transient @Setter String apellidocontacto;
+    private @Transient @Setter String telefono1;
+    private @Transient @Setter String telefono2;
+    private @Transient @Setter String telefono3;
+    private @Transient @Setter String email;
+    private @Transient @Setter String password;
 
     public TblEmpresa() {
     }
@@ -369,10 +387,69 @@ public class TblEmpresa implements Serializable {
         }
         return true;
     }
-
+    /*
     @Override
     public String toString() {
         return "prueba.entity.TblEmpresa[ idempresa=" + idempresa + " ]";
     }
+    */
+    @Override
+    public String toString() {
+        return idempresa.toString();
+    }
+
+    public String getRazonsocial() {
+        return razonsocial= razonsocialemp;
+    }
+
+    public String getIdtributaria() {
+        return idtributaria= nitempresa;
+    }
+
+    public String getCodigopostal() {
+        return codigopostal= codpostalempresa;
+    }
+
+    public String getNumtrabajadores() {
+        return numtrabajadores= numtrabajadoresempresa.toString();
+    }
+
+    public String getPaginaweb() {
+        return paginaweb= paginawebempresa;
+    }
+
+    public String getLogo() {
+        return logo= logoempresa;
+    }
+
+    public String getNombrecontacto() {
+        return nombrecontacto= nombrecontactoempresa;
+    }
+
+    public String getApellidocontacto() {
+        return apellidocontacto= apellcontactoempresa;
+    }
+
+    public String getTelefono1() {
+        return telefono1= telefono1contactoempresa;
+    }
+
+    public String getTelefono2() {
+        return telefono2= telefono2contactoempresa;
+    }
+
+    public String getTelefono3() {
+        return telefono3= telefono3contactoempresa;
+    }
+
+    public String getEmail() {
+        return email= correocontactoempresa;
+    }
+
+    public String getPassword() {
+        return password= contrasenacontactoempresa;
+    }
     
+ 
+
 }

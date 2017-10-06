@@ -61,6 +61,31 @@ public class CandidatoFacade extends AbstractFacade<TblCandidato, CandidatoForm>
         return listaEntityForm;
     }
     
+    public List<CandidatoForm> obtenerCandidatoById(String id) {
+        String sql="select idcandidato, idpais, idpuestotrabajo, nombrecandidato, apellidocandidato, telefono1candidato, telefono2candidato, \n" +
+"                generocandidato, fechanacimientocandidato, archivocurriculum, correocandidato,(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(contrasenacandidato)from dual) contrasenacandidato,\n" +
+"                estadocandidato from tbl_candidato\n" +
+"                where idcandidato=?";
+        
+        Query q = getEntityManager().createNativeQuery(sql, TblCandidato.class);
+        q.setParameter(1, new BigDecimal(id));
+        List<TblCandidato> listaEntity;
+        List<CandidatoForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<CandidatoForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new CandidatoForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<CandidatoForm>();
+        }
+
+        return listaEntityForm;
+    }
+    
     
 
     public String actualizarCandidato(CandidatoForm candidato, String op) {

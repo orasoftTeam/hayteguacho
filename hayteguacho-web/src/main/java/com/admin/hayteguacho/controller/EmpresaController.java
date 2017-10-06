@@ -17,6 +17,7 @@ import com.admin.hayteguacho.form.EmpresaForm;
 import com.admin.hayteguacho.form.MunicipioForm;
 import com.admin.hayteguacho.form.PaisForm;
 import com.admin.hayteguacho.form.TipologiaForm;
+import com.admin.hayteguacho.form.UserForm;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.CargoEmpresaFacade;
 import com.hayteguacho.facade.CategoriaEmpresaFacade;
@@ -37,6 +38,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.event.FileUploadEvent;
@@ -77,6 +79,9 @@ public class EmpresaController {
     @EJB 
     EmpresaFacade empresaFacade;
     
+    @Inject
+    LoginController loginBean;
+    
     private @Getter @Setter UploadedFile archivo;
     private @Getter @Setter String msgFile;
     private @Getter @Setter List<DepartamentoForm> listaDepto;
@@ -89,6 +94,8 @@ public class EmpresaController {
     private @Getter @Setter String idCargo;
     private @Getter @Setter List<TipologiaForm> listaTipologia;
     private @Getter @Setter  String idTipologia;
+    
+    
     
     
     @PostConstruct
@@ -104,6 +111,14 @@ public class EmpresaController {
         listaCargo= cargoFacade.obtenerCargos();
         listaTipologia= tipologiaFacade.obtenerTipologias();
         empresa.setIdempresa("0");
+        UserForm usuario=loginBean.getUserLog();
+        if(usuario!=null && usuario.getTipo().equals("E")){
+            empresa= empresaFacade.obtenerEmpresaById(usuario.getIdentificador()).get(0);
+            idCargo= empresa.getIdcargoempresa();
+            idCategoria= empresa.getIdcategoria();
+            idMuni= empresa.getIdciudad();
+            idTipologia= empresa.getIdtipologia();
+        }
     }
     
     public void changeDepartamento(){
@@ -173,6 +188,22 @@ public class EmpresaController {
                     }
                     else{
                         validationBean.lanzarMensaje("error", "titleEmpresa", "lblGuardarError");
+                    }
+            }
+            UserForm usuario=loginBean.getUserLog();
+            if(usuario!=null && usuario.getTipo().equals("E")){
+                    flag= empresaFacade.actualizarEmpresa(empresa, "U"); 
+                    switch (flag) {
+                        case "0":
+                            validationBean.lanzarMensaje("info", "titleEmpresa", "lblGuardarSuccess");
+                            limpiar();
+                            break;
+                        case "-1":
+                            validationBean.lanzarMensaje("warn", "titleEmpresa", "lblExistReg");
+                            break;
+                        default:
+                            validationBean.lanzarMensaje("error", "titleEmpresa", "lblGuardarError");
+                            break;               
                     }
             }
             

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content">
+
+            <h:outputScript  target="body">
+                function mostrar(){
+                alert('Hola');
+                }
+
+                function soloNumeros(obj) 
+                { 
+                obj.value = (obj.value + '').replace(/[^0-9]/g, '');
+                }
+
+                function formatearFecha() {
+                d = new Date(document.getElementById("fechaContra").value);
+                dt = d.getDate();
+                mn = d.getMonth();
+                mn++;
+                yy = d.getFullYear();
+                document.getElementById("fechaContra").value = dt + "/" + mn + "/" + yy;
+                }
+            </h:outputScript>
+            <h:outputStylesheet name="css/step.css"></h:outputStylesheet>
+            <h:form id="ofertasForm">
+                <b:tabView tabPosition="left" contentStyle="padding:10px">
+                    <b:tab title="" style="background-color: white;">
+                        <b:row>
+                            <b:column span="2">
+                                <b:commandButton update="@form" ajax="true" actionListener="#{ofertaCandidatoController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                            </b:column>
+                        </b:row>
+                        <b:modal  id="amodal" title="#{bundle['titleOfertaEmpresa']}" styleClass="modalPseudoClass">
+                            <p>#{bundle['lblDescOferta']}</p>
+                            <b:row>
+                                <b:column col-md="12">
+                                    <b:selectOneMenu id="puestoCmb" value="#{ofertaCandidatoController.oferta.idpuestotrabajo}"  label="#{bundle['lblPuestoTrabajo']}" disabled="true" style="background-color: white; border: none; color:black;"
+                                                     >
+                                        <f:selectItems value="#{ofertaCandidatoController.listaPuestos}" var="puesto" itemValue="#{puesto.idpuestotrabajo}" itemLabel="#{puesto.nombrepuestotrabajo}"/>
+                                    </b:selectOneMenu>
+                                    <b:selectOneMenu value="#{ofertaCandidatoController.iddepto}"  label="#{bundle['lblNombreDepto']}" disabled="true" style="background-color: white; border: none; color:black;"
+                                                     onchange="ajax:ofertaCandidatoController.cambiarDepto()">
+                                        <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
+                                        <f:selectItems value="#{ofertaCandidatoController.listaDepto}" var="depto" itemValue="#{depto.iddepartamento}" itemLabel="#{depto.nombredepartamento}"/>
+                                    </b:selectOneMenu>
+                                    <b:selectOneMenu id="muniCmb" value="#{ofertaCandidatoController.oferta.idciudad}"  label="#{bundle['lblNombreMuni']}" disabled="true" style="background-color: white; border: none; color:black;"
+                                                     >
+                                        <f:selectItems value="#{ofertaCandidatoController.listaMunicipio}" var="muni" itemValue="#{muni.idciudad}" itemLabel="#{muni.nombreciudad}"/>
+                                    </b:selectOneMenu>
+                                    <b:inputText size="10" id="nomOferta" value="#{ofertaCandidatoController.oferta.tituloofertalaboral}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqNombreOferta']}" disabled="true" style="background-color: white; border: none; color:black;"/>
+                                    <b:inputText type="date" size="10" id="fechaContra" value="#{ofertaCandidatoController.fechaFormateada}" label="#{bundle['lblOfertaFechaContra']}" placeholder="#{bundle['lblReqOfertaFechaContra']}" lang="pt_BR /opt/google/chrome/chrome" disabled="true" style="background-color: white; border: none; color:black;"/>
+                                    <b:inputText size="10" onkeyup="soloNumeros(this)" id="cantidadVacante" fieldId="cantidadVacante" value="#{ofertaCandidatoController.oferta.cantidadvacante}" label="#{bundle['lblOfertaCantidadVacante']}" placeholder="#{bundle['lblReqOfertaCantidadVacante']}" disabled="true" style="background-color: white; border: none; color:black;"/>
+                                </b:column>
+                                <b:column col-md="12" >
+                                    <b:inputText size="10" onkeyup="soloNumeros(this)" id="salariominimo" fieldId="salariominimo" value="#{ofertaCandidatoController.oferta.salariominofertalaboral}" label="#{bundle['lblOfertaSalarioMinimo']}" placeholder="#{bundle['lblReqOfertaSalarioMinimo']}" disabled="true" style="background-color: white; border: none; color:black;"/>
+                                    <b:inputText size="10" onkeyup="soloNumeros(this)" id="salariomaximo" fieldId="salariomaximo" value="#{ofertaCandidatoController.oferta.salariomaxofertalaboral}" label="#{bundle['lblOfertaSalarioMaximo']}" placeholder="#{bundle['lblReqOfertaSalarioMaximo']}" disabled="true" style="background-color: white; border: none; color:black;"/>
+                                    <b:inputTextarea value="#{ofertaCandidatoController.oferta.descripcionofertalaboral}"  label="#{bundle['lblOfertaDescripcion']}" placeholder="#{bundle['lblReqOfertaDescripcion']}" disabled="true" style="background-color: white; border: none; color:black;"/>
+                                    <b:inputTextarea value="#{ofertaCandidatoController.oferta.requerimientosofertalaboral}"  label="#{bundle['lblOfertaRequerimiento']}" placeholder="#{bundle['lblReqOfertaRequerimiento']}" disabled="true" style="background-color: white; border: none; color:black;"/>
+                                </b:column>
+                                <b:column col-md="12">
+                                    <b:inputTextarea value="#{ofertaCandidatoController.oferta.habilidadesofertalaboral}"  label="#{bundle['lblOfertaHabilidades']}" placeholder="#{bundle['lblReqOfertaHabilidades']}" disabled="true" style="background-color: white; border: none; color:black;"/>
+                                    <b:inputTextarea value="#{ofertaCandidatoController.oferta.conocimientoofertalaboral}"  label="#{bundle['lblOfertaConocimientos']}" placeholder="#{bundle['lblReqOfertaConocimientos']}" disabled="true" style="background-color: white; border: none; color:black;"/>
+                                </b:column>
+                            </b:row>
+                            <f:facet name="footer">
+                                <b:button value="#{bundle['lblBtnCerrar']}" dismiss="modal" />
+                            </f:facet>
+                        </b:modal>
+
+                        <b:modal  id="modalEliminar" title="#{bundle['titleOfertaEmpresa']}" styleClass="modalPseudoClassEliminar">
+                            <p>#{bundle['lblRegEliminar']}</p>
+                            <f:facet name="footer">
+                                <b:commandButton  type="submit" actionListener="#{ofertaCandidatoController.cerrarDialogo}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton  ajax="false" actionListener="#{ofertaCandidatoController.eliminar}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                            </f:facet>
+                        </b:modal>
+                    </b:tab>
+                </b:tabView>
+                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
+                    <b:tab title="#{bundle['titleOfertaEmpresa']}">
+                        <b:messages  />
+                        <b:row>
+                            <b:column col-md="12">
+                                <b:selectOneMenu id="estadoCmb" value="#{ofertaCandidatoController.estadofilter}"  label="#{bundle['lblOfertaEstado']}" 
+                                                 onchange="ajax:ofertaCandidatoController.cambiarEstadoOfertaByFilter()">
+                                    <f:selectItem itemLabel="#{bundle['lblTodas']}" itemValue="" />
+                                    <f:selectItem itemLabel="#{bundle['lblPO']}" itemValue="PO" />
+                                    <f:selectItem itemLabel="#{bundle['lblCV']}" itemValue="CV" />
+                                    <f:selectItem itemLabel="#{bundle['lblPR']}" itemValue="PR" />
+                                    <f:selectItem itemLabel="#{bundle['lblFI']}" itemValue="FI" />
+                                </b:selectOneMenu>
+                                <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="ofertaTbl" value="#{ofertaCandidatoController.listaOfertas}" 
+                                             var="oferta" 
+                                             select="false"
+                                             selectionMode="single"
+                                             onselect="ajax:ofertaCandidatoController.onSelect(oferta)"
+                                             ondeselect="ajax:ofertaCandidatoController.unSelect()"
+                                             update="@form"
+                                             searching="false"
+                                             page-length="5"
+                                             page-length-menu="5,10,20"
+                                             responsive="false"
+
+                                             >
+                                    <b:dataTableColumn label="" orderable="false"  >
+                                        <b:panel title="#{oferta.idempresa_tbl.concat(' - ').concat(oferta.tituloofertalaboral)}" collapsible="false" look="primary" >
+                                            <div class="row bs-wizard" style="border-bottom:0;">
+
+                                                <div class="col-xs-3 bs-wizard-step #{ofertaCandidatoController.validarEstado(1, oferta.estadoofertalaboral)} >">
+                                                    <div class="text-center bs-wizard-stepnum">#{bundle['lblPO']}</div>
+
+                                                    <div class="progress"><div class="progress-bar"></div></div>
+                                                    <a href="#" class="bs-wizard-dot"></a>
+                                                    <!--
+                                                    <div class="bs-wizard-info text-center">Lorem ipsum dolor sit amet.</div>
+                                                    -->
+                                                </div>
+
+                                                <div class="col-xs-3 bs-wizard-step #{ofertaCandidatoController.validarEstado(2, oferta.estadoofertalaboral)}"><!-- complete -->
+                                                    <div class="text-center bs-wizard-stepnum">#{bundle['lblCV']}</div>
+
+                                                    <div class="progress"><div class="progress-bar"></div></div>
+                                                    <a href="#" class="bs-wizard-dot"></a>
+                                                    <!--
+                                                    <div class="bs-wizard-info text-center">Nam mollis tristique erat vel tristique. Aliquam erat volutpat. Mauris et vestibulum nisi. Duis molestie nisl sed scelerisque vestibulum. Nam placerat tristique placerat</div>
+                                                    -->
+                                                </div>
+
+                                                <div class="col-xs-3 bs-wizard-step #{ofertaCandidatoController.validarEstado(3, oferta.estadoofertalaboral)}"><!-- complete -->
+                                                    <div class="text-center bs-wizard-stepnum">#{bundle['lblPR']}</div>
+
+                                                    <div class="progress"><div class="progress-bar"></div></div>
+                                                    <a href="#" class="bs-wizard-dot"></a>
+                                                    <!--
+                                                    <div class="bs-wizard-info text-center">Integer semper dolor ac auctor rutrum. Duis porta ipsum vitae mi bibendum bibendum</div>
+                                                    -->
+                                                </div>
+
+                                                <div class="col-xs-3 bs-wizard-step #{ofertaCandidatoController.validarEstado(4, oferta.estadoofertalaboral)}"><!-- active -->
+                                                    <div class="text-center bs-wizard-stepnum">#{bundle['lblFI']}</div>
+
+                                                    <div class="progress"><div class="progress-bar"></div></div>
+                                                    <a href="#" class="bs-wizard-dot"></a>
+                                                    <!--
+                                                    <div class="bs-wizard-info text-center"> Curabitur mollis magna at blandit vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae</div>
+                                                    -->
+                                                </div>
+                                            </div>
+                                            <b:panelGrid columns="2" colSpans="4,8" >
+                                                <h:outputText value="#{bundle['lblOfertaFechaContra']}">
+                                                </h:outputText>
+                                                <b:label  text="#{oferta.fechacontratacionofertalaboral}"></b:label>
+                                                <h:outputText value="#{bundle['lblOfertaFechaVigencia']}">
+                                                </h:outputText>
+                                                <b:label  text="#{oferta.fechavigenciaofertalaboral}"></b:label>
+                                                <h:outputText value="#{bundle['lblbtnEliminar']}">
+                                                </h:outputText>
+                                                <h:selectBooleanCheckbox value="#{ofertaCandidatoController.chequeado}" >
+                                                    <f:ajax event="change" listener="#{ofertaCandidatoController.selectCheckbox(oferta)}"></f:ajax>
+                                                </h:selectBooleanCheckbox>
+                                            </b:panelGrid>
+                                            <p:separator></p:separator>
+                                            <b:row>
+                                                <b:column col-md="2">
+                                                    <b:commandButton size="sm" update="@form" ajax="true" actionListener="#{ofertaCandidatoController.onSelect(oferta)}" value="#{bundle['lblbtnVer']}" look="primary" style="width:100%" />
+                                                </b:column> 
+                                            </b:row>
+                                        </b:panel>
+                                    </b:dataTableColumn>
+                                </b:dataTable>                               
+                            </b:column>
+                        </b:row>
+                        <p:separator></p:separator>
+                    </b:tab>
+                </b:tabView>
+            </h:form> 
+        </ui:define>
+    </ui:composition>
+
+</html>

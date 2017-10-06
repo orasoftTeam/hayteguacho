@@ -158,6 +158,10 @@ public class LoginController implements Serializable {
                     System.err.println("Error de transaccion");
                 }
             } else if (usuario.getTipo().equals("C")) {
+                    userLog = usuario;
+                    setUsuario("");
+                    setPassword("");
+                    loggedIn = true;
                 listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
             }
 

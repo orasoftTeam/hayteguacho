@@ -99,10 +99,15 @@ public class TblCargoempresa implements Serializable {
         }
         return true;
     }
-
+    /*
     @Override
     public String toString() {
         return "com.hayteguacho.entity.TblCargoempresa[ idcargoempresa=" + idcargoempresa + " ]";
     }
+    */
     
+    @Override
+    public String toString() {
+        return idcargoempresa.toString();
+    }
 }

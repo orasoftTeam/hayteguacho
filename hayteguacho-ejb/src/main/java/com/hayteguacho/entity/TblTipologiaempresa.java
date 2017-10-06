@@ -99,10 +99,14 @@ public class TblTipologiaempresa implements Serializable {
         }
         return true;
     }
-
+    /*
     @Override
     public String toString() {
         return "com.hayteguacho.entity.TblTipologiaempresa[ idtipologia=" + idtipologia + " ]";
     }
-    
+    */
+    @Override
+    public String toString() {
+        return idtipologia.toString();
+    }
 }

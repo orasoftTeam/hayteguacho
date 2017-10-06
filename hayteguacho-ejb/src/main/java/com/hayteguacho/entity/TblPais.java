@@ -110,10 +110,14 @@ public class TblPais implements Serializable {
         }
         return true;
     }
-
+    /*
     @Override
     public String toString() {
         return "com.hayteguacho.entity.TblPais[ idpais=" + idpais + " ]";
     }
-    
+    */
+    @Override
+    public String toString() {
+        return idpais.toString();
+    }
 }

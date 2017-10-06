@@ -6,6 +6,7 @@
 package com.hayteguacho.facade;
 
 
+import com.admin.hayteguacho.form.AplicarOfertaForm;
 import com.admin.hayteguacho.form.OfertaForm;
 import com.hayteguacho.entity.TblOfertalaboral;
 import com.hayteguacho.util.facade.AbstractFacade;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import lombok.Getter;
@@ -103,6 +105,7 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
 
         return listaEntityForm;
     }
+    
     
     
     public List<OfertaForm> obtenerOfertasByCategoria(String idcategoria, String idempresa) {
@@ -209,6 +212,71 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
         return listaEntityForm;
     }
     
+    
+    public List<OfertaForm> obtenerOfertasByIdCandidato(String idcandidato) {
+        String sql="select aplica.IDCANDIDATOXOFERTALABORAL idofertalaboral, (select nombreempresa from tbl_empresa where idempresa=oferta.idempresa) idempresa_tbl, oferta.idjornadalaboral, oferta.idtipocontrato,\n" +
+"        oferta.idpuestotrabajo, oferta.idciudad, oferta.tituloofertalaboral, to_char(oferta.fechahoraofertalaboral,'dd/mm/yyyy') fechahoraofertalaboral,\n" +
+"        to_char(oferta.fechavigenciaofertalaboral,'dd/mm/yyyy') fechavigenciaofertalaboral,\n" +
+"        to_char( oferta.fechacontratacionofertalaboral,'dd/mm/yyyy') fechacontratacionofertalaboral, oferta.cantidadvacante,\n" +
+"        oferta.salariominofertalaboral, oferta.salariomaxofertalaboral, oferta.descripcionofertalaboral,\n" +
+"        oferta.requerimientosofertalaboral, oferta.habilidadesofertalaboral, oferta.conocimientoofertalaboral,\n" +
+"        oferta.personacondiscapacidad, \n" +
+"        DECODE(aplica.estadocandidatoxofertalaboral,'PO','1',(DECODE(aplica.estadocandidatoxofertalaboral,'CV','2',\n" +
+"        (DECODE(aplica.estadocandidatoxofertalaboral,'PR','3',(DECODE(aplica.estadocandidatoxofertalaboral,'FI','4'))))))) \n" +
+"        estadoofertalaboral\n" +
+"        from tbl_candidatoxofertalaboral aplica, tbl_ofertalaboral oferta\n" +
+"        where aplica.IDCANDIDATO=? and oferta.IDOFERTALABORAL= aplica.IDOFERTALABORAL and oferta.ESTADOOFERTALABORAL='A' AND aplica.estadocandidatoxofertalaboral <>'EL'";
+        
+        
+        Query q = getEntityManager().createNativeQuery(sql, "OfertaMapping");    
+        q.setParameter(1, new BigInteger(idcandidato));
+        //List<TblOfertalaboral> listaEntity;
+        List<OfertaForm> listaEntityForm;
+
+        try {
+            listaEntityForm = q.getResultList();
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<OfertaForm>();
+        }
+        return listaEntityForm;
+    }
+    
+    public List<OfertaForm> obtenerOfertasByIdCandidato(String estado,String idcandidato) {
+        String sql="select aplica.IDCANDIDATOXOFERTALABORAL idofertalaboral, (select nombreempresa from tbl_empresa where idempresa=oferta.idempresa) idempresa_tbl, oferta.idjornadalaboral, oferta.idtipocontrato,\n" +
+"        oferta.idpuestotrabajo, oferta.idciudad, oferta.tituloofertalaboral, to_char(oferta.fechahoraofertalaboral,'dd/mm/yyyy') fechahoraofertalaboral,\n" +
+"        to_char(oferta.fechavigenciaofertalaboral,'dd/mm/yyyy') fechavigenciaofertalaboral,\n" +
+"        to_char( oferta.fechacontratacionofertalaboral,'dd/mm/yyyy') fechacontratacionofertalaboral, oferta.cantidadvacante,\n" +
+"        oferta.salariominofertalaboral, oferta.salariomaxofertalaboral, oferta.descripcionofertalaboral,\n" +
+"        oferta.requerimientosofertalaboral, oferta.habilidadesofertalaboral, oferta.conocimientoofertalaboral,\n" +
+"        oferta.personacondiscapacidad, \n" +
+"        DECODE(aplica.estadocandidatoxofertalaboral,'PO','1',(DECODE(aplica.estadocandidatoxofertalaboral,'CV','2',\n" +
+"        (DECODE(aplica.estadocandidatoxofertalaboral,'PR','3',(DECODE(aplica.estadocandidatoxofertalaboral,'FI','4'))))))) \n" +
+"        estadoofertalaboral\n" +
+"        from tbl_candidatoxofertalaboral aplica, tbl_ofertalaboral oferta\n" +
+"        where aplica.IDCANDIDATO=? and oferta.IDOFERTALABORAL= aplica.IDOFERTALABORAL and oferta.ESTADOOFERTALABORAL='A' and aplica.ESTADOCANDIDATOXOFERTALABORAL=?";
+        
+        Query q = getEntityManager().createNativeQuery(sql, "OfertaMapping");
+        q.setParameter(1, new BigInteger(idcandidato));
+        q.setParameter(2, estado);
+       // List<TblOfertalaboral> listaEntity;
+        List<OfertaForm> listaEntityForm;
+
+        try {
+            listaEntityForm = q.getResultList();
+            /*
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<OfertaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new OfertaForm());
+            }
+            */  
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<OfertaForm>();
+        }
+
+        return listaEntityForm;
+    }
+    
     public List<OfertaForm> obtenerOfertasByIdEstado(String estado, String idempresa) {
         Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where estadoofertalaboral=? and idempresa=?", TblOfertalaboral.class);
         q.setParameter(1, estado);
@@ -257,6 +325,30 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
             cs.registerOutParameter(17, Types.VARCHAR);
             cs.execute();
             flag = cs.getString(17);
+            System.out.println(flag);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+    
+    
+    
+    public String aplicarOferta(AplicarOfertaForm aform, String op) {
+        String flag = "";
+        try {
+            Connection cn = em.unwrap(java.sql.Connection.class);
+            //cn.setAutoCommit(false);
+            CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_APLICAOFERTA (?,?,?,?,?,?,?)}");
+            cs.setInt(1, new Integer(aform.getIdaplica()));
+            cs.setInt(2, new Integer(aform.getIdoferta()));
+            cs.setInt(3, new Integer(aform.getIdcandidato()));
+            cs.setFloat(4, Float.parseFloat(aform.getPretension()));
+            cs.setString(5, aform.getTrabajando());
+            cs.setString(6, op);
+            cs.registerOutParameter(7, Types.VARCHAR);
+            cs.execute();
+            flag = cs.getString(7);
             System.out.println(flag);
         } catch (Exception e) {
             e.printStackTrace();

@@ -31,4 +31,31 @@ public class OfertaForm {
     private @Getter @Setter String habilidadesofertalaboral;
     private @Getter @Setter String conocimientoofertalaboral;
     private @Getter @Setter String estadoofertalaboral;
+
+    public OfertaForm(String idofertalaboral, String idempresa_tbl, String idjornadalaboral, String idtipocontrato, String idpuestotrabajo, String idciudad, String tituloofertalaboral, String fechavigenciaofertalaboral, String fechahoraofertalaboral, String fechacontratacionofertalaboral, String cantidadvacante, String salariominofertalaboral, String salariomaxofertalaboral, String descripcionofertalaboral, String requerimientosofertalaboral, String habilidadesofertalaboral, String conocimientoofertalaboral, String estadoofertalaboral) {
+        this.idofertalaboral = idofertalaboral;
+        this.idempresa_tbl=idempresa_tbl;
+        this.idjornadalaboral = idjornadalaboral;
+        this.idtipocontrato = idtipocontrato;
+        this.idpuestotrabajo = idpuestotrabajo;
+        this.idciudad = idciudad;
+        this.tituloofertalaboral = tituloofertalaboral;
+        this.fechavigenciaofertalaboral = fechavigenciaofertalaboral;
+        this.fechahoraofertalaboral = fechahoraofertalaboral;
+        this.fechacontratacionofertalaboral = fechacontratacionofertalaboral;
+        this.cantidadvacante = cantidadvacante;
+        this.salariominofertalaboral = salariominofertalaboral;
+        this.salariomaxofertalaboral = salariomaxofertalaboral;
+        this.descripcionofertalaboral = descripcionofertalaboral;
+        this.requerimientosofertalaboral = requerimientosofertalaboral;
+        this.habilidadesofertalaboral = habilidadesofertalaboral;
+        this.conocimientoofertalaboral = conocimientoofertalaboral;
+        this.estadoofertalaboral = estadoofertalaboral;
+    }
+    
+    public OfertaForm(){
+        
+    }
+    
+
 }

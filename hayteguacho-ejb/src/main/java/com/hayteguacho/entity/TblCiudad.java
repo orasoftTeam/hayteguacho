@@ -112,10 +112,15 @@ public class TblCiudad implements Serializable {
         }
         return true;
     }
-
+     /*
     @Override
     public String toString() {
         return "com.hayteguacho.entity.TblCiudad[ idciudad=" + idciudad + " ]";
     }
-    
+
+    */
+    @Override
+    public String toString() {
+        return idciudad.toString() ;
+    }
 }
