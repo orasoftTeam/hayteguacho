@@ -93,8 +93,10 @@ public class OfertaController {
             listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
         }
         oferta.setIdofertalaboral("0");
-        idempresa= loginBean.getUserLog().getIdentificador();
-        listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+        if(loginBean.getUserLog()!=null){
+            idempresa= loginBean.getUserLog().getIdentificador();
+            listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+        }
     }
     
      
