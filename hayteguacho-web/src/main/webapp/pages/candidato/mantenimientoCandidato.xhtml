@@ -28,8 +28,8 @@
                                     <b:panelGrid columns="2" >
                                         <b:inputText size="10" id="email" fieldId="email" value="#{candidatoController.candidato.correocandidato}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}"/>
                                         <b:inputSecret size="10" id="clave" fieldId="clave" value="#{candidatoController.candidato.contrasenacandidato}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}"/>
-                                        <b:inputText size="10" id="nomCandidato" fieldId="nomCandidato" value="#{candidatoController.candidato.nombrecandidato}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqName']}"/>
-                                        <b:inputText size="10" id="apellidoCandidato" fieldId="apellidoCandidato" value="#{candidatoController.candidato.apellidocandidato}" label="#{bundle['lblSecondName']}" placeholder="#{bundle['lblReqSecondName']}"/>
+                                        <b:inputText size="10" id="nomCandidato" fieldId="nomCandidato" value="#{candidatoController.candidato.nombrecandidato}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqName']}" disabled="true"/>
+                                        <b:inputText size="10" id="apellidoCandidato" fieldId="apellidoCandidato" value="#{candidatoController.candidato.apellidocandidato}" label="#{bundle['lblSecondName']}" placeholder="#{bundle['lblReqSecondName']}" disabled="true"/>
                                         <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono1" fieldId="telefono1" value="#{candidatoController.candidato.telefono1candidato}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
                                         <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono2" fieldId="telefono2" value="#{candidatoController.candidato.telefono2candidato}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
 
