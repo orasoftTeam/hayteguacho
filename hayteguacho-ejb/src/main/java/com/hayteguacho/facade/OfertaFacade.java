@@ -44,9 +44,12 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
         return em;
     }
     
-
     public List<OfertaForm> obtenerOfertasByRange(int ini, int cantPag) {
         int[] range={ini, cantPag};
+        String sql="select * from tbl_ofertalaboral where estadoofertalaboral='A'";
+        Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
+        q.setMaxResults(range[1] - range[0] + 1);
+        q.setFirstResult(range[0]);  
         //Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where rownum>=? and rownum<=?", TblOfertalaboral.class);
         //q.setParameter(1, ini);
         //q.setParameter(2, cantPag);
@@ -54,8 +57,8 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
         List<OfertaForm> listaEntityForm;
 
         try {
-            //listaEntity = q.getResultList();
-            listaEntity= findRange(range);
+            listaEntity = q.getResultList();
+            //listaEntity= findRange(range);
             if (listaEntity.isEmpty()) {
                 listaEntityForm = new ArrayList<OfertaForm>();
             } else {
