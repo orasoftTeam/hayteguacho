@@ -88,7 +88,7 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
     }
     
      public List<OfertaForm> obtenerOfertas(String idempresa) {
-        Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where idempresa  = " + idempresa, TblOfertalaboral.class);
+        Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where idempresa  = " + idempresa + " and estadoofertalaboral = 'A'", TblOfertalaboral.class);
         List<TblOfertalaboral> listaEntity;
         List<OfertaForm> listaEntityForm;
 
