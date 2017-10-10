@@ -19,7 +19,10 @@ import com.hayteguacho.facade.MembresiaxempresaFacade;
 import com.hayteguacho.facade.OfertaFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
@@ -66,9 +69,9 @@ public class MostrarCandidatoxofertalaboralController {
     private @Getter
     @Setter
     List<OfertaForm> listaOferta = new ArrayList<>();
-    private @Getter
+    private 
     @Setter
-    String pdf = "";
+    String titulo = "";
     private @Getter @Setter CandidatoxofertaForm selectedCxoferta
             = new CandidatoxofertaForm() ;
     private @Getter
@@ -327,6 +330,29 @@ public class MostrarCandidatoxofertalaboralController {
     vb.updateComponent("CxofertaForm:btns");
     }
     
+     public int obtenerInscritos(OfertaForm oferta){
+   return cxof.obtenerCandidatosxoferta(oferta.getIdofertalaboral(),false).size();
+    }
+     
+     public String obtenerFecha(OfertaForm oferta){
+     String dateStr = oferta.getFechavigenciaofertalaboral();
+     DateFormat readFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+     DateFormat writeFormat = new SimpleDateFormat("dd MMMMM yyyy");
+     Date date = null;
+         try {
+             date = (Date)readFormat.parse(dateStr);
+         } catch (Exception e) {
+             System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.obtenerFecha()");
+             e.printStackTrace();
+         }
+         
+         String formattedDate = "";
+         if (date != null) {
+             formattedDate = writeFormat.format(date);
+         }
+         return formattedDate;
+    }
+    
     public void limpiar(){
         selectedCxoferta = new CandidatoxofertaForm();
         
@@ -337,5 +363,17 @@ public class MostrarCandidatoxofertalaboralController {
         MembresiaxEmpresaForm mf = mxef.obtenerMembresia(login.getUserLog().getIdentificador());
         MembresiaForm membre = memf.entityToDto(memf.find(new BigDecimal(mf.getIdmembresia())), new MembresiaForm());
         return membre;
+    }
+    
+    
+    public String getTitulo(){
+       
+        try {
+            titulo = vb.getMsgBundle("lblCxOfertasActuales") + " " + listaOferta.size();
+        } catch (Exception e) {
+            System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.obtenerTitulo()");
+            e.printStackTrace();
+        }
+    return titulo;
     }
 }

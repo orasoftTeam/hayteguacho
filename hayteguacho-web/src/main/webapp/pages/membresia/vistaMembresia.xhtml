@@ -38,10 +38,10 @@
                     <b:panel collapsible="false" style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px;text-align: center" look="primary">
                         <f:facet name="heading">
 
-                            <h:outputText style="text-align: center" value="Bienvenido!" />
+                            <h:outputText style="text-align: center" value="#{bundle['lblMemBienvenido']}" />
 
                         </f:facet>
-                        <h:outputText value="Deslize la pantalla para ver las membresias disponibles"/>
+                        <h:outputText value="#{bundle['lblMemDefault']}"/>
                     </b:panel>
                     <ui:repeat value="#{membresiaController.listaMembresias}" var="mem">
                         <div style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px">

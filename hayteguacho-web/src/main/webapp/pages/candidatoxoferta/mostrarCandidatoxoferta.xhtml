@@ -61,15 +61,16 @@
                             showIndicators="false"
                             wrap="false">
                     <b:carouselItem style="width:100%; height:100%">
-                        <b:panel title="#{bundle['lblCxOfertasActuales']}" look="primary" collapsible="false">
-
+                        <b:panel title="#{mostrarCandxOfertaController.titulo}" look="primary" collapsible="false">
+                            <f:param value="10"/>
                             <b:dataTable
                                 value="#{mostrarCandxOfertaController.listaOferta}"
                                 var="oferta"
                                 >
 
                                 <b:dataTableColumn label="#{bundle['titleOfertaEmpresa']}" value="#{oferta.tituloofertalaboral}" />
-                                <b:dataTableColumn label="#{bundle['lblOfertaFechaVigencia']}" value="#{oferta.fechavigenciaofertalaboral}" />
+                                <b:dataTableColumn label="#{bundle['lblOfertaFechaVigencia']}" value="#{mostrarCandxOfertaController.obtenerFecha(oferta)}" />
+                                <b:dataTableColumn label="#{bundle['lblInscritos']}" value="#{mostrarCandxOfertaController.obtenerInscritos(oferta)}" />
                                 <b:dataTableColumn label="#{bundle['lblCxoOperacion']}" >
                                     <b:commandButton ajax="true"   value="#{bundle['lblCxoVerCands']}" 
                                               onclick="$('.wizardPseudoClass').carousel('next');
