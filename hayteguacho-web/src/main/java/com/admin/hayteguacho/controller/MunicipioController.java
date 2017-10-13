@@ -111,7 +111,7 @@ public class MunicipioController {
     
     public void cerrarDialogo(){
         limpiar();
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     }
     
     public void eliminar(){
@@ -127,7 +127,7 @@ public class MunicipioController {
         
         else if(flag.equals("-1") || flag.equals("-2"))
             validationBean.lanzarMensaje("error", "titleMuni", "lblEliminarError");
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         limpiar();
         
     }
@@ -154,7 +154,8 @@ public class MunicipioController {
         //limpiar();
     }
     
-    public void onSelectMuni(MunicipioForm obj) {
+    public void onSelectMuni(int index) {
+        MunicipioForm obj= listaMuni.get(index);
         muni.setIdciudad(obj.getIdciudad());
         muni.setNombreciudad(obj.getNombreciudad());
     }

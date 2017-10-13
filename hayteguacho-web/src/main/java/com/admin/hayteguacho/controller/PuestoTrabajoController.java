@@ -82,9 +82,10 @@ public class PuestoTrabajoController {
     }
     
     public void cerrarDialogo(){
-        limpiar();
-        listaPuestos=new ArrayList<>();
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        puesto.setIdpuestotrabajo("0");
+        puesto.setNombrepuestotrabajo("");
+       // validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.updateComponent("puestosForm:puestoTbl");
     }
     
     public void eliminar(){
@@ -94,8 +95,10 @@ public class PuestoTrabajoController {
         
         else if(flag.equals("-1") || flag.equals("-2"))
             validationBean.lanzarMensaje("error", "titlePuestoTrabajo", "lblEliminarError");
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         listaPuestos= puestoFacade.obtenerPuestosByIdCategoria(idCategoria);
+        //validationBean.updateComponent("puestosForm:puestoTbl");
+        puesto.setIdpuestotrabajo("0");
         puesto.setNombrepuestotrabajo("");
         
     }
@@ -110,14 +113,22 @@ public class PuestoTrabajoController {
         puesto.setIdcategoria(idCategoria);
         validationBean.updateComponent("puestosForm:puestoTbl");
     }
-
+/*
     public void onSelect(PuestoTrabajoForm obj) {
         puesto.setIdpuestotrabajo(obj.getIdpuestotrabajo());
         puesto.setNombrepuestotrabajo(obj.getNombrepuestotrabajo());
+        validationBean.updateComponent("puestosForm:puestoTbl");
+    }*/
+    
+    public void onSelect(int index) {
+        PuestoTrabajoForm obj= listaPuestos.get(index);
+        puesto.setIdpuestotrabajo(obj.getIdpuestotrabajo());
+        puesto.setNombrepuestotrabajo(obj.getNombrepuestotrabajo());
+        
     }
-
     public void unSelect() {
         limpiar();
+        validationBean.updateComponent("puestosForm:puestoTbl");
     }
 
     public void limpiar() {

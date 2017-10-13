@@ -42,7 +42,7 @@ public class CategoriaEmpresaController {
         cemp.setIdcategoria("0");
     }
 
-    public void actualizarPais() {
+    public void actualizarCategoria() {
         
         String flag=""; 
         if(validationBean.validarCampoVacio(cemp.getNombrecategoria().replace(" ", ""), "warn", "titleCategoriaEmpresa", "lblReqNombreCategoria")
@@ -74,7 +74,7 @@ public class CategoriaEmpresaController {
     
     public void cerrarDialogo(){
         limpiar();
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     }
     
     public void eliminar(){
@@ -84,13 +84,14 @@ public class CategoriaEmpresaController {
         
         else if(flag.equals("-1") || flag.equals("-2"))
             validationBean.lanzarMensaje("error", "titleCategoriaEmpresa", "lblEliminarError");
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         listaCategorias = catFacade.obtenerCategorias();
         limpiar();
         
     }
 
-    public void onSelect(CategoriaEmpresaForm obj) {
+    public void onSelect(int index) {
+        CategoriaEmpresaForm obj= listaCategorias.get(index);
         cemp.setIdcategoria(obj.getIdcategoria());
         cemp.setNombrecategoria(obj.getNombrecategoria());
     }

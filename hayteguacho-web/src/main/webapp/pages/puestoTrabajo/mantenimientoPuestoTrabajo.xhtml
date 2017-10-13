@@ -14,27 +14,26 @@
                     <b:tab title="" style="background-color: white;">
                         <b:row>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{puestoController.actualizarPuesto}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{puestoController.actualizarPuesto}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{puestoController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{puestoController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{puestoController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                                <b:commandButton  action="#{puestoController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
                             </b:column>
                         </b:row>
                         <b:modal  id="amodal" title="#{bundle['titlePuestoTrabajo']}" styleClass="modalPseudoClass">
                             <p>#{bundle['lblRegEliminar']}</p>
                             <f:facet name="footer">
-                                <b:commandButton  ajax="false" actionListener="#{puestoController.cerrarDialogo}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
-                                <b:commandButton  ajax="false" actionListener="#{puestoController.eliminar}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                                <b:commandButton update="puestosForm:puestoTbl"   ajax="true" onclick="puestoWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:puestoController.cerrarDialogo()"  value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton update="puestosForm:puestoTbl"   ajax="true" onclick="puestoWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:puestoController.eliminar()"  value="#{bundle['lblBtnOk']}" look="primary"  />
                             </f:facet>
                         </b:modal>
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titlePuestoTrabajo']}">
-                        <b:messages  />
                         <b:selectOneMenu value="#{puestoController.idCategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}" 
                                          onchange="ajax:puestoController.cambiarCategoria()">
                             <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
@@ -42,12 +41,12 @@
                         </b:selectOneMenu>
                         <b:inputText size="10" id="nomPuesto" value="#{puestoController.puesto.nombrepuestotrabajo}" label="#{bundle['lblPuestoTrabajo']}" placeholder="#{bundle['lblNombreReqPuestoTrabajo']}"/>
                         <p:separator></p:separator>
-                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="puestoTbl" value="#{puestoController.listaPuestos}" 
+                        <b:dataTable widgetVar="puestoWidget" custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="puestoTbl" value="#{puestoController.listaPuestos}" 
                                      var="puesto" 
+              
                                      select="true"
                                      selectionMode="single"
-                                     onselect="ajax:puestoController.onSelect(puesto)"
-                                     ondeselect="ajax:puestoController.unSelect()"
+                                     onselect="ajax:puestoController.onSelect(indexes)"
                                      >
                             <b:dataTableColumn label="#{bundle['lblName']}" value="#{puesto.nombrepuestotrabajo}" />
                         </b:dataTable>
