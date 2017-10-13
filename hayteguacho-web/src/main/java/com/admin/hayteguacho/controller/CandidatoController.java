@@ -17,6 +17,7 @@ import com.hayteguacho.facade.CandidatoFacade;
 import com.hayteguacho.facade.CargoEmpresaFacade;
 import com.hayteguacho.facade.PaisFacade;
 import com.hayteguacho.facade.PuestoTrabajoFacade;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -54,8 +55,8 @@ public class CandidatoController {
     
     @Inject
     LoginController loginBean;
-    
-    private String destination="C:\\Users\\dell\\Desktop\\glassfish4\\glassfish\\domains\\domain1\\ArchivosASubir\\pdf\\";
+    String appPath = System.getProperty("user.dir");
+    private String destination=   appPath + File.separator + "pdf\\";
 
     private @Getter @Setter UploadedFile archivo;
     private @Getter @Setter List<CandidatoForm> listaCandidatos = new ArrayList<>();
@@ -66,6 +67,9 @@ public class CandidatoController {
     
     @PostConstruct
     public void init() {
+        
+        
+        
         String pais= Locale.getDefault().getDisplayCountry();
         List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
         if(!tmp.isEmpty()){
