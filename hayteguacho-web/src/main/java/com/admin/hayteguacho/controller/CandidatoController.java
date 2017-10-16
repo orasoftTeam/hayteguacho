@@ -111,7 +111,7 @@ public class CandidatoController {
                         validationBean.lanzarMensaje("error", "titleCandidato", "lblGuardarError");
                     }
             }
-            if(!candidato.getIdcandidato().equals("0")){
+            if(!candidato.getIdcandidato().equals("0") && !candidato.getIdcandidato().equals("")){
                 validationBean.lanzarMensaje("warn", "titleCandidato", "lblExistReg");
             }
         }

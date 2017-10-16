@@ -82,13 +82,16 @@ public class MostrarOfertaController {
     @PostConstruct
     public void init(){
         listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
-        numreg= ofertaFacade.count();
+        numreg= ofertaFacade.contarOfertas();
+        /*
         cssClases[0]="red result-text";
         cssClases[1]="teal result-text";
         cssClases[2]="green result-text";
         cssClases[3]="blue result-text";
         cssClases[4]="teal result-text";
         cssClases[5]="green result-text";
+        */
+        
     }
     
     public String cadenaConEnter(String cad, int top){
@@ -125,8 +128,10 @@ public class MostrarOfertaController {
     public void cambiarCategoriaByFilter(){
         if(!idcategoriafilter.equals("")){
             listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(idcategoriafilter, ini, count);
+            numreg= ofertaFacade.contarOfertasByCategoriaRange(idcategoriafilter);
         }
         else{
+            numreg= ofertaFacade.contarOfertas();
             listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
         }
         setIddeptofilter("");
@@ -135,8 +140,10 @@ public class MostrarOfertaController {
     public void cambiarDeptoByFilter(){
         if(!iddeptofilter.equals("")){
             listaOferta= ofertaFacade.obtenerOfertasByDepartamentoRange(iddeptofilter, ini, count);
+            numreg= ofertaFacade.contarOfertasByDeptoRange(iddeptofilter);
         }
         else{
+            numreg= ofertaFacade.contarOfertas();
             listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
         }
         setIdcategoriafilter("");
@@ -152,7 +159,16 @@ public class MostrarOfertaController {
                 count= count+6;
                 ini= ini+6;
                 if(count>numreg){
-                   listaOferta= ofertaFacade.obtenerOfertasByRange(ini, numreg);
+                    if(!getIdcategoriafilter().equals("")){
+                        listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(idcategoriafilter, ini, numreg);
+                    }
+                    else if(!getIddeptofilter().equals("")){
+                        listaOferta= ofertaFacade.obtenerOfertasByDepartamentoRange(iddeptofilter, ini, numreg);
+                    } 
+                    else{
+                      listaOferta= ofertaFacade.obtenerOfertasByRange(ini, numreg);  
+                    }
+                   //listaOferta= ofertaFacade.obtenerOfertasByRange(ini, numreg);
                 }
                 else{
                     listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
@@ -196,7 +212,16 @@ public class MostrarOfertaController {
             if(count>6 && ini>1){
                 count= count-6;
                 ini= ini-6;
-                listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
+                    if(!getIdcategoriafilter().equals("")){
+                        listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(idcategoriafilter, ini, count);
+                    }
+                    else if(!getIddeptofilter().equals("")){
+                        listaOferta= ofertaFacade.obtenerOfertasByDepartamentoRange(iddeptofilter, ini, count);
+                    } 
+                    else{
+                      listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);  
+                    }
+                //listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
             }
     }
     
@@ -249,5 +274,17 @@ public class MostrarOfertaController {
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('index');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('jump',"+contador+");");
            // validationBean.ejecutarJavascript("myFlipster.flipster('destroy'); myFlipster.flipster(); myFlipster.flipster('jump',"+contador+");");
+    }
+    
+    public boolean deshabilitarSiguiente(){
+        if(numreg < 6){
+            return true;
+        }
+        else if(count >= numreg){
+            return true;
+        }
+        else{
+          return false;  
+        }
     }
 }
