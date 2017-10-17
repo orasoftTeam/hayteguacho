@@ -76,7 +76,8 @@ public class TipoPeriodoMembresiaController {
         System.out.println("com.admin.hayteguacho.controller.TipoPeriodoMembresiaController.unSelect()");
     }
     
-    public void onSelect(TipoPeriodoMembresiaForm tpmf){
+    public void onSelect(int index){
+        TipoPeriodoMembresiaForm tpmf = listaTipoPeriodoMembresia.get(index);
     tpmform.setIdtipoperiodomembresia(tpmf.getIdtipoperiodomembresia());
     tpmform.setNombretipoperiodomembresia(tpmf.getNombretipoperiodomembresia());
         System.out.println("com.admin.hayteguacho.controller.TipoPeriodoMembresiaController.onSelect()");
@@ -92,7 +93,7 @@ public class TipoPeriodoMembresiaController {
     
     public void cerrarDialogo(){
     limpiar();
-    vb.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+   // vb.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     }
     
     public void eliminar(){
@@ -103,7 +104,7 @@ public class TipoPeriodoMembresiaController {
             limpiar();
         }else if (flag.equals("-1")|| flag.equals("-2")) {
             vb.lanzarMensaje("error", "titleTipoPeriodoMembresia", "lblEliminarError");
-            vb.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+            //vb.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         }
     }
     

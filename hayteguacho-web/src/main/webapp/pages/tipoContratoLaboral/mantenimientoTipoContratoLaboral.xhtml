@@ -14,34 +14,34 @@
                     <b:tab title="" style="background-color: white;">
                         <b:row>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{tipoContratoLaboralController.actualizarTipoContrato()}" value="#{bundle['lblbtnAgregar']}" look="info" style="width: 100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{tipoContratoLaboralController.actualizarTipoContrato()}" value="#{bundle['lblbtnAgregar']}" look="info" style="width: 100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton  update="@form" ajax="true" actionListener="#{tipoContratoLaboralController.validareliminar()}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width: 100%"/>
+                                <b:commandButton  update="@form formGrl" ajax="true" actionListener="#{tipoContratoLaboralController.validareliminar()}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width: 100%"/>
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{cargoEmpresaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                                <b:commandButton action="#{cargoEmpresaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
                             </b:column>
                         </b:row>
                         <b:modal id="amodal" title="#{bundle['titleTipoContratoLaboral']}" styleClass="modalPseudoClass">
                             <p>#{bundle['lblRegEliminar']}</p>
                             <f:facet name="footer">
-                                <b:commandButton ajax="false" actionListener="#{tipoContratoLaboralController.cerrarDialogo()}" value="#{bundle['lblBtnCerrar']}" look="primary"/>
-                                <b:commandButton ajax="false" actionListener="#{tipoContratoLaboralController.eliminar()}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                                <b:commandButton update="tipoContratoForm:tipoContratoTbl" ajax="true" onclick="tipoContratoWidget.DataTable().destroy();$('.modalPseudoClass').modal('hide');ajax:tipoContratoLaboralController.cerrarDialogo()"  value="#{bundle['lblBtnCerrar']}" look="primary"/>
+                                <b:commandButton update="tipoContratoForm:tipoContratoTbl formGrl" ajax="true" onclick="tipoContratoWidget.DataTable().destroy();$('.modalPseudoClass').modal('hide');ajax:tipoContratoLaboralController.eliminar()" value="#{bundle['lblBtnOk']}" look="primary"  />
                             </f:facet>
                         </b:modal>
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleTipoContratoLaboral']}">
-                        <b:messages />
+                        
                         <b:inputText size="10" id="nomTipoContrato" value="#{tipoContratoLaboralController.tcf.nombretipocontrato}" label="#{bundle['lblNombreTipoContrato']}" placeholder="#{bundle['lblNombreReqTipoContrato']}"/>
                         <p:separator />
-                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="tipoContratoTbl" value="#{tipoContratoLaboralController.listaTiposContrato}"
+                        <b:dataTable widgetVar="tipoContratoWidget" custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="tipoContratoTbl" value="#{tipoContratoLaboralController.listaTiposContrato}"
                                      var="tipoContrato"
                                      select="true"
                                      selectionMode="single"
-                                     onselect="ajax:tipoContratoLaboralController.onSelect(tipoContrato)"
+                                     onselect="ajax:tipoContratoLaboralController.onSelect(indexes)"
                                      ondeselect="ajax:tipoContratoLaboralController.unSelect()">
                             <b:dataTableColumn label="#{bundle['lblName']}" value="#{tipoContrato.nombretipocontrato}"  />
                         </b:dataTable>

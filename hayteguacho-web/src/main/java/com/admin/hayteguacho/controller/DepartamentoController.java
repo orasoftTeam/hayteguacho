@@ -97,7 +97,7 @@ public class DepartamentoController {
     
     public void cerrarDialogo(){
         limpiar();
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     }
     
     public void eliminar(){
@@ -111,7 +111,7 @@ public class DepartamentoController {
         
         else if(flag.equals("-1") || flag.equals("-2"))
             validationBean.lanzarMensaje("error", "titleDepto", "lblEliminarError");
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         limpiar();
         
     }
@@ -126,7 +126,8 @@ public class DepartamentoController {
         //limpiar();
     }
     
-    public void onSelectDepto(DepartamentoForm obj) {
+    public void onSelectDepto(int index) {
+        DepartamentoForm obj = listaDepto.get(index);
         depto.setIddepartamento(obj.getIddepartamento());
         depto.setNombredepartamento(obj.getNombredepartamento());
         //RequestContext.getCurrentInstance().update("deptoTbl");

@@ -76,7 +76,7 @@ public class CargoEmpresaController {
     
     public void cerrarDialogo(){
         limpiar();
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     }
     
     public void eliminar(){
@@ -86,13 +86,14 @@ public class CargoEmpresaController {
         
         else if(flag.equals("-1") || flag.equals("-2"))
             validationBean.lanzarMensaje("error", "titleCargoEmpresa", "lblEliminarError");
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         listaCargos = cargoFacade.obtenerCargos();
         limpiar();
         
     }
 
-    public void onSelect(CargoEmpresaForm obj) {
+    public void onSelect(int index) {
+        CargoEmpresaForm obj= listaCargos.get(index);
         cemp.setIdcargoempresa(obj.getIdcargoempresa());
         cemp.setNombrecargoempresa(obj.getNombrecargoempresa());
     }

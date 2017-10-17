@@ -14,10 +14,10 @@
                     <b:tab title="" style="background-color: white;">
                         <b:row>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{categoriaEmpresaController.actualizarPais}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{categoriaEmpresaController.actualizarCategoria}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{categoriaEmpresaController.validareliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{categoriaEmpresaController.validareliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true" actionListener="#{categoriaEmpresaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
@@ -26,22 +26,21 @@
                         <b:modal  id="amodal" title="#{bundle['titleCategoriaEmpresa']}" styleClass="modalPseudoClass">
                             <p>#{bundle['lblRegEliminar']}</p>
                             <f:facet name="footer">
-                                <b:commandButton  ajax="false" actionListener="#{categoriaEmpresaController.cerrarDialogo}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
-                                <b:commandButton  ajax="false" actionListener="#{categoriaEmpresaController.eliminar}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                                <b:commandButton update="categoriasForm:categoriaTbl"   ajax="true" onclick="categoriaWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:categoriaEmpresaController.cerrarDialogo()"  value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton update="categoriasForm:categoriaTbl formGrl"   ajax="true" onclick="categoriaWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:categoriaEmpresaController.eliminar()"  value="#{bundle['lblBtnOk']}" look="primary"  />
                             </f:facet>
                         </b:modal>
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleCategoriaEmpresa']}">
-                        <b:messages  />
                         <b:inputText size="10" id="nomCategoria" value="#{categoriaEmpresaController.cemp.nombrecategoria}" label="#{bundle['lblNombreCategoriaEmpresa']}" placeholder="#{bundle['lblReqNombreCategoria']}"/>
                         <p:separator></p:separator>
-                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="categoriaTbl" value="#{categoriaEmpresaController.listaCategorias}" 
+                        <b:dataTable widgetVar="categoriaWidget" custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="categoriaTbl" value="#{categoriaEmpresaController.listaCategorias}" 
                                      var="categoria" 
                                      select="true"
                                      selectionMode="single"
-                                     onselect="ajax:categoriaEmpresaController.onSelect(categoria)"
+                                     onselect="ajax:categoriaEmpresaController.onSelect(indexes)"
                                      ondeselect="ajax:categoriaEmpresaController.unSelect()"
                                      >
                             <b:dataTableColumn label="#{bundle['lblName']}" value="#{categoria.nombrecategoria}" />

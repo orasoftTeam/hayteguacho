@@ -73,7 +73,7 @@ public class TipoContratoLaboralController {
     
     public void cerrarDialogo(){
     limpiar();
-    validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+    //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     }
     
     public void eliminar(){
@@ -84,13 +84,14 @@ public class TipoContratoLaboralController {
             limpiar();
         }else if(flag.equals("-1") || flag.equals("-2")){
         validationBean.lanzarMensaje("error", "titleTipoContratoLaboral", "lblEliminarError");
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         listaTiposContrato = contratoFacade.obtenerTiposContrato();
         limpiar();
         }
     }
     
-    public void onSelect(TipoContratoLaboralForm obj){
+    public void onSelect(int index){
+        TipoContratoLaboralForm obj = listaTiposContrato.get(index);
     tcf.setIdtipocontrato(obj.getIdtipocontrato());
     tcf.setNombretipocontrato(obj.getNombretipocontrato());
         System.out.println("com.admin.hayteguacho.controller.TipoContratoLaboralController.onSelect()");

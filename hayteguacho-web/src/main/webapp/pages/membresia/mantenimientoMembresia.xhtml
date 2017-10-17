@@ -6,19 +6,19 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-          
+
     <ui:composition template="/template/template.xhtml">
-       <ui:define name="content">
-           <h:outputScript target="body">
-               function soloNumerosConPunto(obj)
-               {
-               obj.value = (obj.value + '').replace(/[^0-9]/g,'');
-               }
-           </h:outputScript>
-           <h:form id="empresaForm">
-               <b:tabView tabPosition="left" contentStyle="padding:10px">
-                   <b:tab title="" style="background-color: white;">
-                     <b:row>
+        <ui:define name="content">
+            <h:outputScript target="body">
+                function soloNumerosConPunto(obj)
+                {
+                obj.value = (obj.value + '').replace(/[^0-9]/g,'');
+                }
+            </h:outputScript>
+            <h:form id="empresaForm">
+                <b:tabView tabPosition="left" contentStyle="padding:10px">
+                    <b:tab title="" style="background-color: white;">
+                        <b:row>
                             <b:column span="2">
                                 <b:commandButton update="@form" ajax="true" actionListener="#{membresiaController.actualizarMembresia()}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
                             </b:column>
@@ -29,33 +29,17 @@
                                 <b:commandButton update="@form" ajax="true" actionListener="#{membresiaController.limpiar()}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
                             </b:column>
                         </b:row>
-                     <b:modal  id="amodal" title="#{bundle['titleMembresia']}" styleClass="modalPseudoClass">
+                        <b:modal  id="amodal" title="#{bundle['titleMembresia']}" styleClass="modalPseudoClass">
                             <p>#{bundle['lblRegEliminar']}</p>
                             <f:facet name="footer">
                                 <b:commandButton  ajax="false" actionListener="#{membresiaController.cerrarDialogo()}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
                                 <b:commandButton  ajax="false" actionListener="#{membresiaController.eliminar()}" value="#{bundle['lblBtnOk']}" look="primary"  />
                             </f:facet>
                         </b:modal>
-                 </b:tab>  
-                   </b:tabView>
+                    </b:tab>  
+                </b:tabView>
                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
-                   <b:tab title="#{bundle['titleMembresia']}">
-                       <b:messages  />
-                       <b:inputText size="10" id="titulo" fieldId="titulo" value="#{membresiaController.membresia.titulomembresia}" label="#{bundle['lblNombreMembresia']}" placeholder="#{bundle['lblNombreReqMembresia']}"/>
-                       <b:selectOneMenu value="#{membresiaController.membresia.idtipoperiodomembresia}" label="#{bundle['lblTipoPeriodoMemMembresia']}">
-                           <f:selectItems value="#{membresiaController.listaTipoPeriodoMembresia}" var="tipo" itemValue="#{tipo.idtipoperiodomembresia}" itemLabel="#{tipo.nombretipoperiodomembresia}"  />
-                       </b:selectOneMenu>
-                       <b:inputTextarea value="#{membresiaController.membresia.ventajasdemembresia}"  label="#{bundle['lblVentajasMembresia']}" placeholder="#{bundle['lblDescReqMembresia']}" />
-                       <b:inputTextarea value="#{membresiaController.membresia.descripcionmembresia}"  label="#{bundle['lblDescMembresia']}" placeholder="#{bundle['lblVentajasReqMembresia']}" />
-                       <b:inputText value="#{membresiaController.membresia.preciomembresia}" label="#{bundle['lblPrecioMembresia']}" placeholder="#{bundle['lblPrecioReqMembresia']}" />
-                       <b:inputText value="#{membresiaController.membresia.precioxoferta}" label="#{bundle['lblPrecioOfertaMembresia']}" placeholder="#{bundle['lblPrecioOfertaReqMembresia']}" />
-                       <b:inputText value="#{membresiaController.membresia.cantidadoferta}" label="#{bundle['lblCantidadOfertaMembresia']}" placeholder="#{bundle['lblCantidadOfertaReqMembresia']}" onkeyup="soloNumerosConPunto(this)"  />
-                       <b:inputText value="#{membresiaController.membresia.cantidaduser}" label="#{bundle['lblCantidadUserMembresia']}" placeholder="#{bundle['lblReqCantidadUserMembresia']}" onkeyup="soloNumerosConPunto(this)"  />
-                   </b:tab>
-               </b:tabView>
-               <p:separator />
-               <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
-                   <b:tab title="" style="background-color: white;">
+                   <b:tab title="Membresias" >
                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                                     id="tblMembresia"
                                     value="#{membresiaController.listaMembresias}"
@@ -75,9 +59,25 @@
                        </b:dataTable>
                    </b:tab>
                </b:tabView>
-           </h:form>
-       </ui:define> 
-       </ui:composition>
-       
+                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
+                    <b:tab title="#{bundle['titleMembresia']}">
+                        <b:messages  />
+                        <b:inputText size="10" id="titulo" fieldId="titulo" value="#{membresiaController.membresia.titulomembresia}" label="#{bundle['lblNombreMembresia']}" placeholder="#{bundle['lblNombreReqMembresia']}"/>
+                        <b:selectOneMenu value="#{membresiaController.membresia.idtipoperiodomembresia}" label="#{bundle['lblTipoPeriodoMemMembresia']}">
+                            <f:selectItems value="#{membresiaController.listaTipoPeriodoMembresia}" var="tipo" itemValue="#{tipo.idtipoperiodomembresia}" itemLabel="#{tipo.nombretipoperiodomembresia}"  />
+                        </b:selectOneMenu>
+                        <b:inputTextarea value="#{membresiaController.membresia.ventajasdemembresia}"  label="#{bundle['lblVentajasMembresia']}" placeholder="#{bundle['lblDescReqMembresia']}" />
+                        <b:inputTextarea value="#{membresiaController.membresia.descripcionmembresia}"  label="#{bundle['lblDescMembresia']}" placeholder="#{bundle['lblVentajasReqMembresia']}" />
+                        <b:inputText value="#{membresiaController.membresia.preciomembresia}" label="#{bundle['lblPrecioMembresia']}" placeholder="#{bundle['lblPrecioReqMembresia']}" />
+                        <b:inputText value="#{membresiaController.membresia.precioxoferta}" label="#{bundle['lblPrecioOfertaMembresia']}" placeholder="#{bundle['lblPrecioOfertaReqMembresia']}" />
+                        <b:inputText value="#{membresiaController.membresia.cantidadoferta}" label="#{bundle['lblCantidadOfertaMembresia']}" placeholder="#{bundle['lblCantidadOfertaReqMembresia']}" onkeyup="soloNumerosConPunto(this)"  />
+                        <b:inputText value="#{membresiaController.membresia.cantidaduser}" label="#{bundle['lblCantidadUserMembresia']}" placeholder="#{bundle['lblReqCantidadUserMembresia']}" onkeyup="soloNumerosConPunto(this)"  />
+                    </b:tab>
+                </b:tabView>
+                <p:separator />
+            </h:form>
+        </ui:define> 
+    </ui:composition>
+
 </html>
 

@@ -44,7 +44,7 @@ public class JornadaController {
         jornada.setIdjornadalaboral("0");
     }
 
-    public void actualizarPais() {
+    public void actualizarJornada() {
         
         String flag=""; 
         if(validationBean.validarCampoVacio(jornada.getNombrejornadalaboral().replace(" ", ""), "warn", "titleJornadaEmpresa", "lblNombreReqJornadaEmpresa")
@@ -76,7 +76,7 @@ public class JornadaController {
     
     public void cerrarDialogo(){
         limpiar();
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     }
     
     public void eliminar(){
@@ -86,13 +86,14 @@ public class JornadaController {
         
         else if(flag.equals("-1") || flag.equals("-2"))
             validationBean.lanzarMensaje("error", "titleJornadaEmpresa", "lblEliminarError");
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         listaJornadas = jornadaFacade.obtenerJornadas();
         limpiar();
         
     }
 
-    public void onSelect(JornadaForm obj) {
+    public void onSelect(int index) {
+        JornadaForm obj= listaJornadas.get(index);
         jornada.setIdjornadalaboral(obj.getIdjornadalaboral());
         jornada.setNombrejornadalaboral(obj.getNombrejornadalaboral());
     }
