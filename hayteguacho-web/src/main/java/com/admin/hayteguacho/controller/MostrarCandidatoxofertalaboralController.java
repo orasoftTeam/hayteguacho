@@ -304,15 +304,15 @@ public class MostrarCandidatoxofertalaboralController {
         cxof.enviarCorreo(email, asunto, mensaje);
     }
 
-    public void guardarEnBase(String idempresa) {
+    public void guardarEnBase() {
        String res = "";
         
 
-        if (cxof.verificarCandidatosPorEmpresa(idempresa, selectedCxoferta.getIdcandidato())) {
+        if (cxof.verificarCandidatosPorEmpresa(login.getUserLog().getIdentificador(), selectedCxoferta.getIdcandidato())) {
             res = cxof.actualizarEstado(
                 "0",
                 "GR",
-                idempresa, selectedCxoferta.getIdcandidato()); 
+                login.getUserLog().getIdentificador(), selectedCxoferta.getIdcandidato()); 
         if (res.equals("1")) {
             vb.lanzarMensaje("info", "lblVisorOfertas", "lblGRguardado");
             limpiar();
@@ -324,7 +324,8 @@ public class MostrarCandidatoxofertalaboralController {
         }
     }
     
-    public void onSelect(CandidatoxofertaForm cxoferta ){
+    public void onSelect(int index){
+        CandidatoxofertaForm cxoferta  = listaCandidatoxoferta.get(index);
     selectedCxoferta = cxoferta;
     selectedCandidato = obtenerCandidato(cxoferta.getIdcandidato());
     vb.updateComponent("CxofertaForm:btns");

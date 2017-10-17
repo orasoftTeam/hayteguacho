@@ -14,34 +14,34 @@
                     <b:tab title="" style="background-color: white;">
                         <b:row>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{paisController.actualizarPais}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{paisController.actualizarPais}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{paisController.validareliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{paisController.validareliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{paisController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                                <b:commandButton  action="#{paisController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
                             </b:column>
                         </b:row>
                         <b:modal  id="amodal" title="#{bundle['titlePais']}" styleClass="modalPseudoClass">
                             <p>#{bundle['lblRegEliminar']}</p>
                             <f:facet name="footer">
-                                <b:commandButton  ajax="false" actionListener="#{paisController.cerrarDialogo}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
-                                <b:commandButton  ajax="false" actionListener="#{paisController.eliminar}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                                <b:commandButton  update="paisForm:paisTbl" ajax="true" onclick="paisWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:paisController.cerrarDialogo()" value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton  update="paisForm:paisTbl formGrl" ajax="true" onclick="paisWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:paisController.eliminar()"  value="#{bundle['lblBtnOk']}" look="primary"  />
                             </f:facet>
                         </b:modal>
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titlePais']}">
-                        <b:messages  />
+                  
                         <b:inputText size="10" id="nomPais" value="#{paisController.pais.nombrepais}" label="#{bundle['lblNombrePais']}" placeholder="#{bundle['lblReqNombrePais']}"/>
                         <p:separator></p:separator>
-                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="paisTbl" value="#{paisController.listaPais}" 
+                        <b:dataTable widgetVar="paisWidget" custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="paisTbl" value="#{paisController.listaPais}" 
                                      var="pais" 
                                      select="true"
                                      selectionMode="single"
-                                     onselect="ajax:paisController.onSelect(pais)"
+                                     onselect="ajax:paisController.onSelect(indexes)"
                                      ondeselect="ajax:paisController.unSelect()"
                                      >
                             <b:dataTableColumn label="#{bundle['lblName']}" value="#{pais.nombrepais}" />

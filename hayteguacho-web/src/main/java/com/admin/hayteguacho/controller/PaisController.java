@@ -77,7 +77,7 @@ public class PaisController {
     
     public void cerrarDialogo(){
         limpiar();
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     }
     
     public void eliminar(){
@@ -87,13 +87,14 @@ public class PaisController {
         
         else if(flag.equals("-1") || flag.equals("-2"))
             validationBean.lanzarMensaje("error", "titlePais", "lblEliminarError");
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         listaPais = paisFacade.obtenerPaises();
         limpiar();
         
     }
 
-    public void onSelect(PaisForm obj) {
+    public void onSelect(int index) {
+        PaisForm obj = listaPais.get(index);
         pais.setIdpais(obj.getIdpais());
         pais.setNombrepais(obj.getNombrepais());
     }

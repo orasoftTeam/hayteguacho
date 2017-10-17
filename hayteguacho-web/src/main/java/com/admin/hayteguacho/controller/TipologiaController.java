@@ -75,7 +75,7 @@ public class TipologiaController {
     
     public void cerrarDialogo(){
         limpiar();
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     }
     
     public void eliminar(){
@@ -85,13 +85,14 @@ public class TipologiaController {
         
         else if(flag.equals("-1") || flag.equals("-2"))
             validationBean.lanzarMensaje("error", "titleTipologiaEmpresa", "lblEliminarError");
-        validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+       // validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         listaTipologias = tipologiaFacade.obtenerTipologias();
         limpiar();
         
     }
 
-    public void onSelect(TipologiaForm obj) {
+    public void onSelect(int index) {
+        TipologiaForm obj = listaTipologias.get(index);
         tipologia.setIdtipologia(obj.getIdtipologia());
         tipologia.setNombretipologia(obj.getNombretipologia());
     }

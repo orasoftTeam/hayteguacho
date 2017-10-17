@@ -127,11 +127,15 @@ public class MostrarOfertaController {
     
     public void cambiarCategoriaByFilter(){
         if(!idcategoriafilter.equals("")){
+            count=5;
+            ini=0;
             listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(idcategoriafilter, ini, count);
             numreg= ofertaFacade.contarOfertasByCategoriaRange(idcategoriafilter);
         }
         else{
             numreg= ofertaFacade.contarOfertas();
+            count=5;
+            ini=0;
             listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
         }
         setIddeptofilter("");
@@ -139,12 +143,16 @@ public class MostrarOfertaController {
     
     public void cambiarDeptoByFilter(){
         if(!iddeptofilter.equals("")){
+            count=5;
+            ini=0;
             listaOferta= ofertaFacade.obtenerOfertasByDepartamentoRange(iddeptofilter, ini, count);
             numreg= ofertaFacade.contarOfertasByDeptoRange(iddeptofilter);
         }
         else{
             numreg= ofertaFacade.contarOfertas();
             listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
+            count=5;
+            ini=0;
         }
         setIdcategoriafilter("");
     }
@@ -277,7 +285,7 @@ public class MostrarOfertaController {
     }
     
     public boolean deshabilitarSiguiente(){
-        if(numreg < 6){
+        if(numreg <= 6){
             return true;
         }
         else if(count >= numreg){

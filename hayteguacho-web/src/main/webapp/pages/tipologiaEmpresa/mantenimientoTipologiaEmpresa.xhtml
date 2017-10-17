@@ -14,34 +14,34 @@
                     <b:tab title="" style="background-color: white;">
                         <b:row>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{tipologiaController.actualizarPais}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{tipologiaController.actualizarPais}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{tipologiaController.validareliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{tipologiaController.validareliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{tipologiaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                                <b:commandButton action="#{tipologiaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
                             </b:column>
                         </b:row>
                         <b:modal  id="amodal" title="#{bundle['titleTipologiaEmpresa']}" styleClass="modalPseudoClass">
                             <p>#{bundle['lblRegEliminar']}</p>
                             <f:facet name="footer">
-                                <b:commandButton  ajax="false" actionListener="#{tipologiaController.cerrarDialogo}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
-                                <b:commandButton  ajax="false" actionListener="#{tipologiaController.eliminar}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                                <b:commandButton  update="tipologiaForm:cargoTbl" ajax="true" onclick="tipologiaWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:tipologiaController.cerrarDialogo()" value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton  update="tipologiaForm:cargoTbl formGrl" ajax="true" onclick="tipologiaWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:tipologiaController.eliminar()"  value="#{bundle['lblBtnOk']}" look="primary"  />
                             </f:facet>
                         </b:modal>
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleTipologiaEmpresa']}">
-                        <b:messages  />
+                       
                         <b:inputText size="10" id="nomTipologia" value="#{tipologiaController.tipologia.nombretipologia}" label="#{bundle['lblNombreTipologiaEmpresa']}" placeholder="#{bundle['lblNombreReqTipologiaEmpresa']}"/>
                         <p:separator></p:separator>
-                        <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="cargoTbl" value="#{tipologiaController.listaTipologias}" 
+                        <b:dataTable widgetVar="tipologiaWidget" custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" id="cargoTbl" value="#{tipologiaController.listaTipologias}" 
                                      var="tipologia" 
                                      select="true"
                                      selectionMode="single"
-                                     onselect="ajax:tipologiaController.onSelect(tipologia)"
+                                     onselect="ajax:tipologiaController.onSelect(indexes)"
                                      ondeselect="ajax:tipologiaController.unSelect()"
                                      >
                             <b:dataTableColumn label="#{bundle['lblName']}" value="#{tipologia.nombretipologia}" />

@@ -46,7 +46,8 @@ public class CandidatoxempresaController {
     List<CandidatoxempresaForm> listaCxempresa = new ArrayList<>();
     List<CandidatoForm> listaCandidatos = new ArrayList<>();
     private @Getter @Setter CandidatoxempresaForm selectedCxempresa = new CandidatoxempresaForm();
-
+    private @Getter @Setter CandidatoForm selectedCand = new CandidatoForm();
+    private @Getter @Setter boolean pdfshow = false;
      @PostConstruct
     public void init() {
        listaCxempresa = cxef.obtenerCandidatosxempresa(login.getUserLog().getIdentificador());
@@ -64,5 +65,13 @@ public class CandidatoxempresaController {
         return cand.getNombrecandidato() + ' ' + cand.getApellidocandidato();
     }
   
-
+public void dialogo(CandidatoForm cf) {
+    
+        selectedCand = cf;
+        //pdf =  cf.getArchivocurriculum();
+        String res = "";
+        pdfshow = true;
+        vb.updateComponent("CxempresaForm:amodal");
+        vb.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
+    }
 }

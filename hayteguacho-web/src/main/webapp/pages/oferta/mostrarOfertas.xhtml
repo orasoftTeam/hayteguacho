@@ -75,7 +75,7 @@
                         <b:column col-md="2">
                         </b:column>
                         <b:column col-md="2">
-                            <b:commandButton   update="@form" ajax="true" actionListener="#{mostrarController.siguiente}" value="#{bundle['lblBtnSig']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.count gt mostrarController.numreg}" />
+                            <b:commandButton   update="@form" ajax="true" actionListener="#{mostrarController.siguiente}" value="#{bundle['lblBtnSig']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.deshabilitarSiguiente()}" />
                         </b:column>
                         <b:column col-md="2">
                         </b:column>

@@ -20,33 +20,33 @@
                     <b:tab title="" style="background-color: white;">
                         <b:row>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{membresiaController.actualizarMembresia()}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{membresiaController.actualizarMembresia()}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{membresiaController.validarEliminar()}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{membresiaController.validarEliminar()}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{membresiaController.limpiar()}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                                <b:commandButton  action="#{membresiaController.limpiar()}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
                             </b:column>
                         </b:row>
                         <b:modal  id="amodal" title="#{bundle['titleMembresia']}" styleClass="modalPseudoClass">
                             <p>#{bundle['lblRegEliminar']}</p>
                             <f:facet name="footer">
-                                <b:commandButton  ajax="false" actionListener="#{membresiaController.cerrarDialogo()}" value="#{bundle['lblBtnCerrar']}" look="primary"  />
-                                <b:commandButton  ajax="false" actionListener="#{membresiaController.eliminar()}" value="#{bundle['lblBtnOk']}" look="primary"  />
+                                <b:commandButton  update="empresaForm:tblMembresia" ajax="true" onclick="membresiaWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:membresiaController.cerrarDialogo()"   value="#{bundle['lblBtnCerrar']}" look="primary"  />
+                                <b:commandButton  update="empresaForm:tblMembresia formGrl" ajax="true" onclick="membresiaWidget.DataTable().destroy(); $('.modalPseudoClass').modal('hide');ajax:membresiaController.eliminar()"  value="#{bundle['lblBtnOk']}" look="primary"  />
                             </f:facet>
                         </b:modal>
                     </b:tab>  
                 </b:tabView>
                <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                    <b:tab title="Membresias" >
-                       <b:dataTable custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                       <b:dataTable widgetVar="membresiaWidget"  custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                                     id="tblMembresia"
                                     value="#{membresiaController.listaMembresias}"
                                     var="membresia"
                                     select="true"
                                     selectionMode="single"
-                                    onselect="ajax:membresiaController.onSelect(membresia)"
+                                    onselect="ajax:membresiaController.onSelect(indexes)"
                                     ondeselect="ajax:membresiaController.deSelect()"
                                     ajax="true"
                                     update="@form">
@@ -61,7 +61,7 @@
                </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleMembresia']}">
-                        <b:messages  />
+                       
                         <b:inputText size="10" id="titulo" fieldId="titulo" value="#{membresiaController.membresia.titulomembresia}" label="#{bundle['lblNombreMembresia']}" placeholder="#{bundle['lblNombreReqMembresia']}"/>
                         <b:selectOneMenu value="#{membresiaController.membresia.idtipoperiodomembresia}" label="#{bundle['lblTipoPeriodoMemMembresia']}">
                             <f:selectItems value="#{membresiaController.listaTipoPeriodoMembresia}" var="tipo" itemValue="#{tipo.idtipoperiodomembresia}" itemLabel="#{tipo.nombretipoperiodomembresia}"  />

@@ -100,7 +100,8 @@ public class MembresiaController {
     membresia.setIdmembresia("0");
     }
     
-    public void onSelect(MembresiaForm mf){
+    public void onSelect(int index){
+        MembresiaForm mf = listaMembresias.get(index);
     membresia = mf;
         System.out.println("com.admin.hayteguacho.controller.MembresiaController.onSelect()");
     }
@@ -125,13 +126,13 @@ public class MembresiaController {
             listaMembresias = membresiafacade.obtenerMembresias();
         }else if (flag.equals("-1")||flag.equals("-2")) {
             vb.lanzarMensaje("error", "titleMembresia", "lblEliminarError");
-        vb.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+       // vb.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         }
     }
     
     public void cerrarDialogo(){
         limpiar();
-    vb.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+   // vb.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
     limpiarVista();
     }
     
