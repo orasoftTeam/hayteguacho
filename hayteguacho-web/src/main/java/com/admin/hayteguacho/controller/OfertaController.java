@@ -115,7 +115,8 @@ public class OfertaController {
             listaOfertas= ofertaFacade.obtenerOfertasByCategoria(idcategoriafilter, idempresa);
         }
         else{
-            listaOfertas= ofertaFacade.obtenerOfertas();
+            listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+            //listaOfertas= ofertaFacade.obtenerOfertas();
         }
         setChequeado(false);
         listaOfertasEliminar.clear();
@@ -129,7 +130,8 @@ public class OfertaController {
             listaOfertas= ofertaFacade.obtenerOfertasByIdEstado(estadofilter,idempresa);
         }
         else{
-            listaOfertas= ofertaFacade.obtenerOfertas();
+            //listaOfertas= ofertaFacade.obtenerOfertas();
+            listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
         }
         setChequeado(false);
         listaOfertasEliminar.clear();
