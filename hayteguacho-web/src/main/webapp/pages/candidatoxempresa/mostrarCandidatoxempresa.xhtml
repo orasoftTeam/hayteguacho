@@ -20,11 +20,12 @@
                         select="true"
                         selectionMode="single"
                         >
-                        <b:dataTableColumn  label="candidato"  value="#{CxempresaController.fullName(CxempresaController.obtenerCandidato(cxempresa.idcandidato))}" />
+                        <b:dataTableColumn  label="#{bundle.lblCxoSeleccion}"  value="#{CxempresaController.fullName(CxempresaController.obtenerCandidato(cxempresa.idcandidato))}" />
                          <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
                                     <b:commandButton onclick="ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
                                                      look="info" />
                                 </b:dataTableColumn>
+                        <b:dataTableColumn label="#{bundle.lblCxoEmail}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).correocandidato}"/>
                     </b:dataTable>
                 
                 </b:tab>

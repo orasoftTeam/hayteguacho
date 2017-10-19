@@ -203,6 +203,8 @@ public class MembresiaController {
       String flag = mefacade.actualizarMembresiaxEmpresa(mef);
       if (flag.equals("0") || flag.equals("-1")) {
           System.out.println("exito!");
+          login.setMembresia(true);
+          vb.lanzarMensaje("info", "lblMembresia", "lblMemConfirm");
       }else{
       System.out.println("fail!");
       }
