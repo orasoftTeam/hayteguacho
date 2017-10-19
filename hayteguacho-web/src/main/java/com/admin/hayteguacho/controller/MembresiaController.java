@@ -58,9 +58,9 @@ public class MembresiaController {
     
     @PostConstruct
     public void init(){
-    membresia.setIdmembresia("0");
-    listaMembresias = membresiafacade.obtenerMembresiasOrden();
-    listaTipoPeriodoMembresia = tpmfacade.obtenerTiposPeriodosMembresia();
+        membresia.setIdmembresia("0");
+        listaMembresias = membresiafacade.obtenerMembresiasOrden();
+        listaTipoPeriodoMembresia = tpmfacade.obtenerTiposPeriodosMembresia();
     }
     
     public void actualizarMembresia(){

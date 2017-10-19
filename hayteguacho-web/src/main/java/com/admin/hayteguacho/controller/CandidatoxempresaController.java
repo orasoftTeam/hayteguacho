@@ -9,7 +9,7 @@ import com.admin.hayteguacho.form.CandidatoForm;
 import com.admin.hayteguacho.form.CandidatoxempresaForm;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.CandidatoFacade;
-import com.hayteguacho.facade.CandidatoxempresaFacade;
+//import com.hayteguacho.facade.CandidatoxempresaFacade;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +34,10 @@ public class CandidatoxempresaController {
     
     @EJB
     CandidatoFacade cf;
-    
+    /*
     @EJB
     CandidatoxempresaFacade cxef;
+*/
     
     @Inject
     LoginController login;
@@ -50,7 +51,7 @@ public class CandidatoxempresaController {
     private @Getter @Setter boolean pdfshow = false;
      @PostConstruct
     public void init() {
-       listaCxempresa = cxef.obtenerCandidatosxempresa(login.getUserLog().getIdentificador());
+       //listaCxempresa = cxef.obtenerCandidatosxempresa(login.getUserLog().getIdentificador());
          for (CandidatoxempresaForm cxempresa : listaCxempresa) {
              listaCandidatos.add(cf.obtenerCand(cxempresa.getIdcandidato()));
          }

@@ -105,8 +105,12 @@ public class CandidatoController {
                //candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
                     flag= candidatoFacade.actualizarCandidato(candidato, "A"); 
                     if(flag.equals("0")){
-                        validationBean.lanzarMensaje("info", "titleCandidato", "lblGuardarSuccess");
-                        limpiar();
+                        loginBean.setUsuario(candidato.getCorreocandidato());
+                        loginBean.setPassword(candidato.getContrasenacandidato());
+                        loginBean.logear();
+                        loginBean.redireccionar("/index.xhtml");
+                        //validationBean.lanzarMensaje("info", "titleCandidato", "lblGuardarSuccess");
+                        //limpiar();
                     }
                     else if(flag.equals("-1")){
                         validationBean.lanzarMensaje("warn", "titleCandidato", "lblExistReg");

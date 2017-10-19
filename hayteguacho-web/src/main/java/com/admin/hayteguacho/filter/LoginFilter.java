@@ -43,16 +43,21 @@ public class LoginFilter implements Filter {
         System.err.println(url[1]);
         String contextPath = ((HttpServletRequest)request).getContextPath();
         if (loginBean == null || !loginBean.isLoggedIn()) {
-            //String contextPath = ((HttpServletRequest)request).getContextPath();
             if(!contextPath.contains("/faces")){
-                ((HttpServletResponse)response).sendRedirect(contextPath + "/login.xhtml");
+                ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
                 loginBean.limpiar();
             }
         }
         else{
-            if(!loginBean.buscarMenus(url[1])){
-                ((HttpServletResponse)response).sendRedirect(contextPath + "/login.xhtml");
-                loginBean.limpiar();
+            if(loginBean.getUserLog()!=null){
+                if(loginBean.getUserLog().getTipo().equals("E") && !loginBean.isMembresia()){
+                    if(!url[1].equals("membresia/vistaMembresia.xhtml"))
+                        ((HttpServletResponse)response).sendRedirect(contextPath + "/pages/membresia/vistaMembresia.xhtml");
+                }
+                else if(!loginBean.buscarMenus(url[1])){
+                    ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
+                    loginBean.limpiar();
+                }
             }
         }
          
