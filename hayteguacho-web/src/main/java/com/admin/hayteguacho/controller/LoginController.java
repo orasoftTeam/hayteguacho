@@ -86,12 +86,18 @@ public class LoginController implements Serializable {
 
     private @Getter
     @Setter
+    boolean isMembresia;
+
+    private @Getter
+    @Setter
     List<MenuForm> listaModulos = new ArrayList<>();
     private @Getter
     @Setter
     List<MenuForm> listaOpciones = new ArrayList<>();
-    
-    private @Getter @Setter boolean isMenu=false;
+
+    private @Getter
+    @Setter
+    boolean isMenu = false;
 
     @PostConstruct
     public void init() {
@@ -102,7 +108,7 @@ public class LoginController implements Serializable {
     public boolean buscarMenus(String op) {
 
         for (MenuForm obj : listaModulos) {
-            //listaOpciones = menuFacade.buscarOpciones(obj.getCodmodulo(), idCompany);
+            listaOpciones = menuFacade.obtenerMenus(obj.getIdentificador());
             for (MenuForm obj2 : listaOpciones) {
                 if (obj2.getOpcion().equalsIgnoreCase(op)) {
                     return true;
@@ -113,18 +119,20 @@ public class LoginController implements Serializable {
     }
 
     public void limpiar() {
-        setUsuario("");
-        setPassword("");
+        if (!loggedIn) {
+            setUsuario("");
+            setPassword("");
+        }
     }
 
     public List<MenuForm> obtenerListaOpciones(int index) {
-        if(!isMenu){
+        if (!isMenu) {
             if (listaModulos.size() != 0) {
                 String codModulo = listaModulos.get(index).getIdentificador();
                 listaOpciones = menuFacade.obtenerMenus(codModulo);
             }
-            if(listaModulos.size() == index){
-                isMenu= true;
+            if (listaModulos.size() == index) {
+                isMenu = true;
             }
         }
         //listaOpciones = menuFacade.buscarOpciones(codModulo, idCompany);
@@ -149,6 +157,7 @@ public class LoginController implements Serializable {
                     setUsuario("");
                     setPassword("");
                     loggedIn = true;
+                    isMembresia = true;
                     listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
                 } else if (log.equals("-1")) {
                     validationBean.lanzarMensaje("warn", "titleLogin", "lblLimitUser");
@@ -156,12 +165,21 @@ public class LoginController implements Serializable {
                 } else if (log.equals("-2")) {
                     validationBean.lanzarMensaje("error", "titleLogin", "lblErrorTransact");
                     System.err.println("Error de transaccion");
-                }
-            } else if (usuario.getTipo().equals("C")) {
+                } else if (log.equals("-3")) {
+                    isMembresia = false;
                     userLog = usuario;
                     setUsuario("");
                     setPassword("");
                     loggedIn = true;
+                    listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
+                    redireccionarEnlaces("membresia/vistaMembresia.xhtml");
+                    //redireccionar("/index.xhtml");
+                }
+            } else if (usuario.getTipo().equals("C")) {
+                userLog = usuario;
+                setUsuario("");
+                setPassword("");
+                loggedIn = true;
                 listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
             }
 
@@ -178,6 +196,20 @@ public class LoginController implements Serializable {
              */
         }
     }
+    /*
+    public void logearEmpresa() {
+        //UserForm usuario = userFacade.getUser(getUsuario(), getPassword());
+        //userLog = usuario;
+        /*
+        setUsuario("");
+        setPassword("");
+        loggedIn = true;
+        isMembresia = false;
+        
+        loggedIn = true;
+        listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
+    }
+    */
 
     public void redirectLogin() {
         redireccionar("/login.xhtml");
@@ -198,9 +230,9 @@ public class LoginController implements Serializable {
                 setPassword("");
                 loggedIn = false;
                 validationBean.lanzarMensaje("info", "titleLogin", "titleRegresarLogin");
-                listaModulos= new ArrayList<MenuForm>();
-                listaOpciones= new ArrayList<MenuForm>();
-                isMenu= false;
+                listaModulos = new ArrayList<MenuForm>();
+                listaOpciones = new ArrayList<MenuForm>();
+                isMenu = false;
             } else if (log.equals("-2")) {
                 validationBean.lanzarMensaje("error", "titleLogin", "lblErrorTransact");
                 System.err.println("Error de transaccion");
@@ -214,6 +246,7 @@ public class LoginController implements Serializable {
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + pag);
         } catch (IOException ex) {
+            System.err.println("entro acá al error");
             //JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("titleUserNotFound"));
             //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -224,6 +257,7 @@ public class LoginController implements Serializable {
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             context.redirect(context.getRequestContextPath() + "/pages/" + pag);
         } catch (IOException ex) {
+            System.err.println("entro acá al error");
             //JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("titleUserNotFound"));
             //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }

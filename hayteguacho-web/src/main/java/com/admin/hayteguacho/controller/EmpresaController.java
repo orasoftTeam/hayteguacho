@@ -180,8 +180,15 @@ public class EmpresaController {
                //empresa.setPassword(validationBean.encriptar(empresa.getPassword(), empresa.getEmail()));
                     flag= empresaFacade.actualizarEmpresa(empresa, "A"); 
                     if(flag.equals("0")){
-                        validationBean.lanzarMensaje("info", "titleEmpresa", "lblGuardarSuccess");
-                        limpiar();
+                        loginBean.setUsuario(empresa.getEmail());
+                        loginBean.setPassword(empresa.getPassword());
+                        loginBean.logear();
+                        //loginBean.setLoggedIn(true);
+                        //loginBean.redireccionarEnlaces("membresia/vistaMembresia.xhtml?faces-redirect=true");
+                                
+                      //  loginBean.logear();
+                        //validationBean.lanzarMensaje("info", "titleEmpresa", "lblGuardarSuccess");
+                        //limpiar();
                     }
                     else if(flag.equals("-1")){
                         validationBean.lanzarMensaje("warn", "titleEmpresa", "lblExistReg");

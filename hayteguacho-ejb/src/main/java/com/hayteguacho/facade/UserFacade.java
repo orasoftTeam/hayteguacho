@@ -69,6 +69,7 @@ public class UserFacade {
             cs.execute();
             flag = cs.getString(5);
             System.out.println(flag);
+            cs.close();
             //System.out.println("com.infomedic.facade.UsuarioFacade.agregarUsuario(OK)");
         } catch (Exception e) {
             //System.out.println("com.infomedic.facade.UsuarioFacade.agregarUsuario(ERROR)");

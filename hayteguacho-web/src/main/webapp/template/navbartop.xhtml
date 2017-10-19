@@ -14,7 +14,9 @@
     </ui:remove>
     <b:navBar brand="#{bundle['titlePage']}" brandHref="#{request.contextPath}/index.xhtml" inverse="true" fixed="top">
         <b:navbarLinks >
-            <b:navLink value="#{bundle['titleEmpleos']}" href="#{request.contextPath}/pages/oferta/mostrarOfertas.xhtml"></b:navLink>
+            <b:navLink value="#{bundle['titleEmpleos']}" href="#{request.contextPath}/mostrarOfertas.xhtml"></b:navLink>
+            <b:navLink value="#{bundle['titleCandidato']}" href="#{request.contextPath}/registroCandidato.xhtml"></b:navLink>
+            <b:navLink value="#{bundle['titleEmpresa']}" href="#{request.contextPath}/registroEmpresa.xhtml"></b:navLink>
         </b:navbarLinks>
         <b:navbarLinks rendered="#{login.loggedIn}">
             <ui:repeat var="modulo" value="#{login.listaModulos}" varStatus="status" >
