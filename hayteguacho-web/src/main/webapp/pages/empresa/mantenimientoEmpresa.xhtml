@@ -20,21 +20,6 @@
                 }
             </h:outputScript>
             <h:form id="empresaForm">
-                <b:tabView tabPosition="left" contentStyle="padding:10px">
-                    <b:tab title="" style="background-color: white;">
-                        <b:row>
-                            <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
-                            </b:column>
-                            <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{empresaController.validareliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" disabled="true" />
-                            </b:column>
-                            <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{empresaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
-                            </b:column>
-                        </b:row>
-                    </b:tab>
-                </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleTabDatosAcceso']}">
                         <b:messages  />
@@ -49,9 +34,9 @@
                         <b:selectOneMenu value="#{empresaController.idCargo}"  label="#{bundle['lblNombreCargoEmpresa']}" >
                             <f:selectItems value="#{empresaController.listaCargo}" var="cargo" itemValue="#{cargo.idcargoempresa}" itemLabel="#{cargo.nombrecargoempresa}"/>
                         </b:selectOneMenu>
-                        <b:inputText size="10" id="idtel1" onkeyup="soloNumeros(this)" fieldId="idtel1" value="#{empresaController.empresa.telefono1}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
-                        <b:inputText size="10" id="idtel2" onkeyup="soloNumeros(this)" fieldId="idtel2" value="#{empresaController.empresa.telefono2}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
-                        <b:inputText size="10" id="idtel3" onkeyup="soloNumeros(this)" fieldId="idtel3" value="#{empresaController.empresa.telefono3}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                        <b:inputText size="10" id="idtel1" onkeyup="soloNumeros(this)" fieldId="idtel1" value="#{empresaController.empresa.telefono1}" label="#{bundle['lblTelEmpresa1']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                        <b:inputText size="10" id="idtel2" onkeyup="soloNumeros(this)" fieldId="idtel2" value="#{empresaController.empresa.telefono2}" label="#{bundle['lblTelEmpresa2']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                        <b:inputText size="10" id="idtel3" onkeyup="soloNumeros(this)" fieldId="idtel3" value="#{empresaController.empresa.telefono3}" label="#{bundle['lblTelEmpresa3']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
@@ -87,6 +72,10 @@
                         
                         <p:graphicImage value="#{empresaController.empresa.logo}" id="logoMostrar"  style="height: 70px;width: 70px"  />
                         <b:label id="msgFile" text="#{empresaController.msgFile}"></b:label>
+                          
+                        <div style="text-align: center;">
+                            <b:commandButton update="@form" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblbtnAgregar']}" look="warning" style="width:50%" />
+                        </div>
                     </b:tab>
                 </b:tabView>
             </h:form> 
