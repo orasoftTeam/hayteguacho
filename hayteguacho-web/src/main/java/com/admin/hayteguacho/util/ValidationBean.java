@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -339,5 +340,16 @@ public class ValidationBean {
 
    
     
+    public String generarRnadom(){
+    char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+StringBuilder sb = new StringBuilder();
+Random random = new Random();
+for (int i = 0; i < 20; i++) {
+    char c = chars[random.nextInt(chars.length)];
+    sb.append(c);
+}
+String output = sb.toString();
+return output;
     
+    }
 }

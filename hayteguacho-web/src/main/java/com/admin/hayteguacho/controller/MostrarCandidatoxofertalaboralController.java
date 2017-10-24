@@ -126,11 +126,11 @@ public class MostrarCandidatoxofertalaboralController {
                vb.lanzarMensaje("info", "lblVisorOfertas", "lblCVCxoferta");
                if (res.equals("0")) {
                
-                /*enviarEmail(cf.getCorreocandidato(),
+                enviarEmail(cf.getCorreocandidato(),
                     vb.getMsgBundle("lblAsuntoCV") + ' ' + fullName(cf),
                     vb.getMsgBundle("lblMensajeCV1") + ' '
                     + selectedOferta.getTituloofertalaboral()
-                    + ' ' + vb.getMsgBundle("lblMensajeCV2"));*/
+                    + ' ' + vb.getMsgBundle("lblMensajeCV2"));
             }
         }
         if (res.equals("0") || (!cxoferta.getEstadocandidatoxofertalaboral().equals("PO"))) {
@@ -207,11 +207,11 @@ public class MostrarCandidatoxofertalaboralController {
                 //vb.updateComponent("CxofertaForm:panelCxoferta");
                 vb.lanzarMensaje("info", "lblVisorOfertas", "lblPRCxoferta");
 
-                /*enviarEmail(selectedCandidato.getCorreocandidato(),
+                enviarEmail(selectedCandidato.getCorreocandidato(),
                         vb.getMsgBundle("lblAsuntoCV") + ' ' + fullName(selectedCandidato),
                         vb.getMsgBundle("lblMensajeCV1") + ' '
                         + selectedOferta.getTituloofertalaboral()
-                        + ' ' + vb.getMsgBundle("lblMensajePR2"));*/
+                        + ' ' + vb.getMsgBundle("lblMensajePR2"));
                 System.out.println("lblPRCxoferta");
                 limpiar();
             } else {
@@ -241,10 +241,10 @@ public class MostrarCandidatoxofertalaboralController {
                 vb.updateComponent("CxofertaForm:panelCxoferta");
                 vb.lanzarMensaje("info", "lblVisorOfertas", "lblFICxoferta");
 
-               /* enviarEmail(selectedCandidato.getCorreocandidato(), vb.getMsgBundle("lblAsuntoCV") + ' ' + fullName(selectedCandidato),
+                enviarEmail(selectedCandidato.getCorreocandidato(), vb.getMsgBundle("lblAsuntoCV") + ' ' + fullName(selectedCandidato),
                         vb.getMsgBundle("lblMensajeCV1") + ' '
                         + selectedOferta.getTituloofertalaboral()
-                        + ' ' + vb.getMsgBundle("lblMensajeFI2"));*/
+                        + ' ' + vb.getMsgBundle("lblMensajeFI2"));
                 System.out.println("lblFICxoferta");
                 limpiar();
             } else {
@@ -284,11 +284,11 @@ public class MostrarCandidatoxofertalaboralController {
             vb.updateComponent("CxofertaForm:panelCxoferta");
             vb.lanzarMensaje("info", "lblVisorOfertas", "lblELCxoferta");
 
-            /*enviarEmail(selectedCandidato.getCorreocandidato(),
+            enviarEmail(selectedCandidato.getCorreocandidato(),
                     vb.getMsgBundle("lblAsuntoCV") + ' ' + fullName(selectedCandidato),
                     vb.getMsgBundle("lblMensajeCV1") + ' '
                     + selectedOferta.getTituloofertalaboral()
-                    + ' ' + vb.getMsgBundle("lblMensajeEL2"));*/
+                    + ' ' + vb.getMsgBundle("lblMensajeEL2"));
 
             System.out.println("lblELCxoferta");
             limpiar();
