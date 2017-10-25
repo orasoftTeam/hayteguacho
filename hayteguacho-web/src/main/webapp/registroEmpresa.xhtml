@@ -69,6 +69,9 @@
                         <b:inputText size="10" id="paginaweb" fieldId="paginaweb" value="#{empresaController.empresa.paginaweb}" label="#{bundle['lblPagEmpresa']}" placeholder="#{bundle['lblPagReqEmpresa']}"/>
                         <p:fileUpload label="#{bundle['lblImageUpload']}" invalidFileMessage="#{bundle['lblFileInvalid']}" id="logoEmp" fileUploadListener="#{empresaController.handleFileUpload}" mode="advanced"
                                        auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        
+                        
+                        <p:graphicImage value="#{empresaController.empresa.logo}" id="logoMostrar"  style="height: 70px;width: 70px"  />
                         <b:label id="msgFile" text="#{empresaController.msgFile}"></b:label>
                         
                         <div style="text-align: center;">

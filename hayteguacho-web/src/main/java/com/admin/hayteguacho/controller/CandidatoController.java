@@ -12,6 +12,7 @@ import com.admin.hayteguacho.form.EmpresaForm;
 import com.admin.hayteguacho.form.PaisForm;
 import com.admin.hayteguacho.form.PuestoTrabajoForm;
 import com.admin.hayteguacho.form.UserForm;
+import com.admin.hayteguacho.util.RandomString;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.CandidatoFacade;
 import com.hayteguacho.facade.CargoEmpresaFacade;
@@ -23,6 +24,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -59,6 +61,7 @@ public class CandidatoController {
     private String destination=   appPath + File.separator + "pdf\\";
 
     private @Getter @Setter UploadedFile archivo;
+    private @Getter @Setter String imageConfirm;
     private @Getter @Setter List<CandidatoForm> listaCandidatos = new ArrayList<>();
     private @Getter @Setter CandidatoForm candidato = new CandidatoForm();
     private @Getter @Setter String msgFile;
@@ -182,7 +185,14 @@ public class CandidatoController {
                 validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
                 msgFile= validationBean.getMsgBundle("lblFileSuccess");
                 validationBean.updateComponent("candidatoForm:msgFile");
+                String name = archivo.getContentType();
+                String[] pieces = name.split(".");
+                RandomString rs =  new RandomString(8, ThreadLocalRandom.current());
+                String random = rs.nextString();
                 candidato.setArchivocurriculum("/pdf/"+event.getFile().getFileName());
+                imageConfirm = "resources/images/iconoCV.jpg";
+                validationBean.updateComponent("candidatoForm:cvMostrar");
+                validationBean.updateComponent("candidatoForm:linkM");
             }
             else{
                 if(validationBean.deleteFile(destination+archivo.getFileName())){
@@ -190,7 +200,11 @@ public class CandidatoController {
                   validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
                   msgFile= validationBean.getMsgBundle("lblFileSuccess");
                   validationBean.updateComponent("candidatoForm:msgFile");
-                  candidato.setArchivocurriculum("/pdf/"+event.getFile().getFileName());                  
+                  candidato.setArchivocurriculum("/pdf/"+event.getFile().getFileName());
+                  imageConfirm = "resources/images/iconoCV.jpg";
+                  validationBean.updateComponent("candidatoForm:cvMostrar");
+                  
+                  validationBean.updateComponent("candidatoForm:linkM");
                 }
             }
         } catch (IOException e) {

@@ -221,8 +221,8 @@
                             </b:column>
                         </b:row>
                         <f:facet name="footer">
-                            <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{membresiaController.cerrarDialogo()}">
-                                <f:ajax execute="@form" render="@none" />
+                            <b:commandButton  ajax="true"  value="#{bundle['lblBtnCerrar']}" look="primary"  onclick="$('.modalPseudoClass').modal('hide');ajax:membresiaController.cerrarDialogo();">
+                                
                             </b:commandButton>
 
                         </f:facet>

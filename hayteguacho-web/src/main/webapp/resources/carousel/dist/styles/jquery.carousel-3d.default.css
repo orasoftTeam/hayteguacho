@@ -90,7 +90,7 @@
 
 /* line 26, ../../styles/theme/jquery.carousel-3d.default.scss */
 [data-carousel-3d] [data-prev-button]:before {
-  content: url("./images/default/prev.png");
+  content: url("#{resource['carousel/dist/styles/prev.png']}");
   position: absolute;
   top: 0;
   bottom: 0;
@@ -102,7 +102,7 @@
 }
 /* line 39, ../../styles/theme/jquery.carousel-3d.default.scss */
 [data-carousel-3d] [data-next-button]:before {
-  content: url("./images/default/next.png");
+  content: url("#{resource['carousel/dist/styles/next.png']}");
   position: absolute;
   top: 0;
   bottom: 0;

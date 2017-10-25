@@ -53,7 +53,8 @@ import org.primefaces.model.UploadedFile;
 public class EmpresaController {
     private @Getter @Setter EmpresaForm empresa= new EmpresaForm();
     
-    private String destination="C:\\Users\\LAP\\Documents\\ArchivosASubir\\";
+    String appPath = System.getProperty("user.dir");
+    private String destination=appPath + File.separator + "logos\\";
     
     @EJB
     PaisFacade paisFacade;
@@ -119,6 +120,8 @@ public class EmpresaController {
             idMuni= empresa.getIdciudad();
             idTipologia= empresa.getIdtipologia();
         }
+        
+       
     }
     
     public void changeDepartamento(){
@@ -199,6 +202,9 @@ public class EmpresaController {
                     else if(flag.equals("-3")){
                         validationBean.lanzarMensaje("error", "titleEmpresa", "lblCandidatoExist");
                     }
+                    else if(flag.equals("-3")){
+                        validationBean.lanzarMensaje("error", "titleEmpresa", "lblCandidatoExist");
+                    }
             }
             UserForm usuario=loginBean.getUserLog();
             if(usuario!=null && usuario.getTipo().equals("E")){
@@ -232,8 +238,12 @@ public class EmpresaController {
                 archivo=event.getFile();
                 validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
                 msgFile= validationBean.getMsgBundle("lblFileSuccess");
+                /*String name = validationBean.generarRnadom();
+                String[] ext = event.getFile().getFileName().split(".");
+                String newname = name + "." + ext[1];*/
+                empresa.setLogo("/logos/"+event.getFile().getFileName());
                 validationBean.updateComponent("empresaForm:msgFile");
-                empresa.setLogo(destination+event.getFile().getFileName());
+                validationBean.updateComponent("empresaForm:logoMostrar");
             }
             else{
                 if(validationBean.deleteFile(destination+archivo.getFileName())){
@@ -241,19 +251,27 @@ public class EmpresaController {
                   validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
                   msgFile= validationBean.getMsgBundle("lblFileSuccess");
                   validationBean.updateComponent("empresaForm:msgFile");
-                  empresa.setLogo(destination+event.getFile().getFileName());                  
+                  empresa.setLogo("/logos/"+event.getFile().getFileName()); 
+                  validationBean.updateComponent("empresaForm:logoMostrar");
                 }
             }
         } catch (IOException e) {
             msgFile= validationBean.getMsgBundle("lblFileUploadError");
             validationBean.updateComponent("empresaForm:msgFile");
             if(archivo!=null){
-                if(validationBean.deleteFile(destination+archivo.getFileName())){
+                if(validationBean.deleteFile("/logos/"+archivo.getFileName())){
                     archivo=null;
                 }
             }
             empresa.setLogo(""); 
+            
+            validationBean.updateComponent("empresaForm:logoMostrar");
             e.printStackTrace();
         }
     }
+    
+    
+    
+    
+  
 }

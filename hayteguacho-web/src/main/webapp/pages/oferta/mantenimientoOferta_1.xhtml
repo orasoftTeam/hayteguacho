@@ -55,7 +55,7 @@
                     <b:tab title="#{bundle['titleOfertaEmpresa']}">
                         <b:messages  />
                         <b:row>
-                            <b:column col-md="12">
+                            <b:column col-md="4">
                                 <b:selectOneMenu value="#{ofertaController.oferta.idjornadalaboral}"  label="#{bundle['lblNombreJornadaEmpresa']}" 
                                                  >
                                     <f:selectItems value="#{jornadaController.listaJornadas}" var="jornada" itemValue="#{jornada.idjornadalaboral}" itemLabel="#{jornada.nombrejornadalaboral}"/>
@@ -92,15 +92,7 @@
                                 <b:inputTextarea value="#{ofertaController.oferta.habilidadesofertalaboral}"  label="#{bundle['lblOfertaHabilidades']}" placeholder="#{bundle['lblReqOfertaHabilidades']}" />
                                 <b:inputTextarea value="#{ofertaController.oferta.conocimientoofertalaboral}"  label="#{bundle['lblOfertaConocimientos']}" placeholder="#{bundle['lblReqOfertaConocimientos']}" />
                             </b:column>
-                            
-                        </b:row>
-                        </b:tab>
-                    </b:tabView>
-                        <p:separator></p:separator>
-                        <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
-                        <b:tab title="#{bundle['titleOfertaEmpresa']}">
-                        <b:row>
-                            <b:column col-md="12">
+                            <b:column col-md="8">
                                 <b:selectOneMenu id="estadoCmb" value="#{ofertaController.estadofilter}"  label="#{bundle['lblOfertaEstado']}" 
                                                  onchange="ajax:ofertaController.cambiarEstadoByFilter()">
                                     <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
@@ -146,7 +138,7 @@
                                             <p:separator></p:separator>
                                             <b:row>
                                                 <b:column col-md="2">
-                                                    <b:commandButton size="sm"  actionListener="#{ofertaController.onSelect(oferta)}" value="#{bundle['lblbtnVer']}" look="primary" style="width:100%" />
+                                                    <b:commandButton size="sm" update="@form" ajax="true" actionListener="#{ofertaController.onSelect(oferta)}" value="#{bundle['lblbtnVer']}" look="primary" style="width:100%" />
                                                 </b:column> 
                                             </b:row>
                                         </b:panel>
@@ -154,6 +146,7 @@
                                 </b:dataTable>                               
                             </b:column>
                         </b:row>
+                        <p:separator></p:separator>
                     </b:tab>
                 </b:tabView>
             </h:form> 
