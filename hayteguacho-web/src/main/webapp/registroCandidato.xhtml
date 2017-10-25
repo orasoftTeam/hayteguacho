@@ -45,8 +45,8 @@
                                         <b:inputSecret size="10" id="clave" fieldId="clave" value="#{candidatoController.candidato.contrasenacandidato}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}"/>
                                         <b:inputText size="10" id="nomCandidato" fieldId="nomCandidato" value="#{candidatoController.candidato.nombrecandidato}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqName']}"/>
                                         <b:inputText size="10" id="apellidoCandidato" fieldId="apellidoCandidato" value="#{candidatoController.candidato.apellidocandidato}" label="#{bundle['lblSecondName']}" placeholder="#{bundle['lblReqSecondName']}"/>
-                                        <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono1" fieldId="telefono1" value="#{candidatoController.candidato.telefono1candidato}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
-                                        <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono2" fieldId="telefono2" value="#{candidatoController.candidato.telefono2candidato}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                                        <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono1" fieldId="telefono1" value="#{candidatoController.candidato.telefono1candidato}" label="#{bundle['lblTelEmpresa1']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                                        <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono2" fieldId="telefono2" value="#{candidatoController.candidato.telefono2candidato}" label="#{bundle['lblTelEmpresa2']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
                                         <b:radiobutton value="#{candidatoController.candidato.generocandidato}" itemLabel="Masculino" itemValue="M"  />
                                         <b:radiobutton value="#{candidatoController.candidato.generocandidato}" itemLabel="Femino" itemValue="F"  />
                                         <b:selectOneMenu value="#{candidatoController.idcategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}" 
@@ -58,7 +58,11 @@
                                             <f:selectItems value="#{candidatoController.listaPuestos}" var="puesto" itemValue="#{puesto.idpuestotrabajo}" itemLabel="#{puesto.nombrepuestotrabajo}"/>
                                         </b:selectOneMenu>
                                         <p:fileUpload label="#{bundle['lblDocUpload']}" invalidFileMessage="#{bundle['lblDocUploadInvalid']}" id="docUpload" fileUploadListener="#{candidatoController.handleFileUpload}" mode="advanced"
-                                                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(doc|docx|pdf)$/" />
+                                                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(doc|docx|pdf)$/" /><br />
+                                        <h:outputLink id="linkM" value="#{request.contextPath}/#{candidatoController.candidato.archivocurriculum}"   target="_blank" >
+                                        <p:graphicImage id="cvMostrar"  style="height: 32px;width: 32px"  value="#{candidatoController.imageConfirm}"  />
+                                        </h:outputLink>
+                                        <br />
                                         <b:label id="msgFile" text="#{candidatoController.msgFile}"></b:label>
                                     </b:panelGrid>
                                     <p:separator></p:separator>
