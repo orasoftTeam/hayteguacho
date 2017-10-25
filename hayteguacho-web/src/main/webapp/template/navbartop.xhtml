@@ -12,24 +12,28 @@
                     Hint to editors: The menus follow the Chicago style of capitalization. Please capitalize everything but the "smaller" words. 
         -->
     </ui:remove>
-    <b:navBar brand="#{bundle['titlePage']}" brandHref="#{request.contextPath}/index.xhtml" inverse="true" fixed="top">
+
+    <b:navBar brand="#{bundle['titlePage']}" brandHref="#{request.contextPath}/index.xhtml" inverse="true" fixed="top" >
         <b:navbarLinks >
-            <b:navLink value="#{bundle['titleEmpleos']}" href="#{request.contextPath}/mostrarOfertas.xhtml"></b:navLink>
-            <b:navLink value="#{bundle['titleCandidato']}" href="#{request.contextPath}/registroCandidato.xhtml"></b:navLink>
-            <b:navLink value="#{bundle['titleEmpresa']}" href="#{request.contextPath}/registroEmpresa.xhtml"></b:navLink>
+            <b:navLink id="nav0" value="#{bundle['titleEmpleos']}" href="" ajax="true" onclick="ajax:login.activarLinks(0,'/mostrarOfertas.xhtml')" style="#{login.setearColor(0)}" ></b:navLink>
+            <b:navLink id="nav1" value="#{bundle['titleCandidato']}" href="" ajax="true" onclick="ajax:login.activarLinks(1,'/registroCandidato.xhtml')"  style="#{login.setearColor(1)}"></b:navLink>
+            <b:navLink id="nav2" value="#{bundle['titleEmpresa']}" href="" ajax="true" onclick="ajax:login.activarLinks(2,'/registroEmpresa.xhtml')"  style="#{login.setearColor(2)}"></b:navLink>
         </b:navbarLinks>
         <b:navbarLinks rendered="#{login.loggedIn}">
             <ui:repeat var="modulo" value="#{login.listaModulos}" varStatus="status" >
-                <b:navLink value="#{modulo.nombremenu}" href="#{request.contextPath.concat('/pages/').concat(modulo.opcion)}"
+                <b:navLink value="#{modulo.nombremenu}" href=""
+                           ajax="true" onclick="ajax:login.activarLinks(status.index+3,modulo.opcion)" 
                            rendered="#{login.obtenerListaOpciones(status.index).size() eq 0}"></b:navLink> 
-                <b:dropMenu value="#{modulo.nombremenu}" rendered="#{login.obtenerListaOpciones(status.index).size() > 0}">
+                           <b:dropMenu value="#{modulo.nombremenu}" rendered="#{login.obtenerListaOpciones(status.index).size() > 0}" style="#{login.setearColor(status.index+3)}" >
                     <ui:repeat var="menu" value="#{login.listaOpciones}" varStatus="status1">
-                        <b:navLink value="#{menu.nombremenu}" href="#{request.contextPath.concat('/pages/').concat(menu.opcion)}"></b:navLink>
+                        <b:navLink value="#{menu.nombremenu}" href=""
+                                   ajax="true" onclick="ajax:login.activarLinks(status.index+3,menu.opcion)" ></b:navLink>
                     </ui:repeat>
                 </b:dropMenu>
             </ui:repeat>
         </b:navbarLinks>
-        <h:form styleClass="navbar-form navbar-right">
+        <h:form id='lForm' styleClass="navbar-form navbar-right">
+            <h:inputHidden id="navBarIndex" value="#{login.indexNav}"></h:inputHidden>
             <b:navbarLinks rendered="#{login.loggedIn}">
                 <b:dropMenu value="#{login.userLog.nombre}">
                     <b:column col-md="12"  style="text-align: center;">
@@ -57,5 +61,4 @@
             </c:if>
         </h:form>
     </b:navBar>
-
 </ui:fragment>

@@ -8,11 +8,13 @@ package com.admin.hayteguacho.controller;
 import com.admin.hayteguacho.form.AplicarOfertaForm;
 import com.admin.hayteguacho.form.EmpresaForm;
 import com.admin.hayteguacho.form.OfertaForm;
+import com.admin.hayteguacho.form.TotalCategoriasForm;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.DepartamentoFacade;
 import com.hayteguacho.facade.EmpresaFacade;
 import com.hayteguacho.facade.MunicipioFacade;
 import com.hayteguacho.facade.OfertaFacade;
+import com.hayteguacho.facade.TotalFacade;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -49,6 +51,9 @@ public class MostrarOfertaController {
     
     MunicipioFacade muniFacade;
     
+    @EJB
+    TotalFacade totalFacade;
+    
     private @Getter @Setter String pretension="0";
     private @Getter @Setter boolean isTrabajando;
     
@@ -57,6 +62,9 @@ public class MostrarOfertaController {
     ValidationBean validationBean;
     
     private @Getter @Setter List<OfertaForm> listaOferta= new ArrayList<>();
+    
+    private @Getter @Setter List<TotalCategoriasForm> listaTotalCategoria= new ArrayList<>();
+    private @Getter @Setter List<TotalCategoriasForm> listaTotalCurriculum= new ArrayList<>();
     
     private @Getter @Setter int count=5;
     
@@ -83,6 +91,8 @@ public class MostrarOfertaController {
     public void init(){
         listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
         numreg= ofertaFacade.contarOfertas();
+        listaTotalCategoria= totalFacade.totalCategorias();
+        listaTotalCurriculum= totalFacade.totalCategoriasCurriculum();
         /*
         cssClases[0]="red result-text";
         cssClases[1]="teal result-text";
@@ -139,6 +149,24 @@ public class MostrarOfertaController {
             listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
         }
         setIddeptofilter("");
+    }
+    
+    public void cambiarCategoriaByFilterHome(String categoria){
+        idcategoriafilter= categoria;
+        if(!idcategoriafilter.equals("")){
+            count=5;
+            ini=0;
+            listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(idcategoriafilter, ini, count);
+            numreg= ofertaFacade.contarOfertasByCategoriaRange(idcategoriafilter);
+        }
+        else{
+            numreg= ofertaFacade.contarOfertas();
+            count=5;
+            ini=0;
+            listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
+        }
+        setIddeptofilter("");
+        loginBean.redireccionar("/mostrarOfertas.xhtml");
     }
     
     public void cambiarDeptoByFilter(){

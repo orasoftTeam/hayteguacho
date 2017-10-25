@@ -1,0 +1,17 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 10-24-2017, 02:07:25 PM
+    Author     : LAP
+*/
+
+body{
+    background-image: url('/resources/images/empresaimg.png');                   
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-position:center; 
+}
+

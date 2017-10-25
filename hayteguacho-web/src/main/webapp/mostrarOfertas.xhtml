@@ -99,10 +99,9 @@
                                                 <h:outputText value="#{mostrarController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}"></h:outputText>                                           
                                             </b:panelGrid>
                                             <p:separator></p:separator>
-                                            <h:panelGrid columns="1">
-                                                <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}" look="warning" style="width:100%" rendered="#{mostrarController.puedeAplicar}" /></p>
-                                                <p:separator rendered="#{mostrarController.puedeAplicar}"></p:separator>
-                                                <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" /></p>
+                                            <h:panelGrid columns="2">
+                                                <b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" />
+                                                <b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}"  look="warning" style="width:100%; margin-left: 30%;" rendered="#{mostrarController.puedeAplicar}" />
                                             </h:panelGrid>
                                         </b:column>
                                     </b:row>                      

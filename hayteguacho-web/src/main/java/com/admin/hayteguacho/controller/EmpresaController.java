@@ -152,7 +152,7 @@ public class EmpresaController {
                 && validationBean.validarSoloLetras(empresa.getApellidocontacto().replace(" ", ""), "warn", "titleEmpresa", "lblSoloLetras")
                 && validationBean.validarLongitudCampo(empresa.getApellidocontacto().replace(" ", ""), 4, 30,"warn", "titleEmpresa", "lblLongitudApellidoContactoEmpresa")
                 && validationBean.validarSeleccion(empresa.getIdcargoempresa(),"warn", "titleEmpresa", "lblSelectRegCargo")
-                && validationBean.validarLongitudCampo(empresa.getTelefono1(), 8, 8, "warn", "titleEmpresa", "lblTelReq")
+                && validationBean.validarLongitudCampo(empresa.getTelefono1(), 7, 15, "warn", "titleEmpresa", "lblTelReq")
                 &&
                 validationBean.validarCampoVacio(empresa.getNombreempresa().replace(" ", ""), "warn", "titleEmpresa", "lblNameReqEmpresa")
                 && validationBean.validarLongitudCampo(empresa.getNombreempresa().replace(" ", ""), 4, 30,"warn", "titleEmpresa", "lblLongitudNombreEmpresa")
@@ -193,8 +193,11 @@ public class EmpresaController {
                     else if(flag.equals("-1")){
                         validationBean.lanzarMensaje("warn", "titleEmpresa", "lblExistReg");
                     }
-                    else{
+                    else if(flag.equals("-2")){
                         validationBean.lanzarMensaje("error", "titleEmpresa", "lblGuardarError");
+                    }
+                    else if(flag.equals("-3")){
+                        validationBean.lanzarMensaje("error", "titleEmpresa", "lblCandidatoExist");
                     }
             }
             UserForm usuario=loginBean.getUserLog();

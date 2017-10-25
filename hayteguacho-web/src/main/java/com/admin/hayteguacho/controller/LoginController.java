@@ -98,6 +98,8 @@ public class LoginController implements Serializable {
     private @Getter
     @Setter
     boolean isMenu = false;
+    
+    private @Getter @Setter int indexNav=-1;
 
     @PostConstruct
     public void init() {
@@ -116,6 +118,27 @@ public class LoginController implements Serializable {
             }
         }
         return false;
+    }
+    
+    public void activarLinks(int indice, String opcion){
+        indexNav= indice;
+        if(indice < 3){
+            redireccionar(opcion);
+        }
+        else{
+            redireccionar("/pages/"+opcion);
+        }
+    }
+    
+    public String setearColor(int indice){
+        String color="";
+        if(indice== indexNav){
+            color="background-color:green;";
+        }
+        else{
+            color="background-color:transparent;";
+        }
+        return color;
     }
 
     public void limpiar() {

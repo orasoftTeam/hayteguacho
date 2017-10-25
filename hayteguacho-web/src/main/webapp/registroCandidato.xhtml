@@ -18,8 +18,20 @@
                 { 
                 obj.value = (obj.value + '').replace(/[^0-9]/g, '');
                 }
+                
+                $(document).ready(function() {
+                    var ancho= $(window).width();
+                    var alto= $(window).height();
+                    if(ancho &#60; 768){
+                        $("#candidatoContainer").css('background-image', 'none');
+                    }
+                });
             </h:outputScript>
-            <b:jumbotron>
+            <b:jumbotron id="candidatoContainer" style="background-color: white; background-image: url(#{resource['images/imgcandidato.png']});  
+                         
+                         background-repeat:no-repeat;
+                         background-size:100% 100%;
+                         background-position:center; ">
                 <b:container>
                     <b:row>
                         <b:column col-md="4">
