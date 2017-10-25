@@ -34,9 +34,9 @@
                         <b:selectOneMenu value="#{empresaController.idCargo}"  label="#{bundle['lblNombreCargoEmpresa']}" >
                             <f:selectItems value="#{empresaController.listaCargo}" var="cargo" itemValue="#{cargo.idcargoempresa}" itemLabel="#{cargo.nombrecargoempresa}"/>
                         </b:selectOneMenu>
-                        <b:inputText size="10" id="idtel1" onkeyup="soloNumeros(this)" fieldId="idtel1" value="#{empresaController.empresa.telefono1}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
-                        <b:inputText size="10" id="idtel2" onkeyup="soloNumeros(this)" fieldId="idtel2" value="#{empresaController.empresa.telefono2}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
-                        <b:inputText size="10" id="idtel3" onkeyup="soloNumeros(this)" fieldId="idtel3" value="#{empresaController.empresa.telefono3}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                        <b:inputText size="10" id="idtel1" onkeyup="soloNumeros(this)" fieldId="idtel1" value="#{empresaController.empresa.telefono1}" label="#{bundle['lblTelEmpresa1']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                        <b:inputText size="10" id="idtel2" onkeyup="soloNumeros(this)" fieldId="idtel2" value="#{empresaController.empresa.telefono2}" label="#{bundle['lblTelEmpresa2']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                        <b:inputText size="10" id="idtel3" onkeyup="soloNumeros(this)" fieldId="idtel3" value="#{empresaController.empresa.telefono3}" label="#{bundle['lblTelEmpresa3']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
