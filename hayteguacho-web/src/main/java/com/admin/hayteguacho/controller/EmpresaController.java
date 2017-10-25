@@ -202,9 +202,6 @@ public class EmpresaController {
                     else if(flag.equals("-3")){
                         validationBean.lanzarMensaje("error", "titleEmpresa", "lblCandidatoExist");
                     }
-                    else if(flag.equals("-3")){
-                        validationBean.lanzarMensaje("error", "titleEmpresa", "lblCandidatoExist");
-                    }
             }
             UserForm usuario=loginBean.getUserLog();
             if(usuario!=null && usuario.getTipo().equals("E")){
