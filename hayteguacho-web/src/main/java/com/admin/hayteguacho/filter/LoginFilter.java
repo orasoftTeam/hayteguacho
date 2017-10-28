@@ -38,16 +38,14 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String parametro = ((HttpServletRequest) request).getParameter("opcion");
         String contextPath = ((HttpServletRequest) request).getContextPath();
-        parametro= parametro==null?"-2":parametro;
+        parametro = parametro == null ? "-2" : parametro;
         loginBean.activarLinks(Integer.parseInt(parametro), "");
-        if(parametro.equals("-2")){
-            ((HttpServletResponse) response).sendRedirect(contextPath + "/index.xhtml");
-        }
-        if (Integer.parseInt(parametro) >= 3) {
-            String[] url = ((HttpServletRequest) request).getRequestURI().toString().split("/pages/");
-            System.err.println("el parametro es: " + parametro);
-            System.err.println(url);
-            System.err.println(url[1]);
+        String path = ((HttpServletRequest) request).getRequestURI().toString();
+        String[] url = null;
+        if (path.contains("/pages/")) {
+            url = path.split("/pages/");
+
+            //String[] url = path.split("/pages/");
             //String contextPath = ((HttpServletRequest) request).getContextPath();
             if (loginBean == null || !loginBean.isLoggedIn()) {
                 if (!contextPath.contains("/faces")) {
