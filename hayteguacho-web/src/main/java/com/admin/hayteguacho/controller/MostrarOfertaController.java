@@ -166,7 +166,7 @@ public class MostrarOfertaController {
             listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
         }
         setIddeptofilter("");
-        loginBean.redireccionar("/mostrarOfertas.xhtml");
+        loginBean.redireccionar("/mostrarOfertas.xhtml?opcion=0");
     }
     
     public void cambiarDeptoByFilter(){

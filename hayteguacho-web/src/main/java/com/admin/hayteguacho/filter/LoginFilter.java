@@ -5,8 +5,6 @@
  */
 package com.admin.hayteguacho.filter;
 
-
-
 import com.admin.hayteguacho.controller.LoginController;
 import java.io.IOException;
 import javax.el.ELContext;
@@ -21,56 +19,62 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
- 
+
 /**
- * Filter checks if LoginBean has loginIn property set to true.
- * If it is not set then request is being redirected to the login.xhml page.
- * 
+ * Filter checks if LoginBean has loginIn property set to true. If it is not set
+ * then request is being redirected to the login.xhml page.
+ *
  * @author itcuties
  *
  */
 public class LoginFilter implements Filter {
-    
+
     @Inject
     LoginController loginBean;
- 
+
     /**
      * Checks if user is logged in. If not it redirects to the login.xhtml page.
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String[] url= ((HttpServletRequest)request).getRequestURI().toString().split("/pages/");
-        System.err.println(url);
-        System.err.println(url[1]);
-        String contextPath = ((HttpServletRequest)request).getContextPath();
-        if (loginBean == null || !loginBean.isLoggedIn()) {
-            if(!contextPath.contains("/faces")){
-                ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
-                loginBean.limpiar();
-            }
+        String parametro = ((HttpServletRequest) request).getParameter("opcion");
+        String contextPath = ((HttpServletRequest) request).getContextPath();
+        parametro= parametro==null?"-2":parametro;
+        loginBean.activarLinks(Integer.parseInt(parametro), "");
+        if(parametro.equals("-2")){
+            ((HttpServletResponse) response).sendRedirect(contextPath + "/index.xhtml");
         }
-        else{
-            if(loginBean.getUserLog()!=null){
-                if(loginBean.getUserLog().getTipo().equals("E") && !loginBean.isMembresia()){
-                    if(!url[1].equals("membresia/vistaMembresia.xhtml"))
-                        ((HttpServletResponse)response).sendRedirect(contextPath + "/pages/membresia/vistaMembresia.xhtml");
+        if (Integer.parseInt(parametro) >= 3) {
+            String[] url = ((HttpServletRequest) request).getRequestURI().toString().split("/pages/");
+            System.err.println("el parametro es: " + parametro);
+            System.err.println(url);
+            System.err.println(url[1]);
+            //String contextPath = ((HttpServletRequest) request).getContextPath();
+            if (loginBean == null || !loginBean.isLoggedIn()) {
+                if (!contextPath.contains("/faces")) {
+                    ((HttpServletResponse) response).sendRedirect(contextPath + "/index.xhtml");
+                    loginBean.limpiar();
                 }
-                else if(!loginBean.buscarMenus(url[1])){
-                    ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
+            } else if (loginBean.getUserLog() != null) {
+                if (loginBean.getUserLog().getTipo().equals("E") && !loginBean.isMembresia()) {
+                    if (!url[1].equals("membresia/vistaMembresia.xhtml")) {
+                        ((HttpServletResponse) response).sendRedirect(contextPath + "/pages/membresia/vistaMembresia.xhtml");
+                    }
+                } else if (!loginBean.buscarMenus(url[1])) {
+                    ((HttpServletResponse) response).sendRedirect(contextPath + "/index.xhtml");
                     loginBean.limpiar();
                 }
             }
         }
-         
         chain.doFilter(request, response);
-             
+
     }
- 
+
     public void init(FilterConfig config) throws ServletException {
         // Nothing to do here!
     }
- 
+
     public void destroy() {
         // Nothing to do here!
-    }   
+    }
 
 }

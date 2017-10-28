@@ -34,15 +34,13 @@
                 });
                 });
             </h:outputScript>
-            <!--
-            <h:outputStylesheet name="css/styles.css"></h:outputStylesheet>
-            -->
-            <h:outputScript name="js/jquery-1.11.0.min.js">
-
-            </h:outputScript>
-            <h:outputScript name="js/responsiveCarousel.min.js">
-
-            </h:outputScript>
+            <h:outputStylesheet>
+                body{
+                    background-image: url("#{resource['images:fondo.png']}");
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                }
+            </h:outputStylesheet>
             <h:form id='mostrarForm'>
                 <b:jumbotron>
                     <b:container>

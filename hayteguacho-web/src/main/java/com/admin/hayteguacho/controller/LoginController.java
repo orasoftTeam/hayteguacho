@@ -121,13 +121,27 @@ public class LoginController implements Serializable {
     }
     
     public void activarLinks(int indice, String opcion){
-        indexNav= indice;
+        if(indice==-2){
+            if(indexNav <0){
+                indexNav=0;
+            }
+        }
+        else{
+            indexNav = indice;
+        }
+        /*
+        if(!(indice == -2 && indexNav < 0)){
+           indexNav= indice; 
+        }
+        /*
+        System.err.println("el indice es: "+ indice +" y su pagina es:"+opcion);
         if(indice < 3){
             redireccionar(opcion);
         }
         else{
             redireccionar("/pages/"+opcion);
         }
+        */
     }
     
     public String setearColor(int indice){
@@ -138,6 +152,7 @@ public class LoginController implements Serializable {
         else{
             color="background-color:transparent;";
         }
+        
         return color;
     }
 
