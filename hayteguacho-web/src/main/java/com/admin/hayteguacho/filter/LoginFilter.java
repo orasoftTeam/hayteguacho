@@ -63,9 +63,13 @@ public class LoginFilter implements Filter {
                 }
             }
         }
+        /*
         else if(path.contains("indexPaises.xhtml")){
+            System.err.println("pasó en el filtro al indexPaises");
             loginBean.activarLinks(Integer.parseInt("-2"), "");
+            loginBean.setearColor(-5);
         }
+        */
         chain.doFilter(request, response);
 
     }

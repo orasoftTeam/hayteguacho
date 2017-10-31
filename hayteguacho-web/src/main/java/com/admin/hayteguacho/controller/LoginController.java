@@ -138,7 +138,6 @@ public class LoginController implements Serializable {
         else{
             color="background-color:transparent;";
         }
-        
         return color;
     }
 
