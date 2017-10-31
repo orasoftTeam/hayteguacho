@@ -74,6 +74,8 @@ public class OfertaCandidatoController {
     
     private @Getter @Setter String iddepto;
     
+    private @Getter @Setter String pais;
+    
     private @Getter @Setter boolean chequeado;
 
     private @Getter @Setter List<OfertaForm> listaOfertas = new ArrayList<>();
@@ -93,14 +95,14 @@ public class OfertaCandidatoController {
     @PostConstruct
     public void init() {
         idempresa= loginBean.getUserLog().getIdentificador();
-            String pais= Locale.getDefault().getDisplayCountry();
+            pais= loginBean.getPais();
             List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
             if(!tmp.isEmpty()){
                 listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
             }
             oferta.setIdofertalaboral("0");
             if(loginBean.getUserLog().getTipo().equals("E")){
-                listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+                listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(pais,idempresa);
                 esEmpresa= true;
             }
             else if(loginBean.getUserLog().getTipo().equals("C")){
@@ -121,10 +123,10 @@ public class OfertaCandidatoController {
     
     public void cambiarCategoriaByFilter(){
         if(!idcategoriafilter.equals("")){
-            listaOfertas= ofertaFacade.obtenerOfertasByCategoria(idcategoriafilter, idempresa);
+            listaOfertas= ofertaFacade.obtenerOfertasByCategoria(pais,idcategoriafilter, idempresa);
         }
         else{
-            listaOfertas= ofertaFacade.obtenerOfertas();
+            listaOfertas= ofertaFacade.obtenerOfertas(pais);
         }
         listaOfertasEliminar.clear();
         validationBean.updateComponent("ofertasForm:ofertaTbl");
@@ -134,10 +136,10 @@ public class OfertaCandidatoController {
     
     public void cambiarEstadoByFilter(){
         if(!estadofilter.equals("")){
-            listaOfertas= ofertaFacade.obtenerOfertasByIdEstado(estadofilter,idempresa);
+            listaOfertas= ofertaFacade.obtenerOfertasByIdEstado(pais,estadofilter,idempresa);
         }
         else{
-            listaOfertas= ofertaFacade.obtenerOfertas();
+            listaOfertas= ofertaFacade.obtenerOfertas(pais);
         }
         listaOfertasEliminar.clear();
         validationBean.updateComponent("ofertasForm:ofertaTbl");

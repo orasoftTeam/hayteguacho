@@ -101,7 +101,7 @@ public class EmpresaController {
     
     @PostConstruct
     public void init(){
-        String pais= Locale.getDefault().getDisplayCountry();
+        String pais= loginBean.getPais();
         empresa.setNompais(pais.toUpperCase());
         List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
         if(!tmp.isEmpty()){

@@ -21,10 +21,12 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 //import javax.faces.bean.ManagedBean;
 //import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import lombok.Getter;
@@ -58,48 +60,32 @@ public class LoginController implements Serializable {
     @EJB
 
     private ValidationBean validationBean;
+    
+    
+    @Inject
+    private MostrarOfertaController ofertas;
 
-    private @Getter
-    @Setter
-    String idCompany = "";
-    private @Getter
-    @Setter
-    String idRol = "";
-    private @Getter
-    @Setter
-    String usuario;
-    private @Getter
-    @Setter
-    String password;
+    private @Getter @Setter String idCompany = "";
+    private @Getter @Setter String idRol = "";
+    private @Getter @Setter String usuario;
+    private @Getter @Setter String password;
 
-    private @Getter
-    @Setter
-    com.admin.hayteguacho.form.UserForm userLog;
+    private @Getter @Setter com.admin.hayteguacho.form.UserForm userLog;
 
-    private @Getter
-    @Setter
-    String nombreUsuario;
+    private @Getter @Setter String nombreUsuario;
 
-    private @Getter
-    @Setter
-    boolean loggedIn;
+    private @Getter @Setter boolean loggedIn;
 
-    private @Getter
-    @Setter
-    boolean isMembresia;
+    private @Getter @Setter boolean isMembresia;
 
-    private @Getter
-    @Setter
-    List<MenuForm> listaModulos = new ArrayList<>();
-    private @Getter
-    @Setter
-    List<MenuForm> listaOpciones = new ArrayList<>();
+    private @Getter @Setter List<MenuForm> listaModulos = new ArrayList<>();
+    private @Getter @Setter List<MenuForm> listaOpciones = new ArrayList<>();
 
-    private @Getter
-    @Setter
-    boolean isMenu = false;
+    private @Getter @Setter boolean isMenu = false;
     
     private @Getter @Setter int indexNav=-1;
+    
+    private @Getter @Setter String pais="";
 
     @PostConstruct
     public void init() {
@@ -123,7 +109,7 @@ public class LoginController implements Serializable {
     public void activarLinks(int indice, String opcion){
         if(indice==-2){
             if(indexNav <0){
-                indexNav=0;
+                indexNav=-1;
             }
         }
         else{
@@ -259,7 +245,7 @@ public class LoginController implements Serializable {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         session.invalidate();
-        String pag = "/index.xhtml";
+        String pag = "/indexPaises.xhtml";
         if (userLog.getTipo().equals("E")) {
             String log = userFacade.actualizarLogUser(userLog, "OUT", "A");
             if (log.equals("1")) {
@@ -277,6 +263,13 @@ public class LoginController implements Serializable {
             }
         }
         redireccionar(pag);
+    }
+    
+    public void seleccionarPais(String pais){
+        this.pais= pais;
+        ofertas.setPais(pais);
+        ofertas.init();
+        redireccionar("/mostrarOfertas.xhtml?opcion=0");
     }
 
     public void redireccionar(String pag) {

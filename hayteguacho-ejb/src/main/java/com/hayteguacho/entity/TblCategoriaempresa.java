@@ -5,6 +5,8 @@
  */
 package com.hayteguacho.entity;
 
+
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,6 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "TBL_CATEGORIAEMPRESA")
 @XmlRootElement
+
+
 @NamedQueries({
     @NamedQuery(name = "TblCategoriaempresa.findAll", query = "SELECT t FROM TblCategoriaempresa t"),
     @NamedQuery(name = "TblCategoriaempresa.findByIdcategoria", query = "SELECT t FROM TblCategoriaempresa t WHERE t.idcategoria = :idcategoria"),

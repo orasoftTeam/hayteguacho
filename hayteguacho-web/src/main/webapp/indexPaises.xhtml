@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet>
+                body{
+                    background-image: url("#{resource['images:fondo.png']}");
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                    background-color: #EEFAF7;
+                }
+                body a{
+                    font-weight:bold;
+                    color: #34495E;
+                    
+                }
+            </h:outputStylesheet>
+            <h:form id='paisesForm'>
+                    <b:container style="text-align: center; font-size:  2.5em;">
+                        <b:row>
+                            <p style=" 
+                               font-weight:bold;
+                               font-size:1em;
+                               color:white;
+                               font-family:'Helvetica','Verdana','Monaco',sans-serif;">
+                                #{bundle['titleIndexPaises']}</p>
+                                <h2 style="color:black; margin-top: -1%;">#{bundle['titleSeleccionaPais']}</h2>
+                                <br></br>
+                        </b:row>
+                        <b:row>
+                            <b:column col-md="2" style="margin-left: -4%;">
+                            </b:column>
+                            <b:column col-md="3">
+                                <h:graphicImage library="images" name="belice.png" width="200" height="150" />
+                                <br></br>
+                                <p:commandLink value="#{bundle['titleBelice']}" action="#{login.seleccionarPais(bundle['titleBelice'])}" ></p:commandLink>
+                            </b:column>
+                            <b:column col-md="3">
+                                <h:graphicImage library="images" name="guatemala.gif" width="200" height="150" />
+                                <br></br>
+                                <p:commandLink value="#{bundle['titleGuatemala']}" action="#{login.seleccionarPais(bundle['titleGuatemala'])}" ></p:commandLink>
+                            </b:column>
+                            <b:column col-md="3">
+                                <h:graphicImage library="images" name="el-salvador.jpg" width="200" height="150" />
+                                <br></br>
+                                <p:commandLink value="#{bundle['titleElSalvador']}" action="#{login.seleccionarPais(bundle['titleElSalvador'])}"  ></p:commandLink>
+                            </b:column>
+                            <b:column col-md="2" style="margin-left: -4%;">
+                            </b:column>
+                            <b:column col-md="3">
+                                <h:graphicImage library="images" name="honduras.gif" width="200" height="150" />
+                                <br></br>
+                                <p:commandLink value="#{bundle['titleHonduras']}" action="#{login.seleccionarPais(bundle['titleHonduras'])}" ></p:commandLink>
+                            </b:column>
+                            <b:column col-md="3">
+                                <h:graphicImage library="images" name="nicaragua.png" width="200" height="150" />
+                                <br></br>
+                                <p:commandLink value="#{bundle['titleNicaragua']}" action="#{login.seleccionarPais(bundle['titleNicaragua'])}" ></p:commandLink>
+                            </b:column>
+                            <b:column col-md="3">
+                                <h:graphicImage library="images" name="panama.jpg" width="200" height="150" />
+                                <br></br>
+                                <p:commandLink value="#{bundle['titlePanama']}" action="#{login.seleccionarPais(bundle['titlePanama'])}" ></p:commandLink>
+                            </b:column>
+                        </b:row>
+                    </b:container>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

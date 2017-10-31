@@ -73,6 +73,8 @@ public class OfertaController {
     
     private @Getter @Setter String iddepto;
     
+    private @Getter @Setter String pais;
+    
     private @Getter @Setter boolean chequeado;
 
     private @Getter @Setter List<OfertaForm> listaOfertas = new ArrayList<>();
@@ -87,7 +89,7 @@ public class OfertaController {
 
     @PostConstruct
     public void init() {
-        String pais= Locale.getDefault().getDisplayCountry();
+        pais= loginBean.getPais();
         List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
         if(!tmp.isEmpty()){
             listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
@@ -95,7 +97,7 @@ public class OfertaController {
         oferta.setIdofertalaboral("0");
         if(loginBean.getUserLog()!=null){
             idempresa= loginBean.getUserLog().getIdentificador();
-            listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+            listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(pais,idempresa);
         }
     }
     
@@ -112,10 +114,10 @@ public class OfertaController {
     
     public void cambiarCategoriaByFilter(){
         if(!idcategoriafilter.equals("")){
-            listaOfertas= ofertaFacade.obtenerOfertasByCategoria(idcategoriafilter, idempresa);
+            listaOfertas= ofertaFacade.obtenerOfertasByCategoria(pais,idcategoriafilter, idempresa);
         }
         else{
-            listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+            listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(pais,idempresa);
             //listaOfertas= ofertaFacade.obtenerOfertas();
         }
         setChequeado(false);
@@ -127,11 +129,11 @@ public class OfertaController {
     
     public void cambiarEstadoByFilter(){
         if(!estadofilter.equals("")){
-            listaOfertas= ofertaFacade.obtenerOfertasByIdEstado(estadofilter,idempresa);
+            listaOfertas= ofertaFacade.obtenerOfertasByIdEstado(pais,estadofilter,idempresa);
         }
         else{
             //listaOfertas= ofertaFacade.obtenerOfertas();
-            listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+            listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(pais,idempresa);
         }
         setChequeado(false);
         listaOfertasEliminar.clear();
@@ -212,7 +214,7 @@ public class OfertaController {
                }
                
                limpiar();
-               listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+               listaOfertas = ofertaFacade.obtenerOfertasByIdEmpresa(pais,idempresa);
                
         }
     }
@@ -246,7 +248,7 @@ public class OfertaController {
         }
         validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
         listaOfertasEliminar= new ArrayList<>();
-        listaOfertas= ofertaFacade.obtenerOfertasByIdEmpresa(idempresa);
+        listaOfertas= ofertaFacade.obtenerOfertasByIdEmpresa(pais,idempresa);
         limpiar();
         
     }

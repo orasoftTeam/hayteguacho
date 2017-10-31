@@ -63,6 +63,9 @@ public class LoginFilter implements Filter {
                 }
             }
         }
+        else if(path.contains("indexPaises.xhtml")){
+            loginBean.activarLinks(Integer.parseInt("-2"), "");
+        }
         chain.doFilter(request, response);
 
     }
