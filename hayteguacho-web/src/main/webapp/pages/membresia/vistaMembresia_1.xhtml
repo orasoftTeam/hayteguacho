@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet library="carousel/dist/styles" name="jquery.carousel-3d.default.css" />
+            <h:outputScript library="carousel/bower_components/jquery" name="jquery.js" />
+            <h:outputScript library="carousel/bower_components/javascript-detect-element-resize" name="jquery.resize.js" />
+            <h:outputScript library="carousel/bower_components/waitForImages/dist" name="jquery.waitforimages.js" />
+            <h:outputScript library="carousel/bower_components/modernizr" name="modernizr.js" />
+            <h:outputScript library="carousel/dist" name="jquery.carousel-3d.js" />
+            <h:outputScript target="body">
+               function soloNumerosConPunto(obj)
+               {
+               obj.value = (obj.value + '').replace(/[^0-9]/g,'');
+               }
+           </h:outputScript>
+            <style>
+                .panel-footer{
+                    background-color: lightgray;
+                }
+
+
+            </style>
+
+            <h:form id="membresiaForm">
+                <!--<b:tabView tabPosition="center" contentStyle="border: 1px solid #ddd;padding:30px">
+                    <b:tab title="" style="background-color: white;">-->
+                <div class='wrapper'>
+                    <h:outputText escape="false" value="#{membresiaController.opentag}" />
+                    <b:panel collapsible="false" style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px;text-align: center" look="primary">
+                        <f:facet name="heading">
+
+                            <h:outputText style="text-align: center" value="#{bundle['lblMemBienvenido']}" />
+
+                        </f:facet>
+                        <h:outputText value="#{bundle['lblMemDefault']}"/>
+                    </b:panel>
+                    <ui:repeat value="#{membresiaController.listaMembresias}" var="mem">
+                        <div style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px">
+                            <b:panel collapsible="false"  style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px;text-align: center;background-color: lightgrey;font-family: 'Times New Roman', Times, serif"  look="primary" >
+                                <f:facet name="heading" >
+
+                                    <h:outputText  value="#{mem.titulomembresia}" style="font-size: 20px"/>
+
+                                </f:facet>
+                                <ul >
+                                    <li><b>#{bundle['lblTipoPeriodoMemMembresia']} </b><b:badge style="margin-left:10px; background-color:green" value="#{membresiaController.getNombreTipoPeriodoMembresia(mem)}"  /></li>
+                                    <li><b>#{bundle['lblPrecioMembresia']} </b> <b:badge style="margin-left:10px; background-color:coral" value="$ #{membresiaController.parse(mem.preciomembresia)}"  /></li>
+                                    
+                                    <li><b>#{bundle['lblCantidadOfertaMembresia']} </b><b:badge style="margin-left:10px; background-color:yellow" value="#{mem.cantidadoferta}"  /></li>
+                                    <li><b>#{bundle['lblCantidadUserMembresia']} </b><b:badge style="margin-left:10px; background-color:red" value="#{mem.cantidaduser}"  /></li>
+                                </ul>
+                                <f:facet name="footer" >
+                                    <b:commandButton  ajax="false"  value="Mas Info" look="info" style="margin: 10px" action="#{membresiaController.mostrarInfo(mem)}"><f:ajax execute="@form" render="modalForm" /></b:commandButton>
+                                    <b:commandButton ajax="false" value="Contratar" look="success" action="#{membresiaController.mostrarCon(mem)}" ><f:ajax execute="@form" render="modalForm" /></b:commandButton>
+                                </f:facet>
+                            </b:panel>
+
+                        </div>
+
+
+                    </ui:repeat>
+
+
+
+
+                    <h:outputText escape="false" value="#{membresiaController.closetag}" />
+
+
+                </div>
+
+
+
+                <!-- </b:tab>
+             </b:tabView>-->
+            </h:form>
+
+            <h:form id="modalForm">
+
+
+                <b:modal  id="imodal" title="#{membresiaController.membresia.titulomembresia}" styleClass="modalPseudoClass" closable="false">
+                    <b:panel id="calculosPanel" rendered="#{membresiaController.modalContratar}">
+                         <b:row>
+                            <b:column span="6">
+                                <h:outputText value="#{bundle['lblOfertasExtra']}" style="font-weight: bold"/>
+
+                            </b:column>
+                            <b:column span="6">
+                                <h:inputText onkeyup="calc(this.value)" class="elemento" value="#{membresiaController.mef.cantidadofertasextra}"/>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column span="6">
+                                <h:outputText value="#{bundle['lblPrecioOfertaMembresia']}" style="font-weight: bold"/>
+                            </b:column>
+                            <b:column span="6">
+                                <h:outputText value="$#{membresiaController.parse(membresiaController.membresia.precioxoferta)}" style="font-weight: bold" />
+                                <h:inputText value="#{membresiaController.membresia.precioxoferta}" class="precio"  readonly="true" style="display: none"/>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column span="6">
+                                <h:outputText value="#{bundle['lblTotalOfertasExtra']}" style="font-weight: bold"/>
+                            </b:column>
+                            <b:column span="6">
+                                <h:outputText class="lbltotal" style="font-weight: bold" value="$0"/>
+                                <h:inputText class="total"  readonly="true" style="display: none"/>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column span="6">
+                                <h:outputText value="#{bundle['lblCantidadOfertas']}" style="font-weight: bold"/>
+                            </b:column>
+                            <b:column span="6">
+                                <h:outputText class="lbltotalofertas" style="font-weight: bold" value="#{membresiaController.membresia.cantidadoferta}"/>
+                                <h:inputText class="totalofertas" style="display: none" readonly="true" value="#{membresiaController.mef.cantidadcontratada}" />
+                                <h:inputText value="#{membresiaController.membresia.cantidadoferta}" class="cantidad" style="display: none" />
+                            </b:column>
+                        </b:row>
+                         <b:row>
+                            <b:column span="6">
+                                <h:outputText value="#{bundle['lblCantidadOfertaMembresias']}" style="font-weight: bold"/>
+                            </b:column>
+                            <b:column span="6">
+                                <h:outputText style="font-weight: bold" value="#{membresiaController.membresia.cantidadoferta}"/>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column span="6">
+                                <h:outputText value="#{bundle['lblPrecioOriginalMembresia']}" style="font-weight: bold"/>
+                            </b:column>
+                            <b:column span="6">
+                                <h:outputText style="font-weight: bold" value="$#{membresiaController.parse(membresiaController.membresia.preciomembresia)}"/>
+                            </b:column>
+                        </b:row>
+                        <b:row>
+                            <b:column span="6">
+                                <h:outputText value="#{bundle['lblTotalAPagar']}" style="font-weight: bold"/>
+                            </b:column>
+                            <b:column span="6">
+                                <h:outputText class="lbltotalfinal" style="font-weight: bold" value="$#{membresiaController.parse(membresiaController.membresia.preciomembresia)}"/>
+                                <h:inputText class="totalfinal" style="display: none" readonly="true"/>
+                                <h:inputText value="#{membresiaController.membresia.preciomembresia}" class="preciomem" style="display: none"/>
+                            </b:column>
+                        </b:row>
+                        <f:facet name="footer">
+                            <b:commandButton  ajax='true' update="modalForm:imodal"   oncomplete="$('.modalPseudoClass').modal('show');" value="Contratar"   action="#{membresiaController.confirmar()}"    look="success"/>
+                        </f:facet>                       
+                    </b:panel>
+                    
+                    <b:panel id="confirmacionPanel" rendered="#{membresiaController.modalConfirmar}">
+                        <b:row>
+                            <b:column span="6">
+                                <h:outputText style="font-weight: bold" value="#{bundle['lblContratarConfirm']}"/>
+                            </b:column>
+                            <b:column span="6">
+                                
+                            </b:column>
+                        </b:row>
+                        <f:facet name="footer">
+                            <b:commandButton ajax="false"  value="#{bundle['lblBtnOk']}"  look="success"  action="#{membresiaController.contratar()}" />
+                            <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{membresiaController.cerrarDialogo()}"/>
+                               
+                        </f:facet>
+                    </b:panel>
+
+                    <b:panel id="informacionPanel" rendered="#{membresiaController.modalInfo}">
+                        <b:row>
+                            <b:column span="3">
+                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblTipoPeriodoMemMembresia']}"  />
+                            </b:column>
+                            <b:column span="9">
+                                <h:outputText value="#{membresiaController.periodo}" style="font-weight: bold" />
+
+                            </b:column>
+                        </b:row>
+                        <p:separator/>
+                        <b:row>
+                            <b:column span="3">
+                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblPrecioMembresia']}"  />
+                            </b:column>
+                            <b:column span="9">
+                                <h:outputText value="$ #{membresiaController.parse(membresiaController.membresia.preciomembresia)}" style="font-weight: bold"/>
+
+                            </b:column>
+                        </b:row>
+                        <p:separator/>
+                        <b:row>
+                            <b:column span="3">
+                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblPrecioOfertaMembresia']}"   />
+                            </b:column>
+                            <b:column span="9">
+                                <h:outputText value="$ #{membresiaController.parse(membresiaController.membresia.precioxoferta)}" style="font-weight: bold" />
+
+                            </b:column>
+                        </b:row>
+                        <p:separator/>
+                        <b:row>
+                            <b:column span="2">
+                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblVentajasMembresia']}"  />
+                            </b:column>
+                            <b:column span="10">
+                                #{membresiaController.membresia.ventajasdemembresia}
+                            </b:column>
+                        </b:row>
+                        <p:separator/>
+                        <b:row>
+                            <b:column span="2">
+                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblDescMembresia']}"  />
+                            </b:column>
+                            <b:column span="10">
+                                #{membresiaController.membresia.descripcionmembresia}
+                            </b:column>
+                        </b:row>
+                        <f:facet name="footer">
+                            <b:commandButton  ajax="true"  value="#{bundle['lblBtnCerrar']}" look="primary"  onclick="$('.modalPseudoClass').modal('hide');ajax:membresiaController.cerrarDialogo();">
+                                
+                            </b:commandButton>
+
+                        </f:facet>
+
+                    </b:panel>
+                </b:modal>
+
+            </h:form>
+
+            <script type="text/javascript">
+                function calc(e) {
+                    var patt = new RegExp("[^0-9]");
+                    var res = patt.test(e);
+                    
+                    if(!res){
+                      var d = $('.precio').val();
+                    var o = $('.cantidad').val();
+                    var p = $('.preciomem').val();
+                    var tot = d * e;
+                    if (e !== "") {
+                        $('.total').val(tot);
+                        $('.lbltotal').html("<b>$"+tot+"</b>");
+                        $('.totalofertas').val(parseFloat(e) + parseFloat(o));
+                        $('.lbltotalofertas').html(parseFloat(e) + parseFloat(o));
+                        $('.totalfinal').val(parseFloat(p) + parseFloat(tot));
+                        $('.lbltotalfinal').html("$" + $('.totalfinal').val());
+                    } else {
+                        $('.lbltotal').html("<b>$0.00</b>");
+                        $('.lbltotalofertas').html(o);
+                        $('.lbltotalfinal').html("$" + p);
+                        $('.total').val(0);
+                        $('.totalofertas').val(o);
+                        $('.totalfinal').val(p);
+
+                    }  
+                        
+                    }else{
+                        var obj = $('.elemento').val();
+                        obj = (obj + '').replace(/[^0-9]/g,'');
+                        $('.elemento').val(obj);
+                    }
+                    
+                    
+                    
+
+                }
+
+                function test(e) {
+
+                    alert(e + $('.precio').val());
+                    //document.getElementById('total').value = e;
+                    //alert(document.getElementById('total').value);
+                }
+
+            </script>
+        </ui:define>
+    </ui:composition>
+</html>
+

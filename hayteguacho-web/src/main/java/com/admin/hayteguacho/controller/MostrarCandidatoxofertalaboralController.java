@@ -370,7 +370,7 @@ public class MostrarCandidatoxofertalaboralController {
     public String getTitulo(){
        
         try {
-            titulo = vb.getMsgBundle("lblCxOfertasActuales") + " " + listaOferta.size();
+            titulo = vb.getMsgBundle("lblCxOfertasActuales") + "(" + listaOferta.size() +" "+vb.getMsgBundle("lblOfertas") +")";
         } catch (Exception e) {
             System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.obtenerTitulo()");
             e.printStackTrace();

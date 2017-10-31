@@ -11,6 +11,8 @@ import com.hayteguacho.entity.TblTipoperidomembresia;
 import com.hayteguacho.util.facade.AbstractFacade;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +38,10 @@ public class MembresiaFacade extends AbstractFacade<TblMembresia, MembresiaForm>
     protected EntityManager getEntityManager() {
         return em;
     }
-     public List<MembresiaForm> obtenerMembresiasOrden() {
-        Query q = getEntityManager().createNativeQuery("select * from tbl_membresia order by decode(tbl_membresia.titulomembresia,'GOLD', 1,'PLATINUM', 2,'CLASICA',3,'GRATUITA',4,5)", TblMembresia.class);
+    public List<MembresiaForm> obtenerMembresiasOrden() {
+        Query q = getEntityManager().createNativeQuery("SELECT MEM.* FROM TBL_MEMBRESIA MEM, TBL_TIPOPERIDOMEMBRESIA TIPO\n" +
+"WHERE MEM.IDTIPOPERIODOMEMBRESIA= TIPO.IDTIPOPERIODOMEMBRESIA AND TIPO.NOMBRETIPOPERIODOMEMBRESIA='ANUAL' \n" +
+"order by decode(MEM.titulomembresia,'Gold', 1,'Platinum', 2,'Classic',3,'Free',4,5)", TblMembresia.class);
         List<TblMembresia> listaEntity;
         List<MembresiaForm> listaEntityForm;
 
@@ -54,6 +58,47 @@ public class MembresiaFacade extends AbstractFacade<TblMembresia, MembresiaForm>
 
         return listaEntityForm;
     }
+    
+     public List<MembresiaForm> obtenerMembresiasOrdenOld() {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_membresia order by decode(titulomembresia,'Gold', 1,'Platinum', 2,'Classic',3,'Free',4,5)", TblMembresia.class);
+        List<TblMembresia> listaEntity;
+        List<MembresiaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<MembresiaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new MembresiaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<MembresiaForm>();
+        }
+
+        return listaEntityForm;
+    }
+       public List<MembresiaForm> obtenerMembresiasPorTitulo(String titulo) {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_membresia where titulomembresia = ?", TblMembresia.class);
+        q.setParameter(1, titulo);
+        List<TblMembresia> listaEntity;
+        List<MembresiaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<MembresiaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new MembresiaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<MembresiaForm>();
+        }
+
+        return listaEntityForm;
+    }
+     
+ 
+     
     
      public List<MembresiaForm> obtenerMembresias() {
         Query q = getEntityManager().createNativeQuery("select * from tbl_membresia", TblMembresia.class);
