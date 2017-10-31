@@ -5,17 +5,22 @@
  */
 package com.hayteguacho.entity;
 
+import com.admin.hayteguacho.form.MenuForm;
+import com.admin.hayteguacho.form.TotalCategoriasForm;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -26,6 +31,19 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "TBL_CARGOEMPRESA")
+
+@SqlResultSetMapping(
+        name = "ContadorMapping",
+        classes = @ConstructorResult(
+                targetClass = TotalCategoriasForm.class,
+                columns = {
+                    @ColumnResult(name = "total", type = String.class),
+                    @ColumnResult(name = "totalCategoria", type = String.class),
+                    @ColumnResult(name = "categoria", type = String.class),
+                    @ColumnResult(name = "idCategoria", type = String.class)/*,
+                    @ColumnResult(name = "categoria", type = String.class)    
+                    @ColumnResult(name = "producto", type = String.class)*/}))
+
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TblCargoempresa.findAll", query = "SELECT t FROM TblCargoempresa t"),

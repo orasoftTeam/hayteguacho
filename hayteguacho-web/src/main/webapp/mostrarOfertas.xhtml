@@ -34,15 +34,13 @@
                 });
                 });
             </h:outputScript>
-            <!--
-            <h:outputStylesheet name="css/styles.css"></h:outputStylesheet>
-            -->
-            <h:outputScript name="js/jquery-1.11.0.min.js">
-
-            </h:outputScript>
-            <h:outputScript name="js/responsiveCarousel.min.js">
-
-            </h:outputScript>
+            <h:outputStylesheet>
+                body{
+                    background-image: url("#{resource['images:fondo.png']}");
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                }
+            </h:outputStylesheet>
             <h:form id='mostrarForm'>
                 <b:jumbotron>
                     <b:container>
@@ -70,9 +68,18 @@
                         <b:column col-md="2">
                             <b:commandButton icon="fa-arrow-left" update="@form" ajax="true" actionListener="#{mostrarController.atras}" value="#{bundle['lblBtnAtras']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.ini eq 0}" />
                         </b:column>
-                        <b:column col-md="2">
-                        </b:column>
-                        <b:column col-md="2">
+                        <b:column col-md="4">
+                            <c:if test="#{(mostrarController.ini %36) eq 0}">
+                                <c:forEach var="indice" begin="#{mostrarController.ini}" end="#{mostrarController.count}">
+                                    
+                                    <c:if test="#{indice eq  mostrarController.numpag}">
+                                        <b:button value="#{indice+1}" size="xs" look="warning"></b:button>
+                                    </c:if>
+                                    <c:if test="#{!(indice eq  mostrarController.numpag)}">
+                                        <b:button value="#{indice+1}" size="xs" style="info"></b:button>
+                                    </c:if>
+                                </c:forEach>
+                            </c:if>
                         </b:column>
                         <b:column col-md="2">
                             <b:commandButton   update="@form" ajax="true" actionListener="#{mostrarController.siguiente}" value="#{bundle['lblBtnSig']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.deshabilitarSiguiente()}" />
@@ -99,10 +106,9 @@
                                                 <h:outputText value="#{mostrarController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}"></h:outputText>                                           
                                             </b:panelGrid>
                                             <p:separator></p:separator>
-                                            <h:panelGrid columns="1">
-                                                <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}" look="warning" style="width:100%" rendered="#{mostrarController.puedeAplicar}" /></p>
-                                                <p:separator rendered="#{mostrarController.puedeAplicar}"></p:separator>
-                                                <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" /></p>
+                                            <h:panelGrid columns="2">
+                                                <b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" />
+                                                <b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}"  look="warning" style="width:100%; margin-left: 30%;" rendered="#{mostrarController.puedeAplicar}" />
                                             </h:panelGrid>
                                         </b:column>
                                     </b:row>                      

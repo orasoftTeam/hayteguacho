@@ -9,4 +9,9 @@
 		<var>bundle</var>
 	   </resource-bundle>
 	</application>
+        
+<error-page>
+    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    <location>/indexPaises.xhtml</location>
+</error-page>
 </faces-config>

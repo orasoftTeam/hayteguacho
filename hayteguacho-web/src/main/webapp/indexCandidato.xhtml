@@ -10,6 +10,13 @@
 
     <ui:composition template="/template/template.xhtml">
         <ui:define name="content">
+            <h:outputStylesheet>
+                body{
+                    background-image: url("#{resource['images:fondo.png']}");
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                }
+            </h:outputStylesheet>
             <h:form id='empleosForm'>
                 <b:jumbotron style="background-color: white; background-image: url(#{resource['images/imgppal.png']});  
                              
@@ -36,7 +43,7 @@
                                     <f:selectItems value="#{ofertaController.listaDepto}" var="depto" itemValue="#{depto.iddepartamento}" itemLabel="#{depto.nombredepartamento}"/>
                                 </b:selectOneMenu>
                                 <b:panelGrid columns="1" style="text-align: center;">
-                                    <b:commandButton action="/mostrarOfertas" value="#{bundle['lblBuscarEmpleos']}" style="margin-top:15px; opacity: 1 !important"   size="lg" look="warning" />
+                                    <b:button outcome="/mostrarOfertas.xhtml?opcion=0" value="#{bundle['lblBuscarEmpleos']}" style="margin-top:15px; opacity: 1 !important"   size="lg" look="warning"></b:button>
                                 </b:panelGrid>                                 
                             </b:column>
                             <b:column col-md="4">
@@ -107,7 +114,7 @@
             
             </b:jumbotron>
             -->
-            <b:container style="text-align: center;">
+            <b:container style="text-align: center; background-color: white;">
                 <b:row>
                     <b:column col-md="4">
                         <h:graphicImage library="images" name="img1.png" width="200" height="200" />

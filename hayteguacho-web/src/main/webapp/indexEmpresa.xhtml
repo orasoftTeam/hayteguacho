@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content">
+            <h:outputStylesheet>
+                body{
+                    background-image: url("#{resource['images:fondo.png']}");
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                }
+            </h:outputStylesheet>
+            <h:form id='empleosForm'>
+                <b:jumbotron>
+                    <b:container>
+                        <b:row style="text-align: center; font-weight: bolder; font-family: Georgia;">
+                            <b:column col-md="12">
+                                <h1 style="font-size: 35px;  color:black;">#{bundle['lblIndexEmpresaTitle']}</h1>
+                            </b:column>
+                        </b:row>
+                        <br></br>
+                        <b:row>
+                            <b:column col-md="3" >
+                                <h:graphicImage library="images" name="reloj.png" width="200" height="200" />
+                                <h2>#{bundle['lblTab4Title']}</h2>
+                                <p style="font-size: 18px;">#{bundle['lblTab4Description']}</p>
+                            </b:column>
+                            <b:column col-md="3" >
+                                <h:graphicImage library="images" name="like.png" width="200" height="200" />
+                                <h2>#{bundle['lblTab7Title']}</h2>
+                                <p style="font-size: 18px;">#{bundle['lblTab7Description']}</p>
+                            </b:column>
+                            <b:column col-md="3" >
+                                <h:graphicImage library="images" name="lupa.png" width="200" height="200" />
+                                <h2>#{bundle['lblTab5Title']}</h2>
+                                <p style="font-size: 18px;">#{bundle['lblTab5Description']}</p>
+                            </b:column>
+                            <b:column col-md="3" >
+                                <h:graphicImage library="images" name="personas.png" width="200" height="200" />
+                                <h2>#{bundle['lblTab6Title']}</h2>
+                                <p style="font-size: 18px;">#{bundle['lblTab6Description']}</p>
+                            </b:column>
+                        </b:row>
+                    </b:container>
+                </b:jumbotron>
+                <div style="background-color: #080707; text-align: center; width: 100%; height: 10%; margin-top: 2%;">
+                    <div style="width: 100%">
+                        <b:row>
+                            <h2 style="color: white; font-size: 25px;">#{bundle['lblCurriTitle']}</h2>
+                            <h1 style="color: white; font-size: 25px;">#{bundle['lblCurriSubTitle']}</h1>
+                        </b:row>
+                        <p:separator></p:separator>
+                        <b:row>
+                            <ui:repeat var="totales" value="#{mostrarController.listaTotalCurriculum}" varStatus="estado">
+                                <b:column col-md="4" rendered="#{estado.index eq 0}">
+                                    <b:panelGrid columns="1" >
+                                        <h:outputText value="#{totales.total}" style="color:#00CED1; font-size: 50px;"></h:outputText>
+                                        <p:commandLink  ajax="false"  actionListener="#{mostrarController.cambiarCategoriaByFilterHome(totales.idCategoria)}">
+                                            <h:outputText value="#{bundle['lblCurriculum']}" style="color:white; font-size: 20px; font-family: Verdana, Geneva, sans-serif; margin-top: 5px;" />
+                                        </p:commandLink>                                  
+                                    </b:panelGrid>
+                                </b:column>   
+
+                                <b:column col-md="4">
+                                    <b:panelGrid columns="1" >
+                                        <p:commandLink  ajax="false"  actionListener="#{mostrarController.cambiarCategoriaByFilterHome(totales.idCategoria)}">
+                                            <h:outputText value="#{totales.categoria}" style="color:white; font-size: 20px; font-family: Verdana, Geneva, sans-serif;" />
+                                        </p:commandLink>
+                                        <h:outputText value="#{totales.totalCategoria}" style="color:#00CED1; font-size: 50px; margin-top: 5px;"></h:outputText>
+                                        <p:link outcome="/registroEmpresa.xhtml" value="#{bundle['lblCurriculum']}" style="color:white; font-size: 20px; font-family: Verdana, Geneva, sans-serif; margin-top: 5px;">
+                                        </p:link>
+                                    </b:panelGrid>
+                                </b:column>
+                            </ui:repeat>
+                        </b:row>
+                    </div>
+                </div>
+                <div style="background-color: white; text-align: center; width: 100%; height: 10%">
+                    <h:outputText value="#{bundle['lblEmpresa1']}" style="color:black; font-size: 20px; font-family: Verdana, Geneva, sans-serif; margin-top: 5px;" />
+                    <br></br>
+                    <h:outputText value="#{bundle['lblEmpresa2']}"  style="margin-top: 5%;" />
+                    <br></br>
+                    <h:outputText value="#{bundle['lblEmpresa3']}" style="margin-top: 5%;" />
+                    <br></br>
+                    <b:commandButton action="/registroEmpresa" value="#{bundle['lblEmpresaBtn']}" style="margin-top: 2%;"    size="lg" look="warning" />
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

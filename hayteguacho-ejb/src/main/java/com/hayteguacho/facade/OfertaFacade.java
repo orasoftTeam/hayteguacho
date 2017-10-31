@@ -45,10 +45,17 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
         return em;
     }
 
-    public List<OfertaForm> obtenerOfertasByRange(int ini, int cantPag) {
+    public List<OfertaForm> obtenerOfertasByRange(String pais,int ini, int cantPag) {
         int[] range = {ini, cantPag};
-        String sql = "select * from tbl_ofertalaboral where estadoofertalaboral='A'";
+        String sql = "select oferta.* from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta\n" +
+        "where UPPER(nombrepais)= UPPER(?) \n" +
+        "and pais.idpais=depto.idpais \n" +
+        "and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+        "and oferta.idciudad= ciudad.idciudad\n" +
+        "and oferta.estadoofertalaboral='A'";
+        
         Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
+        q.setParameter(1, pais);
         q.setMaxResults(range[1] - range[0] + 1);
         q.setFirstResult(range[0]);
         //Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where rownum>=? and rownum<=?", TblOfertalaboral.class);
@@ -72,49 +79,42 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
         return listaEntityForm;
     }
 
-    public List<OfertaForm> obtenerOfertas() {
-        Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral ", TblOfertalaboral.class);
-        List<TblOfertalaboral> listaEntity;
-        List<OfertaForm> listaEntityForm;
-
-        try {
-            listaEntity = q.getResultList();
-            if (listaEntity.isEmpty()) {
-                listaEntityForm = new ArrayList<OfertaForm>();
-            } else {
-                listaEntityForm = this.entityToDtoList(listaEntity, new OfertaForm());
-            }
-        } catch (Exception ex) {
-            listaEntityForm = new ArrayList<OfertaForm>();
-        }
-
-        return listaEntityForm;
-    }
-
-    public List<OfertaForm> obtenerOfertas(String idempresa) {
-        Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where idempresa  = " + idempresa + " and estadoofertalaboral = 'A'", TblOfertalaboral.class);
-        List<TblOfertalaboral> listaEntity;
-        List<OfertaForm> listaEntityForm;
-
-        try {
-            listaEntity = q.getResultList();
-            if (listaEntity.isEmpty()) {
-                listaEntityForm = new ArrayList<OfertaForm>();
-            } else {
-                listaEntityForm = this.entityToDtoList(listaEntity, new OfertaForm());
-            }
-        } catch (Exception ex) {
-            listaEntityForm = new ArrayList<OfertaForm>();
-        }
-
-        return listaEntityForm;
-    }
-
-    public List<OfertaForm> obtenerOfertasByCategoria(String idcategoria, String idempresa) {
-        String sql = "select oferta.* from TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto, TBL_OFERTALABORAL oferta\n"
-                + "where cemp.IDCATEGORIA=? and cemp.IDCATEGORIA= puesto.IDCATEGORIA and puesto.IDPUESTOTRABAJO= oferta.IDPUESTOTRABAJO and oferta.idempresa=?";
+    public List<OfertaForm> obtenerOfertas(String pais) {
+        String sql="select oferta.*  from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta \n" +
+"        where UPPER(nombrepais)= UPPER(?) \n" +
+"        and pais.idpais=depto.idpais \n" +
+"        and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+"        and oferta.idciudad= ciudad.idciudad\n" +
+"        and oferta.estadoofertalaboral='A'";
         Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
-        q.setParameter(1, idcategoria);
+        q.setParameter(1, pais);
+        List<TblOfertalaboral> listaEntity;
+        List<OfertaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<OfertaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new OfertaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<OfertaForm>();
+        }
+
+        return listaEntityForm;
+    }
+
+    public List<OfertaForm> obtenerOfertas(String pais, String idempresa) {
+        String sql="select oferta.*  from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta \n" +
+"        where UPPER(nombrepais)= UPPER(?) \n" +
+"        and pais.idpais=depto.idpais \n" +
+"        and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+"        and oferta.idciudad= ciudad.idciudad\n" +
+"        and oferta.idempresa=?\n" +
+"        and oferta.estadoofertalaboral='A'";
+        Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
+        q.setParameter(1, pais);
         q.setParameter(2, new BigInteger(idempresa));
         List<TblOfertalaboral> listaEntity;
         List<OfertaForm> listaEntityForm;
@@ -133,13 +133,63 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
         return listaEntityForm;
     }
 
-    public List<OfertaForm> obtenerOfertasByCategoriaRange(String idcategoria, int ini, int cantPag) {
-        int[] range = {ini, cantPag};
-        String sql = "select oferta.* from TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto, TBL_OFERTALABORAL oferta\n"
-                + "where cemp.IDCATEGORIA=? and cemp.IDCATEGORIA= puesto.IDCATEGORIA and puesto.IDPUESTOTRABAJO= oferta.IDPUESTOTRABAJO"
-                + " and oferta.estadoofertalaboral='A'";
+    public List<OfertaForm> obtenerOfertasByCategoria(String pais,String idcategoria, String idempresa) {
+        /*String sql = "select oferta.* from TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto, TBL_OFERTALABORAL oferta\n"
+                + "where cemp.IDCATEGORIA=? and cemp.IDCATEGORIA= puesto.IDCATEGORIA and puesto.IDPUESTOTRABAJO= oferta.IDPUESTOTRABAJO and oferta.idempresa=?";
+        */
+        String sql="select oferta.*  from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta,\n" +
+"        TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto\n" +
+"        where UPPER(nombrepais)= UPPER(?) \n" +
+"        and pais.idpais=depto.idpais \n" +
+"        and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+"        and oferta.idciudad= ciudad.idciudad\n" +
+"        and cemp.IDCATEGORIA=?\n" +
+"        and cemp.IDCATEGORIA= puesto.IDCATEGORIA\n" +
+"        and puesto.IDPUESTOTRABAJO= oferta.IDPUESTOTRABAJO\n" +
+"        and oferta.idempresa=?\n" +
+"        and oferta.estadoofertalaboral='A'";
         Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
-        q.setParameter(1, idcategoria);
+        q.setParameter(1, pais);
+        q.setParameter(2, idcategoria);
+        q.setParameter(3, new BigInteger(idempresa));
+        List<TblOfertalaboral> listaEntity;
+        List<OfertaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<OfertaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new OfertaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<OfertaForm>();
+        }
+
+        return listaEntityForm;
+    }
+
+    public List<OfertaForm> obtenerOfertasByCategoriaRange(String pais, String idcategoria, int ini, int cantPag) {
+        int[] range = {ini, cantPag};
+        String sql = "select oferta.* from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad,\n" +
+                "TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto,\n" +
+                "tbl_ofertalaboral oferta\n" +
+                "where UPPER(nombrepais)= UPPER(?) \n" +
+                "and pais.idpais=depto.idpais \n" +
+                "and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+                "and oferta.idciudad= ciudad.idciudad\n" +
+                "and cemp.IDCATEGORIA=? \n" +
+                "and cemp.IDCATEGORIA= puesto.IDCATEGORIA \n" +
+                "and puesto.IDPUESTOTRABAJO= oferta.IDPUESTOTRABAJO\n" +
+                "and oferta.estadoofertalaboral='A'";
+                
+                /*
+                "select oferta.* from TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto, TBL_OFERTALABORAL oferta\n"
+                + "where cemp.IDCATEGORIA=? and cemp.IDCATEGORIA= puesto.IDCATEGORIA and puesto.IDPUESTOTRABAJO= oferta.IDPUESTOTRABAJO"
+                + " and oferta.estadoofertalaboral='A'";*/
+        Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
+        q.setParameter(1, pais);
+        q.setParameter(2, idcategoria);
         q.setMaxResults(range[1] - range[0] + 1);
         q.setFirstResult(range[0]);
         List<TblOfertalaboral> listaEntity;
@@ -196,9 +246,17 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
     }    
     
      */
-    public List<OfertaForm> obtenerOfertasByIdEmpresa(String idempresa) {
-        Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where idempresa=? and estadoofertalaboral='A'", TblOfertalaboral.class);
-        q.setParameter(1, new BigInteger(idempresa));
+    public List<OfertaForm> obtenerOfertasByIdEmpresa(String pais,String idempresa) {
+        String sql="select oferta.*  from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta \n" +
+"        where UPPER(nombrepais)= UPPER(?) \n" +
+"        and pais.idpais=depto.idpais \n" +
+"        and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+"        and oferta.idciudad= ciudad.idciudad\n" +
+"        and oferta.idempresa=?\n" +
+"        and oferta.estadoofertalaboral='A'";
+        Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
+        q.setParameter(1, pais);
+        q.setParameter(2, new BigInteger(idempresa));
         List<TblOfertalaboral> listaEntity;
         List<OfertaForm> listaEntityForm;
 
@@ -279,10 +337,19 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
         return listaEntityForm;
     }
 
-    public List<OfertaForm> obtenerOfertasByIdEstado(String estado, String idempresa) {
-        Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where estadoofertalaboral=? and idempresa=?", TblOfertalaboral.class);
-        q.setParameter(1, estado);
+    public List<OfertaForm> obtenerOfertasByIdEstado(String pais,String estado, String idempresa) {
+        String sql=" select oferta.*  from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta \n" +
+"        where UPPER(nombrepais)= UPPER(?) \n" +
+"        and pais.idpais=depto.idpais \n" +
+"        and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+"        and oferta.idciudad= ciudad.idciudad\n" +
+"        and oferta.idempresa=?\n" +
+"        and oferta.estadoofertalaboral=?";
+       // Query q = getEntityManager().createNativeQuery("select * from tbl_ofertalaboral where estadoofertalaboral=? and idempresa=?", TblOfertalaboral.class);
+       Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class); 
+       q.setParameter(1, pais);
         q.setParameter(2, new BigInteger(idempresa));
+        q.setParameter(3, estado);
         List<TblOfertalaboral> listaEntity;
         List<OfertaForm> listaEntityForm;
 
@@ -353,17 +420,35 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
         }
         return flag;
     }
+    
+    /*
+    cambiarle los filtros a las ofertas mostradas por categorias
+    */
 
-    public int contarOfertasByCategoriaRange(String idcategoria) {
+    public int contarOfertasByCategoriaRange(String pais, String idcategoria) {
         int numreg = 0;
 
-        String sql = "select count(*) total from TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto, TBL_OFERTALABORAL oferta\n"
+        String sql ="select count(*) total from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad,\n" +
+                "TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto,\n" +
+                "tbl_ofertalaboral oferta\n" +
+                "where UPPER(nombrepais)= UPPER(?) \n" +
+                "and pais.idpais=depto.idpais \n" +
+                "and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+                "and oferta.idciudad= ciudad.idciudad\n" +
+                "and cemp.IDCATEGORIA=? \n" +
+                "and cemp.IDCATEGORIA= puesto.IDCATEGORIA \n" +
+                "and puesto.IDPUESTOTRABAJO= oferta.IDPUESTOTRABAJO\n" +
+                "and oferta.estadoofertalaboral='A'";
+                
+                
+                /*"select count(*) total from TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto, TBL_OFERTALABORAL oferta\n"
                 + "where cemp.IDCATEGORIA=? and cemp.IDCATEGORIA= puesto.IDCATEGORIA and puesto.IDPUESTOTRABAJO= oferta.IDPUESTOTRABAJO"
-                + " and oferta.estadoofertalaboral='A'";
+                + " and oferta.estadoofertalaboral='A'";*/
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             PreparedStatement preparedStatement = cn.prepareStatement(sql);
-            preparedStatement.setInt(1, Integer.parseInt(idcategoria));
+            preparedStatement.setString(1, pais);
+            preparedStatement.setInt(2, Integer.parseInt(idcategoria));
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 numreg= rs.getInt("total");
@@ -396,32 +481,39 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
 
         return numreg;
     }
-    /*
-    public List<OfertaForm> obtenerOfertasByDepartamentoRange(String iddepto, int ini, int cantPag) {
-        int[] range={ini, cantPag};
-        String sql="select oferta.* from TBL_DEPARTAMENTO depto, TBL_CIUDAD mun, TBL_OFERTALABORAL oferta\n" +
-        "where depto.iddepartamento=? and depto.iddepartamento= mun.iddepartamento and mun.idciudad= oferta.IDCIUDAD"
-                + " and oferta.estadoofertalaboral='A'";
-        Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
-        q.setParameter(1, iddepto);
-        q.setMaxResults(range[1] - range[0] + 1);
-        q.setFirstResult(range[0]);      
-        List<TblOfertalaboral> listaEntity;
-        List<OfertaForm> listaEntityForm;
-
+    
+    
+    public int contarOfertasByPais(String pais) {
+        int numreg = 0;
+        String sql="select count(*) total from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta\n" +
+        "where UPPER(nombrepais)= UPPER(?) \n" +
+        "and pais.idpais=depto.idpais \n" +
+        "and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+        "and oferta.idciudad= ciudad.idciudad\n" +
+        "and oferta.estadoofertalaboral='A'";
         try {
-            listaEntity = q.getResultList();
-            if (listaEntity.isEmpty()) {
-                listaEntityForm = new ArrayList<OfertaForm>();
-            } else {
-                listaEntityForm = this.entityToDtoList(listaEntity, new OfertaForm());
+            Connection cn = em.unwrap(java.sql.Connection.class);
+            PreparedStatement preparedStatement = cn.prepareStatement(sql);
+            preparedStatement.setString(1, pais);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                numreg= rs.getInt("total");
             }
         } catch (Exception ex) {
-            listaEntityForm = new ArrayList<OfertaForm>();
+            System.err.println(ex.getMessage());
+            System.err.println("error al contar las categorias");
         }
 
-        return listaEntityForm;
+        return numreg;
     }
-     */
+    /*
+    
+            String sql = "select oferta.* from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta\n" +
+        "where UPPER(nombrepais)= UPPER(?) \n" +
+        "and pais.idpais=depto.idpais \n" +
+        "and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+        "and oferta.idciudad= ciudad.idciudad\n" +
+        "and oferta.estadoofertalaboral='A'";
+    */
 
 }

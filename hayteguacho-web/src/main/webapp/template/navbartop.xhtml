@@ -12,26 +12,26 @@
                     Hint to editors: The menus follow the Chicago style of capitalization. Please capitalize everything but the "smaller" words. 
         -->
     </ui:remove>
-    <b:navBar brand="#{bundle['titlePage']}" brandHref="#{request.contextPath}/index.xhtml" inverse="true" fixed="top">
+    <b:navBar brand="#{bundle['titlePage']}" brandHref="#{request.contextPath}/indexPaises.xhtml" inverse="true" fixed="top">
         <b:navbarLinks >
-            <b:navLink value="#{bundle['titleEmpleos']}" href="#{request.contextPath}/mostrarOfertas.xhtml"></b:navLink>
-            <b:navLink value="#{bundle['titleCandidato']}" href="#{request.contextPath}/registroCandidato.xhtml"></b:navLink>
-            <b:navLink value="#{bundle['titleEmpresa']}" href="#{request.contextPath}/registroEmpresa.xhtml"></b:navLink>
+            <b:navLink value="#{bundle['titleEmpleos']}" href="#{request.contextPath}/mostrarOfertas.xhtml?opcion=0" style="#{login.setearColor(0)}"  rendered="#{!(login.pais.length() eq 0)}"></b:navLink>
+            <b:navLink value="#{bundle['titleCandidato']}" href="#{request.contextPath}/indexCandidato.xhtml?opcion=1" style="#{login.setearColor(1)}" rendered="#{(!login.loggedIn) and (login.pais.length() gt 0)}"></b:navLink>
+            <b:navLink value="#{bundle['titleEmpresa']}" href="#{request.contextPath}/indexEmpresa.xhtml?opcion=2" style="#{login.setearColor(2)}" rendered="#{(!login.loggedIn) and (login.pais.length() gt 0)}"></b:navLink>
         </b:navbarLinks>
         <b:navbarLinks rendered="#{login.loggedIn}">
             <ui:repeat var="modulo" value="#{login.listaModulos}" varStatus="status" >
                 <b:navLink value="#{modulo.nombremenu}" href="#{request.contextPath.concat('/pages/').concat(modulo.opcion)}"
                            rendered="#{login.obtenerListaOpciones(status.index).size() eq 0}"></b:navLink> 
-                <b:dropMenu value="#{modulo.nombremenu}" rendered="#{login.obtenerListaOpciones(status.index).size() > 0}">
+                <b:dropMenu value="#{modulo.nombremenu}" rendered="#{(login.obtenerListaOpciones(status.index).size() > 0) and (login.pais.length() gt 0)}" style="#{login.setearColor(status.index+3)}">
                     <ui:repeat var="menu" value="#{login.listaOpciones}" varStatus="status1">
-                        <b:navLink value="#{menu.nombremenu}" href="#{request.contextPath.concat('/pages/').concat(menu.opcion)}"></b:navLink>
+                        <b:navLink value="#{menu.nombremenu}" href="#{request.contextPath.concat('/pages/').concat(menu.opcion).concat('?opcion=').concat(status.index+3)}"></b:navLink>
                     </ui:repeat>
                 </b:dropMenu>
             </ui:repeat>
         </b:navbarLinks>
         <h:form styleClass="navbar-form navbar-right">
             <b:navbarLinks rendered="#{login.loggedIn}">
-                <b:dropMenu value="#{login.userLog.nombre}">
+                <b:dropMenu value="#{login.userLog.nombre.concat('    ').concat(login.pais)}">
                     <b:column col-md="12"  style="text-align: center;">
                         <h:panelGrid columns="1">
                             <h:graphicImage  library="images" name="usuario.png" height="100" width="100" />
@@ -54,6 +54,10 @@
                 </div> 
                 #{' '}
                 <b:commandButton action="#{login.logear}" value="#{bundle['lblBtnAcceder']}" look="success" icon="chevron-right" iconAlign="right"/>
+                <div class="form-group" >
+                    <p style="color: white; font-size: 16px;">#{login.pais}</p>
+                    <!--input type="text" class="form-control" placeholder="Search"/-->
+                </div>
             </c:if>
         </h:form>
     </b:navBar>

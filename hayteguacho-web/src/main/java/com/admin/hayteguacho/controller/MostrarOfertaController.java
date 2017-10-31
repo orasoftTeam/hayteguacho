@@ -8,18 +8,22 @@ package com.admin.hayteguacho.controller;
 import com.admin.hayteguacho.form.AplicarOfertaForm;
 import com.admin.hayteguacho.form.EmpresaForm;
 import com.admin.hayteguacho.form.OfertaForm;
+import com.admin.hayteguacho.form.TotalCategoriasForm;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.DepartamentoFacade;
 import com.hayteguacho.facade.EmpresaFacade;
 import com.hayteguacho.facade.MunicipioFacade;
 import com.hayteguacho.facade.OfertaFacade;
+import com.hayteguacho.facade.TotalFacade;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,9 +32,10 @@ import lombok.Setter;
  * @author LAP
  */
 
-@ManagedBean (name = "mostrarController")
+@ManagedBean
+@Named(value = "mostrarController")
 @SessionScoped
-public class MostrarOfertaController {
+public class MostrarOfertaController implements Serializable {
     @Inject
     LoginController loginBean;
     
@@ -49,6 +54,9 @@ public class MostrarOfertaController {
     
     MunicipioFacade muniFacade;
     
+    @EJB
+    TotalFacade totalFacade;
+    
     private @Getter @Setter String pretension="0";
     private @Getter @Setter boolean isTrabajando;
     
@@ -58,11 +66,16 @@ public class MostrarOfertaController {
     
     private @Getter @Setter List<OfertaForm> listaOferta= new ArrayList<>();
     
+    private @Getter @Setter List<TotalCategoriasForm> listaTotalCategoria= new ArrayList<>();
+    private @Getter @Setter List<TotalCategoriasForm> listaTotalCurriculum= new ArrayList<>();
+    
     private @Getter @Setter int count=5;
     
     private @Getter @Setter int ini=0;
     
     private @Getter @Setter int numreg;
+    
+    private @Getter @Setter int numpag=0;
     
     private @Getter @Setter OfertaForm ofertaForm;
     
@@ -77,12 +90,17 @@ public class MostrarOfertaController {
     private @Getter @Setter String[] cssClases= new String[6];
     
     private @Setter boolean puedeAplicar;
+    
+    private @Getter @Setter String pais;
     //private @Getter @Setter int contador=0;
     
-    @PostConstruct
+    //@PostConstruct
     public void init(){
-        listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
-        numreg= ofertaFacade.contarOfertas();
+        //pais= loginBean.getPais();
+        listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, count);
+        numreg= ofertaFacade.contarOfertasByPais(pais);
+        listaTotalCategoria= totalFacade.totalCategorias();
+        listaTotalCurriculum= totalFacade.totalCategoriasCurriculum();
         /*
         cssClases[0]="red result-text";
         cssClases[1]="teal result-text";
@@ -129,16 +147,34 @@ public class MostrarOfertaController {
         if(!idcategoriafilter.equals("")){
             count=5;
             ini=0;
-            listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(idcategoriafilter, ini, count);
-            numreg= ofertaFacade.contarOfertasByCategoriaRange(idcategoriafilter);
+            listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(pais,idcategoriafilter, ini, count);
+            numreg= ofertaFacade.contarOfertasByCategoriaRange(pais, idcategoriafilter);
         }
         else{
-            numreg= ofertaFacade.contarOfertas();
+            numreg= ofertaFacade.contarOfertasByPais(pais);
             count=5;
             ini=0;
-            listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
+            listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, count);
         }
         setIddeptofilter("");
+    }
+    
+    public void cambiarCategoriaByFilterHome(String categoria){
+        idcategoriafilter= categoria;
+        if(!idcategoriafilter.equals("")){
+            count=5;
+            ini=0;
+            listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(pais,idcategoriafilter, ini, count);
+            numreg= ofertaFacade.contarOfertasByCategoriaRange(pais,idcategoriafilter);
+        }
+        else{
+            numreg= ofertaFacade.contarOfertasByPais(pais);
+            count=5;
+            ini=0;
+            listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, count);
+        }
+        setIddeptofilter("");
+        loginBean.redireccionar("/mostrarOfertas.xhtml?opcion=0");
     }
     
     public void cambiarDeptoByFilter(){
@@ -149,8 +185,8 @@ public class MostrarOfertaController {
             numreg= ofertaFacade.contarOfertasByDeptoRange(iddeptofilter);
         }
         else{
-            numreg= ofertaFacade.contarOfertas();
-            listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
+            numreg= ofertaFacade.contarOfertasByPais(pais);
+            listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, count);
             count=5;
             ini=0;
         }
@@ -166,20 +202,21 @@ public class MostrarOfertaController {
             if(count<= numreg){
                 count= count+6;
                 ini= ini+6;
+                numpag++;
                 if(count>numreg){
                     if(!getIdcategoriafilter().equals("")){
-                        listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(idcategoriafilter, ini, numreg);
+                        listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(pais,idcategoriafilter, ini, numreg);
                     }
                     else if(!getIddeptofilter().equals("")){
                         listaOferta= ofertaFacade.obtenerOfertasByDepartamentoRange(iddeptofilter, ini, numreg);
                     } 
                     else{
-                      listaOferta= ofertaFacade.obtenerOfertasByRange(ini, numreg);  
+                      listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, numreg);  
                     }
                    //listaOferta= ofertaFacade.obtenerOfertasByRange(ini, numreg);
                 }
                 else{
-                    listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
+                    listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, count);
                 }
             }
     }
@@ -220,14 +257,15 @@ public class MostrarOfertaController {
             if(count>6 && ini>1){
                 count= count-6;
                 ini= ini-6;
+                numpag--;
                     if(!getIdcategoriafilter().equals("")){
-                        listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(idcategoriafilter, ini, count);
+                        listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(pais,idcategoriafilter, ini, count);
                     }
                     else if(!getIddeptofilter().equals("")){
                         listaOferta= ofertaFacade.obtenerOfertasByDepartamentoRange(iddeptofilter, ini, count);
                     } 
                     else{
-                      listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);  
+                      listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, count);  
                     }
                 //listaOferta= ofertaFacade.obtenerOfertasByRange(ini, count);
             }
