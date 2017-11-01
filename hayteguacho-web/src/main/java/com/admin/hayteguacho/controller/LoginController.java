@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedProperty;
@@ -92,7 +93,29 @@ public class LoginController implements Serializable {
         loggedIn = false;
         System.err.println("El valor de logged in es: " + loggedIn);
     }
-
+    
+    
+    @PreDestroy
+    public void close(){
+        //String pag = "/indexPaises.xhtml";
+        if (userLog.getTipo().equals("E")) {
+            String log = userFacade.actualizarLogUser(userLog, "OUT", "A");
+            if (log.equals("1")) {
+                userLog = new UserForm();
+                setUsuario("");
+                setPassword("");
+                loggedIn = false;
+                listaModulos = new ArrayList<MenuForm>();
+                listaOpciones = new ArrayList<MenuForm>();
+                isMenu = false;
+            } else if (log.equals("-2")) {
+                //validationBean.lanzarMensaje("error", "titleLogin", "lblErrorTransact");
+                System.err.println("Error de transaccion");
+            }
+        }
+        //redireccionar(pag);      
+    }
+    
     public boolean buscarMenus(String op) {
 
         for (MenuForm obj : listaModulos) {
@@ -237,7 +260,7 @@ public class LoginController implements Serializable {
     public void redirectLogin() {
         redireccionar("/login.xhtml");
     }
-
+    
     public void doLogout() {
         // Set the paremeter indicating that user is logged in to false
         //loggedIn = false;
