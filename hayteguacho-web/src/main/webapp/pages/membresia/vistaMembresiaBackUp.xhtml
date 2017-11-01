@@ -21,13 +21,71 @@
                {
                obj.value = (obj.value + '').replace(/[^0-9]/g,'');
                }
+               
+           function cambiar(elemento,color){
+      $('.'+elemento).css("background-color", color);
+     
+     }
+     function cambiarOut(elemento,color){
+      $('.'+elemento).css("background-color", color);
+     
+     }
+               
            </h:outputScript>
+            
+            <h:outputStylesheet>
+                .free{
+                background-image:url("#{resource['images/membresias/free.png']}");
+                }
+                
+               
+            </h:outputStylesheet>
             <style>
                 .panel-footer{
                     background-color: lightgray;
                 }
-
-
+                .contenedor{
+                    position: relative;
+                    
+                    color: white;
+                    
+                }
+                .bienvenido{
+                    position: absolute;
+                    top:20px;
+                    right: 176px;
+                    font-size: 30px;
+                }
+                .top-right{
+                    position: absolute;
+                    top:45px;
+                    right: 56px;
+                    font-size: 30px;
+                }
+                .centrado{
+                    position: absolute;
+                    top: 50%;
+                    left: 40%;
+                    transform: translate(-40%,-50%);
+                    color: black;
+                    font-size: 30px;
+                }
+                .centrado2{
+                    font-size: 20px;
+                    position: absolute;
+                    top: 55%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    color: black;
+                }
+                 .lamina{
+                width:100%;
+                }
+                .botones{
+                    position: absolute;
+                    bottom: 20px;
+                    left: 30%;
+                }
             </style>
 
             <h:form id="membresiaForm">
@@ -35,34 +93,59 @@
                     <b:tab title="" style="background-color: white;">-->
                 <div class='wrapper'>
                     <h:outputText escape="false" value="#{membresiaController.opentag}" />
-                    <b:panel collapsible="false" style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px;text-align: center" look="primary">
-                        <f:facet name="heading">
-
-                            <h:outputText style="text-align: center" value="#{bundle['lblMemBienvenido']}" />
-
-                        </f:facet>
-                        <h:outputText value="#{bundle['lblMemDefault']}"/>
-                    </b:panel>
+                    <div  class="contenedor" >
+                        <img src="../../resources/images/membresias/welcome.png"  class="lamina" />
+                        <h:outputText  value="#{bundle['lblMemBienvenido']}"  class="bienvenido" />
+                        <h:outputText value="#{bundle['lblMemDefault']}"  class="centrado" />
+                    </div>
+                    
                     <ui:repeat value="#{membresiaController.listaMembresias}" var="mem">
-                        <div style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px">
-                            <b:panel collapsible="false"  style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px;text-align: center;background-color: lightgrey;font-family: 'Times New Roman', Times, serif"  look="primary" >
-                                <f:facet name="heading" >
-
-                                    <h:outputText  value="#{mem.titulomembresia}" style="font-size: 20px"/>
-
-                                </f:facet>
-                                <ul >
-                                    <li><b>#{bundle['lblTipoPeriodoMemMembresia']} </b><b:badge style="margin-left:10px; background-color:green" value="#{membresiaController.getNombreTipoPeriodoMembresia(mem)}"  /></li>
-                                    <li><b>#{bundle['lblPrecioMembresia']} </b> <b:badge style="margin-left:10px; background-color:coral" value="$ #{membresiaController.parse(mem.preciomembresia)}"  /></li>
+                        <div class="contenedor">
+                            <img src="../../resources/images/membresias/#{mem.titulomembresia.toLowerCase()}3.png"  class="lamina" />
+                            <h:outputText  value="#{mem.titulomembresia}" class="top-right" />
+                            
+                   
+                            
+                            
+                            <div class="centrado2" >
+                                <h:panelGrid columns="2">
                                     
-                                    <li><b>#{bundle['lblCantidadOfertaMembresia']} </b><b:badge style="margin-left:10px; background-color:yellow" value="#{mem.cantidadoferta}"  /></li>
-                                    <li><b>#{bundle['lblCantidadUserMembresia']} </b><b:badge style="margin-left:10px; background-color:red" value="#{mem.cantidaduser}"  /></li>
-                                </ul>
-                                <f:facet name="footer" >
-                                    <b:commandButton  ajax="false"  value="Mas Info" look="info" style="margin: 10px" action="#{membresiaController.mostrarInfo(mem)}"><f:ajax execute="@form" render="modalForm" /></b:commandButton>
-                                    <b:commandButton ajax="false" value="Contratar" look="success" action="#{membresiaController.mostrarCon(mem)}" ><f:ajax execute="@form" render="modalForm" /></b:commandButton>
-                                </f:facet>
-                            </b:panel>
+                                   <b>#{bundle['lblTipoPeriodoMemMembresia']} </b>
+                                   <b:badge style="margin-left:10px; background-color:#{membresiaController.colorMem(mem.titulomembresia)}" value="#{membresiaController.getNombreTipoPeriodoMembresia(mem)}"  />
+                                  <b>#{bundle['lblPrecioMembresia']} </b>
+                                   <b:badge style="margin-left:10px; background-color:#{membresiaController.colorMem(mem.titulomembresia)}" value="$ #{membresiaController.parse(mem.preciomembresia)}"  />
+                                   
+                                   <b>#{bundle['lblCantidadOfertaMembresia']} </b>
+                                   <b:badge style="margin-left:10px; background-color:#{membresiaController.colorMem(mem.titulomembresia)}" value="#{mem.cantidadoferta}"  />
+                                   
+                                   <b>#{bundle['lblCantidadUserMembresia']} </b>
+                                   <b:badge style="margin-left:10px; background-color:#{membresiaController.colorMem(mem.titulomembresia)}" value="#{mem.cantidaduser}"  />
+
+
+                                   
+                                   
+                                   
+                                   
+                                   
+                                </h:panelGrid>
+                                </div>
+                           <div  class="botones">
+                                <b:commandButton  ajax="false" class="boton#{mem.idmembresia}"   
+                                                  onmouseout="cambiarOut('boton#{mem.idmembresia}','#{membresiaController.colorMem(mem.titulomembresia)}');" 
+                                                  onmouseover="cambiar('boton#{mem.idmembresia}','#{membresiaController.colorMemDarker(mem.titulomembresia)}');"  
+                                                  value="#{bundle.lblMasInfoMem}"  
+                                                  style="margin: 10px;background-color:#{membresiaController.colorMem(mem.titulomembresia)};color: white;box-shadow: 5px 5px 2px #ADADB8;"
+                                                  action="#{membresiaController.mostrarInfo(mem)}"><f:ajax execute="@form" render="modalForm" /></b:commandButton>
+                                                  
+                                <b:commandButton ajax="false" value="#{bundle.lblContratarMem}" class="boton2#{mem.idmembresia}" 
+                                                 onmouseover="cambiarOut('boton2#{mem.idmembresia}','#{membresiaController.colorMem(mem.titulomembresia)}');" 
+                                                 onmouseout="cambiar('boton2#{mem.idmembresia}','#{membresiaController.colorMemDarker(mem.titulomembresia)}');"
+                                                 style="background-color:#{membresiaController.colorMemDarker(mem.titulomembresia)};color: white;box-shadow: 5px 5px 2px #ADADB8;"
+                                                 action="#{membresiaController.mostrarCon(mem)}" ><f:ajax execute="@form" render="modalForm" /></b:commandButton>
+ 
+                            </div>
+                                    
+                            
 
                         </div>
 

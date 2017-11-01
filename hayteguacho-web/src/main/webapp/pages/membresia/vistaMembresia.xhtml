@@ -17,52 +17,142 @@
             <h:outputScript library="carousel/bower_components/modernizr" name="modernizr.js" />
             <h:outputScript library="carousel/dist" name="jquery.carousel-3d.js" />
             <h:outputScript target="body">
-               function soloNumerosConPunto(obj)
-               {
-               obj.value = (obj.value + '').replace(/[^0-9]/g,'');
-               }
-           </h:outputScript>
+                function soloNumerosConPunto(obj)
+                {
+                obj.value = (obj.value + '').replace(/[^0-9]/g,'');
+                }
+
+                function cambiar(elemento,color){
+                $('.'+elemento).css("background-color", color);
+
+                }
+                function cambiarOut(elemento,color){
+                $('.'+elemento).css("background-color", color);
+
+                }
+
+            </h:outputScript>
+
+
             <style>
                 .panel-footer{
                     background-color: lightgray;
                 }
+                .contenedor{
+                    position: relative;
 
+                    color: white;
 
+                }
+                .bienvenido{
+                    position: absolute;
+                    top:20px;
+                    right: 176px;
+                    font-size: 30px;
+                }
+                .top-right{
+                    position: absolute;
+                    top:45px;
+                    right: 80px;
+                    font-size: 30px;
+                }
+                .centrado{
+                    position: absolute;
+                    top: 50%;
+                    left: 40%;
+                    transform: translate(-40%,-50%);
+                    color: black;
+                    font-size: 30px;
+                }
+                .centrado2{
+                    font-size: 18px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    color: black;
+                }
+                .lamina{
+                    width:100%;
+                }
+                .botones{
+                    position: absolute;
+                    bottom: 20px;
+                    left: 30%;
+                }
+                .frijoles{
+                    position: absolute;
+                    bottom: 90px;
+                    
+                    left: 20%;
+                }
             </style>
 
             <h:form id="membresiaForm">
                 <!--<b:tabView tabPosition="center" contentStyle="border: 1px solid #ddd;padding:30px">
                     <b:tab title="" style="background-color: white;">-->
-                <div class='wrapper'>
-                    <h:outputText escape="false" value="#{membresiaController.opentag}" />
-                    <b:panel collapsible="false" style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px;text-align: center" look="primary">
-                        <f:facet name="heading">
+                <div class='wrapper'  >
+                    <h:outputText escape="false" value="#{mostrarMembresia.opentag}" />
+                    <div  class="contenedor" >
+                        <img src="../../resources/images/membresias/welcome.png"  class="lamina" />
+                        <h:outputText  value="#{bundle['lblMemBienvenido']}"  class="bienvenido" />
+                        <h:outputText value="#{bundle['lblMemDefault']}"  class="centrado" />
+                    </div>
 
-                            <h:outputText style="text-align: center" value="#{bundle['lblMemBienvenido']}" />
+                    <ui:repeat value="#{mostrarMembresia.listaMembresias}" var="membresia" varStatus="status" >
+                        <div class="contenedor" >
+                            <img src="../../resources/images/membresias/#{membresia.titulomembresia.toLowerCase()}3.png" class="lamina"/>
+                            <h:outputText  value="#{membresia.titulomembresia}" class="top-right" />
+                            <div class="centrado2" >
+                                <h:panelGrid id="panelMemb#{status.index}"  columns="2">
 
-                        </f:facet>
-                        <h:outputText value="#{bundle['lblMemDefault']}"/>
-                    </b:panel>
-                    <ui:repeat value="#{membresiaController.listaMembresias}" var="mem">
-                        <div style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px">
-                            <b:panel collapsible="false"  style="min-width: 320px; min-height: 213px; max-width: 320px; max-height: 213px;text-align: center;background-color: lightgrey;font-family: 'Times New Roman', Times, serif"  look="primary" >
-                                <f:facet name="heading" >
+                                    <b>#{bundle['lblTipoPeriodoMemMembresia']} </b>
+                                    <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(membresia.titulomembresia)}" value="#{mostrarMembresia.getNombreTipoPeriodoMembresia(membresia)}"  />
+                                    <b>#{bundle['lblPrecioMembresia']} </b>
+                                    <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(membresia.titulomembresia)}" value="$ #{mostrarMembresia.parse(membresia.preciomembresia)}"  />
 
-                                    <h:outputText  value="#{mem.titulomembresia}" style="font-size: 20px"/>
+                                    <b>#{bundle['lblCantidadOfertaMembresia']} </b>
+                                    <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(membresia.titulomembresia)}" value="#{membresia.cantidadoferta}"  />
 
-                                </f:facet>
-                                <ul >
-                                    <li><b>#{bundle['lblTipoPeriodoMemMembresia']} </b><b:badge style="margin-left:10px; background-color:green" value="#{membresiaController.getNombreTipoPeriodoMembresia(mem)}"  /></li>
-                                    <li><b>#{bundle['lblPrecioMembresia']} </b> <b:badge style="margin-left:10px; background-color:coral" value="$ #{membresiaController.parse(mem.preciomembresia)}"  /></li>
-                                    
-                                    <li><b>#{bundle['lblCantidadOfertaMembresia']} </b><b:badge style="margin-left:10px; background-color:yellow" value="#{mem.cantidadoferta}"  /></li>
-                                    <li><b>#{bundle['lblCantidadUserMembresia']} </b><b:badge style="margin-left:10px; background-color:red" value="#{mem.cantidaduser}"  /></li>
-                                </ul>
-                                <f:facet name="footer" >
-                                    <b:commandButton  ajax="false"  value="Mas Info" look="info" style="margin: 10px" action="#{membresiaController.mostrarInfo(mem)}"><f:ajax execute="@form" render="modalForm" /></b:commandButton>
-                                    <b:commandButton ajax="false" value="Contratar" look="success" action="#{membresiaController.mostrarCon(mem)}" ><f:ajax execute="@form" render="modalForm" /></b:commandButton>
-                                </f:facet>
-                            </b:panel>
+                                    <b>#{bundle['lblCantidadUserMembresia']} </b>
+                                    <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(membresia.titulomembresia)}" value="#{membresia.cantidaduser}"  />
+                                </h:panelGrid>
+
+
+
+                            </div>
+                            <div class="frijoles">
+                                <h:panelGrid columns="4">
+                                    <ui:repeat value="#{mostrarMembresia.obtenerMembresiasPorTitulo(membresia.titulomembresia)}" var="periodo">
+
+                                        <b:commandButton style="font-size: 12px;font-weight: bold;" value="#{mostrarMembresia.getNombreTipoPeriodoMembresia(periodo)}" 
+                                                         onclick="ajax:mostrarMembresia.cambiarPeriodo(status.index, periodo);"
+                                                         />
+                                    </ui:repeat>
+
+                                </h:panelGrid>
+                            </div>
+
+                            <div  class="botones">
+                                <b:commandButton  ajax="false" class="boton#{membresia.idmembresia}"   
+                                                  onmouseout="cambiarOut('boton#{membresia.idmembresia}', '#{mostrarMembresia.colorMem(membresia.titulomembresia)}');" 
+                                                  onmouseover="cambiar('boton#{membresia.idmembresia}', '#{mostrarMembresia.colorMemDarker(membresia.titulomembresia)}');"  
+                                                  value="#{bundle.lblMasInfoMem}"  
+                                                  style="margin: 10px;background-color:#{mostrarMembresia.colorMem(membresia.titulomembresia)};color: white;box-shadow: 5px 5px 2px #ADADB8;"
+                                                  action="#{mostrarMembresia.mostrarInfo(membresia)}"><f:ajax execute="@form" render="modalForm" /></b:commandButton>
+
+                                <b:commandButton ajax="false" value="#{bundle.lblContratarMem}" class="boton2#{membresia.idmembresia}" 
+                                                 onmouseover="cambiarOut('boton2#{membresia.idmembresia}', '#{mostrarMembresia.colorMem(membresia.titulomembresia)}');" 
+                                                 onmouseout="cambiar('boton2#{membresia.idmembresia}', '#{mostrarMembresia.colorMemDarker(membresia.titulomembresia)}');"
+                                                 style="background-color:#{mostrarMembresia.colorMemDarker(membresia.titulomembresia)};color: white;box-shadow: 5px 5px 2px #ADADB8;"
+                                                 action="#{mostrarMembresia.mostrarCon(membresia)}" ><f:ajax execute="@form" render="modalForm" /></b:commandButton>
+
+                            </div>
+
+
+
+
+
 
                         </div>
 
@@ -71,8 +161,7 @@
 
 
 
-
-                    <h:outputText escape="false" value="#{membresiaController.closetag}" />
+                    <h:outputText escape="false" value="#{mostrarMembresia.closetag}" />
 
 
                 </div>
@@ -86,15 +175,15 @@
             <h:form id="modalForm">
 
 
-                <b:modal  id="imodal" title="#{membresiaController.membresia.titulomembresia}" styleClass="modalPseudoClass" closable="false">
-                    <b:panel id="calculosPanel" rendered="#{membresiaController.modalContratar}">
-                         <b:row>
+                <b:modal  id="imodal" title="#{mostrarMembresia.membresia.titulomembresia}" styleClass="modalPseudoClass" closable="false" backdrop="false">
+                    <b:panel id="calculosPanel" rendered="#{mostrarMembresia.modalContratar}">
+                        <b:row>
                             <b:column span="6">
                                 <h:outputText value="#{bundle['lblOfertasExtra']}" style="font-weight: bold"/>
 
                             </b:column>
                             <b:column span="6">
-                                <h:inputText onkeyup="calc(this.value)" class="elemento" value="#{membresiaController.mef.cantidadofertasextra}"/>
+                                <h:inputText onkeyup="calc(this.value)" class="elemento" value="#{mostrarMembresia.mef.cantidadofertasextra}"/>
                             </b:column>
                         </b:row>
                         <b:row>
@@ -102,8 +191,8 @@
                                 <h:outputText value="#{bundle['lblPrecioOfertaMembresia']}" style="font-weight: bold"/>
                             </b:column>
                             <b:column span="6">
-                                <h:outputText value="$#{membresiaController.parse(membresiaController.membresia.precioxoferta)}" style="font-weight: bold" />
-                                <h:inputText value="#{membresiaController.membresia.precioxoferta}" class="precio"  readonly="true" style="display: none"/>
+                                <h:outputText value="$#{mostrarMembresia.parse(mostrarMembresia.membresia.precioxoferta)}" style="font-weight: bold" />
+                                <h:inputText value="#{mostrarMembresia.membresia.precioxoferta}" class="precio"  readonly="true" style="display: none"/>
                             </b:column>
                         </b:row>
                         <b:row>
@@ -120,17 +209,17 @@
                                 <h:outputText value="#{bundle['lblCantidadOfertas']}" style="font-weight: bold"/>
                             </b:column>
                             <b:column span="6">
-                                <h:outputText class="lbltotalofertas" style="font-weight: bold" value="#{membresiaController.membresia.cantidadoferta}"/>
-                                <h:inputText class="totalofertas" style="display: none" readonly="true" value="#{membresiaController.mef.cantidadcontratada}" />
-                                <h:inputText value="#{membresiaController.membresia.cantidadoferta}" class="cantidad" style="display: none" />
+                                <h:outputText class="lbltotalofertas" style="font-weight: bold" value="#{mostrarMembresia.membresia.cantidadoferta}"/>
+                                <h:inputText class="totalofertas" style="display: none" readonly="true" value="#{mostrarMembresia.mef.cantidadcontratada}" />
+                                <h:inputText value="#{mostrarMembresia.membresia.cantidadoferta}" class="cantidad" style="display: none" />
                             </b:column>
                         </b:row>
-                         <b:row>
+                        <b:row>
                             <b:column span="6">
                                 <h:outputText value="#{bundle['lblCantidadOfertaMembresias']}" style="font-weight: bold"/>
                             </b:column>
                             <b:column span="6">
-                                <h:outputText style="font-weight: bold" value="#{membresiaController.membresia.cantidadoferta}"/>
+                                <h:outputText style="font-weight: bold" value="#{mostrarMembresia.membresia.cantidadoferta}"/>
                             </b:column>
                         </b:row>
                         <b:row>
@@ -138,7 +227,7 @@
                                 <h:outputText value="#{bundle['lblPrecioOriginalMembresia']}" style="font-weight: bold"/>
                             </b:column>
                             <b:column span="6">
-                                <h:outputText style="font-weight: bold" value="$#{membresiaController.parse(membresiaController.membresia.preciomembresia)}"/>
+                                <h:outputText style="font-weight: bold" value="$#{mostrarMembresia.parse(mostrarMembresia.membresia.preciomembresia)}"/>
                             </b:column>
                         </b:row>
                         <b:row>
@@ -146,83 +235,103 @@
                                 <h:outputText value="#{bundle['lblTotalAPagar']}" style="font-weight: bold"/>
                             </b:column>
                             <b:column span="6">
-                                <h:outputText class="lbltotalfinal" style="font-weight: bold" value="$#{membresiaController.parse(membresiaController.membresia.preciomembresia)}"/>
+                                <h:outputText class="lbltotalfinal" style="font-weight: bold" value="$#{mostrarMembresia.parse(mostrarMembresia.membresia.preciomembresia)}"/>
                                 <h:inputText class="totalfinal" style="display: none" readonly="true"/>
-                                <h:inputText value="#{membresiaController.membresia.preciomembresia}" class="preciomem" style="display: none"/>
+                                <h:inputText value="#{mostrarMembresia.membresia.preciomembresia}" class="preciomem" style="display: none"/>
                             </b:column>
                         </b:row>
                         <f:facet name="footer">
-                            <b:commandButton  ajax='true' update="modalForm:imodal"   oncomplete="$('.modalPseudoClass').modal('show');" value="Contratar"   action="#{membresiaController.confirmar()}"    look="success"/>
+                            <b:commandButton  ajax='true' update="modalForm:imodal"   
+                                              class="botonCal#{mostrarMembresia.membresia.idmembresia}" 
+                                              onmouseover="cambiarOut('botonCal#{mostrarMembresia.membresia.idmembresia}', '#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)}');" 
+                                              onmouseout="cambiar('botonCal#{mostrarMembresia.membresia.idmembresia}', '#{mostrarMembresia.colorMemDarker(mostrarMembresia.membresia.titulomembresia)}');"
+                                              style="background-color:#{mostrarMembresia.colorMemDarker(mostrarMembresia.membresia.titulomembresia)};color: white;box-shadow: 5px 5px 2px #ADADB8;"
+                                              oncomplete="$('.modalPseudoClass').modal('show');" value="Contratar"   action="#{mostrarMembresia.confirmar()}"  />
                         </f:facet>                       
                     </b:panel>
-                    
-                    <b:panel id="confirmacionPanel" rendered="#{membresiaController.modalConfirmar}">
+
+                    <b:panel id="confirmacionPanel" rendered="#{mostrarMembresia.modalConfirmar}">
                         <b:row>
                             <b:column span="6">
                                 <h:outputText style="font-weight: bold" value="#{bundle['lblContratarConfirm']}"/>
                             </b:column>
                             <b:column span="6">
-                                
+
                             </b:column>
                         </b:row>
                         <f:facet name="footer">
-                            <b:commandButton ajax="false"  value="#{bundle['lblBtnOk']}"  look="success"  action="#{membresiaController.contratar()}" />
-                            <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" look="primary"  actionListener="#{membresiaController.cerrarDialogo()}"/>
-                               
+                            <b:commandButton ajax="false"  value="#{bundle['lblBtnOk']}"  
+                                             class="botonCon#{mostrarMembresia.membresia.idmembresia}" 
+                                             onmouseover="cambiarOut('botonCon#{mostrarMembresia.membresia.idmembresia}', '#{mostrarMembresia.colorMemDarker(mostrarMembresia.membresia.titulomembresia)}');" 
+                                             onmouseout="cambiar('botonCon#{mostrarMembresia.membresia.idmembresia}', '#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)}');"
+                                             style="background-color:#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)};color: white;box-shadow: 5px 5px 2px #ADADB8;"
+                                             action="#{mostrarMembresia.contratar()}" />
+                            <b:commandButton  ajax="false"  value="#{bundle['lblBtnCerrar']}" 
+                                              class="botonCer#{mostrarMembresia.membresia.idmembresia}" 
+                                              onmouseover="cambiarOut('botonCer#{mostrarMembresia.membresia.idmembresia}', '#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)}');" 
+                                              onmouseout="cambiar('botonCer#{mostrarMembresia.membresia.idmembresia}', '#{mostrarMembresia.colorMemDarker(mostrarMembresia.membresia.titulomembresia)}');"
+                                              style="background-color:#{mostrarMembresia.colorMemDarker(mostrarMembresia.membresia.titulomembresia)};color: white;box-shadow: 5px 5px 2px #ADADB8;"
+                                              actionListener="#{mostrarMembresia.cerrarDialogo()}"/>
+
                         </f:facet>
                     </b:panel>
 
-                    <b:panel id="informacionPanel" rendered="#{membresiaController.modalInfo}">
+                    <b:panel id="informacionPanel" rendered="#{mostrarMembresia.modalInfo}">
                         <b:row>
                             <b:column span="3">
-                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblTipoPeriodoMemMembresia']}"  />
+                                <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)}"  value="#{bundle['lblTipoPeriodoMemMembresia']}"  />
                             </b:column>
                             <b:column span="9">
-                                <h:outputText value="#{membresiaController.periodo}" style="font-weight: bold" />
+                                <h:outputText value="#{mostrarMembresia.periodo}" style="font-weight: bold" />
 
                             </b:column>
                         </b:row>
                         <p:separator/>
                         <b:row>
                             <b:column span="3">
-                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblPrecioMembresia']}"  />
+                                <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)}"  value="#{bundle['lblPrecioMembresia']}"  />
                             </b:column>
                             <b:column span="9">
-                                <h:outputText value="$ #{membresiaController.parse(membresiaController.membresia.preciomembresia)}" style="font-weight: bold"/>
+                                <h:outputText value="$ #{mostrarMembresia.parse(mostrarMembresia.membresia.preciomembresia)}" style="font-weight: bold"/>
 
                             </b:column>
                         </b:row>
                         <p:separator/>
                         <b:row>
                             <b:column span="3">
-                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblPrecioOfertaMembresia']}"   />
+                                <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)}"  value="#{bundle['lblPrecioOfertaMembresia']}"   />
                             </b:column>
                             <b:column span="9">
-                                <h:outputText value="$ #{membresiaController.parse(membresiaController.membresia.precioxoferta)}" style="font-weight: bold" />
+                                <h:outputText value="$ #{mostrarMembresia.parse(mostrarMembresia.membresia.precioxoferta)}" style="font-weight: bold" />
 
                             </b:column>
                         </b:row>
                         <p:separator/>
                         <b:row>
                             <b:column span="2">
-                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblVentajasMembresia']}"  />
+                                <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)}"  value="#{bundle['lblVentajasMembresia']}"  />
                             </b:column>
                             <b:column span="10">
-                                #{membresiaController.membresia.ventajasdemembresia}
+                                #{mostrarMembresia.membresia.ventajasdemembresia}
                             </b:column>
                         </b:row>
                         <p:separator/>
                         <b:row>
                             <b:column span="2">
-                                <b:badge style="margin-left:10px; background-color:chocolate" value="#{bundle['lblDescMembresia']}"  />
+                                <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)}"  value="#{bundle['lblDescMembresia']}"  />
                             </b:column>
                             <b:column span="10">
-                                #{membresiaController.membresia.descripcionmembresia}
+                                #{mostrarMembresia.membresia.descripcionmembresia}
                             </b:column>
                         </b:row>
                         <f:facet name="footer">
-                            <b:commandButton  ajax="true"  value="#{bundle['lblBtnCerrar']}" look="primary"  onclick="$('.modalPseudoClass').modal('hide');ajax:membresiaController.cerrarDialogo();">
-                                
+                            <b:commandButton  ajax="true"  value="#{bundle['lblBtnCerrar']}" 
+                                              class="botonCal#{mostrarMembresia.membresia.idmembresia}" 
+                                              onmouseover="cambiarOut('botonCal#{mostrarMembresia.membresia.idmembresia}', '#{mostrarMembresia.colorMem(mostrarMembresia.membresia.titulomembresia)}');" 
+                                              onmouseout="cambiar('botonCal#{mostrarMembresia.membresia.idmembresia}', '#{mostrarMembresia.colorMemDarker(mostrarMembresia.membresia.titulomembresia)}');"
+                                              style="background-color:#{mostrarMembresia.colorMemDarker(mostrarMembresia.membresia.titulomembresia)};color: white;box-shadow: 5px 5px 2px #ADADB8;"
+                                              onclick="$('.modalPseudoClass').modal('hide');ajax:mostrarMembresia.cerrarDialogo();">
+
                             </b:commandButton>
 
                         </f:facet>
@@ -236,37 +345,37 @@
                 function calc(e) {
                     var patt = new RegExp("[^0-9]");
                     var res = patt.test(e);
-                    
-                    if(!res){
-                      var d = $('.precio').val();
-                    var o = $('.cantidad').val();
-                    var p = $('.preciomem').val();
-                    var tot = d * e;
-                    if (e !== "") {
-                        $('.total').val(tot);
-                        $('.lbltotal').html("<b>$"+tot+"</b>");
-                        $('.totalofertas').val(parseFloat(e) + parseFloat(o));
-                        $('.lbltotalofertas').html(parseFloat(e) + parseFloat(o));
-                        $('.totalfinal').val(parseFloat(p) + parseFloat(tot));
-                        $('.lbltotalfinal').html("$" + $('.totalfinal').val());
-                    } else {
-                        $('.lbltotal').html("<b>$0.00</b>");
-                        $('.lbltotalofertas').html(o);
-                        $('.lbltotalfinal').html("$" + p);
-                        $('.total').val(0);
-                        $('.totalofertas').val(o);
-                        $('.totalfinal').val(p);
 
-                    }  
-                        
-                    }else{
+                    if (!res) {
+                        var d = $('.precio').val();
+                        var o = $('.cantidad').val();
+                        var p = $('.preciomem').val();
+                        var tot = d * e;
+                        if (e !== "") {
+                            $('.total').val(tot);
+                            $('.lbltotal').html("<b>$" + tot + "</b>");
+                            $('.totalofertas').val(parseFloat(e) + parseFloat(o));
+                            $('.lbltotalofertas').html(parseFloat(e) + parseFloat(o));
+                            $('.totalfinal').val(parseFloat(p) + parseFloat(tot));
+                            $('.lbltotalfinal').html("$" + $('.totalfinal').val());
+                        } else {
+                            $('.lbltotal').html("<b>$0.00</b>");
+                            $('.lbltotalofertas').html(o);
+                            $('.lbltotalfinal').html("$" + p);
+                            $('.total').val(0);
+                            $('.totalofertas').val(o);
+                            $('.totalfinal').val(p);
+
+                        }
+
+                    } else {
                         var obj = $('.elemento').val();
-                        obj = (obj + '').replace(/[^0-9]/g,'');
+                        obj = (obj + '').replace(/[^0-9]/g, '');
                         $('.elemento').val(obj);
                     }
-                    
-                    
-                    
+
+
+
 
                 }
 

@@ -95,4 +95,24 @@ public class TipoPeriodoMembresiaFacade extends AbstractFacade<TblTipoperidomemb
 
         return listaEntityForm.get(0).getNombretipoperiodomembresia();
      }
+    
+    public  TipoPeriodoMembresiaForm getTipoPeriodoMembresia(MembresiaForm mf){
+        String sql = "select * from tbl_tipoperidomembresia where idtipoperiodomembresia = " + mf.getIdtipoperiodomembresia();
+     Query q = getEntityManager().createNativeQuery(sql, TblTipoperidomembresia.class);
+        List<TblTipoperidomembresia> listaEntity;
+        List<TipoPeriodoMembresiaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<TipoPeriodoMembresiaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new TipoPeriodoMembresiaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<TipoPeriodoMembresiaForm>();
+        }
+
+        return listaEntityForm.get(0);
+     }
 }

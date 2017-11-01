@@ -51,6 +51,7 @@ public class MembresiaController {
     private @Getter @Setter String opentag="<div data-carousel-3d>";
     private @Getter @Setter String closetag="</div>";
     private @Getter @Setter String periodo="";
+    private @Getter @Setter int op = 0;
     
     @Inject
     private LoginController login;
@@ -59,7 +60,7 @@ public class MembresiaController {
     @PostConstruct
     public void init(){
         membresia.setIdmembresia("0");
-        listaMembresias = membresiafacade.obtenerMembresiasOrden();
+        listaMembresias = membresiafacade.obtenerMembresiasOrdenOld();
         listaTipoPeriodoMembresia = tpmfacade.obtenerTiposPeriodosMembresia();
     }
     
@@ -173,7 +174,7 @@ public class MembresiaController {
   Date fechainicio = new Date();
   Calendar c = Calendar.getInstance();
   c.setTime(fechainicio);
-  String periodo = getNombreTipoPeriodoMembresia(membresia);
+  //String periodo = getNombreTipoPeriodoMembresia(membresia);
   int mes = 0;
       if (periodo.toLowerCase().equals("mensual")) {
           mes = 1;
@@ -219,5 +220,75 @@ public class MembresiaController {
     if((int) num == num) return Integer.toString((int) num);
     return String.valueOf(num); 
 }
+  
+  public String colorMem(String title){
+  String color = "black";
+  switch(title.toLowerCase())
+  {
+      case "gold":
+          color = "#b29500";
+          break;
+      case "platinum":
+          color = "#697e86";
+          break;
+      case "classic":
+          color = "#009ea7";
+          break;
+      case "free":
+          color = "#64aa07";
+          break;    
+  }
+  
+  return color;
+  }
+  
+  public String colorMemDarker(String title){
+  String color = "black";
+  switch(title.toLowerCase())
+  {
+      case "gold":
+          color = "#967E05";
+          break;
+      case "platinum":
+          color = "#5C6C73";
+          break;
+      case "classic":
+          color = "#037A81";
+          break;
+      case "free":
+          color = "#4C8006";
+          break;    
+  }
+  
+  return color;
+  }
+  
+  
+ /*public String mostrarAnual(MembresiaForm mf){
+      String res = "";
+      if (!mf.getTitulomembresia().toLowerCase().equals("anual")) {
+          res = "mostrarPeriodo('mostrarShow"+mf.getIdmembresia()+"','none');";
+      }
+  return res;
+  }*/
+  
+  public List<MembresiaForm> obtenerMembresiasPorTitulo(String titulo){
+  listaMembresias = membresiafacade.obtenerMembresiasPorTitulo(titulo);
+  return listaMembresias;
+  }
+  
+  public boolean renderizar(int opcion, MembresiaForm memfo){
+  boolean flag = false;
+        String tipoPer = getNombreTipoPeriodoMembresia(memfo);
+      if (opcion == 1) {
+          if (tipoPer.toLowerCase().equals("anual")) {
+              flag = true;
+          }
+      }
+   
+  
+  
+  return flag;
+  }
    
 }

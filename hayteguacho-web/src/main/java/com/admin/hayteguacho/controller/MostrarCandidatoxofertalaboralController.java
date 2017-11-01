@@ -99,8 +99,8 @@ public class MostrarCandidatoxofertalaboralController {
     public void init() {
         membresia = getMembresiaActual();
         mostrarGuardar = mostrarSave();
-        listaOferta = ofertaFacade.obtenerOfertas(login.getUserLog().getIdentificador());
-        
+        listaOferta = ofertaFacade.obtenerOfertas(login.getPais(),login.getIdCompany());
+        System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.init()");
     }
     
     public boolean mostrarSave(){
@@ -370,7 +370,7 @@ public class MostrarCandidatoxofertalaboralController {
     public String getTitulo(){
        
         try {
-            titulo = vb.getMsgBundle("lblCxOfertasActuales") + " " + listaOferta.size();
+            titulo = vb.getMsgBundle("lblCxOfertasActuales") + "(" + listaOferta.size() +" "+vb.getMsgBundle("lblOfertas") +")";
         } catch (Exception e) {
             System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.obtenerTitulo()");
             e.printStackTrace();
