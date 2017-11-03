@@ -229,7 +229,7 @@ public class LoginController implements Serializable {
                 listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
             }
 
-
+            System.err.println("la imagen es: "+userLog.getImagen());
             /*
             pag = "/pages/empleado/agregarEmpleado.xhtml";
             setIdRol(usuario.getIdrol());

@@ -232,6 +232,23 @@ public class ValidationBean {
         tmp = cad[2] + "-" + cad[1] + "-" + cad[0];
         return tmp;
     }
+    
+    
+    public boolean validarFormatoFecha(String c, String tipoMsg, String tituloMsg, String descMsg){
+        Pattern patron = Pattern.compile("^([0][1-9]|[12][0-9]|3[01])(\\/|-)([0][1-9]|[1][0-2])\\2(\\d{4})$");
+        Matcher validar = patron.matcher(c);
+        //
+        //String c, String tipoMsg, String tituloMsg, String descMsg
+        boolean flag;
+        if (validar.find()) {
+            flag = true;
+            
+        } else {
+            flag = false;
+            lanzarMensaje(tipoMsg, tituloMsg, descMsg);
+        }
+        return flag;     
+    }
 
     public boolean validarFecha(String fecha, String tipo, String titulo, String msg) {
 

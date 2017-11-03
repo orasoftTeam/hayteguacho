@@ -36,14 +36,14 @@ public class UserFacade {
 
     public UserForm getUser(String user, String pass) {
         String sql = "select usuario.tipo, usuario.identificador, usuario.nombre, usuario.correo, "
-         + "(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(usuario.contrasena) FROM DUAL) contrasena, rol.NOMBREROL, rol.IDROL, roluser.IDROLUSUARIO from tbl_rolusuario roluser,\n" +
+         + "(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(usuario.contrasena) FROM DUAL) contrasena, rol.NOMBREROL, rol.IDROL, roluser.IDROLUSUARIO, usuario.imagen from tbl_rolusuario roluser,\n" +
         "(\n" +
-        "select 'E' tipo,  company.IDEMPRESA identificador, company.NOMBREEMPRESA nombre, company.correocontactoempresa correo, company.contrasenacontactoempresa contrasena from tbl_empresa company \n" +
+        "select 'E' tipo,  company.IDEMPRESA identificador, company.NOMBREEMPRESA nombre, company.correocontactoempresa correo, company.contrasenacontactoempresa contrasena, decode(company.logoempresa,NULL,'',company.logoempresa) imagen from tbl_empresa company \n" +
         "where company.correocontactoempresa='"+user+"' \n" +
         "and \n" +
         "(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(company.contrasenacontactoempresa) FROM DUAL)='"+pass+"'\n" +
         "union \n" +
-        "select 'C' tipo, candidato.idcandidato identificador, (candidato.nombrecandidato || candidato.apellidocandidato) as  nombre, candidato.correocandidato correo, candidato.contrasenacandidato contrasena from tbl_candidato candidato \n" +
+        "select 'C' tipo, candidato.idcandidato identificador, (candidato.nombrecandidato || candidato.apellidocandidato) as  nombre, candidato.correocandidato correo, candidato.contrasenacandidato contrasena, '' imagen from tbl_candidato candidato \n" +
         "where candidato.correocandidato='"+user+"' and candidato.estadocandidato='A' \n" +
         "and \n" +
         "(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(candidato.contrasenacandidato) FROM DUAL)='"+pass+"'\n" +

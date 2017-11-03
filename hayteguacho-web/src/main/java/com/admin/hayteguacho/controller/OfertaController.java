@@ -176,7 +176,8 @@ public class OfertaController {
                 //&&
                 //validationBean.validarFecha(oferta.getFechacontratacionofertalaboral(), "warn", "titleOfertaEmpresa", "lblReqOfertaFechaContra")               
                 &&
-                validationBean.validarFecha(validationBean.formatearFechaGuion(oferta.getFechacontratacionofertalaboral()), "warn", "titleOfertaEmpresa", "lblReqOfertaFechaContra") 
+                validationBean.validarFormatoFecha(oferta.getFechacontratacionofertalaboral(),"warn", "titleOfertaEmpresa", "lblReqOfertaFechaContra")
+                //validationBean.validarFecha(validationBean.formatearFechaGuion(oferta.getFechacontratacionofertalaboral()), "warn", "titleOfertaEmpresa", "lblReqOfertaFechaContra") 
                 &&
                 validationBean.validarCampoVacio(oferta.getCantidadvacante(), "warn", "titleOfertaEmpresa", "lblReqOfertaCantidadVacante")
                 &&
