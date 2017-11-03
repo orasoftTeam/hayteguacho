@@ -99,7 +99,7 @@ public class MostrarCandidatoxofertalaboralController {
     public void init() {
         membresia = getMembresiaActual();
         mostrarGuardar = mostrarSave();
-        listaOferta = ofertaFacade.obtenerOfertas(login.getPais(),login.getIdCompany());
+        listaOferta = ofertaFacade.obtenerOfertas(login.getPais(),login.getUserLog().getIdentificador());
         System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.init()");
     }
     
