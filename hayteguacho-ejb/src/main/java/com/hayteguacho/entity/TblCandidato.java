@@ -45,7 +45,8 @@ import lombok.Setter;
                     @ColumnResult(name = "contrasena", type = String.class),
                     @ColumnResult(name = "nombrerol", type = String.class),
                     @ColumnResult(name = "idrol", type = String.class),
-                    @ColumnResult(name = "idrolusuario", type = String.class)/*,
+                    @ColumnResult(name = "idrolusuario", type = String.class),
+                    @ColumnResult(name = "imagen", type = String.class)/*,
                     @ColumnResult(name = "producto", type = String.class)*/}))
 
 @XmlRootElement

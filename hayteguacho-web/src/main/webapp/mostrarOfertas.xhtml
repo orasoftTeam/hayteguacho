@@ -33,6 +33,12 @@
                 e.preventDefault();
                 });
                 });
+                
+                $( window ).on( "load", function() {
+                    if(!((#{mostrarController.listaOferta.size()}) &#62; 0)){
+                        $("body").css('background-image', 'none');
+                    }
+                });
             </h:outputScript>
             <h:outputStylesheet>
                 body{
@@ -68,6 +74,8 @@
                         <b:column col-md="2">
                             <b:commandButton icon="fa-arrow-left" update="@form" ajax="true" actionListener="#{mostrarController.atras}" value="#{bundle['lblBtnAtras']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.ini eq 0}" />
                         </b:column>
+                        <b:column col-md="4"></b:column>
+                        <!--
                         <b:column col-md="4">
                             <c:if test="#{(mostrarController.ini %36) eq 0}">
                                 <c:forEach var="indice" begin="#{mostrarController.ini}" end="#{mostrarController.count}">
@@ -81,6 +89,7 @@
                                 </c:forEach>
                             </c:if>
                         </b:column>
+                        -->
                         <b:column col-md="2">
                             <b:commandButton   update="@form" ajax="true" actionListener="#{mostrarController.siguiente}" value="#{bundle['lblBtnSig']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.deshabilitarSiguiente()}" />
                         </b:column>

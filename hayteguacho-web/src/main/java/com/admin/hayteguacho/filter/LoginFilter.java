@@ -49,7 +49,7 @@ public class LoginFilter implements Filter {
             //String contextPath = ((HttpServletRequest) request).getContextPath();
             if (loginBean == null || !loginBean.isLoggedIn()) {
                 if (!contextPath.contains("/faces")) {
-                    ((HttpServletResponse) response).sendRedirect(contextPath + "/index.xhtml");
+                    ((HttpServletResponse) response).sendRedirect(contextPath + "/indexPaises.xhtml");
                     loginBean.limpiar();
                 }
             } else if (loginBean.getUserLog() != null) {

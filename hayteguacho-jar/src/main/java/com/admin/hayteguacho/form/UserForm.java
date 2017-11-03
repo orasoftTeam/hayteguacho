@@ -22,8 +22,9 @@ public class UserForm {
     private @Getter @Setter String nombrerol;
     private @Getter @Setter String idrol;
     private @Getter @Setter String idrolusuario;
+    private @Getter @Setter String imagen;
 
-    public UserForm(String tipo, String identificador, String nombre, String correo, String contrasena, String nombrerol, String idrol, String idrolusuario) {
+    public UserForm(String tipo, String identificador, String nombre, String correo, String contrasena, String nombrerol, String idrol, String idrolusuario, String imagen) {
         this.tipo = tipo;
         this.identificador = identificador;
         this.nombre = nombre;
@@ -32,6 +33,7 @@ public class UserForm {
         this.nombrerol = nombrerol;
         this.idrol = idrol;
         this.idrolusuario = idrolusuario;
+        this.imagen= imagen;
     }
     
     public UserForm(){

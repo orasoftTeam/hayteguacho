@@ -144,6 +144,10 @@ public class MembresiaFacade extends AbstractFacade<TblMembresia, MembresiaForm>
         }
         return flag;
     }
-     
+     /*
+    public List<MembresiaForm> obtenerMembresiasOrdenOld() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     */
      
 }
