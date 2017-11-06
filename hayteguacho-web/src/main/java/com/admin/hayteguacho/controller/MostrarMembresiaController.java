@@ -214,7 +214,8 @@ public class MostrarMembresiaController {
    public void cambiarPeriodo(int index,MembresiaForm per){
        listaMembresias.remove(index);
        listaMembresias.add(index, per);
-       System.out.println("com.admin.hayteguacho.controller.MostrarMembresiaController.cambiarPeriodo()");
-       vb.updateComponent("membresiaForm:j_idt43:"+index+":panelMemb");
+       System.out.println("com.admin.hayteguacho.controller.MostrarMembresiaController.cambiarPeriodo()"  + getNombreTipoPeriodoMembresia(per));
+       
+       //vb.updateComponent("@form");
    }
 }

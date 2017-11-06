@@ -5,15 +5,25 @@
  */
 package com.admin.hayteguacho.controller;
 
+import com.admin.hayteguacho.form.MembresiaForm;
+import com.admin.hayteguacho.form.MembresiaxEmpresaForm;
 import com.admin.hayteguacho.form.MenuForm;
+import com.admin.hayteguacho.form.OfertaForm;
 import com.admin.hayteguacho.form.UserForm;
 import com.admin.hayteguacho.util.ValidationBean;
+import com.hayteguacho.facade.MembresiaFacade;
+import com.hayteguacho.facade.MembresiaxempresaFacade;
 import com.hayteguacho.facade.MenuFacade;
 import com.hayteguacho.facade.UserFacade;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,6 +72,11 @@ public class LoginController implements Serializable {
 
     private ValidationBean validationBean;
     
+     @EJB
+    private MembresiaFacade membresiaFacade;
+    
+     @EJB
+    private MembresiaxempresaFacade membresiaxEmpresaFacade;
     
     @Inject
     private MostrarOfertaController ofertas;
@@ -87,6 +102,9 @@ public class LoginController implements Serializable {
     private @Getter @Setter int indexNav=-1;
     
     private @Getter @Setter String pais="";
+    
+    private @Getter @Setter MembresiaForm membresiaActual;
+    private @Getter @Setter MembresiaxEmpresaForm membresiaxEmpresaActual;
 
     @PostConstruct
     public void init() {
@@ -315,4 +333,90 @@ public class LoginController implements Serializable {
             //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public boolean obtenerMembresiaActual(){
+    boolean flag = false;
+        if (loggedIn) {
+              try {
+            List<MembresiaForm> lista = membresiaFacade.obtenerMembresiaEmpresa(Integer.parseInt(userLog.getIdentificador()));
+            if (!lista.isEmpty()) {
+                membresiaActual = lista.get(0);
+                membresiaxEmpresaActual = membresiaxEmpresaFacade.obtenerMembresia(userLog.getIdentificador());
+                flag = true;
+            }
+        } catch (Exception e) {
+            System.out.println("com.admin.hayteguacho.controller.LoginController.obtenerMembresiaActual()");
+            e.printStackTrace();
+        }
+        }
+    
+    
+       return flag;
+    }
+    
+    public boolean mostrarBaseCandidatos(){
+       boolean flag = false;
+        if (loggedIn) {
+              try {
+            List<MembresiaForm> lista = membresiaFacade.obtenerMembresiaEmpresa(Integer.parseInt(userLog.getIdentificador()));
+            if (!lista.isEmpty()) {
+                membresiaActual = lista.get(0);
+                if (membresiaActual.getTitulomembresia().toLowerCase().equals("gold")) {
+                    flag = true;
+                }
+                
+            }
+        } catch (Exception e) {
+            System.out.println("com.admin.hayteguacho.controller.LoginController.obtenerMembresiaActual()");
+            e.printStackTrace();
+        }
+        }
+    
+    
+       return flag;
+    
+    }
+    
+    public String obtenerFecha(String fecha){
+     String dateStr = fecha;
+     DateFormat readFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+     DateFormat writeFormat = new SimpleDateFormat("dd/MM/yyyy");
+     Date date = null;
+         try {
+             date = (Date)readFormat.parse(dateStr);
+         } catch (Exception e) {
+             System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.obtenerFecha()");
+             e.printStackTrace();
+         }
+         
+         String formattedDate = "";
+         if (date != null) {
+             formattedDate = writeFormat.format(date);
+         }
+         return formattedDate;
+    }
+    
+      public String colorMem(String title){
+  String color = "black";
+  switch(title.toLowerCase())
+  {
+      case "gold":
+          color = "#b29500";
+          break;
+      case "platinum":
+          color = "#697e86";
+          break;
+      case "classic":
+          color = "#009ea7";
+          break;
+      case "free":
+          color = "#64aa07";
+          break;    
+  }
+  
+  return color;
+  }
+    
+  
+    
 }

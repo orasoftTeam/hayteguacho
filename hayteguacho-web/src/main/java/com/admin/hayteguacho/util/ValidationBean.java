@@ -235,7 +235,7 @@ public class ValidationBean {
     
     
     public boolean validarFormatoFecha(String c, String tipoMsg, String tituloMsg, String descMsg){
-        Pattern patron = Pattern.compile("^([0][1-9]|[12][0-9]|3[01])(\\/|-)([0][1-9]|[1][0-2])\\2(\\d{4})$");
+        Pattern patron = Pattern.compile("/^([0][1-9]|[12][0-9]|3[01])(\\/|-)([0][1-9]|[1][0-2])\\2(\\d{4})$/");
         Matcher validar = patron.matcher(c);
         //
         //String c, String tipoMsg, String tituloMsg, String descMsg

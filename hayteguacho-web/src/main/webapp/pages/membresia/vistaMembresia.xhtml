@@ -88,7 +88,7 @@
                 }
             </style>
 
-            <h:form id="membresiaForm">
+            
                 <!--<b:tabView tabPosition="center" contentStyle="border: 1px solid #ddd;padding:30px">
                     <b:tab title="" style="background-color: white;">-->
                 <div class='wrapper'  >
@@ -98,13 +98,14 @@
                         <h:outputText  value="#{bundle['lblMemBienvenido']}"  class="bienvenido" />
                         <h:outputText value="#{bundle['lblMemDefault']}"  class="centrado" />
                     </div>
-
-                    <ui:repeat value="#{mostrarMembresia.listaMembresias}" var="membresia" varStatus="status" >
+                   
+                    <ui:repeat value="#{mostrarMembresia.listaMembresias}" var="membresia" varStatus="status"  id="entries" >
+                        <h:form id="membresiaForm">
                         <div class="contenedor" >
                             <img src="../../resources/images/membresias/#{membresia.titulomembresia.toLowerCase()}3.png" class="lamina"/>
                             <h:outputText  value="#{membresia.titulomembresia}" class="top-right" />
                             <div class="centrado2" >
-                                <h:panelGrid id="panelMemb#{status.index}"  columns="2">
+                                <h:panelGrid id="panelMemb"  columns="2">
 
                                     <b>#{bundle['lblTipoPeriodoMemMembresia']} </b>
                                     <b:badge style="margin-left:10px; background-color:#{mostrarMembresia.colorMem(membresia.titulomembresia)}" value="#{mostrarMembresia.getNombreTipoPeriodoMembresia(membresia)}"  />
@@ -123,9 +124,9 @@
                             </div>
                             <div class="frijoles">
                                 <h:panelGrid columns="4">
-                                    <ui:repeat value="#{mostrarMembresia.obtenerMembresiasPorTitulo(membresia.titulomembresia)}" var="periodo">
+                                    <ui:repeat value="#{mostrarMembresia.obtenerMembresiasPorTitulo(membresia.titulomembresia)}" id="entries" var="periodo">
 
-                                        <b:commandButton style="font-size: 12px;font-weight: bold;" value="#{mostrarMembresia.getNombreTipoPeriodoMembresia(periodo)}" 
+                                        <b:commandButton  ajax="true" update="@form" style="font-size: 12px;font-weight: bold;" value="#{mostrarMembresia.getNombreTipoPeriodoMembresia(periodo)}" 
                                                          onclick="ajax:mostrarMembresia.cambiarPeriodo(status.index, periodo);"
                                                          />
                                     </ui:repeat>
@@ -156,8 +157,9 @@
 
                         </div>
 
-
+ </h:form>
                     </ui:repeat>
+                   
 
 
 
@@ -170,7 +172,7 @@
 
                 <!-- </b:tab>
              </b:tabView>-->
-            </h:form>
+           
 
             <h:form id="modalForm">
 

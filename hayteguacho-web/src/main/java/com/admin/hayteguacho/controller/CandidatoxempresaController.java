@@ -48,6 +48,7 @@ public class CandidatoxempresaController {
     List<CandidatoxempresaForm> listaCxempresa = new ArrayList<>();
     List<CandidatoForm> listaCandidatos = new ArrayList<>();
     private @Getter @Setter CandidatoxempresaForm selectedCxempresa = new CandidatoxempresaForm();
+    private @Getter @Setter String ideliminar = "";
     private @Getter @Setter CandidatoForm selectedCand = new CandidatoForm();
     private @Getter @Setter boolean pdfshow = false;
      @PostConstruct
@@ -76,4 +77,23 @@ public void dialogo(CandidatoForm cf) {
         vb.updateComponent("CxempresaForm:amodal");
         vb.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
     }
+
+public void validarEliminar(CandidatoxempresaForm coxf){
+ideliminar = coxf.getIdcandidatoxempresa();
+vb.ejecutarJavascript("$('.modalPseudoClass2').modal('show');");
+}
+
+public void eliminar(){
+    try {
+        cxef.remove(cxef.find(BigDecimal.valueOf(Double.parseDouble(ideliminar))));
+        vb.lanzarMensaje("info", "lblCxEmpresa", "lblCxEmpresaEliminar");
+        listaCxempresa = cxef.obtenerCandidatosxempresa(login.getUserLog().getIdentificador());
+        vb.updateComponent("CxempresaForm");
+    } catch (Exception e) {
+        System.out.println("com.admin.hayteguacho.controller.CandidatoxempresaController.eliminar()");
+        e.printStackTrace();
+    }
+
+
+}
 }

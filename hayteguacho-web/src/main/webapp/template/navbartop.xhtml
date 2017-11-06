@@ -28,6 +28,7 @@
                     </ui:repeat>
                 </b:dropMenu>
             </ui:repeat>
+         
         </b:navbarLinks>
         <h:form styleClass="navbar-form navbar-right">
             <b:navbarLinks rendered="#{login.loggedIn}">
@@ -35,9 +36,16 @@
                     <b:column col-md="12"  style="text-align: center;">
                         <h:panelGrid columns="1">
                             <h:graphicImage  library="images" name="usuario.png" height="100" width="100" rendered="#{login.userLog.imagen.length() == 0}" />
-                            <h:graphicImage  name="#{login.userLog.imagen}" height="100" width="100" rendered="#{login.userLog.imagen.length() > 5}" />
+                            <h:graphicImage  value="#{login.userLog.imagen}" height="100" width="100" rendered="#{login.userLog.imagen.length() > 5}" />
                             <h:outputText value="#{login.userLog.nombre}" style="color:green;"></h:outputText>
-
+                            <h:panelGrid columns="2" rendered="#{login.obtenerMembresiaActual()}" >
+                                <h:outputText  style="font-weight: bold" value="Membresia:" />
+                                <h:outputText style="color: #{login.colorMem(login.membresiaActual.titulomembresia)}"  value="#{login.membresiaActual.titulomembresia}"/>
+                                <h:outputText style="font-weight: bold" value="Inicio:" />
+                                <h:outputText style="color: green" value="#{login.obtenerFecha(login.membresiaxEmpresaActual.fechainicio)}"/>
+                                <h:outputText style="font-weight: bold" value="Expiracion:" />
+                                <h:outputText style="color: red" value="#{login.obtenerFecha(login.membresiaxEmpresaActual.fechavencimiento)}"/>
+                            </h:panelGrid>
                             <b:commandButton size="sm" type="submit" icon-rotate="l" iconAwesome="thumbs-up"
                                              value="#{bundle['lblBtnCerrarSession']}" action="#{login.doLogout}"
                                              look="danger" title="#{bundle['lblBtnCerrarSession']}" />

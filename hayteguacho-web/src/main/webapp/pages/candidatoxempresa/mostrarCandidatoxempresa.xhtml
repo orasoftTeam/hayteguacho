@@ -11,6 +11,7 @@
     <ui:composition template="/template/template.xhtml">
         <ui:define name="content">
             <h:form id="CxempresaForm" >
+                <p:growl showDetail="true"/>
             <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px"> 
                 <b:tab title="Candidatos Guardados">
                     <b:dataTable
@@ -19,6 +20,8 @@
                         var="cxempresa"
                         select="true"
                         selectionMode="single"
+                        paginated="true"
+                        responsive="true"
                         >
                         <b:dataTableColumn  label="#{bundle.lblCxoSeleccion}"  value="#{CxempresaController.fullName(CxempresaController.obtenerCandidato(cxempresa.idcandidato))}" />
                          <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
@@ -26,6 +29,11 @@
                                                      look="info" />
                                 </b:dataTableColumn>
                         <b:dataTableColumn label="#{bundle.lblCxoEmail}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).correocandidato}"/>
+                        <b:dataTableColumn label="#{bundle.lblTelEmpresa1}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono1candidato} ,#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono2candidato} "/>
+                        <b:dataTableColumn label="#{bundle.lblGenero}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).generocandidato}"/>
+                        <b:dataTableColumn label="#{bundle.lblCxoOperacion}" >
+                            <b:commandButton  look="danger" value="#{bundle.lblbtnEliminar}" ajax="true" update="@form" actionListener="#{CxempresaController.validarEliminar(cxempresa)}"  />
+                        </b:dataTableColumn>
                     </b:dataTable>
                 
                 </b:tab>
@@ -35,7 +43,11 @@
                 <b:modal  id="amodal" title="#{CxempresaController.fullName(CxempresaController.selectedCand)}" styleClass="modalPseudoClass"  close-on-escape="false" backdrop="false"  >
                     <p:media value="#{CxempresaController.selectedCand.archivocurriculum}" width="100%" height="500px" rendered="#{CxempresaController.pdfshow}"  />            
                         </b:modal>
-                
+                <b:modal  id="bmodal" title="#{bundle.lblCxEmpresa}" styleClass="modalPseudoClass2"    >
+                    <p><p:outputLabel value="#{bundle.lblCxEmpresaConfirm}"/></p> 
+                    <b:commandButton look="info" value="#{bundle.lblBtnCerrar}" type="button" onclick="$('.modalPseudoClass2').modal('hide');"  />
+                    <b:commandButton look="info" value="#{bundle.lblBtnOk}" actionListener="#{CxempresaController.eliminar()}" />
+                        </b:modal>
                 </h:form>
         </ui:define>
     </ui:composition>

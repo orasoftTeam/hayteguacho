@@ -150,4 +150,26 @@ public class MembresiaFacade extends AbstractFacade<TblMembresia, MembresiaForm>
     }
      */
      
+     
+        public List<MembresiaForm> obtenerMembresiaEmpresa(int idempresa) {
+        Query q = getEntityManager().createNativeQuery("select m.* from tbl_membresia m inner join tbl_membresiaxempresa e on e.idmembresia = m.idmembresia\n" +
+"where idempresa = ? and estado ='A'", TblMembresia.class);
+        q.setParameter(1, idempresa);
+        List<TblMembresia> listaEntity;
+        List<MembresiaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<MembresiaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new MembresiaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<MembresiaForm>();
+        }
+
+        return listaEntityForm;
+    }
+     
 }
