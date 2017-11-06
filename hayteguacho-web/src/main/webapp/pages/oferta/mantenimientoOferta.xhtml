@@ -83,7 +83,9 @@
                                     <f:selectItems value="#{ofertaController.listaMunicipio}" var="muni" itemValue="#{muni.idciudad}" itemLabel="#{muni.nombreciudad}"/>
                                 </b:selectOneMenu>
                                 <b:inputText size="10" id="nomOferta" value="#{ofertaController.oferta.tituloofertalaboral}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqNombreOferta']}"/>
-                                <b:inputText type="date" size="10" id="fechaContra" value="#{ofertaController.oferta.fechacontratacionofertalaboral}" label="#{bundle['lblOfertaFechaContra']}" placeholder="#{bundle['lblReqOfertaFechaContra']}" lang="pt_BR /opt/google/chrome/chrome" />
+                                <label for="input_ofertasForm:fechaContra" class="bf-no-message has-success control-label">#{bundle['lblOfertaFechaContra']}</label>
+                                <br></br>
+                                <p:inputMask id="fechaContra" value="#{ofertaController.oferta.fechacontratacionofertalaboral}"   mask="99/99/9999" style="width: 100%;"/>
                                 <b:inputText size="10" onkeyup="soloNumeros(this)" id="cantidadVacante" fieldId="cantidadVacante" value="#{ofertaController.oferta.cantidadvacante}" label="#{bundle['lblOfertaCantidadVacante']}" placeholder="#{bundle['lblReqOfertaCantidadVacante']}"/>
                                 <b:inputText size="10" onkeyup="soloNumeros(this)" id="salariominimo" fieldId="salariominimo" value="#{ofertaController.oferta.salariominofertalaboral}" label="#{bundle['lblOfertaSalarioMinimo']}" placeholder="#{bundle['lblReqOfertaSalarioMinimo']}"/>
                                 <b:inputText size="10" onkeyup="soloNumeros(this)" id="salariomaximo" fieldId="salariomaximo" value="#{ofertaController.oferta.salariomaxofertalaboral}" label="#{bundle['lblOfertaSalarioMaximo']}" placeholder="#{bundle['lblReqOfertaSalarioMaximo']}"/>

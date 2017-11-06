@@ -80,11 +80,18 @@ public class DepartamentoFacade extends AbstractFacade<TblDepartamento, Departam
     
     public String actualizarDepartamento(DepartamentoForm df,String idpais, String op) {
         String flag = "";
+        String nomDepto="";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             //cn.setAutoCommit(false);
+            if(op.equals("D")){
+                nomDepto= df.getNombredepartamento();
+            }
+            else{
+                nomDepto= df.getNombredepartamento().substring(0,1).toUpperCase().concat(df.getNombredepartamento().substring(1, df.getNombredepartamento().length()).toLowerCase());
+            }
             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_DEPARTAMENTO (?,?,?,?,?)}");
-            cs.setString(1, df.getNombredepartamento().toUpperCase());
+            cs.setString(1, nomDepto);
             cs.setString(2, op);
             cs.setInt(3, new Integer(idpais));
             cs.setInt(4, new Integer(df.getIddepartamento()));

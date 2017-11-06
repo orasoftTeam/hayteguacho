@@ -62,11 +62,18 @@ public class CategoriaEmpresaFacade extends AbstractFacade<TblCategoriaempresa, 
 
     public String actualizarCategoria(CategoriaEmpresaForm cef, String op) {
         String flag = "";
+        String nomCategoria="";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             //cn.setAutoCommit(false);
+            if(op.equals("D")){
+                nomCategoria= cef.getNombrecategoria();
+            }
+            else{
+                nomCategoria= cef.getNombrecategoria().substring(0,1).toUpperCase().concat(cef.getNombrecategoria().substring(1, cef.getNombrecategoria().length()).toLowerCase());
+            }
             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_CAT_EMP (?,?,?,?)}");
-            cs.setString(1, cef.getNombrecategoria().toUpperCase());
+            cs.setString(1, nomCategoria);
             cs.setString(2, op);
             cs.setInt(3, new Integer(cef.getIdcategoria()));
             cs.registerOutParameter(4, Types.VARCHAR);

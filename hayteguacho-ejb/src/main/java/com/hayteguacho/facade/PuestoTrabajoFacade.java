@@ -83,11 +83,18 @@ public class PuestoTrabajoFacade extends AbstractFacade<TblPuestotrabajo, Puesto
     
     public String actualizarPuesto(PuestoTrabajoForm obj, String op) {
         String flag = "";
+        String nomPuesto="";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             //cn.setAutoCommit(false);
+            if(op.equals("D")){
+                nomPuesto= obj.getNombrepuestotrabajo();
+            }
+            else{
+                nomPuesto= obj.getNombrepuestotrabajo().substring(0,1).toUpperCase().concat(obj.getNombrepuestotrabajo().substring(1, obj.getNombrepuestotrabajo().length()).toLowerCase());
+            }
             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_PUESTOTRABAJO (?,?,?,?,?)}");
-            cs.setString(1, obj.getNombrepuestotrabajo());
+            cs.setString(1, nomPuesto);
             cs.setInt(2, new Integer(obj.getIdpuestotrabajo()));
             cs.setInt(3, new Integer(obj.getIdcategoria()));
             cs.setString(4, op);

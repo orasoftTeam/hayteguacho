@@ -62,11 +62,18 @@ public class TipologiaFacade extends AbstractFacade<TblTipologiaempresa, Tipolog
 
     public String actualizarTipologia(TipologiaForm tipologia, String op) {
         String flag = "";
+        String nomtipologia="";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             //cn.setAutoCommit(false);
+            if(op.equals("D")){
+                nomtipologia= tipologia.getNombretipologia();
+            }
+            else{
+                nomtipologia= tipologia.getNombretipologia().substring(0,1).toUpperCase().concat(tipologia.getNombretipologia().substring(1, tipologia.getNombretipologia().length()).toLowerCase());
+            }
             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_TIPOLOGIA (?,?,?,?)}");
-            cs.setString(1, tipologia.getNombretipologia().toUpperCase());
+            cs.setString(1, nomtipologia);
             cs.setString(2, op);
             cs.setInt(3, new Integer(tipologia.getIdtipologia()));
             cs.registerOutParameter(4, Types.VARCHAR);

@@ -56,10 +56,17 @@ public class TipoContratoLaboralFacade extends AbstractFacade<TblTipocontratolab
     
     public String actualizarCargo(TipoContratoLaboralForm tcf, String op){
     String flag = "";
+    String cargo="";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
+            if(op.equals("D")){
+                cargo=tcf.getNombretipocontrato();
+            }
+            else{
+                cargo= tcf.getNombretipocontrato().substring(0,1).toUpperCase().concat(tcf.getNombretipocontrato().substring(1, tcf.getNombretipocontrato().length()).toLowerCase());
+            }
             CallableStatement cs = cn.prepareCall("{call hayteguacho.proc_actualizar_tipocontrato(?,?,?,?)}");
-            cs.setString(1, tcf.getNombretipocontrato().toUpperCase());
+            cs.setString(1, cargo);
             cs.setString(2, op);
             cs.setInt(3, new Integer(tcf.getIdtipocontrato()));
             cs.registerOutParameter(4, Types.VARCHAR);
