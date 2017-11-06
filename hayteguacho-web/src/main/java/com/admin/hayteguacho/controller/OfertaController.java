@@ -203,7 +203,7 @@ public class OfertaController {
                 ){
                if(oferta.getIdofertalaboral()==null || oferta.getIdofertalaboral().equals("0")){
                    oferta.setIdempresa_tbl(idempresa);
-                   oferta.setFechacontratacionofertalaboral(validationBean.formatearFechaGuion(oferta.getFechacontratacionofertalaboral()));
+                   //oferta.setFechacontratacionofertalaboral(validationBean.formatearFechaGuion(oferta.getFechacontratacionofertalaboral()));
                     flag= ofertaFacade.actualizarOferta(oferta, "A"); 
                     if(flag.equals("0"))
                         validationBean.lanzarMensaje("info", "titleOfertaEmpresa", "lblGuardarSuccess");
