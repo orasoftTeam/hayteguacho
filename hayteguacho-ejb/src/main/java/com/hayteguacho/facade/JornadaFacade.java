@@ -61,11 +61,18 @@ public class JornadaFacade extends AbstractFacade<TblJornadalaboral, JornadaForm
 
     public String actualizarJornada(JornadaForm jorf, String op) {
         String flag = "";
+        String nomJornada="";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             //cn.setAutoCommit(false);
+            if(op.equals("D")){
+                nomJornada= jorf.getNombrejornadalaboral();
+            }
+            else{
+                nomJornada= jorf.getNombrejornadalaboral().substring(0, 1).concat(jorf.getNombrejornadalaboral().substring(1, jorf.getNombrejornadalaboral().length()).toLowerCase());
+            }
             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_JORNADA (?,?,?,?)}");
-            cs.setString(1, jorf.getNombrejornadalaboral().toUpperCase());
+            cs.setString(1, nomJornada);
             cs.setString(2, op);
             cs.setInt(3, new Integer(jorf.getIdjornadalaboral()));
             cs.registerOutParameter(4, Types.VARCHAR);

@@ -60,11 +60,18 @@ public class CargoEmpresaFacade extends AbstractFacade<TblCargoempresa, CargoEmp
 
     public String actualizarCargo(CargoEmpresaForm cef, String op) {
         String flag = "";
+        String nomCargo="";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             //cn.setAutoCommit(false);
+            if(op.equals("D")){
+                nomCargo= cef.getNombrecargoempresa();
+            }
+            else{
+                nomCargo= cef.getNombrecargoempresa().substring(0,1).toUpperCase().concat(cef.getNombrecargoempresa().substring(1, cef.getNombrecargoempresa().length()).toLowerCase());
+            }
             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_CARGO_EMP (?,?,?,?)}");
-            cs.setString(1, cef.getNombrecargoempresa().toUpperCase());
+            cs.setString(1, nomCargo);
             cs.setString(2, op);
             cs.setInt(3, new Integer(cef.getIdcargoempresa()));
             cs.registerOutParameter(4, Types.VARCHAR);

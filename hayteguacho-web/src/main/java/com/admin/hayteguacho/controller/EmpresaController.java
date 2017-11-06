@@ -181,6 +181,7 @@ public class EmpresaController {
             
             if(empresa.getIdempresa()==null || empresa.getIdempresa().equals("0")){
                //empresa.setPassword(validationBean.encriptar(empresa.getPassword(), empresa.getEmail()));
+               empresa.setLogo(empresa.getLogo()==null?"":empresa.getLogo());
                     flag= empresaFacade.actualizarEmpresa(empresa, "A"); 
                     if(flag.equals("0")){
                         loginBean.setUsuario(empresa.getEmail());

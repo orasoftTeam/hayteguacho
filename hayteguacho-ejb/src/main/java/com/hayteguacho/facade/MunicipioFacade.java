@@ -81,11 +81,18 @@ public class MunicipioFacade extends AbstractFacade<TblCiudad, MunicipioForm> {
     
     public String actualizarMunicipios(MunicipioForm mf,String iddepto, String op) {
         String flag = "";
+        String nomMunicipio="";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             //cn.setAutoCommit(false);
+            if(op.equals("D")){
+                nomMunicipio= mf.getNombreciudad();
+            }
+            else{
+                nomMunicipio= mf.getNombreciudad().substring(0,1).toUpperCase().concat(mf.getNombreciudad().substring(1, mf.getNombreciudad().length()).toLowerCase());
+            }
             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_CIUDAD (?,?,?,?,?)}");
-            cs.setString(1, mf.getNombreciudad().toUpperCase());
+            cs.setString(1, nomMunicipio);
             cs.setString(2, op);
             cs.setInt(3, new Integer(iddepto));
             cs.setInt(4, new Integer(mf.getIdciudad()));

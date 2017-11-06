@@ -80,11 +80,19 @@ public class PaisFacade extends AbstractFacade<TblPais, PaisForm> {
 
     public String actualizarPais(PaisForm pf, String op) {
         String flag = "";
+        String nompais="";
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
+            if(!op.equals("D")){
+             nompais= pf.getNombrepais().substring(0, 1).toUpperCase().concat(pf.getNombrepais().substring(1, pf.getNombrepais().length()).toLowerCase());  
+            }
+            else{
+                nompais=pf.getNombrepais();
+            }
             //cn.setAutoCommit(false);
             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_PAIS (?,?,?,?)}");
-            cs.setString(1, pf.getNombrepais().toUpperCase());
+            //cs.setString(1, pf.getNombrepais().toUpperCase());
+            cs.setString(1, nompais);
             cs.setString(2, op);
             cs.setInt(3, new Integer(pf.getIdpais()));
             /*

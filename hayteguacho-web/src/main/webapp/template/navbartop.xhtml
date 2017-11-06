@@ -35,7 +35,7 @@
                     <b:column col-md="12"  style="text-align: center;">
                         <h:panelGrid columns="1">
                             <h:graphicImage  library="images" name="usuario.png" height="100" width="100" rendered="#{login.userLog.imagen.length() == 0}" />
-                            <h:graphicImage  name="#{login.userLog.imagen}" height="100" width="100" rendered="#{login.userLog.imagen.length() > 5}" />
+                            <h:graphicImage  value="#{login.userLog.imagen}" height="100" width="100" rendered="#{login.userLog.imagen.length() > 5}" />
                             <h:outputText value="#{login.userLog.nombre}" style="color:green;"></h:outputText>
 
                             <b:commandButton size="sm" type="submit" icon-rotate="l" iconAwesome="thumbs-up"

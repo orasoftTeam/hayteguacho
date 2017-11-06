@@ -302,6 +302,8 @@ public class ValidationBean {
         return fecha;
     }
     
+    
+    
     public String obtenerLabelEstado(String estado){
         String lbl="";
         switch(estado){
