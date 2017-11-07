@@ -47,7 +47,7 @@ public class CategoriaEmpresaController {
         String flag=""; 
         if(validationBean.validarCampoVacio(cemp.getNombrecategoria().replace(" ", ""), "warn", "titleCategoriaEmpresa", "lblReqNombreCategoria")
                 && validationBean.validarSoloLetras(cemp.getNombrecategoria().replace(" ", ""), "warn", "titleCategoriaEmpresa", "lblSoloLetras")
-                && validationBean.validarLongitudCampo(cemp.getNombrecategoria().replace(" ", ""), 4, 25,"warn", "titleCategoriaEmpresa", "lblLongitudNombreCategoria")){
+                && validationBean.validarLongitudCampo(cemp.getNombrecategoria().replace(" ", ""), 4, 50,"warn", "titleCategoriaEmpresa", "lblLongitudNombreCategoria")){
             if(cemp.getIdcategoria()==null || cemp.getIdcategoria().equals("0")){
                flag= catFacade.actualizarCategoria(cemp, "A"); 
                if(flag.equals("0"))
