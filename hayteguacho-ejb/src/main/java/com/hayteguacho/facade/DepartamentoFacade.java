@@ -102,6 +102,7 @@ public class DepartamentoFacade extends AbstractFacade<TblDepartamento, Departam
             //System.out.println("com.infomedic.facade.UsuarioFacade.agregarUsuario(OK)");
         } catch (Exception e) {
             //System.out.println("com.infomedic.facade.UsuarioFacade.agregarUsuario(ERROR)");
+            flag="-2";
             e.printStackTrace();
         }
         return flag;

@@ -107,6 +107,7 @@ public class PaisFacade extends AbstractFacade<TblPais, PaisForm> {
             System.out.println(flag);
             System.out.println("com.infomedic.facade.UsuarioFacade.agregarUsuario(OK)");
         } catch (Exception e) {
+            flag="-2";
             System.out.println("com.infomedic.facade.UsuarioFacade.agregarUsuario(ERROR)");
             e.printStackTrace();
         }

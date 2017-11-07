@@ -101,6 +101,7 @@ public class CandidatoxofertaMostrarFacade extends AbstractFacade<TblCandidatoxo
              flag = cs.getString(5);
              System.out.println(flag);
          } catch (Exception e) {
+             flag="-2";
              System.out.println("com.hayteguacho.facade.CandidatoxofertaMostrarFacade.actualizarEstado()");
              e.printStackTrace();
          }

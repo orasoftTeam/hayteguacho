@@ -207,11 +207,23 @@ public class OfertaController {
                     flag= ofertaFacade.actualizarOferta(oferta, "A"); 
                     if(flag.equals("0"))
                         validationBean.lanzarMensaje("info", "titleOfertaEmpresa", "lblGuardarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
                 }
                else{
                     flag= ofertaFacade.actualizarOferta(oferta, "U"); 
                     if(flag.equals("0"))
                         validationBean.lanzarMensaje("info", "titleOfertaEmpresa", "lblEditarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
                }
                
                limpiar();

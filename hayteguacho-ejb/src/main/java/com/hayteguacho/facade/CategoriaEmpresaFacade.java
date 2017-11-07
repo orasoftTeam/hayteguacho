@@ -81,6 +81,7 @@ public class CategoriaEmpresaFacade extends AbstractFacade<TblCategoriaempresa, 
             flag = cs.getString(4);
             System.out.println(flag);
         } catch (Exception e) {
+            flag="-2";
             e.printStackTrace();
         }
         return flag;

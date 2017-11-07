@@ -74,6 +74,12 @@ public class MunicipioController {
                        //listaDepto= new ArrayList<>();
                         //actualizarComponentes();   
                    }
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
                 }
                 else{
                    flag=muniFacade.actualizarMunicipios(muni, iddepto, "U");
@@ -82,6 +88,13 @@ public class MunicipioController {
                        //listaMuni= new ArrayList<MunicipioForm>();
                        //listaDepto= new ArrayList<>();
                       // actualizarComponentes();
+                      //lblExistReg
+                   }
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
                    }
                 }
                 limpiar();

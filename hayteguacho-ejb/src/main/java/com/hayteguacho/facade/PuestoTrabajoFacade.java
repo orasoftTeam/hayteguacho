@@ -103,6 +103,7 @@ public class PuestoTrabajoFacade extends AbstractFacade<TblPuestotrabajo, Puesto
             flag = cs.getString(5);
             System.out.println(flag);
         } catch (Exception e) {
+            flag="-2";
             e.printStackTrace();
         }
         return flag;

@@ -149,6 +149,7 @@ public class EmpresaFacade extends AbstractFacade<TblEmpresa, EmpresaForm> {
             System.out.println("El password ingresado fué: "+ eform.getPassword());
             cs.close();
         } catch (Exception e) {
+            flag="-2";
             e.printStackTrace();
         }
         return flag;

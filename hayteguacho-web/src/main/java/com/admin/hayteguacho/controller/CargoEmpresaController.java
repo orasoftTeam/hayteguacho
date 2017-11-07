@@ -54,11 +54,23 @@ public class CargoEmpresaController {
                flag= cargoFacade.actualizarCargo(cemp, "A"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titleCargoEmpresa", "lblGuardarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             else{
                 flag= cargoFacade.actualizarCargo(cemp, "U"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titleCargoEmpresa", "lblEditarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             limpiar();
             listaCargos = cargoFacade.obtenerCargos();

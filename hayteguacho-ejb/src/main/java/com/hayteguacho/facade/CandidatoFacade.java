@@ -111,6 +111,7 @@ public class CandidatoFacade extends AbstractFacade<TblCandidato, CandidatoForm>
             flag = cs.getString(13);
             System.out.println(flag);
         } catch (Exception e) {
+            flag="-2";
             e.printStackTrace();
         }
         return flag;
