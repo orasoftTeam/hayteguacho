@@ -54,7 +54,7 @@ public class PuestoTrabajoController {
                 &&
                 validationBean.validarCampoVacio(puesto.getNombrepuestotrabajo(), "warn", "titlePuestoTrabajo", "lblNombreReqPuestoTrabajo")
                 && validationBean.validarSoloLetras(puesto.getNombrepuestotrabajo().replace(" ", ""), "warn", "titlePuestoTrabajo", "lblSoloLetras")
-                && validationBean.validarLongitudCampo(puesto.getNombrepuestotrabajo(), 4, 25,"warn", "titlePuestoTrabajo", "lblLongitudPuestoTrabajo")){
+                && validationBean.validarLongitudCampo(puesto.getNombrepuestotrabajo(), 4, 50,"warn", "titlePuestoTrabajo", "lblLongitudPuestoTrabajo")){
             if(puesto.getIdpuestotrabajo()==null || puesto.getIdpuestotrabajo().equals("0")){
                 puesto.setIdcategoria(idCategoria);
                flag= puestoFacade.actualizarPuesto(puesto, "A"); 
