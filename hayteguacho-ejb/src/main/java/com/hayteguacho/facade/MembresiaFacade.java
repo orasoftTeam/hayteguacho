@@ -140,6 +140,7 @@ public class MembresiaFacade extends AbstractFacade<TblMembresia, MembresiaForm>
            flag = cs.getString(11);
             System.out.println(flag);
         } catch (Exception e) {
+            flag="-2";
             e.printStackTrace();
         }
         return flag;

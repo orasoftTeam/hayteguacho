@@ -394,6 +394,7 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
             flag = cs.getString(17);
             System.out.println(flag);
         } catch (Exception e) {
+            flag="-2";
             e.printStackTrace();
         }
         return flag;
@@ -416,6 +417,7 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
             flag = cs.getString(7);
             System.out.println(flag);
         } catch (Exception e) {
+            flag="-2";
             e.printStackTrace();
         }
         return flag;

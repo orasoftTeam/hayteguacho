@@ -60,11 +60,23 @@ public class PuestoTrabajoController {
                flag= puestoFacade.actualizarPuesto(puesto, "A"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titlePuestoTrabajo", "lblGuardarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             else{
                 flag= puestoFacade.actualizarPuesto(puesto, "U"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titlePuestoTrabajo", "lblEditarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             //limpiar();
             listaPuestos= puestoFacade.obtenerPuestosByIdCategoria(idCategoria);

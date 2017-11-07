@@ -53,11 +53,23 @@ public class TipologiaController {
                flag= tipologiaFacade.actualizarTipologia(tipologia, "A"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titleTipologiaEmpresa", "lblGuardarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             else{
                 flag= tipologiaFacade.actualizarTipologia(tipologia, "U"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titleTipologiaEmpresa", "lblEditarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             limpiar();
             listaTipologias = tipologiaFacade.obtenerTipologias();

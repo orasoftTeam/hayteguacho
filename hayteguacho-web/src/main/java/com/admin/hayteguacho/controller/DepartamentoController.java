@@ -63,6 +63,12 @@ public class DepartamentoController {
                        //listaDepto= new ArrayList<DepartamentoForm>();
                         //actualizarComponentes();   
                    }
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
                 }
                 else{
                    flag= deptoFacade.actualizarDepartamento(depto, idpais, "U");
@@ -70,6 +76,12 @@ public class DepartamentoController {
                        validationBean.lanzarMensaje("info", "titleDepto", "lblEditarSuccess");
                        //listaDepto= new ArrayList<DepartamentoForm>();
                       // actualizarComponentes();
+                   }
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
                    }
                 }
                 limpiar();

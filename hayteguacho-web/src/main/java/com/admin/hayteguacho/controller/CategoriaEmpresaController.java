@@ -52,11 +52,23 @@ public class CategoriaEmpresaController {
                flag= catFacade.actualizarCategoria(cemp, "A"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titleCategoriaEmpresa", "lblGuardarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             else{
                 flag= catFacade.actualizarCategoria(cemp, "U"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titleCategoriaEmpresa", "lblEditarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             limpiar();
             listaCategorias = catFacade.obtenerCategorias();

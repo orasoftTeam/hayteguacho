@@ -54,11 +54,23 @@ public class JornadaController {
                flag= jornadaFacade.actualizarJornada(jornada, "A"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titleJornadaEmpresa", "lblGuardarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             else{
                 flag= jornadaFacade.actualizarJornada(jornada, "U"); 
                if(flag.equals("0"))
                    validationBean.lanzarMensaje("info", "titleJornadaEmpresa", "lblEditarSuccess");
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             limpiar();
             listaJornadas = jornadaFacade.obtenerJornadas();

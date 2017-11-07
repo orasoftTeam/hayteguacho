@@ -70,6 +70,7 @@ public class TipoPeriodoMembresiaFacade extends AbstractFacade<TblTipoperidomemb
             flag = cs.getString(4);
             System.out.println(flag);
         } catch (Exception e) {
+            flag="-2";
             System.out.println("com.hayteguacho.facade.TipoPeriodoMembresiaFacade.actualizarTipoPeriodoMembresia()");
             e.printStackTrace();
         }

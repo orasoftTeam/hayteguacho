@@ -53,13 +53,27 @@ public class PaisController {
                 && validationBean.validarLongitudCampo(pais.getNombrepais().replace(" ", ""), 4, 25,"warn", "titlePais", "lblLongitudNombrePais")){
             if(pais.getIdpais()==null || pais.getIdpais().equals("0")){
                flag= paisFacade.actualizarPais(pais, "A"); 
-               if(flag.equals("0"))
+               if(flag.equals("0")){
                    validationBean.lanzarMensaje("info", "titlePais", "lblGuardarSuccess");
+               }
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             else{
                flag= paisFacade.actualizarPais(pais, "U"); 
-               if(flag.equals("0"))
+               if(flag.equals("0")){
                    validationBean.lanzarMensaje("info", "titlePais", "lblEditarSuccess");
+               }
+                   else if(flag.equals("-1")){
+                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             limpiar();
             listaPais = paisFacade.obtenerPaises();

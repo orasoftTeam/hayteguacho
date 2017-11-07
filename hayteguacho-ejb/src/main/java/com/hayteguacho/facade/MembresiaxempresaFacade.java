@@ -57,6 +57,7 @@ public class MembresiaxempresaFacade extends AbstractFacade<TblMembresiaxempresa
             cs.close();
             cn.close();
        } catch (Exception e) {
+           flag="-2";
             System.out.println("com.hayteguacho.facade.MembresiaxempresaFacade.actualizarMembresiaxEmpresa()");
             e.printStackTrace();
         }

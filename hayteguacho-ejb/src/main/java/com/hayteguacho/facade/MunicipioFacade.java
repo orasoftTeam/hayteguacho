@@ -103,6 +103,7 @@ public class MunicipioFacade extends AbstractFacade<TblCiudad, MunicipioForm> {
             //System.out.println("com.infomedic.facade.UsuarioFacade.agregarUsuario(OK)");
         } catch (Exception e) {
             //System.out.println("com.infomedic.facade.UsuarioFacade.agregarUsuario(ERROR)");
+            flag="-2";
             e.printStackTrace();
         }
         return flag;

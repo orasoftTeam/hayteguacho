@@ -53,11 +53,23 @@ public class TipoPeriodoMembresiaController {
                 if (flag.equals("0")) {
                     vb.lanzarMensaje("info", "titleTipoPeriodoMembresia","lblGuardarSuccess");
                 }
+                   else if(flag.equals("-1")){
+                       vb.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       vb.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }else{
              flag = tpmfacade.actualizarTipoPeriodoMembresia(tpmform, "U");
                 if (flag.equals("0")) {
                     vb.lanzarMensaje("info", "titleTipoPeriodoMembresia", "lblEditarSuccess");
                 }
+                   else if(flag.equals("-1")){
+                       vb.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                   }
+                   else if(flag.equals("-2")){
+                       vb.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                   }
             }
             limpiar();
             listaTipoPeriodoMembresia = tpmfacade.obtenerTiposPeriodosMembresia();
