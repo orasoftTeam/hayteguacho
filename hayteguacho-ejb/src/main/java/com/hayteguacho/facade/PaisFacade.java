@@ -59,7 +59,7 @@ public class PaisFacade extends AbstractFacade<TblPais, PaisForm> {
     }
     
     public List<PaisForm> obtenerPaisesPorNombre(String nompais) {
-        Query q = getEntityManager().createNativeQuery("select * from tbl_pais where nombrepais=?", TblPais.class);
+        Query q = getEntityManager().createNativeQuery("select * from tbl_pais where upper(nombrepais)=upper(?)", TblPais.class);
         q.setParameter(1, nompais);
         List<TblPais> listaEntity;
         List<PaisForm> listaEntityForm;

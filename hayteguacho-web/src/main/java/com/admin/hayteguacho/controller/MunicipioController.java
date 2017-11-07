@@ -141,7 +141,11 @@ public class MunicipioController {
     }
 
     public void unSelectPais() {
-        //limpiar();
+        setIdpais("");
+        listaDepto= new ArrayList<>();
+        listaMuni= new ArrayList<MunicipioForm>();
+        validationBean.updateComponent("muniForm:deptoTbl");
+        validationBean.updateComponent("muniForm:muniTbl");
     }
     
     public void onSelectDepto(DepartamentoForm obj) {
@@ -151,9 +155,12 @@ public class MunicipioController {
     }
 
     public void unSelectDepto() {
-        //limpiar();
+        setIddepto("");
+        listaMuni= new ArrayList<>();
+        validationBean.updateComponent("muniForm:muniTbl");
     }
     
+
     public void onSelectMuni(int index) {
         MunicipioForm obj= listaMuni.get(index);
         muni.setIdciudad(obj.getIdciudad());
@@ -161,7 +168,8 @@ public class MunicipioController {
     }
 
     public void unSelectMuni() {
-        limpiar();
+        //limpiar();
+        limpiarMuni();
     }
 
     public void limpiar() {
@@ -171,6 +179,15 @@ public class MunicipioController {
         muni.setNombreciudad("");
         listaMuni= new ArrayList<MunicipioForm>();
         listaDepto= new ArrayList<>();
+    }
+    
+    public void limpiarMuni() {
+        setIdpais("");
+        setIddepto("");
+        muni.setIdciudad("0");
+        muni.setNombreciudad("");
+        //listaMuni= new ArrayList<MunicipioForm>();
+        //listaDepto= new ArrayList<>();
     }
 
 }

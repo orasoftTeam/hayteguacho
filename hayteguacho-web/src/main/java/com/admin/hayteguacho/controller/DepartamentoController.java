@@ -123,7 +123,9 @@ public class DepartamentoController {
     }
 
     public void unSelectPais() {
-        //limpiar();
+        setIdpais("");
+        listaDepto=new ArrayList<>();
+        validationBean.updateComponent("deptoForm:deptoTbl");
     }
     
     public void onSelectDepto(int index) {
@@ -141,7 +143,7 @@ public class DepartamentoController {
         setIdpais("");
         depto.setIddepartamento("0");
         depto.setNombredepartamento("");
-        listaDepto= new ArrayList<DepartamentoForm>();
+        //listaDepto= new ArrayList<DepartamentoForm>();
     }
 
 }

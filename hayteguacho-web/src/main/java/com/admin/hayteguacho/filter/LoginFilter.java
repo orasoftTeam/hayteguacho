@@ -58,7 +58,7 @@ public class LoginFilter implements Filter {
                         ((HttpServletResponse) response).sendRedirect(contextPath + "/pages/membresia/vistaMembresia.xhtml");
                     }
                 } else if (!loginBean.buscarMenus(url[1])) {
-                    ((HttpServletResponse) response).sendRedirect(contextPath + "/index.xhtml");
+                    ((HttpServletResponse) response).sendRedirect(contextPath + "/indexPaises.xhtml");
                     loginBean.limpiar();
                 }
             }
