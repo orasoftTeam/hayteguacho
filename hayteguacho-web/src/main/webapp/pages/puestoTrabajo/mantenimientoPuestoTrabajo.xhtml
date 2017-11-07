@@ -47,6 +47,7 @@
                                      select="true"
                                      selectionMode="single"
                                      onselect="ajax:puestoController.onSelect(indexes)"
+                                     ondeselect=="ajax:puestoController.unSelect()"
                                      >
                             <b:dataTableColumn label="#{bundle['lblName']}" value="#{puesto.nombrepuestotrabajo}" />
                         </b:dataTable>

@@ -139,7 +139,8 @@ public class PuestoTrabajoController {
         
     }
     public void unSelect() {
-        limpiar();
+        puesto.setIdpuestotrabajo("0");
+        puesto.setNombrepuestotrabajo("");
         validationBean.updateComponent("puestosForm:puestoTbl");
     }
 
