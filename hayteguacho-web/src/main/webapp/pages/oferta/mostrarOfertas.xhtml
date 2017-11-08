@@ -91,7 +91,7 @@
                                 <b:panel title="#{oferta.tituloofertalaboral}" collapsible="false" look="primary">
                                     <b:row>
                                         <b:column col-md="4"> 
-                                            <h:graphicImage library="images" name="Facebook.png" />
+                                            <h:graphicImage  value="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo}" />
                                         </b:column>
                                         <b:column col-md="8">
                                             <b:panelGrid columns="1">
@@ -104,8 +104,8 @@
                                             </b:panelGrid>
                                             <p:separator></p:separator>
                                             <h:panelGrid columns="1">
-                                                <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}" look="warning" style="width:100%" rendered="#{mostrarController.puedeAplicar}" /></p>
-                                                <p:separator rendered="#{mostrarController.puedeAplicar}"></p:separator>
+                                                <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}" look="warning" style="width:100%"  /></p>
+                                                <p:separator></p:separator>
                                                 <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" /></p>
                                             </h:panelGrid>
                                         </b:column>

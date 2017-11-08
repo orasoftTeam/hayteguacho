@@ -99,8 +99,8 @@ public class MostrarOfertaController implements Serializable {
         //pais= loginBean.getPais();
         listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, count);
         numreg= ofertaFacade.contarOfertasByPais(pais);
-        listaTotalCategoria= totalFacade.totalCategorias();
-        listaTotalCurriculum= totalFacade.totalCategoriasCurriculum();
+        listaTotalCategoria= totalFacade.totalCategorias(pais);
+        listaTotalCurriculum= totalFacade.totalCategoriasCurriculum(pais);
         /*
         cssClases[0]="red result-text";
         cssClases[1]="teal result-text";
@@ -314,8 +314,13 @@ public class MostrarOfertaController implements Serializable {
     }
     
     public void seleccionarAplicacion(OfertaForm oform){
+        if(puedeAplicar){
             ofertaForm= oform;
             validationBean.ejecutarJavascript("$('.aplicarOferta').modal('show');");
+        }
+        else{
+            validationBean.lanzarMensaje("warning", "titleAplicaOferta", "lblAutLogin");
+        }
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('destroy');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('index');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('jump',"+contador+");");
