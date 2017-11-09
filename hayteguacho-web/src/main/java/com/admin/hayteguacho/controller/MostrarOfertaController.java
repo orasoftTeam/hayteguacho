@@ -319,7 +319,8 @@ public class MostrarOfertaController implements Serializable {
             validationBean.ejecutarJavascript("$('.aplicarOferta').modal('show');");
         }
         else{
-            validationBean.lanzarMensaje("warning", "titleAplicaOferta", "lblAutLogin");
+            validationBean.ejecutarJavascript("PF('growl').renderMessage({'summary':'" + validationBean.getMsgBundle("titleAplicaOferta")+"','detail':'" + validationBean.getMsgBundle("lblAutLogin")+"','severity':'warn'})");
+            //validationBean.lanzarMensaje("warning", "titleAplicaOferta", "lblAutLogin");
         }
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('destroy');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('index');");
@@ -337,5 +338,9 @@ public class MostrarOfertaController implements Serializable {
         else{
           return false;  
         }
+    }
+    
+    public String formatearCadenaTitulo(String cad){
+        return cad.substring(0, 25);
     }
 }
