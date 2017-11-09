@@ -272,8 +272,11 @@ public class MostrarOfertaController implements Serializable {
     }
     
     public boolean getPuedeAplicar(){
-       return loginBean.isLoggedIn() && loginBean.getUserLog()!=null 
+        boolean flag= loginBean.isLoggedIn() && loginBean.getUserLog()!=null 
                && loginBean.getUserLog().getIdentificador()!=null && loginBean.getUserLog().getTipo().equals("C");
+        
+        System.err.println("El valor de puede aplicar es : ------- "+ flag);
+       return flag;
     }
     
     /*
@@ -314,7 +317,7 @@ public class MostrarOfertaController implements Serializable {
     }
     
     public void seleccionarAplicacion(OfertaForm oform){
-        if(puedeAplicar){
+        if(getPuedeAplicar()){
             ofertaForm= oform;
             validationBean.ejecutarJavascript("$('.aplicarOferta').modal('show');");
         }

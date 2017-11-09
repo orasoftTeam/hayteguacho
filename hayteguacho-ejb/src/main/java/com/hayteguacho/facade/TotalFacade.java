@@ -84,18 +84,21 @@ public class TotalFacade {
 "            AND UPPER(nombrepais)= UPPER(?) \n" +
 "            and pais.idpais=depto.idpais \n" +
 "            and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
-"            and oferta.idciudad= ciudad.idciudad       \n" +
+"            and oferta.idciudad= ciudad.idciudad    \n" +
+"            and oferta.estadoofertalaboral='A'\n" +
 "            ) total, \n" +
-"            DECODE(COUNT(CATEGORIA.IDCATEGORIA),1,0,COUNT(CATEGORIA.IDCATEGORIA)) totalCategoria, \n" +
+"            --DECODE(COUNT(CATEGORIA.IDCATEGORIA),1,0,COUNT(CATEGORIA.IDCATEGORIA)) totalCategoria, \n" +
+"            COUNT(CATEGORIA.IDCATEGORIA) totalCategoria,\n" +
 "            CATEGORIA.NOMBRECATEGORIA categoria from tbl_categoriaempresa categoria, \n" +
 "            ((select puesto.IDCATEGORIA, puesto.IDPUESTOTRABAJO, puesto.NOMBREPUESTOTRABAJO \n" +
 "            from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad,\n" +
 "            tbl_ofertalaboral oferta, tbl_candidatoxofertalaboral aplica, tbl_puestotrabajo puesto\n" +
-"            where oferta.idofertalaboral=aplica.idofertalaboral and oferta.idpuestotrabajo= puesto.IDPUESTOTRABAJO (+)\n" +
+"            where oferta.idofertalaboral=aplica.idofertalaboral \n" +
+"            and oferta.idpuestotrabajo= puesto.IDPUESTOTRABAJO (+)\n" +
 "            AND UPPER(nombrepais)= UPPER(?) \n" +
 "            and pais.idpais=depto.idpais \n" +
 "            and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
-"            and oferta.idciudad= ciudad.idciudad\n" +
+"            and oferta.idciudad= ciudad.idciudad \n" +
 "            )) puesto\n" +
 "            where categoria.IDCATEGORIA= puesto.IDCATEGORIA (+)\n" +
 "            group by categoria.IDCATEGORIA, categoria.NOMBRECATEGORIA";

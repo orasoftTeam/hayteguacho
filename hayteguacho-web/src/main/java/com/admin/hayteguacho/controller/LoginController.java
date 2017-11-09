@@ -71,50 +71,79 @@ public class LoginController implements Serializable {
     @EJB
 
     private ValidationBean validationBean;
-    
-     @EJB
+
+    @EJB
     private MembresiaFacade membresiaFacade;
-    
-     @EJB
+
+    @EJB
     private MembresiaxempresaFacade membresiaxEmpresaFacade;
-    
+
     @Inject
     private MostrarOfertaController ofertas;
 
-    private @Getter @Setter String idCompany = "";
-    private @Getter @Setter String idRol = "";
-    private @Getter @Setter String usuario;
-    private @Getter @Setter String password;
+    private @Getter
+    @Setter
+    String idCompany = "";
+    private @Getter
+    @Setter
+    String idRol = "";
+    private @Getter
+    @Setter
+    String usuario;
+    private @Getter
+    @Setter
+    String password;
 
-    private @Getter @Setter com.admin.hayteguacho.form.UserForm userLog;
+    private @Getter
+    @Setter
+    com.admin.hayteguacho.form.UserForm userLog;
 
-    private @Getter @Setter String nombreUsuario;
+    private @Getter
+    @Setter
+    String nombreUsuario;
 
-    private @Getter @Setter boolean loggedIn;
+    private @Getter
+    @Setter
+    boolean loggedIn;
 
-    private @Getter @Setter boolean isMembresia;
+    private @Getter
+    @Setter
+    boolean isMembresia;
 
-    private @Getter @Setter List<MenuForm> listaModulos = new ArrayList<>();
-    private @Getter @Setter List<MenuForm> listaOpciones = new ArrayList<>();
+    private @Getter
+    @Setter
+    List<MenuForm> listaModulos = new ArrayList<>();
+    private @Getter
+    @Setter
+    List<MenuForm> listaOpciones = new ArrayList<>();
 
-    private @Getter @Setter boolean isMenu = false;
-    
-    private @Getter @Setter int indexNav=-1;
-    
-    private @Getter @Setter String pais="";
-    
-    private @Getter @Setter MembresiaForm membresiaActual;
-    private @Getter @Setter MembresiaxEmpresaForm membresiaxEmpresaActual;
+    private @Getter
+    @Setter
+    boolean isMenu = false;
+
+    private @Getter
+    @Setter
+    int indexNav = -1;
+
+    private @Getter
+    @Setter
+    String pais = "";
+
+    private @Getter
+    @Setter
+    MembresiaForm membresiaActual;
+    private @Getter
+    @Setter
+    MembresiaxEmpresaForm membresiaxEmpresaActual;
 
     @PostConstruct
     public void init() {
         loggedIn = false;
         System.err.println("El valor de logged in es: " + loggedIn);
     }
-    
-    
+
     @PreDestroy
-    public void close(){
+    public void close() {
         //String pag = "/indexPaises.xhtml";
         if (userLog.getTipo().equals("E")) {
             String log = userFacade.actualizarLogUser(userLog, "OUT", "A");
@@ -133,7 +162,7 @@ public class LoginController implements Serializable {
         }
         //redireccionar(pag);      
     }
-    
+
     public boolean buscarMenus(String op) {
 
         for (MenuForm obj : listaModulos) {
@@ -146,14 +175,13 @@ public class LoginController implements Serializable {
         }
         return false;
     }
-    
-    public void activarLinks(int indice, String opcion){
-        if(indice==-2){
-            if(indexNav <0){
-                indexNav=-1;
+
+    public void activarLinks(int indice, String opcion) {
+        if (indice == -2) {
+            if (indexNav < 0) {
+                indexNav = -1;
             }
-        }
-        else{
+        } else {
             indexNav = indice;
         }
         /*
@@ -168,16 +196,15 @@ public class LoginController implements Serializable {
         else{
             redireccionar("/pages/"+opcion);
         }
-        */
+         */
     }
-    
-    public String setearColor(int indice){
-        String color="";
-        if(indice== indexNav){
-            color="background-color:green;";
-        }
-        else{
-            color="background-color:transparent;";
+
+    public String setearColor(int indice) {
+        String color = "";
+        if (indice == indexNav) {
+            color = "background-color:green;";
+        } else {
+            color = "background-color:transparent;";
         }
         return color;
     }
@@ -247,7 +274,7 @@ public class LoginController implements Serializable {
                 listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
             }
 
-            System.err.println("la imagen es: "+userLog.getImagen());
+            System.err.println("la imagen es: " + userLog.getImagen());
             /*
             pag = "/pages/empleado/agregarEmpleado.xhtml";
             setIdRol(usuario.getIdrol());
@@ -260,6 +287,7 @@ public class LoginController implements Serializable {
              */
         }
     }
+
     /*
     public void logearEmpresa() {
         //UserForm usuario = userFacade.getUser(getUsuario(), getPassword());
@@ -273,12 +301,12 @@ public class LoginController implements Serializable {
         loggedIn = true;
         listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
     }
-    */
+     */
 
     public void redirectLogin() {
         redireccionar("/login.xhtml");
     }
-    
+
     public void doLogout() {
         // Set the paremeter indicating that user is logged in to false
         //loggedIn = false;
@@ -304,9 +332,9 @@ public class LoginController implements Serializable {
         }
         redireccionar(pag);
     }
-    
-    public void seleccionarPais(String pais){
-        this.pais= pais;
+
+    public void seleccionarPais(String pais) {
+        this.pais = pais;
         ofertas.setPais(pais);
         ofertas.init();
         redireccionar("/mostrarOfertas.xhtml?opcion=0");
@@ -333,90 +361,90 @@ public class LoginController implements Serializable {
             //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public boolean obtenerMembresiaActual(){
-    boolean flag = false;
+
+    public boolean obtenerMembresiaActual() {
+        boolean flag = false;
+
         if (loggedIn) {
-              try {
-            List<MembresiaForm> lista = membresiaFacade.obtenerMembresiaEmpresa(Integer.parseInt(userLog.getIdentificador()));
-            if (!lista.isEmpty()) {
-                membresiaActual = lista.get(0);
-                membresiaxEmpresaActual = membresiaxEmpresaFacade.obtenerMembresia(userLog.getIdentificador());
-                flag = true;
-            }
-        } catch (Exception e) {
-            System.out.println("com.admin.hayteguacho.controller.LoginController.obtenerMembresiaActual()");
-            e.printStackTrace();
-        }
-        }
-    
-    
-       return flag;
-    }
-    
-    public boolean mostrarBaseCandidatos(){
-       boolean flag = false;
-        if (loggedIn) {
-              try {
-            List<MembresiaForm> lista = membresiaFacade.obtenerMembresiaEmpresa(Integer.parseInt(userLog.getIdentificador()));
-            if (!lista.isEmpty()) {
-                membresiaActual = lista.get(0);
-                if (membresiaActual.getTitulomembresia().toLowerCase().equals("gold")) {
-                    flag = true;
+
+           // if (userLog.getTipo().equals("e")) {
+                try {
+                    List<MembresiaForm> lista = membresiaFacade.obtenerMembresiaEmpresa(Integer.parseInt(userLog.getIdentificador()));
+                    if (!lista.isEmpty()) {
+                        membresiaActual = lista.get(0);
+                        membresiaxEmpresaActual = membresiaxEmpresaFacade.obtenerMembresia(userLog.getIdentificador());
+                        flag = true;
+                    }
+                } catch (Exception e) {
+                    System.out.println("com.admin.hayteguacho.controller.LoginController.obtenerMembresiaActual()");
+                    e.printStackTrace();
                 }
-                
+          //  }
+
+        }
+
+        return flag;
+    }
+
+    public boolean mostrarBaseCandidatos() {
+        boolean flag = false;
+        if (loggedIn) {
+            try {
+                List<MembresiaForm> lista = membresiaFacade.obtenerMembresiaEmpresa(Integer.parseInt(userLog.getIdentificador()));
+                if (!lista.isEmpty()) {
+                    membresiaActual = lista.get(0);
+                    if (membresiaActual.getTitulomembresia().toLowerCase().equals("gold")) {
+                        flag = true;
+                    }
+
+                }
+            } catch (Exception e) {
+                System.out.println("com.admin.hayteguacho.controller.LoginController.obtenerMembresiaActual()");
+                e.printStackTrace();
             }
+        }
+
+        return flag;
+
+    }
+
+    public String obtenerFecha(String fecha) {
+        String dateStr = fecha;
+        DateFormat readFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+        DateFormat writeFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = null;
+        try {
+            date = (Date) readFormat.parse(dateStr);
         } catch (Exception e) {
-            System.out.println("com.admin.hayteguacho.controller.LoginController.obtenerMembresiaActual()");
+            System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.obtenerFecha()");
             e.printStackTrace();
         }
+
+        String formattedDate = "";
+        if (date != null) {
+            formattedDate = writeFormat.format(date);
         }
-    
-    
-       return flag;
-    
+        return formattedDate;
     }
-    
-    public String obtenerFecha(String fecha){
-     String dateStr = fecha;
-     DateFormat readFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-     DateFormat writeFormat = new SimpleDateFormat("dd/MM/yyyy");
-     Date date = null;
-         try {
-             date = (Date)readFormat.parse(dateStr);
-         } catch (Exception e) {
-             System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.obtenerFecha()");
-             e.printStackTrace();
-         }
-         
-         String formattedDate = "";
-         if (date != null) {
-             formattedDate = writeFormat.format(date);
-         }
-         return formattedDate;
+
+    public String colorMem(String title) {
+        String color = "black";
+        switch (title.toLowerCase()) {
+            case "gold":
+                color = "#b29500";
+                break;
+            case "platinum":
+                color = "#697e86";
+                break;
+            case "classic":
+                color = "#009ea7";
+                break;
+            case "free":
+                color = "#64aa07";
+                break;
+        }
+
+        return color;
     }
-    
-      public String colorMem(String title){
-  String color = "black";
-  switch(title.toLowerCase())
-  {
-      case "gold":
-          color = "#b29500";
-          break;
-      case "platinum":
-          color = "#697e86";
-          break;
-      case "classic":
-          color = "#009ea7";
-          break;
-      case "free":
-          color = "#64aa07";
-          break;    
-  }
-  
-  return color;
-  }
-    
-  
-    
+
 }
