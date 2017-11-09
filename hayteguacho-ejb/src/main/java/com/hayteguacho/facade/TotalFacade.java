@@ -38,7 +38,11 @@ public class TotalFacade {
                 + "WHERE CATEGORIA.IDCATEGORIA = PUESTO.IDCATEGORIA (+)\n"
                 + "GROUP BY CATEGORIA.IDCATEGORIA, CATEGORIA.NOMBRECATEGORIA";
         */
-        String sql="SELECT CATEGORIA.IDCATEGORIA idCategoria, (SELECT COUNT(*) FROM tbl_ofertalaboral) total, DECODE(COUNT(CATEGORIA.IDCATEGORIA),1,0,COUNT(CATEGORIA.IDCATEGORIA))\n" +
+        String sql="SELECT CATEGORIA.IDCATEGORIA idCategoria, \n" +
+"            (SELECT COUNT(*) FROM tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta\n" +
+"            WHERE  oferta.idciudad= ciudad.idciudad AND UPPER(pais.nombrepais)= UPPER(?)\n" +
+"            ) \n" +
+"                total, DECODE(COUNT(CATEGORIA.IDCATEGORIA),1,0,COUNT(CATEGORIA.IDCATEGORIA))\n" +
 "                totalCategoria, CATEGORIA.NOMBRECATEGORIA categoria FROM TBL_CATEGORIAEMPRESA CATEGORIA,\n" +
 "                ((select puesto.IDCATEGORIA, puesto.IDPUESTOTRABAJO, puesto.NOMBREPUESTOTRABAJO \n" +
 "                from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad,\n" +
@@ -53,6 +57,7 @@ public class TotalFacade {
 "                GROUP BY CATEGORIA.IDCATEGORIA, CATEGORIA.NOMBRECATEGORIA";
         Query q = getEntityManager().createNativeQuery(sql, "ContadorMapping");
         q.setParameter(1, pais);
+        q.setParameter(2, pais);
         q.setMaxResults(5);
         q.setFirstResult(0);
         List<TotalCategoriasForm> temp = q.getResultList();
