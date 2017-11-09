@@ -65,11 +65,20 @@ public class TblMembresia implements Serializable {
     @Column(name = "CANTIDADOFERTA")
     private BigInteger cantidadoferta;
     private BigInteger cantidaduser;
+    private String estadomembresia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmembresia")
     private List<TblMembresiaxempresa> tblMembresiaxempresaList;
     @JoinColumn(name = "IDTIPOPERIODOMEMBRESIA", referencedColumnName = "IDTIPOPERIODOMEMBRESIA")
     @ManyToOne(optional = false)
     private TblTipoperidomembresia idtipoperiodomembresia;
+
+    public String getEstadomembresia() {
+        return estadomembresia;
+    }
+
+    public void setEstadomembresia(String estadomembresia) {
+        this.estadomembresia = estadomembresia;
+    }
     
 
     public TblMembresia() {
