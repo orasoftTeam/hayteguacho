@@ -173,6 +173,10 @@ public class OfertaController {
                 validationBean.validarSeleccion(oferta.getIdciudad(), "warn", "titleOfertaEmpresa", "lblSelectRegMunicipio")
                 &&
                 validationBean.validarCampoVacio(oferta.getTituloofertalaboral(), "warn", "titleOfertaEmpresa", "lblReqNombreOferta")
+                
+                &&
+                
+                validationBean.validarLongitudCampo(oferta.getTituloofertalaboral(), 10, 28, "warn", "titleOfertaEmpresa", "lblLongitudOfertaTitulo")
                 //&&
                 //validationBean.validarFecha(oferta.getFechacontratacionofertalaboral(), "warn", "titleOfertaEmpresa", "lblReqOfertaFechaContra")               
                 &&
