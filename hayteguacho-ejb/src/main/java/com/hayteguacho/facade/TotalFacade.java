@@ -40,7 +40,10 @@ public class TotalFacade {
         */
         String sql="SELECT CATEGORIA.IDCATEGORIA idCategoria, \n" +
 "            (SELECT COUNT(*) FROM tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta\n" +
-"            WHERE  oferta.idciudad= ciudad.idciudad AND UPPER(pais.nombrepais)= UPPER(?)\n" +
+"            WHERE UPPER(pais.nombrepais)= UPPER(?)\n" +
+"                and pais.idpais=depto.idpais \n" +
+"                and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+"                and oferta.idciudad= ciudad.idciudad\n" +
 "            ) \n" +
 "                total, DECODE(COUNT(CATEGORIA.IDCATEGORIA),1,0,COUNT(CATEGORIA.IDCATEGORIA))\n" +
 "                totalCategoria, CATEGORIA.NOMBRECATEGORIA categoria FROM TBL_CATEGORIAEMPRESA CATEGORIA,\n" +
@@ -73,22 +76,32 @@ public class TotalFacade {
         "group by categoria.IDCATEGORIA, categoria.NOMBRECATEGORIA";
         */
         
-        String sql="select CATEGORIA.IDCATEGORIA, (select count(*) from tbl_candidatoxofertalaboral) total, \n" +
-            "DECODE(COUNT(CATEGORIA.IDCATEGORIA),1,0,COUNT(CATEGORIA.IDCATEGORIA)) totalCategoria, \n" +
-            "CATEGORIA.NOMBRECATEGORIA categoria from tbl_categoriaempresa categoria, \n" +
-            "((select puesto.IDCATEGORIA, puesto.IDPUESTOTRABAJO, puesto.NOMBREPUESTOTRABAJO \n" +
-            "from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad,\n" +
-            "tbl_ofertalaboral oferta, tbl_candidatoxofertalaboral aplica, tbl_puestotrabajo puesto\n" +
-            "where oferta.idofertalaboral=aplica.idofertalaboral and oferta.idpuestotrabajo= puesto.IDPUESTOTRABAJO (+)\n" +
-            "AND UPPER(nombrepais)= UPPER(?) \n" +
-            "and pais.idpais=depto.idpais \n" +
-            "and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
-            "and oferta.idciudad= ciudad.idciudad\n" +
-            ")) puesto\n" +
-            "where categoria.IDCATEGORIA= puesto.IDCATEGORIA (+)\n" +
-            "group by categoria.IDCATEGORIA, categoria.NOMBRECATEGORIA";
+        String sql="select CATEGORIA.IDCATEGORIA, (\n" +
+"            select count(*) from tbl_pais pais, tbl_departamento depto, \n" +
+"            tbl_ciudad ciudad, tbl_candidatoxofertalaboral aplica,\n" +
+"            tbl_ofertalaboral oferta\n" +
+"            where oferta.idofertalaboral=aplica.idofertalaboral\n" +
+"            AND UPPER(nombrepais)= UPPER(?) \n" +
+"            and pais.idpais=depto.idpais \n" +
+"            and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+"            and oferta.idciudad= ciudad.idciudad       \n" +
+"            ) total, \n" +
+"            DECODE(COUNT(CATEGORIA.IDCATEGORIA),1,0,COUNT(CATEGORIA.IDCATEGORIA)) totalCategoria, \n" +
+"            CATEGORIA.NOMBRECATEGORIA categoria from tbl_categoriaempresa categoria, \n" +
+"            ((select puesto.IDCATEGORIA, puesto.IDPUESTOTRABAJO, puesto.NOMBREPUESTOTRABAJO \n" +
+"            from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad,\n" +
+"            tbl_ofertalaboral oferta, tbl_candidatoxofertalaboral aplica, tbl_puestotrabajo puesto\n" +
+"            where oferta.idofertalaboral=aplica.idofertalaboral and oferta.idpuestotrabajo= puesto.IDPUESTOTRABAJO (+)\n" +
+"            AND UPPER(nombrepais)= UPPER(?) \n" +
+"            and pais.idpais=depto.idpais \n" +
+"            and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+"            and oferta.idciudad= ciudad.idciudad\n" +
+"            )) puesto\n" +
+"            where categoria.IDCATEGORIA= puesto.IDCATEGORIA (+)\n" +
+"            group by categoria.IDCATEGORIA, categoria.NOMBRECATEGORIA";
         Query q = getEntityManager().createNativeQuery(sql, "ContadorMapping");
         q.setParameter(1, pais);
+        q.setParameter(2, pais);
         q.setMaxResults(5);
         q.setFirstResult(0);
         List<TotalCategoriasForm> temp = q.getResultList();
