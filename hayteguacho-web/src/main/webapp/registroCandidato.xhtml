@@ -39,22 +39,22 @@
                         <b:column col-md="8">
                             <b:panel title="#{bundle['titleRegistrar']}" collapsible="false">
                                 <h:form id="candidatoForm">
-                                    <b:messages  />
+                                    
                                     <b:panelGrid columns="2" >
-                                        <b:inputText size="10" id="email" fieldId="email" value="#{candidatoController.candidato.correocandidato}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}"/>
-                                        <b:inputSecret size="10" id="clave" fieldId="clave" value="#{candidatoController.candidato.contrasenacandidato}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}"/>
-                                        <b:inputText size="10" id="nomCandidato" fieldId="nomCandidato" value="#{candidatoController.candidato.nombrecandidato}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqName']}"/>
-                                        <b:inputText size="10" id="apellidoCandidato" fieldId="apellidoCandidato" value="#{candidatoController.candidato.apellidocandidato}" label="#{bundle['lblSecondName']}" placeholder="#{bundle['lblReqSecondName']}"/>
-                                        <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono1" fieldId="telefono1" value="#{candidatoController.candidato.telefono1candidato}" label="#{bundle['lblTelEmpresa1']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                                        <b:inputText size="10" id="email" fieldId="email" value="#{candidatoController.candidato.correocandidato}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}" required="true"/>
+                                        <b:inputSecret size="10" id="clave" fieldId="clave" value="#{candidatoController.candidato.contrasenacandidato}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}" required="true"/>
+                                        <b:inputText size="10" id="nomCandidato" fieldId="nomCandidato" value="#{candidatoController.candidato.nombrecandidato}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqName']}" required="true"/>
+                                        <b:inputText size="10" id="apellidoCandidato" fieldId="apellidoCandidato" value="#{candidatoController.candidato.apellidocandidato}" label="#{bundle['lblSecondName']}" placeholder="#{bundle['lblReqSecondName']}" required="true"/>
+                                        <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono1" fieldId="telefono1" value="#{candidatoController.candidato.telefono1candidato}" label="#{bundle['lblTelEmpresa1']}" placeholder="#{bundle['lblTelReqEmpresa']}" required="true"/>
                                         <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono2" fieldId="telefono2" value="#{candidatoController.candidato.telefono2candidato}" label="#{bundle['lblTelEmpresa2']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
                                         <b:radiobutton value="#{candidatoController.candidato.generocandidato}" itemLabel="Masculino" itemValue="M"  />
                                         <b:radiobutton value="#{candidatoController.candidato.generocandidato}" itemLabel="Femino" itemValue="F"  />
-                                        <b:selectOneMenu value="#{candidatoController.idcategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}" 
+                                        <b:selectOneMenu value="#{candidatoController.idcategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}"  
                                                          onchange="ajax:candidatoController.cambiarCategoria()">
                                             <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
                                             <f:selectItems value="#{empresaController.listaCategoria}" var="categoria" itemValue="#{categoria.idcategoria}" itemLabel="#{categoria.nombrecategoria}"/>
                                         </b:selectOneMenu>
-                                        <b:selectOneMenu id="cmbPuesto" value="#{candidatoController.candidato.idpuestotrabajotbl}"  label="#{bundle['lblPuestoTrabajo']}" >
+                                        <b:selectOneMenu id="cmbPuesto" value="#{candidatoController.candidato.idpuestotrabajotbl}"  label="#{bundle['lblPuestoTrabajo']}" required="true">
                                             <f:selectItems value="#{candidatoController.listaPuestos}" var="puesto" itemValue="#{puesto.idpuestotrabajo}" itemLabel="#{puesto.nombrepuestotrabajo}"/>
                                         </b:selectOneMenu>
                                         <p:fileUpload label="#{bundle['lblDocUpload']}" invalidFileMessage="#{bundle['lblDocUploadInvalid']}" id="docUpload" fileUploadListener="#{candidatoController.handleFileUpload}" mode="advanced"

@@ -193,6 +193,27 @@ public class MostrarOfertaController implements Serializable {
         setIdcategoriafilter("");
     }
     
+    public void mostrarOfertasByFilter(){
+        count=5;
+        ini=0;
+        if(!iddeptofilter.equals("") && !idcategoriafilter.equals("")){
+            listaOferta= ofertaFacade.obtenerOfertasByCategoriaDeptoRange(pais,iddeptofilter,idcategoriafilter, ini, count);
+            numreg= ofertaFacade.contarOfertasByCategoriaDeptoRange(pais,iddeptofilter, idcategoriafilter);
+        }
+        else if(!idcategoriafilter.equals("")){
+            listaOferta= ofertaFacade.obtenerOfertasByCategoriaRange(pais,idcategoriafilter, ini, count);
+            numreg= ofertaFacade.contarOfertasByCategoriaRange(pais, idcategoriafilter);           
+        }
+        else if(!iddeptofilter.equals("")){
+            listaOferta= ofertaFacade.obtenerOfertasByDepartamentoRange(iddeptofilter, ini, count);
+            numreg= ofertaFacade.contarOfertasByDeptoRange(iddeptofilter);           
+        }
+        else{
+            numreg= ofertaFacade.contarOfertasByPais(pais);
+            listaOferta= listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, count);          
+        }
+    }
+    
     public EmpresaForm obtenerEmpresa(String idEmpresa){
         return empresaFacade.obtenerEmpresa(idEmpresa).get(0);
     }
