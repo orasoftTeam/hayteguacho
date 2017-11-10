@@ -168,8 +168,10 @@ public class CandidatoController {
     }
     
     public void cambiarCategoria(){
+        System.out.println("entra");
         if(!idcategoria.equals("")){
             listaPuestos= puestoFacade.obtenerPuestosByIdCategoria(idcategoria);
+            System.out.println("com.admin.hayteguacho.controller.CandidatoController.cambiarCategoria()");
         }
         else{
             listaPuestos= new ArrayList<>();
