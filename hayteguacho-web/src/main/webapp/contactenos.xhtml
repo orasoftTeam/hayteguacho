@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="content">
+            <b:jumbotron id="contactoContainer" style="background-color: white;background-image: url(#{resource['images/contacto.png']});  
+                         
+                         background-repeat:no-repeat;
+                         background-size:100% 100%;
+                         background-position:center;">
+                <b:container>
+                    <b:row>
+                        <b:column col-md="4">
+                        </b:column>
+                        <b:column col-md="8">
+                            <b:panel title="Contactenos" collapsible="false"  look="info">
+                                <h:form id="contactenosForm">
+                                    <b:growl id="bgrowl" show-detail="true"/>
+                                    <b:panelGrid columns="2" >
+                                        <p:outputLabel value="#{bundle.lblContactoCorreo}" style="font-size: 20px" />
+                                        <b:inputText placeholder="#{bundle.lblContactoCorreoEjemplo}" value="#{contacto.correo}">
+                                            <f:facet name="prepend">
+                                                <h:outputText value="@" />
+                                            </f:facet>
+                                        </b:inputText>
+                                        <p:outputLabel value="#{bundle.lblContactoAsunto}" style="font-size: 20px" />
+                                        <b:inputText placeholder="#{bundle.lblContactoAsunto}"  value="#{contacto.asunto}" />
+                                        <p:outputLabel value="#{bundle.lblContactoMensaje}" style="font-size: 20px"  />
+                                        <b:inputTextarea   placeholder="#{bundle.lblContactoMensaje}" value="#{contacto.mensaje}"  >
+                                            <f:facet name="append">
+                                                <b:iconAwesome name="envelope-o" size="2x" />
+                                            </f:facet>
+                                        </b:inputTextarea>
+
+                                    </b:panelGrid>
+                                    <p:separator></p:separator>
+                                    <b:row>
+                                        <b:column col-md="4">
+                                        </b:column>
+                                        <b:column col-md="4">
+                                            <b:commandButton update="@form" ajax="true"  value="Enviar" look="info" style="width:100%" actionListener="#{contacto.enviar()}" />
+                                        </b:column>
+                                        <b:column col-md="4">
+                                        </b:column>
+                                    </b:row>
+                                </h:form>
+                            </b:panel>
+                        </b:column>
+                    </b:row>
+                </b:container>
+
+            </b:jumbotron> 
+
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -367,7 +367,7 @@ public class LoginController implements Serializable {
 
         if (loggedIn) {
 
-           // if (userLog.getTipo().equals("e")) {
+            if (userLog.getTipo().toLowerCase().equals("e")) {
                 try {
                     List<MembresiaForm> lista = membresiaFacade.obtenerMembresiaEmpresa(Integer.parseInt(userLog.getIdentificador()));
                     if (!lista.isEmpty()) {
@@ -379,7 +379,7 @@ public class LoginController implements Serializable {
                     System.out.println("com.admin.hayteguacho.controller.LoginController.obtenerMembresiaActual()");
                     e.printStackTrace();
                 }
-          //  }
+            }
 
         }
 
