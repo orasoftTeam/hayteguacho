@@ -22,7 +22,7 @@
                         <b:column col-md="4">
                         </b:column>
                         <b:column col-md="8">
-                            <b:panel title="Contactenos" collapsible="false"  look="info">
+                            <b:panel title="#{bundle['lblContactenos']}" collapsible="false"  look="info">
                                 <h:form id="contactenosForm">
                                     <b:growl id="bgrowl" show-detail="true"/>
                                     <b:panelGrid columns="2" >
@@ -47,7 +47,7 @@
                                         <b:column col-md="4">
                                         </b:column>
                                         <b:column col-md="4">
-                                            <b:commandButton update="@form" ajax="true"  value="Enviar" look="info" style="width:100%" actionListener="#{contacto.enviar()}" />
+                                            <b:commandButton update="@form formGrl" ajax="true"  value="Enviar" look="info" style="width:100%" actionListener="#{contacto.enviar()}" />
                                         </b:column>
                                         <b:column col-md="4">
                                         </b:column>

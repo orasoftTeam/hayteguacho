@@ -22,7 +22,6 @@
             <h:form id="empresaForm">
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleTabDatosAcceso']}">
-                        <b:messages  />
                         <b:inputText size="10" id="email" fieldId="email" value="#{empresaController.empresa.email}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}" required="true"/>
                         <b:inputSecret size="10" id="password" fieldId="email" value="#{empresaController.empresa.password}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}" required="true"/>
                     </b:tab>
@@ -74,7 +73,7 @@
                         <b:label id="msgFile" text="#{empresaController.msgFile}"></b:label>
                           
                         <div style="text-align: center;">
-                            <b:commandButton update="@form" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblbtnAgregar']}" look="warning" style="width:50%" />
+                            <b:commandButton update="@form formGrl" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblbtnAgregar']}" look="warning" style="width:50%" />
                         </div>
                     </b:tab>
                 </b:tabView>

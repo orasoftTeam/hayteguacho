@@ -102,12 +102,14 @@ public class EmpresaController {
     @PostConstruct
     public void init(){
         String pais= loginBean.getPais();
+        /*
         empresa.setNompais(pais.toUpperCase());
         List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
         if(!tmp.isEmpty()){
             empresa.setIdpais(tmp.get(0).getIdpais());
             listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
         }
+        */
         listaCategoria= catFacade.obtenerCategorias();
         listaCargo= cargoFacade.obtenerCargos();
         listaTipologia= tipologiaFacade.obtenerTipologias();
@@ -115,9 +117,17 @@ public class EmpresaController {
         UserForm usuario=loginBean.getUserLog();
         if(usuario!=null && usuario.getTipo().equals("E")){
             empresa= empresaFacade.obtenerEmpresaById(usuario.getIdentificador()).get(0);
+            empresa.setNompais(pais.toUpperCase());
+            List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
+            if(!tmp.isEmpty()){
+                empresa.setIdpais(tmp.get(0).getIdpais());
+                listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
+                idMuni= empresa.getIdciudad();
+                idDepto= deptoFacade.obtenerDepartamentoByIdCiudad(idMuni).get(0).getIddepartamento();
+                listaMuni= muniFacade.obtenerMunicipios(idDepto);
+            }
             idCargo= empresa.getIdcargoempresa();
             idCategoria= empresa.getIdcategoria();
-            idMuni= empresa.getIdciudad();
             idTipologia= empresa.getIdtipologia();
         }
         
