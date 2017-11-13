@@ -24,13 +24,14 @@
                         responsive="true"
                         >
                         <b:dataTableColumn  label="#{bundle.lblCxoSeleccion}"  value="#{CxempresaController.fullName(CxempresaController.obtenerCandidato(cxempresa.idcandidato))}" />
-                         <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
-                                    <b:commandButton onclick="ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
-                                                     look="info" />
-                                </b:dataTableColumn>
+                      
                         <b:dataTableColumn label="#{bundle.lblCxoEmail}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).correocandidato}"/>
                         <b:dataTableColumn label="#{bundle.lblTelEmpresa1}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono1candidato} ,#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono2candidato} "/>
                         <b:dataTableColumn label="#{bundle.lblGenero}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).generocandidato}"/>
+                           <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
+                                    <b:commandButton onclick="ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
+                                                     look="info" />
+                                </b:dataTableColumn>
                         <b:dataTableColumn label="#{bundle.lblCxoOperacion}" >
                             <b:commandButton  look="danger" value="#{bundle.lblbtnEliminar}" ajax="true" update="@form" actionListener="#{CxempresaController.validarEliminar(cxempresa)}"  />
                         </b:dataTableColumn>

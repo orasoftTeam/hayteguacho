@@ -29,6 +29,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.apache.commons.codec.binary.Base64;
 import org.primefaces.context.RequestContext;
@@ -370,5 +371,17 @@ for (int i = 0; i < 20; i++) {
 String output = sb.toString();
 return output;
     
+    }
+    
+    
+     public void redirecionar(String pagina) {
+        try {
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + pagina);
+        } catch (IOException e) {
+            System.out.println("com.hayteguacho.util.ValidationBean.redirecionar()");
+            e.printStackTrace();
+        }
+
     }
 }

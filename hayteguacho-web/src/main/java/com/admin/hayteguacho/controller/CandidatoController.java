@@ -193,7 +193,7 @@ public class CandidatoController {
                 String random = rs.nextString();
                 candidato.setArchivocurriculum("/pdf/"+event.getFile().getFileName());
                 imageConfirm = "resources/images/iconoCV.jpg";
-                validationBean.updateComponent("candidatoForm:cvMostrar");
+                //validationBean.updateComponent("candidatoForm:cvMostrar");
                 validationBean.updateComponent("candidatoForm:linkM");
             }
             else{
@@ -204,7 +204,7 @@ public class CandidatoController {
                   validationBean.updateComponent("candidatoForm:msgFile");
                   candidato.setArchivocurriculum("/pdf/"+event.getFile().getFileName());
                   imageConfirm = "resources/images/iconoCV.jpg";
-                  validationBean.updateComponent("candidatoForm:cvMostrar");
+                  //validationBean.updateComponent("candidatoForm:cvMostrar");
                   
                   validationBean.updateComponent("candidatoForm:linkM");
                 }
