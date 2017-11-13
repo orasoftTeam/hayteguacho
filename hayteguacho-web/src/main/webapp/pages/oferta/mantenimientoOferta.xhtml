@@ -33,13 +33,13 @@
                     <b:tab title="" style="background-color: #EEFAF7;">
                         <b:row>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{ofertaController.actualizaOferta}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{ofertaController.actualizaOferta}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{ofertaController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{ofertaController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{ofertaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{ofertaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
                             </b:column>
                         </b:row>
                         <b:modal  id="amodal" title="#{bundle['titleOfertaEmpresa']}" styleClass="modalPseudoClass">
@@ -53,7 +53,7 @@
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleOfertaEmpresa']}">
-                        <b:messages  />
+                        
                         <b:row>
                             <b:column col-md="12">
                                 <b:selectOneMenu value="#{ofertaController.oferta.idjornadalaboral}"  label="#{bundle['lblNombreJornadaEmpresa']}" 
