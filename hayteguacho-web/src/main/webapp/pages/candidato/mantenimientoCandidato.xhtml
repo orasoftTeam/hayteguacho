@@ -34,13 +34,15 @@
                                         <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono2" fieldId="telefono2" value="#{candidatoController.candidato.telefono2candidato}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
 
                                         <p:fileUpload label="#{bundle['lblDocUpload']}" invalidFileMessage="#{bundle['lblDocUploadInvalid']}" id="docUpload" fileUploadListener="#{candidatoController.handleFileUpload}" mode="advanced"
-                                                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(doc|docx|pdf)$/" /><br />
-                                        <h:outputLink id="msgFile" value="#{request.contextPath}/#{candidatoController.candidato.archivocurriculum}"   target="_blank" >
-                                        <p:graphicImage id="cvMostrar"  style="height: 32px;width: 32px"  value="#{candidatoController.imageConfirm}"  />
+                                                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(docx|pdf)$/" /><br />
+                                        <h:outputLink id="linkM" value="#{request.contextPath}/#{candidatoController.candidato.archivocurriculum}"   target="_blank" >
+                                            <p:graphicImage id="cvMostrar"  style="height: 32px;width: 32px"  library="images"  name="iconoCV.jpg"  />
+                                        <b:label  text="#{bundle.lblCandEditarCV}"></b:label>
                                         </h:outputLink>
-                                        <br />
                                         
-                                        <b:label id="linkM" text="#{candidatoController.msgFile}"></b:label>
+                                        <br />
+                                      
+                                        <b:label id="msgFile" text="#{candidatoController.msgFile}"></b:label>
                                     </b:panelGrid>
                                     <p:separator></p:separator>
                                     <b:row>

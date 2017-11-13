@@ -78,7 +78,7 @@ public class MembresiaFacade extends AbstractFacade<TblMembresia, MembresiaForm>
         return listaEntityForm;
     }
        public List<MembresiaForm> obtenerMembresiasPorTitulo(String titulo) {
-        Query q = getEntityManager().createNativeQuery("select * from tbl_membresia where titulomembresia = ?", TblMembresia.class);
+        Query q = getEntityManager().createNativeQuery("select * from tbl_membresia where titulomembresia = ? and estadomembresia='A'", TblMembresia.class);
         q.setParameter(1, titulo);
         List<TblMembresia> listaEntity;
         List<MembresiaForm> listaEntityForm;

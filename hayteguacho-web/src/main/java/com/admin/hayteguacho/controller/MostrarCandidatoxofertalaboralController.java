@@ -134,11 +134,16 @@ public class MostrarCandidatoxofertalaboralController {
             }
         }
         if (res.equals("0") || (!cxoferta.getEstadocandidatoxofertalaboral().equals("PO"))) {
+            
+            if (cf.getArchivocurriculum().contains(".docx")) {
+                System.out.println("es word");
+                vb.redirecionar(selectedCandidato.getArchivocurriculum());
+            }else{
             vb.updateComponent("CxofertaForm:amodal");
             vb.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
             cargarCandidatosxoferta(selectedOferta);
             vb.updateComponent("CxofertaForm:panelCxoferta");
-            
+            }
            
         }
      limpiar();
