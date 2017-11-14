@@ -25,49 +25,49 @@
                     
                     <b:tab title="#{bundle['titleTabDatosAcceso']}">
                         
-                        <b:inputText size="10" id="email" fieldId="email" value="#{empresaController.empresa.email}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}" required="true" requiredMessage="#{bundle['lblEmailReqEmpresa']}"/>
-                        <b:inputSecret size="10" id="password" fieldId="email" value="#{empresaController.empresa.password}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}" required="true" requiredMessage="#{bundle['lblClaveEmpresa']}"/>
+                        <b:inputText size="10" id="email" fieldId="email" value="#{empresaController.empresa.email}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}" />
+                        <b:inputSecret size="10" id="password" fieldId="email" value="#{empresaController.empresa.password}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}" />
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleTabDatosContactos']}">
-                        <b:inputText size="10" id="nombres" fieldId="nombres" value="#{empresaController.empresa.nombrecontacto}" label="#{bundle['lblNomContactoEmpresa']}" placeholder="#{bundle['lblNomContactoReqEmpresa']}" required="true" requiredMessage="#{bundle['lblNomContactoReqEmpresa']}"/>
-                        <b:inputText size="10" id="apellidos" fieldId="apellidos" value="#{empresaController.empresa.apellidocontacto}" label="#{bundle['lblApeContactoEmpresa']}" placeholder="#{bundle['lblApeContactoReqEmpresa']}" required="true" requiredMessage="#{bundle['lblApeContactoReqEmpresa']}"/>
-                        <b:selectOneMenu value="#{empresaController.idCargo}"  label="#{bundle['lblNombreCargoEmpresa']}" required="true" requiredMessage="#{bundle['lblSelectRegCargo']}">
+                        <b:inputText size="10" id="nombres" fieldId="nombres" value="#{empresaController.empresa.nombrecontacto}" label="#{bundle['lblNomContactoEmpresa']}" placeholder="#{bundle['lblNomContactoReqEmpresa']}" />
+                        <b:inputText size="10" id="apellidos" fieldId="apellidos" value="#{empresaController.empresa.apellidocontacto}" label="#{bundle['lblApeContactoEmpresa']}" placeholder="#{bundle['lblApeContactoReqEmpresa']}" />
+                        <b:selectOneMenu value="#{empresaController.idCargo}"  label="#{bundle['lblNombreCargoEmpresa']}">
                             <f:selectItems value="#{empresaController.listaCargo}" var="cargo" itemValue="#{cargo.idcargoempresa}" itemLabel="#{cargo.nombrecargoempresa}"/>
                         </b:selectOneMenu>
-                        <b:inputText size="10" id="idtel1" onkeyup="soloNumeros(this)" fieldId="idtel1" value="#{empresaController.empresa.telefono1}" label="#{bundle['lblTelEmpresa1']}" placeholder="#{bundle['lblTelReqEmpresa']}" required="true" requiredMessage="#{bundle['lblTelReqEmpresa']}"/>
+                        <b:inputText size="10" id="idtel1" onkeyup="soloNumeros(this)" fieldId="idtel1" value="#{empresaController.empresa.telefono1}" label="#{bundle['lblTelEmpresa1']}" placeholder="#{bundle['lblTelReqEmpresa']}" />
                         <b:inputText size="10" id="idtel2" onkeyup="soloNumeros(this)" fieldId="idtel2" value="#{empresaController.empresa.telefono2}" label="#{bundle['lblTelEmpresa2']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
                         <b:inputText size="10" id="idtel3" onkeyup="soloNumeros(this)" fieldId="idtel3" value="#{empresaController.empresa.telefono3}" label="#{bundle['lblTelEmpresa3']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleTabDatosEmpresa']}">
-                        <b:inputText size="10" id="nomEmpresa" fieldId="nomEmpresa" value="#{empresaController.empresa.nombreempresa}" label="#{bundle['titleEmpresa']}" placeholder="#{bundle['lblNameReqEmpresa']}" required="true" requiredMessage="#{bundle['lblNameReqEmpresa']}"/>
-                        <b:inputText size="10" id="nomRazon" fieldId="nomRazon" value="#{empresaController.empresa.razonsocial}" label="#{bundle['lblRazonEmpresa']}" placeholder="#{bundle['lblRazonReqEmpresa']}" required="true" requiredMessage="#{bundle['lblRazonReqEmpresa']}"/>
-                        <b:inputText size="10" id="idTributaria" onkeyup="soloNumeros(this)" fieldId="idTributaria" value="#{empresaController.empresa.idtributaria}" label="#{bundle['lblIdTribEmpresa']}" placeholder="#{bundle['lblIdTribReqEmpresa']}" required="true" requiredMessage="#{bundle['lblIdTribReqEmpresa']}"/>
+                        <b:inputText size="10" id="nomEmpresa" fieldId="nomEmpresa" value="#{empresaController.empresa.nombreempresa}" label="#{bundle['titleEmpresa']}" placeholder="#{bundle['lblNameReqEmpresa']}" />
+                        <b:inputText size="10" id="nomRazon" fieldId="nomRazon" value="#{empresaController.empresa.razonsocial}" label="#{bundle['lblRazonEmpresa']}" placeholder="#{bundle['lblRazonReqEmpresa']}" />
+                        <b:inputText size="10" id="idTributaria" onkeyup="soloNumeros(this)" fieldId="idTributaria" value="#{empresaController.empresa.idtributaria}" label="#{bundle['lblIdTribEmpresa']}" placeholder="#{bundle['lblIdTribReqEmpresa']}" />
                         <b:inputText size="10" id="idPais" fieldId="idPais" value="#{empresaController.empresa.nompais}" label="#{bundle['lblNombrePais']}" disabled="true"/>
                         <b:selectOneMenu value="#{empresaController.idDepto}"  label="#{bundle['lblNombreDepto']}" 
                                          onchange="ajax:empresaController.changeDepartamento()">
                             <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
                             <f:selectItems value="#{empresaController.listaDepto}" var="depto" itemValue="#{depto.iddepartamento}" itemLabel="#{depto.nombredepartamento}"/>
                         </b:selectOneMenu>
-                        <b:selectOneMenu id="cmbMuni" value="#{empresaController.idMuni}"  label="#{bundle['lblNombreMuni']}" required="true" requiredMessage="#{bundle['lblSelectRegMunicipio']}">
+                        <b:selectOneMenu id="cmbMuni" value="#{empresaController.idMuni}"  label="#{bundle['lblNombreMuni']}" >
                             <f:selectItems value="#{empresaController.listaMuni}" var="muni" itemValue="#{muni.idciudad}" itemLabel="#{muni.nombreciudad}"/>
                         </b:selectOneMenu>
-                        <b:inputTextarea value="#{empresaController.empresa.direccionempresa}"  label="#{bundle['lblDirEmpresa']}" placeholder="#{bundle['lblDirReqEmpresa']}" required="true" requiredMessage="#{bundle['lblDirReqEmpresa']}"/>
-                        <b:selectOneMenu value="#{empresaController.idCategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}" required="true" requiredMessage="#{bundle['lblSelectRegCategoria']}" >
+                        <b:inputTextarea value="#{empresaController.empresa.direccionempresa}"  label="#{bundle['lblDirEmpresa']}" placeholder="#{bundle['lblDirReqEmpresa']}" />
+                        <b:selectOneMenu value="#{empresaController.idCategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}"  >
                             <f:selectItems value="#{empresaController.listaCategoria}" var="categoria" itemValue="#{categoria.idcategoria}" itemLabel="#{categoria.nombrecategoria}"/>
                         </b:selectOneMenu>
-                        <b:inputText size="10" id="numTrabajadores" onkeyup="soloNumeros(this)" fieldId="numTrabajadores" value="#{empresaController.empresa.numtrabajadores}" label="#{bundle['lblNumTrabEmpresa']}" placeholder="#{bundle['lblNumTrabReqEmpresa']}" required="true" requiredMessage="#{bundle['lblNumTrabReqEmpresa']}"/>
+                        <b:inputText size="10" id="numTrabajadores" onkeyup="soloNumeros(this)" fieldId="numTrabajadores" value="#{empresaController.empresa.numtrabajadores}" label="#{bundle['lblNumTrabEmpresa']}" placeholder="#{bundle['lblNumTrabReqEmpresa']}" />
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
                     <b:tab title="#{bundle['titleTabTipoEmpresa']}">
-                        <b:selectOneMenu value="#{empresaController.idTipologia}"  label="#{bundle['lblNombreTipologiaEmpresa']}" required="true"  requiredMessage="#{bundle['lblSelectRegTipologia']}">
+                        <b:selectOneMenu value="#{empresaController.idTipologia}"  label="#{bundle['lblNombreTipologiaEmpresa']}" >
                             <f:selectItems value="#{empresaController.listaTipologia}" var="tipologia" itemValue="#{tipologia.idtipologia}" itemLabel="#{tipologia.nombretipologia}"/>
                         </b:selectOneMenu>
-                        <b:inputTextarea value="#{empresaController.empresa.descripcionempresa}"  label="#{bundle['lblDescripcionEmpresa']}" placeholder="#{bundle['lblLongitudDescripcionEmpresa']}" required="true" requiredMessage="#{bundle['lblLongitudDescripcionEmpresa']}"/>
+                        <b:inputTextarea value="#{empresaController.empresa.descripcionempresa}"  label="#{bundle['lblDescripcionEmpresa']}" placeholder="#{bundle['lblLongitudDescripcionEmpresa']}" />
                         <b:inputText size="10" id="paginaweb" fieldId="paginaweb" value="#{empresaController.empresa.paginaweb}" label="#{bundle['lblPagEmpresa']}" placeholder="#{bundle['lblPagReqEmpresa']}"/>
                         <p:fileUpload label="#{bundle['lblImageUpload']}" invalidFileMessage="#{bundle['lblFileInvalid']}" id="logoEmp" fileUploadListener="#{empresaController.handleFileUpload}" mode="advanced"
                                        auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
@@ -77,7 +77,7 @@
                         <b:label id="msgFile" text="#{empresaController.msgFile}"></b:label>
                           
                         <div style="text-align: center;">
-                            <b:commandButton update="@form" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblbtnAgregar']}" look="warning" style="width:50%" />
+                            <b:commandButton update="@form formGrl" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblbtnAgregar']}" look="warning" style="width:50%" />
                         </div>
                     </b:tab>
                 </b:tabView>
