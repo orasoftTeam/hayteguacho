@@ -212,10 +212,13 @@ public class OfertaController {
                     if(flag.equals("0"))
                         validationBean.lanzarMensaje("info", "titleOfertaEmpresa", "lblGuardarSuccess");
                    else if(flag.equals("-1")){
-                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                       validationBean.lanzarMensaje("warning", "titleOfertaEmpresa", "lblExistReg");
                    }
                    else if(flag.equals("-2")){
-                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                       validationBean.lanzarMensaje("error", "titleOfertaEmpresa", "lblErrorTransact");
+                   }
+                   else if(flag.equals("-3")){
+                       validationBean.lanzarMensaje("error", "titleOfertaEmpresa", "lblErrorLimit");
                    }
                 }
                else{
@@ -223,10 +226,10 @@ public class OfertaController {
                     if(flag.equals("0"))
                         validationBean.lanzarMensaje("info", "titleOfertaEmpresa", "lblEditarSuccess");
                    else if(flag.equals("-1")){
-                       validationBean.lanzarMensaje("warning", "titleMuni", "lblExistReg");
+                       validationBean.lanzarMensaje("warning", "titleOfertaEmpresa", "lblExistReg");
                    }
                    else if(flag.equals("-2")){
-                       validationBean.lanzarMensaje("error", "titleMuni", "lblErrorTransact");
+                       validationBean.lanzarMensaje("error", "titleOfertaEmpresa", "lblErrorTransact");
                    }
                }
                

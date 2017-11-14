@@ -117,24 +117,25 @@ public class EmpresaController {
         UserForm usuario=loginBean.getUserLog();
         if(usuario!=null && usuario.getTipo().equals("E")){
             empresa= empresaFacade.obtenerEmpresaById(usuario.getIdentificador()).get(0);
+            idCargo= empresa.getIdcargoempresa();
+            idCategoria= empresa.getIdcategoria();
+            idTipologia= empresa.getIdtipologia();
+            idMuni= empresa.getIdciudad();
+            idDepto= deptoFacade.obtenerDepartamentoByIdCiudad(idMuni).get(0).getIddepartamento();
+            listaMuni= muniFacade.obtenerMunicipios(idDepto);
+            
+        }
             empresa.setNompais(pais.toUpperCase());
             List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
             if(!tmp.isEmpty()){
                 empresa.setIdpais(tmp.get(0).getIdpais());
                 listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
-                idMuni= empresa.getIdciudad();
-                idDepto= deptoFacade.obtenerDepartamentoByIdCiudad(idMuni).get(0).getIddepartamento();
-                listaMuni= muniFacade.obtenerMunicipios(idDepto);
-            }
-            idCargo= empresa.getIdcargoempresa();
-            idCategoria= empresa.getIdcategoria();
-            idTipologia= empresa.getIdtipologia();
-        }
-        
+            }        
        
     }
     
     public void changeDepartamento(){
+        System.err.println("pasó x aca");
         if(idDepto.equals("")){
             listaMuni= new ArrayList<>();
         }
