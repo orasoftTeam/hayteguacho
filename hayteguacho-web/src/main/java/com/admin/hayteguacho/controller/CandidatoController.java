@@ -73,7 +73,8 @@ public class CandidatoController {
         
         
         
-        String pais= Locale.getDefault().getDisplayCountry();
+        //String pais= Locale.getDefault().getDisplayCountry();
+        String pais = loginBean.getPais();
         List<PaisForm> tmp= paisFacade.obtenerPaisesPorNombre(pais.toUpperCase());
         if(!tmp.isEmpty()){
             candidato.setIdpaistbl(tmp.get(0).getIdpais());

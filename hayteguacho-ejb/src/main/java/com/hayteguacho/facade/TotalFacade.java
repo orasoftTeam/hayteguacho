@@ -103,7 +103,7 @@ public class TotalFacade {
 "            where categoria.IDCATEGORIA= puesto.IDCATEGORIA (+)\n" +
 "            group by categoria.IDCATEGORIA, categoria.NOMBRECATEGORIA";*/
       
-      String sql = "select CATEGORIA.IDCATEGORIA, (\n" +
+     /* String sql = "select CATEGORIA.IDCATEGORIA, (\n" +
 "            select count(*) from tbl_pais pais, tbl_departamento depto, \n" +
 "            tbl_ciudad ciudad, tbl_candidatoxofertalaboral aplica,\n" +
 "            tbl_ofertalaboral oferta\n" +
@@ -128,7 +128,38 @@ public class TotalFacade {
 "            and oferta.idciudad= ciudad.idciudad \n" +
 "            )) puesto\n" +
 "            where categoria.IDCATEGORIA= puesto.IDCATEGORIA (+)\n" +
-"            group by categoria.IDCATEGORIA, categoria.NOMBRECATEGORIA";
+"            group by categoria.IDCATEGORIA, categoria.NOMBRECATEGORIA"; */
+       String sql = "       select CATEGORIA.IDCATEGORIA, (select count(*) from TBL_CANDIDATOXOFERTALABORAL aplica\n" +
+"inner join TBL_OFERTALABORAL oferta\n" +
+"on oferta.IDOFERTALABORAL = aplica.IDOFERTALABORAL\n" +
+"inner join TBL_CIUDAD ciudad\n" +
+"on ciudad.IDCIUDAD = oferta.IDCIUDAD\n" +
+"inner join TBL_DEPARTAMENTO depto\n" +
+"on depto.IDDEPARTAMENTO = ciudad.IDDEPARTAMENTO\n" +
+"inner join TBL_PAIS pais\n" +
+"on pais.IDPAIS = depto.IDPAIS\n" +
+"where oferta.estadoofertalaboral='A'\n" +
+" AND UPPER(nombrepais)= UPPER(?)) \n" +
+"as total \n" +
+"            ,count(*) as totalCategoria,\n" +
+"            categoria.NOMBRECATEGORIA as categoria\n" +
+"            from TBL_CANDIDATOXOFERTALABORAL aplica\n" +
+"inner join TBL_OFERTALABORAL oferta\n" +
+"on oferta.IDOFERTALABORAL = aplica.IDOFERTALABORAL\n" +
+"inner join TBL_CIUDAD ciudad\n" +
+"on ciudad.IDCIUDAD = oferta.IDCIUDAD\n" +
+"inner join TBL_DEPARTAMENTO depto\n" +
+"on depto.IDDEPARTAMENTO = ciudad.IDDEPARTAMENTO\n" +
+"inner join TBL_PAIS pais\n" +
+"on pais.IDPAIS = depto.IDPAIS\n" +
+"inner join TBL_PUESTOTRABAJO puesto\n" +
+"on oferta.IDPUESTOTRABAJO = puesto.IDPUESTOTRABAJO\n" +
+"inner join tbl_categoriaempresa categoria\n" +
+"on categoria.idcategoria = puesto.IDCATEGORIA\n" +
+"where oferta.estadoofertalaboral='A'\n" +
+"and categoria.idcategoria = categoria.idcategoria\n" +
+" AND UPPER(nombrepais)= UPPER(?)\n" +
+" group by CATEGORIA.IDCATEGORIA, categoria.NOMBRECATEGORIA";
       
         Query q = getEntityManager().createNativeQuery(sql, "ContadorMapping");
         q.setParameter(1, pais);
