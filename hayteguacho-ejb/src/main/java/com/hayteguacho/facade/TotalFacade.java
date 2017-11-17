@@ -38,7 +38,7 @@ public class TotalFacade {
                 + "WHERE CATEGORIA.IDCATEGORIA = PUESTO.IDCATEGORIA (+)\n"
                 + "GROUP BY CATEGORIA.IDCATEGORIA, CATEGORIA.NOMBRECATEGORIA";
         */
-        String sql="SELECT CATEGORIA.IDCATEGORIA idCategoria, \n" +
+        /*String sql="SELECT CATEGORIA.IDCATEGORIA idCategoria, \n" +
 "            (SELECT COUNT(*) FROM tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta\n" +
 "            WHERE UPPER(pais.nombrepais)= UPPER(?)\n" +
 "                and pais.idpais=depto.idpais \n" +
@@ -57,7 +57,30 @@ public class TotalFacade {
 "                and oferta.idciudad= ciudad.idciudad\n" +
 "                )) puesto\n" +
 "                WHERE CATEGORIA.IDCATEGORIA = PUESTO.IDCATEGORIA (+)\n" +
-"                GROUP BY CATEGORIA.IDCATEGORIA, CATEGORIA.NOMBRECATEGORIA";
+"                GROUP BY CATEGORIA.IDCATEGORIA, CATEGORIA.NOMBRECATEGORIA";*/
+        String sql = "  select CATEGORIA.IDCATEGORIA,( select count(*)  from tbl_pais pais \n" +
+"                inner join tbl_departamento depto\n" +
+"                on pais.IDPAIS = depto.IDPAIS\n" +
+"                inner join tbl_ciudad ciudad\n" +
+"                on depto.iddepartamento = ciudad.iddepartamento\n" +
+"                inner join TBL_OFERTALABORAL oferta\n" +
+"                on oferta.IDCIUDAD = ciudad.IDCIUDAD"
+                + " where UPPER(pais.NOMBREPAIS) = UPPER(?)) as total,\n" +
+"                count(*) as totalCategoria,\n" +
+"                categoria.NOMBRECATEGORIA as categoria\n" +
+"                from TBL_CATEGORIAEMPRESA categoria\n" +
+"                inner join TBL_PUESTOTRABAJO puesto\n" +
+"                on categoria.IDCATEGORIA = puesto.IDCATEGORIA\n" +
+"                inner join TBL_OFERTALABORAL oferta\n" +
+"                on oferta.IDPUESTOTRABAJO = puesto.IDPUESTOTRABAJO\n" +
+"                inner join tbl_ciudad ciudad \n" +
+"                on ciudad.idciudad = oferta.idciudad\n" +
+"                inner join tbl_departamento depto\n" +
+"                on depto.iddepartamento = ciudad.iddepartamento\n" +
+"                inner join TBL_PAIS pais\n" +
+"                on pais.idpais = depto.idpais\n" +
+"                where UPPER(pais.NOMBREPAIS) = UPPER(?)\n" +
+"                group by categoria.IDCATEGORIA,categoria.NOMBRECATEGORIA";
         Query q = getEntityManager().createNativeQuery(sql, "ContadorMapping");
         q.setParameter(1, pais);
         q.setParameter(2, pais);
