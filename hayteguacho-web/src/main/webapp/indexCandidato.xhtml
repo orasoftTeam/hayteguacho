@@ -43,7 +43,7 @@
                                     <f:selectItems value="#{ofertaController.listaDepto}" var="depto" itemValue="#{depto.iddepartamento}" itemLabel="#{depto.nombredepartamento}"/>
                                 </b:selectOneMenu>
                                 <b:panelGrid columns="1" style="text-align: center;">
-                                    <b:button outcome="/mostrarOfertas.xhtml?opcion=0" value="#{bundle['lblBuscarEmpleos']}" style="margin-top:15px; opacity: 1 !important"   size="lg" look="warning"></b:button>
+                                    <b:button outcome="/mostrarOfertas.xhtml?opcion=0" value="#{bundle['lblBuscarEmpleos']}" style="margin-top:15px; opacity: 1 !important"  icon-awesome="fa-search" size="lg" look="warning"></b:button>
                                 </b:panelGrid>                                 
                             </b:column>
                             <b:column col-md="4">
@@ -74,7 +74,7 @@
                                             <h:outputText value="#{totales.totalCategoria}" style="color:#00CED1; font-size: 50px;"></h:outputText>
                                             <br></br>
                                             <p:commandLink  ajax="false"  actionListener="#{mostrarController.cambiarCategoriaByFilterHome(totales.idCategoria)}">
-                                                <h:outputText value="#{totales.categoria}" style="color:#333333; font-size: 20px; font-family: Verdana, Geneva, sans-serif;" />
+                                                <h:outputText value="#{totales.categoria}" style="color:#333333; font-size: 18px; font-family: Verdana, Geneva, sans-serif;" />
                                             </p:commandLink>
                                         </b:column>
                                     </b:row>

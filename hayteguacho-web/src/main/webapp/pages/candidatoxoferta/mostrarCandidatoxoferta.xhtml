@@ -16,31 +16,39 @@
 
             <h:form id="CxofertaForm">
                 
-                <b:panel id="btns" >
+                <b:container id="btns" >
                     <b:growl id="growl"
              globalOnly="true"
              showDetail="true"/>
-                     <b:row rendered="#{mostrarCandxOfertaController.selectedCxoferta.idcandidatoxofertalaboral != null}" >
-                       <b:column span="2">
+                     <b:row  rendered="#{mostrarCandxOfertaController.selectedCxoferta.idcandidatoxofertalaboral != null}" >
+                         <b:panel title="#{bundle['lblCxoSeleccion']}#{mostrarCandxOfertaController.fullName(mostrarCandxOfertaController.selectedCandidato)}"
+                                  collapsible="false"
+                                  look="primary">
+                      <!-- <b:column span="2">
                            <h:outputText value="#{bundle['lblCxoSeleccion']}" />
                            <h:outputText value="#{mostrarCandxOfertaController.fullName(mostrarCandxOfertaController.selectedCandidato)}"/>
-                            </b:column>
-                            <b:column span="2">
-                                <b:commandButton ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoProcesar']}" look="info"   actionListener="#{mostrarCandxOfertaController.procesar}" style="width:100%"/>
+                            </b:column> -->
+                            <b:column span="3">
+                                <b:commandButton ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoProcesar']}" look="info"   actionListener="#{mostrarCandxOfertaController.procesar}" style="width:100%"
+                                                 icon-awesome="fa-gear"  />
                                
                             </b:column>
-                            <b:column span="2">
-                                <b:commandButton ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoFinalizar']}" look="warning" actionListener="#{mostrarCandxOfertaController.finalizar}" style="width:100%"/>
+                            <b:column span="3">
+                                <b:commandButton ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoFinalizar']}" look="warning" actionListener="#{mostrarCandxOfertaController.finalizar}" style="width:100%"
+                                                 icon-awesome="fa-check" />
                             
                             </b:column>
-                            <b:column span="2">
-                                 <b:commandButton ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoEliminar']}"  look="danger" actionListener="#{mostrarCandxOfertaController.validarEliminar}" style="width:100%"/>
+                            <b:column span="3">
+                                 <b:commandButton ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoEliminar']}"  look="danger" actionListener="#{mostrarCandxOfertaController.validarEliminar}" style="width:100%"
+                                                  icon-awesome="fa-close" />
                                 
                             </b:column>
-                         <b:column span="2">
-                             <b:commandButton   rendered="#{mostrarCandxOfertaController.mostrarGuardar}"  ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoGuardar']}" look="success"  actionListener="#{mostrarCandxOfertaController.guardarEnBase()}" style="width:100%"/>
+                         <b:column span="3">
+                             <b:commandButton   rendered="#{mostrarCandxOfertaController.mostrarGuardar}"  ajax="true" update="CxofertaForm:btns" value="#{bundle['lblCxoGuardar']}" look="success"  actionListener="#{mostrarCandxOfertaController.guardarEnBase()}" style="width:100%"
+                                                icon-awesome="fa-floppy-o" />
                                 
                             </b:column>
+                             </b:panel>
                         </b:row>
                      <b:modal  id="bmodal" title="#{bundle['lblVisorOfertas']}" styleClass="modalPseudoClass2">
                             <p>#{bundle['lblRegEliminar']}</p>
@@ -49,7 +57,7 @@
                                 <b:commandButton   update="CxofertaForm:tblCxoferta formGrl CxofertaForm:tblOferta" ajax="true" onclick="ofertaWidget.DataTable().destroy();CxofertaWidget.DataTable().destroy(); $('.modalPseudoClass2').modal('hide');ajax:mostrarCandxOfertaController.eliminar()"  value="#{bundle['lblBtnOk']}" look="primary"  />
                             </f:facet>
                         </b:modal>
-                </b:panel>
+                </b:container>
                 
                 
               
@@ -76,6 +84,7 @@
                                               onclick="$('.wizardPseudoClass').carousel('next');
                                                       $('.wizardPseudoClass').carousel('pause');
                                                       ajax:mostrarCandxOfertaController.cargarCandidatosxoferta(oferta);"
+                                                          icon-awesome="fa-arrow-right" icon-align="right"
                                               look="success" />
                                 </b:dataTableColumn>
                             </b:dataTable>
@@ -112,7 +121,7 @@
                                 <b:dataTableColumn label="#{bundle['lblCxoEstado']}" value="#{mostrarCandxOfertaController.getEstadoCxoferta(cxoferta.estadocandidatoxofertalaboral)}" />
                                  <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
                                     <b:commandButton onclick="ajax:mostrarCandxOfertaController.dialogo(mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato),cxoferta);" value="#{bundle.lblVer}"  ajax="true" 
-                                                     look="info" />
+                                                     look="info"  icon-awesome="fa-external-link" />
                                 </b:dataTableColumn>
                             </b:dataTable>
                             

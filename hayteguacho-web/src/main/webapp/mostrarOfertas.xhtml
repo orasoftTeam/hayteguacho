@@ -63,7 +63,8 @@
                                 <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
                                 <f:selectItems value="#{ofertaController.listaDepto}" var="depto" itemValue="#{depto.iddepartamento}" itemLabel="#{depto.nombredepartamento}"/>
                             </b:selectOneMenu>
-                            <b:commandButton update="@form formGrl" ajax="true" actionListener="#{mostrarController.mostrarOfertasByFilter}" value="#{bundle['lblVerEmpleos']}" look="primary" style="width:100%; margin-top: 7.5%;" />
+                            <b:commandButton update="@form formGrl" ajax="true" actionListener="#{mostrarController.mostrarOfertasByFilter}" value="#{bundle['lblVerEmpleos']}" look="primary" style="width:100%; margin-top: 7.5%;" 
+                                             icon-awesome="fa-search" />
                         </b:panelGrid>
                     </b:container>
 
@@ -73,7 +74,7 @@
                         <b:column col-md="2">
                         </b:column>
                         <b:column col-md="2">
-                            <b:commandButton icon="fa-arrow-left" update="@form" ajax="true" actionListener="#{mostrarController.atras}" value="#{bundle['lblBtnAtras']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.ini eq 0}" />
+                            <b:commandButton icon-awesome="fa-arrow-left" update="@form" ajax="true" actionListener="#{mostrarController.atras}" value="#{bundle['lblBtnAtras']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.ini eq 0}" />
                         </b:column>
                         <b:column col-md="4"></b:column>
                         <!--
@@ -92,7 +93,7 @@
                         </b:column>
                         -->
                         <b:column col-md="2">
-                            <b:commandButton   update="@form" ajax="true" actionListener="#{mostrarController.siguiente}" value="#{bundle['lblBtnSig']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.deshabilitarSiguiente()}" />
+                            <b:commandButton  icon-awesome="fa-arrow-right" icon-align="right" update="@form" ajax="true" actionListener="#{mostrarController.siguiente}" value="#{bundle['lblBtnSig']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.deshabilitarSiguiente()}" />
                         </b:column>
                         <b:column col-md="2">
                         </b:column>
@@ -117,8 +118,8 @@
                                             </b:panelGrid>
                                             <p:separator></p:separator>
                                             <h:panelGrid columns="2">
-                                                <b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" />
-                                                <b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}"  look="warning" style="width:100%; margin-left: 30%;" />
+                                                <b:commandButton icon-awesome="fa-external-link" update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" />
+                                                <b:commandButton icon-awesome="fa-pencil" update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}"  look="warning" style="width:100%; margin-left: 10%;" />
                                             </h:panelGrid>
                                         </b:column>
                                     </b:row>                      
@@ -207,14 +208,14 @@
                         <b:column col-md="2">
                         </b:column>
                         <b:column col-md="2">
-                            <b:commandButton icon="fa-arrow-left" update="@form" ajax="true" actionListener="#{mostrarController.atras}" value="#{bundle['lblBtnAtras']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.ini eq 0}" />
+                            <b:commandButton icon-awesome="fa-arrow-left" update="@form" ajax="true" actionListener="#{mostrarController.atras}" value="#{bundle['lblBtnAtras']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.ini eq 0}" />
                         </b:column>
                         <b:column col-md="2">
                         </b:column>
                         <b:column col-md="2">
                         </b:column>
                         <b:column col-md="2">
-                            <b:commandButton   update="@form" ajax="true" actionListener="#{mostrarController.siguiente}" value="#{bundle['lblBtnSig']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.deshabilitarSiguiente()}" />
+                            <b:commandButton   icon-awesome="fa-arrow-right" icon-align="right" update="@form" ajax="true" actionListener="#{mostrarController.siguiente}" value="#{bundle['lblBtnSig']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.deshabilitarSiguiente()}" />
                         </b:column>
                         <b:column col-md="2">
                         </b:column>

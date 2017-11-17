@@ -33,13 +33,16 @@
                     <b:tab title="" style="background-color: #EEFAF7;">
                         <b:row>
                             <b:column span="2">
-                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{ofertaController.actualizaOferta}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{ofertaController.actualizaOferta}" value="#{bundle['lblbtnAgregar']}" look="info" style="width:100%" 
+                                                 icon-awesome="fa-save" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{ofertaController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{ofertaController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" 
+                                                 icon-awesome="fa-close" />
                             </b:column>
                             <b:column span="2">
-                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{ofertaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" />
+                                <b:commandButton update="@form formGrl" ajax="true" actionListener="#{ofertaController.limpiar}" value="#{bundle['lbltbnLimpiar']}" look="success" style="width:100%" 
+                                                 icon-awesome="fa-eraser" />
                             </b:column>
                         </b:row>
                         <b:modal  id="amodal" title="#{bundle['titleOfertaEmpresa']}" styleClass="modalPseudoClass">
@@ -148,7 +151,8 @@
                                             <p:separator></p:separator>
                                             <b:row>
                                                 <b:column col-md="2">
-                                                    <b:commandButton size="sm"  actionListener="#{ofertaController.onSelect(oferta)}" value="#{bundle['lblbtnVer']}" look="primary" style="width:100%" />
+                                                    <b:commandButton size="sm"  actionListener="#{ofertaController.onSelect(oferta)}" value="#{bundle['lblbtnVer']}" look="primary" style="width:100%" 
+                                                                     icon-awesome="fa-eye" />
                                                 </b:column> 
                                             </b:row>
                                         </b:panel>

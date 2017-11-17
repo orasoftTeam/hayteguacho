@@ -174,7 +174,7 @@ public class EmpresaController {
                 validationBean.validarCampoVacio(empresa.getRazonsocial().replace(" ", ""), "warn", "titleEmpresa", "lblRazonReqEmpresa")
                 && validationBean.validarLongitudCampo(empresa.getRazonsocial().replace(" ", ""), 4, 30,"warn", "titleEmpresa", "lblLongitudRazonEmpresa")
                 &&
-                validationBean.validarLongitudCampo(empresa.getIdtributaria().replace(" ", ""), 8, 15,"warn", "titleEmpresa", "lblLongitudTributarioEmpresa")
+                validationBean.validarLongitudCampo(empresa.getIdtributaria().replace(" ", ""), 17, 17,"warn", "titleEmpresa", "lblLongitudTributarioEmpresa")
                 &&
                 validationBean.validarSeleccion(empresa.getIdpais(), "warn", "titleEmpresa", "lblSelectPais")
                 &&

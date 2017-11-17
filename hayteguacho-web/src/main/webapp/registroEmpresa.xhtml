@@ -45,7 +45,9 @@
                     <b:tab title="#{bundle['titleTabDatosEmpresa']}">
                         <b:inputText size="10" id="nomEmpresa" fieldId="nomEmpresa" value="#{empresaController.empresa.nombreempresa}" label="#{bundle['titleEmpresa']}" placeholder="#{bundle['lblNameReqEmpresa']}" />
                         <b:inputText size="10" id="nomRazon" fieldId="nomRazon" value="#{empresaController.empresa.razonsocial}" label="#{bundle['lblRazonEmpresa']}" placeholder="#{bundle['lblRazonReqEmpresa']}" />
-                        <b:inputText size="10" id="idTributaria" onkeyup="soloNumeros(this)" fieldId="idTributaria" value="#{empresaController.empresa.idtributaria}" label="#{bundle['lblIdTribEmpresa']}" placeholder="#{bundle['lblIdTribReqEmpresa']}" />
+                        <!--<b:inputText size="10" id="idTributaria" onkeyup="soloNumeros(this)" fieldId="idTributaria" value="#{empresaController.empresa.idtributaria}" label="#{bundle['lblIdTribEmpresa']}" placeholder="#{bundle['lblIdTribReqEmpresa']}" />-->
+                        <label for="input_empresaForm:idTributaria" class="bf-no-message has-success control-label">#{bundle['lblIdTribEmpresa']}</label>
+                        <p:inputMask id="idTributaria"  value="#{empresaController.empresa.idtributaria}"   mask="9999-999999-999-9" style="width: 100%;"/>
                         <b:inputText size="10" id="idPais" fieldId="idPais" value="#{empresaController.empresa.nompais}" label="#{bundle['lblNombrePais']}" disabled="true"/>
                         <b:selectOneMenu value="#{empresaController.idDepto}"  label="#{bundle['lblNombreDepto']}" 
                                          onchange="ajax:empresaController.changeDepartamento()">
