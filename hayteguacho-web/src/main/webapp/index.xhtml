@@ -36,7 +36,7 @@
                                     <f:selectItems value="#{ofertaController.listaDepto}" var="depto" itemValue="#{depto.iddepartamento}" itemLabel="#{depto.nombredepartamento}"/>
                                 </b:selectOneMenu>
                                 <b:panelGrid columns="1" style="text-align: center;">
-                                    <b:commandButton action="/mostrarOfertas" value="#{bundle['lblBuscarEmpleos']}" style="margin-top:15px; opacity: 1 !important"   size="lg" look="warning" />
+                                    <b:commandButton icon-awesome="fa-search" action="/mostrarOfertas" value="#{bundle['lblBuscarEmpleos']}" style="margin-top:15px; opacity: 1 !important"   size="lg" look="warning" />
                                 </b:panelGrid>                                 
                             </b:column>
                             <b:column col-md="4">
@@ -87,7 +87,9 @@
                                 <h:outputText value="#{bundle['lblHomeCandidato2']}" style="color:white; font-size: 18px;"></h:outputText>
                             </b:column>
                             <b:column col-md="3">
-                                <b:commandButton action="/registroCandidato" value="#{bundle['lblHomeCandidatoBtn']}"    size="lg" look="warning" />
+                                <b:commandButton 
+                                    icon-awesome="fa-arrow-up"
+                                    action="/registroCandidato" value="#{bundle['lblHomeCandidatoBtn']}"    size="lg" look="warning" />
                             </b:column>
                         </b:row>
                     </b:container>

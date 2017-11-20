@@ -30,10 +30,13 @@
                         <b:dataTableColumn label="#{bundle.lblGenero}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).generocandidato}"/>
                            <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
                                     <b:commandButton onclick="ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
+                                                     icon-awesome="fa-external-link"
                                                      look="info" />
                                 </b:dataTableColumn>
                         <b:dataTableColumn label="#{bundle.lblCxoOperacion}" >
-                            <b:commandButton  look="danger" value="#{bundle.lblbtnEliminar}" ajax="true" update="@form" actionListener="#{CxempresaController.validarEliminar(cxempresa)}"  />
+                            <b:commandButton  
+                                icon-awesome="fa-close"
+                                look="danger" value="#{bundle.lblbtnEliminar}" ajax="true" update="@form" actionListener="#{CxempresaController.validarEliminar(cxempresa)}"  />
                         </b:dataTableColumn>
                     </b:dataTable>
                 

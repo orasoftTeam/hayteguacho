@@ -144,7 +144,9 @@
                             <b:selectBooleanCheckbox value="#{mostrarController.trabajando}"></b:selectBooleanCheckbox>
                         </b:panelGrid>
                         <f:facet name="footer">
-                            <b:commandButton type="submit" ajax="false" look="info" action="#{mostrarController.aplicarOferta}" value="#{bundle['lblAplicar']}"  />
+                            <b:commandButton 
+                                icon-awesome="fa-check"
+                                type="submit" ajax="false" look="info" action="#{mostrarController.aplicarOferta}" value="#{bundle['lblAplicar']}"  />
                         </f:facet>
                     </b:modal>
                     <b:modal  id="amodal"  styleClass="modalPseudoClass" size="lg">

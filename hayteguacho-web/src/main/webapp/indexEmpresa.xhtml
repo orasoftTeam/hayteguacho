@@ -91,7 +91,9 @@
                     <br></br>
                     <h:outputText value="#{bundle['lblEmpresa3']}" style="margin-top: 5%;" />
                     <br></br>
-                    <b:commandButton action="/registroEmpresa" value="#{bundle['lblEmpresaBtn']}" style="margin-top: 2%;"    size="lg" look="warning" />
+                    <b:commandButton 
+                        icon-awesome="fa-cloud-upload"
+                        action="/registroEmpresa" value="#{bundle['lblEmpresaBtn']}" style="margin-top: 2%;"    size="lg" look="warning" />
                 </div>
             </h:form>
         </ui:define>

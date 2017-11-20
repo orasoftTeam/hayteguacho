@@ -35,7 +35,9 @@
                     <b:tab title="" style="background-color: white;">
                         <b:row>
                             <b:column span="2">
-                                <b:commandButton update="@form" ajax="true" actionListener="#{ofertaCandidatoController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
+                                <b:commandButton 
+                                    icon-awesome="fa-remove"
+                                    update="@form" ajax="true" actionListener="#{ofertaCandidatoController.validarEliminar}" value="#{bundle['lblbtnEliminar']}" look="warning" style="width:100%" />
                             </b:column>
                         </b:row>
                         <b:modal  id="amodal" title="#{bundle['titleOfertaEmpresa']}" styleClass="modalPseudoClass">
@@ -170,7 +172,9 @@
                                             <p:separator></p:separator>
                                             <b:row>
                                                 <b:column col-md="2">
-                                                    <b:commandButton size="sm" update="@form" ajax="true" actionListener="#{ofertaCandidatoController.onSelect(oferta)}" value="#{bundle['lblbtnVer']}" look="primary" style="width:100%" />
+                                                    <b:commandButton 
+                                                        icon-awesome="fa-eye"
+                                                        size="sm" update="@form" ajax="true" actionListener="#{ofertaCandidatoController.onSelect(oferta)}" value="#{bundle['lblbtnVer']}" look="primary" style="width:100%" />
                                                 </b:column> 
                                             </b:row>
                                         </b:panel>

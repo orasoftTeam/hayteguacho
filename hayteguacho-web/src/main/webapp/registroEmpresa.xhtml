@@ -79,7 +79,9 @@
                         <b:label id="msgFile" text="#{empresaController.msgFile}"></b:label>
                           
                         <div style="text-align: center;">
-                            <b:commandButton update="@form formGrl" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblbtnAgregar']}" look="warning" style="width:50%" />
+                            <b:commandButton 
+                                icon-awesome="fa-sign-in"
+                                update="@form formGrl" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblRegistrarse']}" look="warning" style="width:50%" />
                         </div>
                     </b:tab>
                 </b:tabView>
