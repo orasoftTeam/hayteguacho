@@ -114,7 +114,7 @@ public class CandidatoController {
                         loginBean.setUsuario(candidato.getCorreocandidato());
                         loginBean.setPassword(candidato.getContrasenacandidato());
                         loginBean.logear();
-                        loginBean.redireccionar("/mostrarOfertas.xhtml");
+                        
                         //validationBean.lanzarMensaje("info", "titleCandidato", "lblGuardarSuccess");
                         //limpiar();
                     }
