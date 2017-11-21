@@ -24,6 +24,7 @@
                     <b:tab title="#{bundle['titleTabDatosAcceso']}">
                         <b:inputText size="10" id="email" fieldId="email" value="#{empresaController.empresa.email}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}" required="true"/>
                         <b:inputSecret size="10" id="password" fieldId="email" value="#{empresaController.empresa.password}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}" required="true"/>
+                        <b:inputSecret size="10" id="repass" fieldId="password" value="#{empresaController.repass}" label="#{bundle['lblRepClave']}" placeholder="#{bundle['lblRepClaveReq']}" />
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
@@ -42,7 +43,9 @@
                     <b:tab title="#{bundle['titleTabDatosEmpresa']}">
                         <b:inputText size="10" id="nomEmpresa" fieldId="nomEmpresa" value="#{empresaController.empresa.nombreempresa}" label="#{bundle['titleEmpresa']}" placeholder="#{bundle['lblNameReqEmpresa']}" required="true"/>
                         <b:inputText size="10" id="nomRazon" fieldId="nomRazon" value="#{empresaController.empresa.razonsocial}" label="#{bundle['lblRazonEmpresa']}" placeholder="#{bundle['lblRazonReqEmpresa']}" required="true"/>
-                        <b:inputText size="10" id="idTributaria" onkeyup="soloNumeros(this)" fieldId="idTributaria" value="#{empresaController.empresa.idtributaria}" label="#{bundle['lblIdTribEmpresa']}" placeholder="#{bundle['lblIdTribReqEmpresa']}" required="true"/>
+                        <!--<b:inputText size="10" id="idTributaria" onkeyup="soloNumeros(this)" fieldId="idTributaria" value="#{empresaController.empresa.idtributaria}" label="#{bundle['lblIdTribEmpresa']}" placeholder="#{bundle['lblIdTribReqEmpresa']}" required="true"/>-->
+                        <label for="input_empresaForm:idTributaria" class="bf-no-message has-success control-label">#{bundle['lblIdTribEmpresa']}</label>
+                        <p:inputMask id="idTributaria"  value="#{empresaController.empresa.idtributaria}"   mask="9999-999999-999-9" style="width: 100%;"/>
                         <b:inputText size="10" id="idPais" fieldId="idPais" value="#{empresaController.empresa.nompais}" label="#{bundle['lblNombrePais']}" disabled="true"/>
                         <b:selectOneMenu value="#{empresaController.idDepto}"  label="#{bundle['lblNombreDepto']}" 
                                          onchange="ajax:empresaController.changeDepartamento()">
@@ -73,7 +76,9 @@
                         <b:label id="msgFile" text="#{empresaController.msgFile}"></b:label>
                           
                         <div style="text-align: center;">
-                            <b:commandButton update="@form formGrl" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblbtnAgregar']}" look="warning" style="width:50%" />
+                            <b:commandButton 
+                                icon-awesome="fa-save"
+                                update="@form formGrl" ajax="true" actionListener="#{empresaController.actualizarEmpresa}" value="#{bundle['lblbtnAgregar']}" look="warning" style="width:50%" />
                         </div>
                     </b:tab>
                 </b:tabView>

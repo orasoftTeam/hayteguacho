@@ -67,6 +67,7 @@ public class CandidatoController {
     private @Getter @Setter String msgFile;
     private @Getter @Setter List<PuestoTrabajoForm> listaPuestos= new ArrayList<>();
     private @Getter @Setter String idcategoria;
+    private @Getter @Setter String reclave;
     
     @PostConstruct
     public void init() {
@@ -94,25 +95,26 @@ public class CandidatoController {
                 && validationBean.validarLongitudCampo(candidato.getContrasenacandidato(), 5, 20,"warn", "titleCandidato", "lblLongitudClaveEmpresa")
                 && 
                 validationBean.validarCampoVacio(candidato.getNombrecandidato(), "warn", "titleCandidato", "lblNomCandidatoReq")
-                && validationBean.validarSoloLetras(candidato.getNombrecandidato().replace(" ", ""), "warn", "titleCandidato", "lblSoloLetras")
+                && validationBean.validarSoloLetras(candidato.getNombrecandidato().replace(" ", ""), "warn", "titleCandidato", "lblSoloLetrasNombre")
                 && validationBean.validarLongitudCampo(candidato.getNombrecandidato(), 4, 30,"warn", "titleCandidato", "lblLongitudNomCandidato")
                 &&
                 validationBean.validarCampoVacio(candidato.getApellidocandidato(), "warn", "titleCandidato", "lblApeCandidatoReq")
-                && validationBean.validarSoloLetras(candidato.getApellidocandidato().replace(" ", ""), "warn", "titleCandidato", "lblSoloLetras")
+                && validationBean.validarSoloLetras(candidato.getApellidocandidato().replace(" ", ""), "warn", "titleCandidato", "lblSoloLetrasApellido")
                 && validationBean.validarLongitudCampo(candidato.getApellidocandidato(), 4, 30,"warn", "titleCandidato", "lblLongitudApellidoCandidato")
                 && validationBean.validarCampoVacio(candidato.getTelefono1candidato(), "warn", "titleCandidato", "lblTelReq")
                 &&  validationBean.validarSeleccion(candidato.getGenerocandidato(),"warn", "titleCandidato", "lblGenSelectReq")
                 &&  validationBean.validarSeleccion(candidato.getIdpuestotrabajotbl(),"warn", "titleCandidato", "lblPuestoSelectReq")
                 &&  validationBean.validarSeleccion(archivo==null?"":archivo.getFileName(),"warn", "titleCandidato", "lblFileUploadReq")){
             
-            if(candidato.getIdcandidato()==null || candidato.getIdcandidato().equals("0")){
+            if (candidato.getContrasenacandidato().equals(reclave)) {
+                 if(candidato.getIdcandidato()==null || candidato.getIdcandidato().equals("0")){
                //candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
                     flag= candidatoFacade.actualizarCandidato(candidato, "A"); 
                     if(flag.equals("0")){
                         loginBean.setUsuario(candidato.getCorreocandidato());
                         loginBean.setPassword(candidato.getContrasenacandidato());
                         loginBean.logear();
-                        loginBean.redireccionar("/index.xhtml");
+                        loginBean.redireccionar("/mostrarOfertas.xhtml");
                         //validationBean.lanzarMensaje("info", "titleCandidato", "lblGuardarSuccess");
                         //limpiar();
                     }
@@ -125,6 +127,10 @@ public class CandidatoController {
             }
             if(!candidato.getIdcandidato().equals("0") && !candidato.getIdcandidato().equals("")){
                 validationBean.lanzarMensaje("warn", "titleCandidato", "lblExistReg");
+            }
+            }else{
+            
+            validationBean.lanzarMensaje("error", "titleCandidato", "lblRepContra");
             }
         }
     }

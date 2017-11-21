@@ -137,11 +137,16 @@
                         </b:row>
                     </b:row>
                     <b:modal title="#{bundle['titleAplicaOferta']}"  id="aplica"  styleClass="aplicarOferta" size="380">
-                        <b:panelGrid colSpans="3,9" >
+                        <b:panelGrid columns="2" >
                             <h:outputText value="#{bundle['lblPretensionLaboral']}" ></h:outputText>
                             <b:inputText onkeyup="soloNumeros(this)" value="#{mostrarController.pretension}" ></b:inputText>
                             <h:outputText value="#{bundle['lblSituacionLaboral']}" ></h:outputText>
-                            <b:selectBooleanCheckbox value="#{mostrarController.trabajando}"></b:selectBooleanCheckbox>
+                            <h:panelGroup  >
+                                <h:outputText value="Si"  ></h:outputText><b:selectBooleanCheckbox  value="#{mostrarController.trabajando}"></b:selectBooleanCheckbox>
+                                
+                            </h:panelGroup>
+                                
+                            
                         </b:panelGrid>
                         <f:facet name="footer">
                             <b:commandButton 

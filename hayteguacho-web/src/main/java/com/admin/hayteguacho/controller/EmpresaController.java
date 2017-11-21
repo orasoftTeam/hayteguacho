@@ -95,7 +95,7 @@ public class EmpresaController {
     private @Getter @Setter String idCargo;
     private @Getter @Setter List<TipologiaForm> listaTipologia;
     private @Getter @Setter  String idTipologia;
-    
+    private @Getter @Setter  String repass;
     
     
     
@@ -159,11 +159,11 @@ public class EmpresaController {
                 && validationBean.validarLongitudCampo(empresa.getPassword().replace(" ", ""), 5, 20,"warn", "titleEmpresa", "lblLongitudClaveEmpresa")
                 &&
                 validationBean.validarCampoVacio(empresa.getNombrecontacto().replace(" ", ""), "warn", "titleEmpresa", "lblNomContactoReqEmpresa")
-                && validationBean.validarSoloLetras(empresa.getNombrecontacto().replace(" ", ""), "warn", "titleEmpresa", "lblSoloLetras")
+                && validationBean.validarSoloLetras(empresa.getNombrecontacto().replace(" ", ""), "warn", "titleEmpresa", "lblSoloLetrasNombre")
                 && validationBean.validarLongitudCampo(empresa.getNombrecontacto().replace(" ", ""), 4, 30,"warn", "titleEmpresa", "lblLongitudNomContactoEmpresa")
                 &&
                 validationBean.validarCampoVacio(empresa.getApellidocontacto().replace(" ", ""), "warn", "titleEmpresa", "lblApeContactoReqEmpresa")
-                && validationBean.validarSoloLetras(empresa.getApellidocontacto().replace(" ", ""), "warn", "titleEmpresa", "lblSoloLetras")
+                && validationBean.validarSoloLetras(empresa.getApellidocontacto().replace(" ", ""), "warn", "titleEmpresa", "lblSoloLetrasApellido")
                 && validationBean.validarLongitudCampo(empresa.getApellidocontacto().replace(" ", ""), 4, 30,"warn", "titleEmpresa", "lblLongitudApellidoContactoEmpresa")
                 && validationBean.validarSeleccion(empresa.getIdcargoempresa(),"warn", "titleEmpresa", "lblSelectRegCargo")
                 && validationBean.validarLongitudCampo(empresa.getTelefono1(), 7, 15, "warn", "titleEmpresa", "lblTelReq")
@@ -172,6 +172,7 @@ public class EmpresaController {
                 && validationBean.validarLongitudCampo(empresa.getNombreempresa().replace(" ", ""), 4, 30,"warn", "titleEmpresa", "lblLongitudNombreEmpresa")
                 &&
                 validationBean.validarCampoVacio(empresa.getRazonsocial().replace(" ", ""), "warn", "titleEmpresa", "lblRazonReqEmpresa")
+                 && validationBean.validarSoloLetras(empresa.getRazonsocial().replace(" ", ""), "warn", "titleEmpresa", "lblSoloLetrasRazon")
                 && validationBean.validarLongitudCampo(empresa.getRazonsocial().replace(" ", ""), 4, 30,"warn", "titleEmpresa", "lblLongitudRazonEmpresa")
                 &&
                 validationBean.validarLongitudCampo(empresa.getIdtributaria().replace(" ", ""), 17, 17,"warn", "titleEmpresa", "lblLongitudTributarioEmpresa")
@@ -190,7 +191,8 @@ public class EmpresaController {
                 &&
                 validationBean.validarLongitudCampo(empresa.getDescripcionempresa(), 15, 255,"warn", "titleEmpresa", "lblLongitudDescripcionEmpresa")){
             
-            if(empresa.getIdempresa()==null || empresa.getIdempresa().equals("0")){
+            if (empresa.getPassword().equals(repass)) {
+                 if(empresa.getIdempresa()==null || empresa.getIdempresa().equals("0")){
                //empresa.setPassword(validationBean.encriptar(empresa.getPassword(), empresa.getEmail()));
                empresa.setLogo(empresa.getLogo()==null?"":empresa.getLogo());
                     flag= empresaFacade.actualizarEmpresa(empresa, "A"); 
@@ -231,6 +233,10 @@ public class EmpresaController {
                             break;               
                     }
             }
+            }else{
+            
+            validationBean.lanzarMensaje("error", "titleEmpresa", "lblRepContra");
+            }
             
             
         }
@@ -239,6 +245,7 @@ public class EmpresaController {
        empresa= new EmpresaForm();
        empresa.setIdempresa("0");
        msgFile="";
+       repass = "";
     }
     
     public void handleFileUpload(FileUploadEvent event) {

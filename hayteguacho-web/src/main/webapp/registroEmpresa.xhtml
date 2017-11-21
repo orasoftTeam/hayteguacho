@@ -26,7 +26,8 @@
                     <b:tab title="#{bundle['titleTabDatosAcceso']}">
                         
                         <b:inputText size="10" id="email" fieldId="email" value="#{empresaController.empresa.email}" label="#{bundle['lblEmailEmpresa']}" placeholder="#{bundle['lblEmailReqEmpresa']}" />
-                        <b:inputSecret size="10" id="password" fieldId="email" value="#{empresaController.empresa.password}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}" />
+                        <b:inputSecret size="10" id="password" fieldId="password" value="#{empresaController.empresa.password}" label="#{bundle['lblClaveEmpresa']}" placeholder="#{bundle['lblClaveReqEmpresa']}" />
+                        <b:inputSecret size="10" id="repass" fieldId="password" value="#{empresaController.repass}" label="#{bundle['lblRepClave']}" placeholder="#{bundle['lblRepClaveReq']}" />
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
@@ -36,9 +37,9 @@
                         <b:selectOneMenu value="#{empresaController.idCargo}"  label="#{bundle['lblNombreCargoEmpresa']}">
                             <f:selectItems value="#{empresaController.listaCargo}" var="cargo" itemValue="#{cargo.idcargoempresa}" itemLabel="#{cargo.nombrecargoempresa}"/>
                         </b:selectOneMenu>
-                        <b:inputText size="10" id="idtel1" onkeyup="soloNumeros(this)" fieldId="idtel1" value="#{empresaController.empresa.telefono1}" label="#{bundle['lblTelEmpresa1']}" placeholder="#{bundle['lblTelReqEmpresa']}" />
-                        <b:inputText size="10" id="idtel2" onkeyup="soloNumeros(this)" fieldId="idtel2" value="#{empresaController.empresa.telefono2}" label="#{bundle['lblTelEmpresa2']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
-                        <b:inputText size="10" id="idtel3" onkeyup="soloNumeros(this)" fieldId="idtel3" value="#{empresaController.empresa.telefono3}" label="#{bundle['lblTelEmpresa3']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                        <b:inputText  maxlength="8" size="10" id="idtel1" onkeyup="soloNumeros(this)" fieldId="idtel1" value="#{empresaController.empresa.telefono1}" label="#{bundle['lblTelEmpresa1']}" placeholder="#{bundle['lblTelReqEmpresa']}" />
+                        <b:inputText  maxlength="8" size="10" id="idtel2" onkeyup="soloNumeros(this)" fieldId="idtel2" value="#{empresaController.empresa.telefono2}" label="#{bundle['lblTelEmpresa2']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
+                        <b:inputText  maxlength="8" size="10" id="idtel3" onkeyup="soloNumeros(this)" fieldId="idtel3" value="#{empresaController.empresa.telefono3}" label="#{bundle['lblTelEmpresa3']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
@@ -61,7 +62,7 @@
                         <b:selectOneMenu value="#{empresaController.idCategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}"  >
                             <f:selectItems value="#{empresaController.listaCategoria}" var="categoria" itemValue="#{categoria.idcategoria}" itemLabel="#{categoria.nombrecategoria}"/>
                         </b:selectOneMenu>
-                        <b:inputText size="10" id="numTrabajadores" onkeyup="soloNumeros(this)" fieldId="numTrabajadores" value="#{empresaController.empresa.numtrabajadores}" label="#{bundle['lblNumTrabEmpresa']}" placeholder="#{bundle['lblNumTrabReqEmpresa']}" />
+                        <b:inputText maxlength="8" size="10" id="numTrabajadores" onkeyup="soloNumeros(this)" fieldId="numTrabajadores" value="#{empresaController.empresa.numtrabajadores}" label="#{bundle['lblNumTrabEmpresa']}" placeholder="#{bundle['lblNumTrabReqEmpresa']}" />
                     </b:tab>
                 </b:tabView>
                 <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px">
