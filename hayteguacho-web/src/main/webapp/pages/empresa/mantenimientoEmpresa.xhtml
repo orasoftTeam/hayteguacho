@@ -55,7 +55,7 @@
                         <b:selectOneMenu id="cmbMuni" value="#{empresaController.idMuni}"  label="#{bundle['lblNombreMuni']}" required="true">
                             <f:selectItems value="#{empresaController.listaMuni}" var="muni" itemValue="#{muni.idciudad}" itemLabel="#{muni.nombreciudad}"/>
                         </b:selectOneMenu>
-                        <b:inputTextarea value="#{empresaController.empresa.direccionempresa}"  label="#{bundle['lblDirEmpresa']}" placeholder="#{bundle['lblDirReqEmpresa']}" required="true"/>
+                        <b:inputTextarea maxlength="100" value="#{empresaController.empresa.direccionempresa}"  label="#{bundle['lblDirEmpresa']}" placeholder="#{bundle['lblDirReqEmpresa']}" required="true"/>
                         <b:selectOneMenu value="#{empresaController.idCategoria}"  label="#{bundle['lblNombreCategoriaEmpresa']}" required="true">
                             <f:selectItems value="#{empresaController.listaCategoria}" var="categoria" itemValue="#{categoria.idcategoria}" itemLabel="#{categoria.nombrecategoria}"/>
                         </b:selectOneMenu>
