@@ -141,10 +141,10 @@
                             <h:outputText value="#{bundle['lblPretensionLaboral']}" ></h:outputText>
                             <b:inputText onkeyup="soloNumeros(this)" value="#{mostrarController.pretension}" ></b:inputText>
                             <h:outputText value="#{bundle['lblSituacionLaboral']}" ></h:outputText>
-                            <h:panelGroup  >
-                                <h:outputText value="Si"  ></h:outputText><b:selectBooleanCheckbox  value="#{mostrarController.trabajando}"></b:selectBooleanCheckbox>
-                                
-                            </h:panelGroup>
+                            <b:selectOneMenu value="#{mostrarController.trabajando}" >
+                                <f:selectItem itemLabel="Si" itemValue="true"/>
+                                <f:selectItem itemLabel="No" itemValue="false"/>
+                            </b:selectOneMenu>
                                 
                             
                         </b:panelGrid>
