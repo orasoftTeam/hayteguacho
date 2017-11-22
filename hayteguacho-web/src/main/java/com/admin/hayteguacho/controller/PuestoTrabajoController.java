@@ -138,6 +138,11 @@ public class PuestoTrabajoController {
         puesto.setNombrepuestotrabajo(obj.getNombrepuestotrabajo());
         
     }
+    public PuestoTrabajoForm obtenerPuesto(String idPuesto){
+        return puestoFacade.obtenerPuestosByIdPuesto(idPuesto).get(0);
+    }
+    
+
     public void unSelect() {
         puesto.setIdpuestotrabajo("0");
         puesto.setNombrepuestotrabajo("");

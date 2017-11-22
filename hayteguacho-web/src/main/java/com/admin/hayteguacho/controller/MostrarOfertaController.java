@@ -115,16 +115,17 @@ public class MostrarOfertaController implements Serializable {
     public String cadenaConEnter(String cad, int top){
         String tmp="";
         for(int i=0; i< cad.length();i++){
-            if(i%top==0){
+            /*if(i%top==0){
                 tmp= tmp+"</br>"+String.valueOf(cad.charAt(i));
             }
-            else{
-                if(i==57){
+            else{*/
+            tmp= tmp+String.valueOf(cad.charAt(i));
+             if(i==90){
                   tmp= tmp+"...";
                   return tmp;
                 }
-                tmp= tmp+String.valueOf(cad.charAt(i));
-            }
+                
+            
         }
         return tmp;
     }
@@ -217,6 +218,7 @@ public class MostrarOfertaController implements Serializable {
     public EmpresaForm obtenerEmpresa(String idEmpresa){
         return empresaFacade.obtenerEmpresa(idEmpresa).get(0);
     }
+    
     
     public void siguiente(){
         if(listaOferta.size()>0)

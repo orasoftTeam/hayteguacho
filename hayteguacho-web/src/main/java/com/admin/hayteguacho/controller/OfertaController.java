@@ -176,7 +176,7 @@ public class OfertaController {
                 
                 &&
                 
-                validationBean.validarLongitudCampo(oferta.getTituloofertalaboral(), 10, 28, "warn", "titleOfertaEmpresa", "lblLongitudOfertaTitulo")
+                validationBean.validarLongitudCampo(oferta.getTituloofertalaboral(), 10, 40, "warn", "titleOfertaEmpresa", "lblLongitudOfertaTitulo")
                 //&&
                 //validationBean.validarFecha(oferta.getFechacontratacionofertalaboral(), "warn", "titleOfertaEmpresa", "lblReqOfertaFechaContra")               
                 &&

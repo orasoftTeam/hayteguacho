@@ -101,28 +101,41 @@
                     <p:separator></p:separator>
                     <b:row>
                         <ui:repeat var="oferta" value="#{mostrarController.listaOferta}" varStatus="status">
-                            <b:column col-md="4" >
-                                <b:panel title="#{oferta.tituloofertalaboral}" collapsible="false" look="primary">
+                            <b:column col-md="6" >
+                                <b:panel title="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}" collapsible="false" look="primary">
                                     <b:row>
+                                        <b:column col-md="12"> 
+                                        <h4 style="text-align: center">#{oferta.tituloofertalaboral}</h4>
+                                        </b:column>
                                         <b:column col-md="4"> 
-                                            <h:graphicImage height="100" width="100" value="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo}" />
+                                            <h:graphicImage height="100" style="margin-left: 20px;width:80%" value="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo}" />
+                                            <br></br>
+                                            <br></br>
+                                            <b:commandButton icon-awesome="fa-external-link" update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:80%;margin-left: 20px" />
+                                            <br></br>
+                                            <br></br>
+                                            <b:commandButton icon-awesome="fa-pencil" update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}"  look="warning" style="width:80%;margin-left: 20px"/>
+                                            
                                         </b:column>
                                         <b:column col-md="8">
                                             <b:panelGrid columns="1">
-                                                <h2>#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}</h2>
+                                                
                                                 <h5>#{bundle['lblDescripcionEmpresa']}</h5>
-                                                <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,20)}" escape="false"></h:outputText>
+                                                <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,90)}" escape="false"></h:outputText>
+                                                <br></br>
+                                                <h5>#{bundle.lblOfertaPlaza}</h5>
+                                                <h:outputText value="#{puestoController.obtenerPuesto(oferta.idpuestotrabajo).nombrepuestotrabajo}" escape="false"></h:outputText>
                                                 <br></br>
                                                 <h5>#{bundle['lblOfertaFechaContra']}</h5>
                                                 <h:outputText value="#{mostrarController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}"></h:outputText>                                           
                                             </b:panelGrid>
-                                            <p:separator></p:separator>
-                                            <h:panelGrid columns="2">
-                                                <b:commandButton icon-awesome="fa-external-link" update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" />
-                                                <b:commandButton icon-awesome="fa-pencil" update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}"  look="warning" style="width:100%; margin-left: 10%;" />
-                                            </h:panelGrid>
+                                            <br></br>
+                                            
+                                            
                                         </b:column>
-                                    </b:row>                      
+                                    </b:row> 
+                                                                            <p:separator></p:separator>
+
                                 </b:panel>
                             </b:column>
                         </ui:repeat>
