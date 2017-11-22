@@ -250,7 +250,7 @@ public class LoginController implements Serializable {
                     loggedIn = true;
                     isMembresia = true;
                     listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
-                    redireccionar("/pages/oferta/mantenimientoOferta.xhtml");
+                    redireccionar("/pages/oferta/mantenimientoOferta.xhtml?faces-redirect=true");
                 } else if (log.equals("-1")) {
                     validationBean.lanzarMensaje("warn", "titleLogin", "lblLimitUser");
                     System.err.println("Excedió el numero de usuarios");
@@ -264,7 +264,7 @@ public class LoginController implements Serializable {
                     setPassword("");
                     loggedIn = true;
                     listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
-                    redireccionar("oferta/mantenimientoOferta.xhtml");
+                    redireccionar("oferta/mantenimientoOferta.xhtml?faces-redirect=true");
                     //redireccionar("/index.xhtml");
                 }
             } else if (usuario.getTipo().equals("C")) {
@@ -273,7 +273,7 @@ public class LoginController implements Serializable {
                 setPassword("");
                 loggedIn = true;
                 listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
-                redireccionar("/mostrarOfertas.xhtml");
+                redireccionar("/mostrarOfertas.xhtml?faces-redirect=true");
             }
 
             System.err.println("la imagen es: " + userLog.getImagen());
