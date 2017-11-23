@@ -75,13 +75,14 @@
                     <b:row>
                         <ui:repeat var="oferta" value="#{mostrarController.listaOferta}" varStatus="status">
                             <b:column col-md="6" >
-                                <b:panel title="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}" collapsible="false" look="primary">
+                                <b:panel  title="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}" collapsible="false" look="primary"  >
                                     <b:row>
                                         <b:column col-md="12"> 
                                         <h4 style="text-align: center;font-weight: bolder;">#{oferta.tituloofertalaboral}</h4>
                                         </b:column>
-                                        <b:column col-md="4"> 
-                                            <h:graphicImage height="100" style="margin-left: 20px;width:80%" value="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo}" />
+                                        <b:column col-md="4">
+                                            <h:graphicImage  style="margin-left: 20px;width:80%" library="images" name="usuario.png" height="100"  rendered="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo eq null}" />
+                                            <h:graphicImage height="100" style="margin-left: 20px;width:80%" value="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo}" rendered="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo.length() > 5}" />
                                             <br></br>
                                             <br></br>
                                             <b:commandButton icon-awesome="fa-external-link" update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:80%;margin-left: 20px" />
@@ -94,11 +95,11 @@
                                             <b:panelGrid columns="1">
                                                 
                                                 <h5>#{bundle['lblDescripcionEmpresa']}</h5>
-                                                <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,90)}" escape="false"></h:outputText>
-                                                <br></br>
+                                                <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,50)}" escape="false"></h:outputText>
+                                                
                                                 <h5>#{bundle.lblOfertaPlaza}</h5>
                                                 <h:outputText value="#{puestoController.obtenerPuesto(oferta.idpuestotrabajo).nombrepuestotrabajo}" escape="false"></h:outputText>
-                                                <br></br>
+                                                
                                                 <h5>#{bundle['lblOfertaFechaContra']}</h5>
                                                 <h:outputText value="#{mostrarController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}"></h:outputText>                                           
                                             </b:panelGrid>
@@ -107,7 +108,7 @@
                                             
                                         </b:column>
                                     </b:row> 
-                                                                            <p:separator></p:separator>
+                                                                          
 
                                 </b:panel>
                             </b:column>
