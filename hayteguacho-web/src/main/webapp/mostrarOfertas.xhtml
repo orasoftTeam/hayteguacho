@@ -105,7 +105,7 @@
                                 <b:panel title="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}" collapsible="false" look="primary">
                                     <b:row>
                                         <b:column col-md="12"> 
-                                        <h4 style="text-align: center">#{oferta.tituloofertalaboral}</h4>
+                                        <h4 escape="true" style="text-align: center">#{oferta.tituloofertalaboral}</h4>
                                         </b:column>
                                         <b:column col-md="4"> 
                                             <h:graphicImage height="100" style="margin-left: 20px;width:80%" value="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo}" />
@@ -117,7 +117,8 @@
                                             <b:commandButton icon-awesome="fa-pencil" update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}"  look="warning" style="width:80%;margin-left: 20px"/>
                                             
                                         </b:column>
-                                        <b:column col-md="8">
+         
+                                        <b:column col-md="7">
                                             <b:panelGrid columns="1">
                                                 
                                                 <h5>#{bundle['lblDescripcionEmpresa']}</h5>
@@ -130,12 +131,9 @@
                                                 <h:outputText value="#{mostrarController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}"></h:outputText>                                           
                                             </b:panelGrid>
                                             <br></br>
-                                            
-                                            
                                         </b:column>
                                     </b:row> 
-                                                                            <p:separator></p:separator>
-
+                                    <p:separator></p:separator>
                                 </b:panel>
                             </b:column>
                         </ui:repeat>

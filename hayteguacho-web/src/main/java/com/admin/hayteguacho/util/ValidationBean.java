@@ -5,6 +5,7 @@
  */
 package com.admin.hayteguacho.util;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,8 +32,10 @@ import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import org.apache.commons.codec.binary.Base64;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -349,6 +352,20 @@ public class ValidationBean {
         return flag;
     }
 
+    public boolean validarTamanioImagen(UploadedFile archivo) throws IOException{
+        boolean flag = true;
+        BufferedImage img = ImageIO.read(archivo.getInputstream());
+        int wid=img.getWidth();
+        int heig= img.getHeight();
+        
+        if(wid!=100 && heig!=100){
+            flag = false; 
+            lanzarMensaje("warn","titleEmpresa","lblFileNotSuccess");
+            updateComponent("formGrl:growl");
+        }
+        return flag;
+    }
+    
     public boolean deleteFile(String file) {
         boolean flag = false;
         File fichero = new File(file);

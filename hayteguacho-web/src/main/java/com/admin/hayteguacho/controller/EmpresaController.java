@@ -26,6 +26,7 @@ import com.hayteguacho.facade.EmpresaFacade;
 import com.hayteguacho.facade.MunicipioFacade;
 import com.hayteguacho.facade.PaisFacade;
 import com.hayteguacho.facade.TipologiaFacade;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,6 +39,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
@@ -248,10 +250,13 @@ public class EmpresaController {
        repass = "";
     }
     
+    
     public void handleFileUpload(FileUploadEvent event) {
+    //validationBean.lanzarMensaje("warn","titleEmpresa","lblFileNotSuccess");
         try {
             if(archivo==null){
                 archivo=event.getFile();
+                if(validationBean.validarTamanioImagen(archivo)){
                 validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
                 msgFile= validationBean.getMsgBundle("lblFileSuccess");
                 /*String name = validationBean.generarRnadom();
@@ -260,15 +265,20 @@ public class EmpresaController {
                 empresa.setLogo("/logos/"+event.getFile().getFileName());
                 validationBean.updateComponent("empresaForm:msgFile");
                 validationBean.updateComponent("empresaForm:logoMostrar");
+              }else{
+                archivo = null;
+                }
             }
             else{
                 if(validationBean.deleteFile(destination+archivo.getFileName())){
                   archivo=event.getFile();
+                  if(validationBean.validarTamanioImagen(archivo)){
                   validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
                   msgFile= validationBean.getMsgBundle("lblFileSuccess");
                   validationBean.updateComponent("empresaForm:msgFile");
                   empresa.setLogo("/logos/"+event.getFile().getFileName()); 
                   validationBean.updateComponent("empresaForm:logoMostrar");
+                  }
                 }
             }
         } catch (IOException e) {

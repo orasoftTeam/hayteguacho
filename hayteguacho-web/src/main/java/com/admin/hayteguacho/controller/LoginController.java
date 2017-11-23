@@ -316,6 +316,7 @@ public class LoginController implements Serializable {
                 .getExternalContext().getSession(false);
         session.invalidate();
         String pag = "/indexPaises.xhtml";
+        //validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
         if (userLog.getTipo().equals("E")) {
             String log = userFacade.actualizarLogUser(userLog, "OUT", "A");
             if (log.equals("1")) {
