@@ -34,14 +34,30 @@ public class LoginFilter implements Filter {
 
     /**
      * Checks if user is logged in. If not it redirects to the login.xhtml page.
+     * @param request
+     * @param response
+     * @param chain
+     * @throws java.io.IOException
+     * @throws javax.servlet.ServletException
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String parametro = ((HttpServletRequest) request).getParameter("opcion");
         String contextPath = ((HttpServletRequest) request).getContextPath();
         parametro = parametro == null ? "-2" : parametro;
         loginBean.activarLinks(Integer.parseInt(parametro), "");
-        String path = ((HttpServletRequest) request).getRequestURI().toString();
+        String path = ((HttpServletRequest) request).getRequestURI();
         String[] url = null;
+        
+        HttpServletResponse resp = (HttpServletResponse) response;
+        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        resp.setHeader("Pragma", "no-cache");
+        resp.setDateHeader("Expires", 0);
+        
+        /*if (loginBean.getPais().equals("") && (!path.contains("/indexPaises.xhtml"))) {
+            ((HttpServletResponse) response).sendRedirect(contextPath + "/indexPaises.xhtml");
+        }*/
+        
         if (path.contains("/pages/")) {
             url = path.split("/pages/");
 

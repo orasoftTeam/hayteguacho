@@ -120,7 +120,7 @@ public class MostrarOfertaController implements Serializable {
             }
             else{*/
             tmp= tmp+String.valueOf(cad.charAt(i));
-             if(i==90){
+             if(i==top){
                   tmp= tmp+"...";
                   return tmp;
                 }

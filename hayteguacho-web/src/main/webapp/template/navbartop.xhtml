@@ -36,7 +36,7 @@
                 <b:dropMenu value="#{login.userLog.nombre.concat('    ').concat(login.pais)}">
                     <b:column col-md="12" style="text-align: center;" >
                         <h:panelGrid columns="1">
-                            <h:graphicImage  library="images" name="usuario.png" height="100" width="100" rendered="#{login.userLog.imagen.length() == 0}" />
+                            <h:graphicImage  library="images" name="usuario.png" height="100" width="100" rendered="#{login.userLog.imagen eq null}" />
                             <h:graphicImage  value="#{login.userLog.imagen}" height="100" width="100" rendered="#{login.userLog.imagen.length() > 5}" />
                             <h:outputText value="#{login.userLog.nombre}" style="color:green;"></h:outputText>
                             <h:panelGrid  columns="2" rendered="#{login.obtenerMembresiaActual()}" >

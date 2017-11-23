@@ -63,7 +63,7 @@
                                                  >
                                     <f:selectItems value="#{ofertaController.listaMunicipio}" var="muni" itemValue="#{muni.idciudad}" itemLabel="#{muni.nombreciudad}"/>
                                 </b:selectOneMenu>
-                                <b:inputText size="10" id="nomOferta"  maxlength="50" value="#{ofertaController.oferta.tituloofertalaboral}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqNombreOferta']}"/>
+                                <b:inputText size="10" id="nomOferta"  maxlength="40" value="#{ofertaController.oferta.tituloofertalaboral}" label="#{bundle['lblName']}" placeholder="#{bundle['lblReqNombreOferta']}"/>
                                 <label for="input_ofertasForm:fechaContra" class="bf-no-message has-success control-label">#{bundle['lblOfertaFechaContra']}</label>
                                 <br></br>
                                 <p:inputMask id="fechaContra" value="#{ofertaController.oferta.fechacontratacionofertalaboral}"   mask="99/99/9999" style="width: 100%;"/>

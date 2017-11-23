@@ -70,45 +70,19 @@
 
                 </b:jumbotron>
                 <b:container>
-                    <b:row>
-                        <b:column col-md="2">
-                        </b:column>
-                        <b:column col-md="2">
-                            <b:commandButton icon-awesome="fa-arrow-left" update="@form" ajax="true" actionListener="#{mostrarController.atras}" value="#{bundle['lblBtnAtras']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.ini eq 0}" />
-                        </b:column>
-                        <b:column col-md="4"></b:column>
-                        <!--
-                        <b:column col-md="4">
-                            <c:if test="#{(mostrarController.ini %36) eq 0}">
-                                <c:forEach var="indice" begin="#{mostrarController.ini}" end="#{mostrarController.count}">
-                                    
-                                    <c:if test="#{indice eq  mostrarController.numpag}">
-                                        <b:button value="#{indice+1}" size="xs" look="warning"></b:button>
-                                    </c:if>
-                                    <c:if test="#{!(indice eq  mostrarController.numpag)}">
-                                        <b:button value="#{indice+1}" size="xs" style="info"></b:button>
-                                    </c:if>
-                                </c:forEach>
-                            </c:if>
-                        </b:column>
-                        -->
-                        <b:column col-md="2">
-                            <b:commandButton  icon-awesome="fa-arrow-right" icon-align="right" update="@form" ajax="true" actionListener="#{mostrarController.siguiente}" value="#{bundle['lblBtnSig']}"   size="sm" style="width:100%; background-color: #7B68EE; color: white;" disabled="#{mostrarController.deshabilitarSiguiente()}" />
-                        </b:column>
-                        <b:column col-md="2">
-                        </b:column>
-                    </b:row>
+                  
                     <p:separator></p:separator>
                     <b:row>
                         <ui:repeat var="oferta" value="#{mostrarController.listaOferta}" varStatus="status">
                             <b:column col-md="6" >
-                                <b:panel title="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}" collapsible="false" look="primary">
+                                <b:panel  title="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}" collapsible="false" look="primary"  >
                                     <b:row>
                                         <b:column col-md="12"> 
-                                        <h4 escape="true" style="text-align: center">#{oferta.tituloofertalaboral}</h4>
+                                        <h4 style="text-align: center;font-weight: bolder;">#{oferta.tituloofertalaboral}</h4>
                                         </b:column>
-                                        <b:column col-md="4"> 
-                                            <h:graphicImage height="100" style="margin-left: 20px;width:80%" value="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo}" />
+                                        <b:column col-md="4">
+                                            <h:graphicImage  style="margin-left: 20px;width:80%" library="images" name="usuario.png" height="100"  rendered="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo eq null}" />
+                                            <h:graphicImage height="100" style="margin-left: 20px;width:80%" value="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo}" rendered="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo.length() > 5}" />
                                             <br></br>
                                             <br></br>
                                             <b:commandButton icon-awesome="fa-external-link" update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:80%;margin-left: 20px" />
@@ -122,18 +96,19 @@
                                             <b:panelGrid columns="1">
                                                 
                                                 <h5>#{bundle['lblDescripcionEmpresa']}</h5>
-                                                <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,90)}" escape="false"></h:outputText>
-                                                <br></br>
+                                                <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,50)}" escape="false"></h:outputText>
+                                                
                                                 <h5>#{bundle.lblOfertaPlaza}</h5>
                                                 <h:outputText value="#{puestoController.obtenerPuesto(oferta.idpuestotrabajo).nombrepuestotrabajo}" escape="false"></h:outputText>
-                                                <br></br>
+                                                
                                                 <h5>#{bundle['lblOfertaFechaContra']}</h5>
                                                 <h:outputText value="#{mostrarController.validationBean.formatearFecha(oferta.fechacontratacionofertalaboral)}"></h:outputText>                                           
                                             </b:panelGrid>
                                             <br></br>
                                         </b:column>
                                     </b:row> 
-                                    <p:separator></p:separator>
+                                                                          
+
                                 </b:panel>
                             </b:column>
                         </ui:repeat>
