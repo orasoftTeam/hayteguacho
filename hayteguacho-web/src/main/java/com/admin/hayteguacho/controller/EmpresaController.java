@@ -91,6 +91,7 @@ public class EmpresaController {
     private @Getter @Setter List<MunicipioForm> listaMuni;
     private @Getter @Setter String idDepto;
     private @Getter @Setter String idMuni;
+    private @Getter @Setter String nameFileFinal;
     private @Getter @Setter List<CategoriaEmpresaForm> listaCategoria;
     private @Getter @Setter List<CargoEmpresaForm> listaCargo;
     private @Getter @Setter String idCategoria;
@@ -253,31 +254,40 @@ public class EmpresaController {
     
     public void handleFileUpload(FileUploadEvent event) {
     //validationBean.lanzarMensaje("warn","titleEmpresa","lblFileNotSuccess");
+    String nameFile;
+    String name;
         try {
             if(archivo==null){
                 archivo=event.getFile();
                 if(validationBean.validarTamanioImagen(archivo)){
-                validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
+                   name= archivo.getFileName();
+                   nameFile= validationBean.generarRandom(name);
+                validationBean.copyFile(nameFile,destination, event.getFile().getInputstream());
                 msgFile= validationBean.getMsgBundle("lblFileSuccess");
                 /*String name = validationBean.generarRnadom();
                 String[] ext = event.getFile().getFileName().split(".");
                 String newname = name + "." + ext[1];*/
-                empresa.setLogo("/logos/"+event.getFile().getFileName());
+                empresa.setLogo("/logos/"+nameFile);
                 validationBean.updateComponent("empresaForm:msgFile");
                 validationBean.updateComponent("empresaForm:logoMostrar");
+                nameFileFinal = nameFile;
               }else{
                 archivo = null;
                 }
             }
             else{
-                if(validationBean.deleteFile(destination+archivo.getFileName())){
-                  archivo=event.getFile();
-                  if(validationBean.validarTamanioImagen(archivo)){
-                  validationBean.copyFile(event.getFile().getFileName(),destination, event.getFile().getInputstream());
+                archivo=event.getFile();
+                if(validationBean.validarTamanioImagen(archivo)){
+                  
+                  if(validationBean.deleteFile(destination+nameFileFinal)){
+                      name= archivo.getFileName();
+                      nameFile= validationBean.generarRandom(name);
+                  validationBean.copyFile(nameFile,destination, event.getFile().getInputstream());
                   msgFile= validationBean.getMsgBundle("lblFileSuccess");
                   validationBean.updateComponent("empresaForm:msgFile");
-                  empresa.setLogo("/logos/"+event.getFile().getFileName()); 
+                  empresa.setLogo("/logos/"+nameFile); 
                   validationBean.updateComponent("empresaForm:logoMostrar");
+                  nameFileFinal = nameFile;
                   }
                 }
             }

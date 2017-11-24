@@ -375,9 +375,20 @@ public class ValidationBean {
         return flag;
     }
 
-   
+   public String generarRandom(String name){
+
+       String nameComplete;
+       String nombre="img";
+       String[] parts = name.split("\\.");
+       String part1 = parts[1];
+       for (int i = 1; i <=10; i++) {
+            int o = (int) (Math.random() * i) + 1;
+            nombre = nombre + o;
+            }
+       return nameComplete = nombre +"."+ part1;
+    }
     
-    public String generarRnadom(){
+   /* public String generarRnadom(){
     char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 StringBuilder sb = new StringBuilder();
 Random random = new Random();
@@ -388,7 +399,7 @@ for (int i = 0; i < 20; i++) {
 String output = sb.toString();
 return output;
     
-    }
+    }*/
     
     
      public void redirecionar(String pagina) {
