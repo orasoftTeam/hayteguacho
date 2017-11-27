@@ -13,7 +13,10 @@
                 function mostrar(){
                 alert('Hola');
                 }
-
+                 function mostrar2(){
+                
+                alert($('#candidatoContainer').width() + 'x' + $('#candidatoContainer').height());
+                }
                 function soloNumeros(obj) 
                 { 
                 obj.value = (obj.value + '').replace(/[^0-9]/g, '');
@@ -27,7 +30,7 @@
                     }
                 });
             </h:outputScript>
-            <b:jumbotron id="candidatoContainer" style="background-color: white; background-image: url(#{resource['images/fondoreg.png']});  
+            <b:jumbotron id="candidatoContainer" style="background-color: white; background-image: url(#{resource['images/chambitapc.png']});  
                          
                          background-repeat:no-repeat;
                          background-size:100% 100%;
