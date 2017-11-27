@@ -5,7 +5,11 @@
  */
 package com.admin.hayteguacho.util;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -352,13 +356,36 @@ public class ValidationBean {
         return flag;
     }
 
-    public boolean validarTamanioImagen(UploadedFile archivo) throws IOException{
+    public InputStream cutImage(BufferedImage img, String name){
+       String[] parts = name.split("\\.");
+       String part1 = parts[1];
+        int w = img.getWidth();
+        int h = img.getHeight();
+        
+        BufferedImage bufim = new BufferedImage(100, 100, img.getType());
+        Graphics2D grafic = bufim.createGraphics();
+        grafic.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        grafic.drawImage(img, 0, 0, 100, 100, 0, 0, w, h, null);
+        grafic.dispose();
+        
+        ByteArrayOutputStream byteout = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(bufim, part1, byteout);
+           
+        } catch (Exception e) {
+        }
+        byte[] bytes = byteout.toByteArray();
+        InputStream in = new ByteArrayInputStream(bytes);
+        
+        return in; 
+    }
+    
+    public boolean validarTamanioImagen(BufferedImage img) throws IOException{
         boolean flag = true;
-        BufferedImage img = ImageIO.read(archivo.getInputstream());
         int wid=img.getWidth();
         int heig= img.getHeight();
         
-        if(wid!=100 && heig!=100){
+        if(wid != heig){
             flag = false; 
             lanzarMensaje("warn","titleEmpresa","lblFileNotSuccess");
             updateComponent("formGrl:growl");
