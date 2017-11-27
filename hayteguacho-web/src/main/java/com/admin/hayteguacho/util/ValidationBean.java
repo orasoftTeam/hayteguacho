@@ -377,29 +377,37 @@ public class ValidationBean {
 
    public String generarRandom(String name){
 
-       String nameComplete;
-       String nombre="img";
        String[] parts = name.split("\\.");
        String part1 = parts[1];
-       for (int i = 1; i <=10; i++) {
-            int o = (int) (Math.random() * i) + 1;
-            nombre = nombre + o;
-            }
-       return nameComplete = nombre +"."+ part1;
+       String nombre;
+       
+       char[] chars = "Na1Pb3Qc5Rd7Se9Tf2Ug4Vh6Wi8XjkYlZmA3nBo0Cp9Dq7Er5Fs3Gt1Hu0Iv8Jw6Kx4Ly2Mz".toCharArray();
+       StringBuilder sb = new StringBuilder();
+       Random random = new Random();
+       for (int i = 0; i <= 7; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+       }
+       nombre = sb.toString();
+       for (int i = 14; i >= 10; i--) {
+           int o = (int) (Math.random() * i) + 3;
+           nombre = nombre + o;
+        }
+       return nombre +"."+ part1;
+   }
+    
+   public String generarCodigo(){
+       char[] chars = "Na1Pb3Qc5Rd7Se9Tf2Ug4Vh6Wi8XjkYlZmA3nBo0Cp9Dq7Er5Fs3Gt1Hu0Iv8Jw6Kx4Ly2Mz".toCharArray();
+       StringBuilder sb = new StringBuilder();
+       Random random = new Random();
+       for (int i = 0; i <= 10; i++) {
+       char c = chars[random.nextInt(chars.length)];
+       sb.append(c);
+       }
+      String output = sb.toString();
+      return output;
+    
     }
-    
-   /* public String generarRnadom(){
-    char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-StringBuilder sb = new StringBuilder();
-Random random = new Random();
-for (int i = 0; i < 20; i++) {
-    char c = chars[random.nextInt(chars.length)];
-    sb.append(c);
-}
-String output = sb.toString();
-return output;
-    
-    }*/
     
     
      public void redirecionar(String pagina) {
