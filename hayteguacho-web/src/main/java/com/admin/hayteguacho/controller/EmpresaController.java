@@ -86,6 +86,8 @@ public class EmpresaController {
     LoginController loginBean;
     
     private @Getter @Setter UploadedFile archivo;
+    private @Getter @Setter BufferedImage archivo2;
+     private @Getter @Setter InputStream archivo3;
     private @Getter @Setter String msgFile;
     private @Getter @Setter List<DepartamentoForm> listaDepto;
     private @Getter @Setter List<MunicipioForm> listaMuni;
@@ -259,10 +261,12 @@ public class EmpresaController {
         try {
             if(archivo==null){
                 archivo=event.getFile();
-                if(validationBean.validarTamanioImagen(archivo)){
-                   name= archivo.getFileName();
-                   nameFile= validationBean.generarRandom(name);
-                validationBean.copyFile(nameFile,destination, event.getFile().getInputstream());
+                BufferedImage img = ImageIO.read(archivo.getInputstream());
+                if(validationBean.validarTamanioImagen(img)){
+                   name = archivo.getFileName();
+                   nameFile = validationBean.generarRandom(name);
+                   archivo3 = validationBean.cutImage(img, name);
+                validationBean.copyFile(nameFile,destination, archivo3);
                 msgFile= validationBean.getMsgBundle("lblFileSuccess");
                 /*String name = validationBean.generarRnadom();
                 String[] ext = event.getFile().getFileName().split(".");
@@ -277,12 +281,14 @@ public class EmpresaController {
             }
             else{
                 archivo=event.getFile();
-                if(validationBean.validarTamanioImagen(archivo)){
+                BufferedImage img = ImageIO.read(archivo.getInputstream());
+                if(validationBean.validarTamanioImagen(img)){
                   
                   if(validationBean.deleteFile(destination+nameFileFinal)){
                       name= archivo.getFileName();
                       nameFile= validationBean.generarRandom(name);
-                  validationBean.copyFile(nameFile,destination, event.getFile().getInputstream());
+                      archivo3 = validationBean.cutImage(img, name);
+                  validationBean.copyFile(nameFile,destination, archivo3);
                   msgFile= validationBean.getMsgBundle("lblFileSuccess");
                   validationBean.updateComponent("empresaForm:msgFile");
                   empresa.setLogo("/logos/"+nameFile); 
