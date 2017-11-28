@@ -56,7 +56,7 @@
                     </b:column>
                 </b:dropMenu>
             </b:navbarLinks>
-            <c:if test="#{!login.loggedIn}">
+            <c:if test="#{!login.loggedIn and login.mostrarLogin()}">
                 <div style="margin-top: 15px" >
                      <div class="form-group" >
                     <b:inputText placeholder="Email" fieldSize="sm" value="#{login.usuario}"/>
