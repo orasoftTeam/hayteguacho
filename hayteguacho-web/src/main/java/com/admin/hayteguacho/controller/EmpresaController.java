@@ -19,6 +19,7 @@ import com.admin.hayteguacho.form.PaisForm;
 import com.admin.hayteguacho.form.TipologiaForm;
 import com.admin.hayteguacho.form.UserForm;
 import com.admin.hayteguacho.util.ValidationBean;
+import com.captcha.botdetect.web.jsf.JsfCaptcha;
 import com.hayteguacho.facade.CargoEmpresaFacade;
 import com.hayteguacho.facade.CategoriaEmpresaFacade;
 import com.hayteguacho.facade.DepartamentoFacade;
@@ -101,7 +102,8 @@ public class EmpresaController {
     private @Getter @Setter List<TipologiaForm> listaTipologia;
     private @Getter @Setter  String idTipologia;
     private @Getter @Setter  String repass;
-    
+    private @Getter @Setter JsfCaptcha captcha;
+    private @Getter @Setter String captchaCode;
     
     
     @PostConstruct
@@ -137,6 +139,11 @@ public class EmpresaController {
                 listaDepto= deptoFacade.obtenerDepartamentos(tmp.get(0).getIdpais());
             }        
        
+    }
+    
+    public boolean validarCaptcha(){
+    boolean isHuman = captcha.validate(captchaCode);
+    return isHuman;
     }
     
     public void changeDepartamento(){
@@ -194,12 +201,14 @@ public class EmpresaController {
                 &&
                 validationBean.validarSeleccion(empresa.getIdtipologia(), "warn", "titleEmpresa", "lblSelectRegTipologia")
                 &&
-                validationBean.validarLongitudCampo(empresa.getDescripcionempresa(), 15, 255,"warn", "titleEmpresa", "lblLongitudDescripcionEmpresa")){
+                validationBean.validarLongitudCampo(empresa.getDescripcionempresa(), 15, 255,"warn", "titleEmpresa", "lblLongitudDescripcionEmpresa")
+                && validationBean.validarCampoVacio(captchaCode, "warn", "titleCandidato", "lblCaptchaReq")){
             
             if (empresa.getPassword().equals(repass)) {
                  if(empresa.getIdempresa()==null || empresa.getIdempresa().equals("0")){
                //empresa.setPassword(validationBean.encriptar(empresa.getPassword(), empresa.getEmail()));
                empresa.setLogo(empresa.getLogo()==null?"":empresa.getLogo());
+               if (validarCaptcha()) {
                     flag= empresaFacade.actualizarEmpresa(empresa, "A"); 
                     if(flag.equals("0")){
                         loginBean.setUsuario(empresa.getEmail());
@@ -221,6 +230,9 @@ public class EmpresaController {
                     else if(flag.equals("-3")){
                         validationBean.lanzarMensaje("error", "titleEmpresa", "lblCandidatoExist");
                     }
+                    }else{
+                     validationBean.lanzarMensaje("error", "titleCandidato", "lblCaptchaError");
+                     }
             }
             UserForm usuario=loginBean.getUserLog();
             if(usuario!=null && usuario.getTipo().equals("E")){
