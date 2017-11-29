@@ -78,7 +78,7 @@
                                 <b:panel  title="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}" collapsible="false" look="primary"  >
                                     <b:row>
                                         <b:column col-md="12"> 
-                                        <h4 style="text-align: center;font-weight: bolder;">#{oferta.tituloofertalaboral}</h4>
+                                        <h4 style="text-align: center;font-weight: bolder;"><h:outputText value="#{mostrarController.cadenaConEnterT(oferta.tituloofertalaboral)}" escape="false"></h:outputText></h4>
                                         </b:column>
                                         <b:column col-md="4">
                                             <h:graphicImage  style="margin-left: 20px;width:80%" library="images" name="usuario.png" height="100"  rendered="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo eq null}" />
@@ -96,7 +96,7 @@
                                             <b:panelGrid columns="1">
                                                 
                                                 <h5>#{bundle['lblDescripcionEmpresa']}</h5>
-                                                <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,50)}" escape="false"></h:outputText>
+                                                <h:outputText value="#{mostrarController.cadenaConEnter(oferta.descripcionofertalaboral,55)}" escape="false"></h:outputText>
                                                 
                                                 <h5>#{bundle.lblOfertaPlaza}</h5>
                                                 <h:outputText value="#{puestoController.obtenerPuesto(oferta.idpuestotrabajo).nombrepuestotrabajo}" escape="false"></h:outputText>

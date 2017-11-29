@@ -14,6 +14,7 @@ import com.admin.hayteguacho.form.PuestoTrabajoForm;
 import com.admin.hayteguacho.form.UserForm;
 import com.admin.hayteguacho.util.RandomString;
 import com.admin.hayteguacho.util.ValidationBean;
+import com.captcha.botdetect.web.jsf.JsfCaptcha;
 import com.hayteguacho.facade.CandidatoFacade;
 import com.hayteguacho.facade.CargoEmpresaFacade;
 import com.hayteguacho.facade.PaisFacade;
@@ -68,6 +69,8 @@ public class CandidatoController {
     private @Getter @Setter List<PuestoTrabajoForm> listaPuestos= new ArrayList<>();
     private @Getter @Setter String idcategoria;
     private @Getter @Setter String reclave;
+    private @Getter @Setter JsfCaptcha captcha;
+    private @Getter @Setter String captchaCode;
     
     @PostConstruct
     public void init() {
@@ -87,6 +90,11 @@ public class CandidatoController {
         }
     }
     
+    public boolean validarCaptcha(){
+    boolean isHuman = captcha.validate(captchaCode);
+    return isHuman;
+    }
+    
     public void actualizarCandidato(){
         String flag=""; 
         if (validationBean.validarCampoVacio(candidato.getCorreocandidato(), "warn", "titleCandidato", "lblEmailReqEmpresa")
@@ -104,13 +112,15 @@ public class CandidatoController {
                 && validationBean.validarCampoVacio(candidato.getTelefono1candidato(), "warn", "titleCandidato", "lblTelReq")
                 &&  validationBean.validarSeleccion(candidato.getGenerocandidato(),"warn", "titleCandidato", "lblGenSelectReq")
                 &&  validationBean.validarSeleccion(candidato.getIdpuestotrabajotbl(),"warn", "titleCandidato", "lblPuestoSelectReq")
-                &&  validationBean.validarSeleccion(archivo==null?"":archivo.getFileName(),"warn", "titleCandidato", "lblFileUploadReq")){
+                &&  validationBean.validarSeleccion(archivo==null?"":archivo.getFileName(),"warn", "titleCandidato", "lblFileUploadReq")
+                && validationBean.validarCampoVacio(captchaCode, "warn", "titleCandidato", "lblCaptchaReq")){
             
             if (candidato.getContrasenacandidato().equals(reclave)) {
                  if(candidato.getIdcandidato()==null || candidato.getIdcandidato().equals("0")){
                //candidato.setContrasenacandidato(validationBean.encriptar(candidato.getContrasenacandidato(), candidato.getCorreocandidato()));
-                    flag= candidatoFacade.actualizarCandidato(candidato, "A"); 
-                    if(flag.equals("0")){
+                     if (validarCaptcha()) {
+                         flag= candidatoFacade.actualizarCandidato(candidato, "A");
+                           if(flag.equals("0")){
                         loginBean.setUsuario(candidato.getCorreocandidato());
                         loginBean.setPassword(candidato.getContrasenacandidato());
                         loginBean.logear();
@@ -124,6 +134,10 @@ public class CandidatoController {
                     else{
                         validationBean.lanzarMensaje("error", "titleCandidato", "lblGuardarError");
                     }
+                     }else{
+                     validationBean.lanzarMensaje("error", "titleCandidato", "lblCaptchaError");
+                     }
+                  
             }
             if(!candidato.getIdcandidato().equals("0") && !candidato.getIdcandidato().equals("")){
                 validationBean.lanzarMensaje("warn", "titleCandidato", "lblExistReg");

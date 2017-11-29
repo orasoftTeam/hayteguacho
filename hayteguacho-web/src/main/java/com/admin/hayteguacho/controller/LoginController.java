@@ -179,6 +179,14 @@ public class LoginController implements Serializable {
         }
         return false;
     }
+    
+    public boolean mostrarLogin(){
+    boolean flag = false;
+        if (!pais.equals("")) {
+            flag = true;
+        }
+        return flag;
+    }
 
     public void activarLinks(int indice, String opcion) {
         if (indice == -2) {
