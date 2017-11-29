@@ -114,20 +114,44 @@ public class MostrarOfertaController implements Serializable {
     
     public String cadenaConEnter(String cad, int top){
         String tmp="";
-        for(int i=0; i< cad.length();i++){
-            /*if(i%top==0){
-                tmp= tmp+"</br>"+String.valueOf(cad.charAt(i));
+        String tmp1="";
+        int conta=0;
+        int numSpaces = cad.replaceAll("[^ ]", "").length();
+        
+        if(numSpaces <= 1 && cad.length()>26){
+            for(int j=0 ; j<= 26; j++){
+            tmp= tmp+String.valueOf(cad.charAt(j));
             }
-            else{*/
+            for(int j=27 ; j<= top; j++){
+            tmp1= tmp+String.valueOf(cad.charAt(j));
+            }
+            return tmp+"</br>"+tmp1+"...";
+         }
+        else{
+            for(int i=0; i< cad.length();i++){
             tmp= tmp+String.valueOf(cad.charAt(i));
-             if(i==top){
+            if(i==top){
                   tmp= tmp+"...";
                   return tmp;
                 }
-                
-            
-        }
+            }
+         }
+
         return tmp;
+    }
+    
+    public String cadenaConEnterT(String cad){
+        String tmp="";
+        int numSpaces = cad.replaceAll("[^ ]", "").length();
+        
+        if(numSpaces <= 1 && cad.length()>15){
+            for(int j=0 ; j<= 15; j++){
+            tmp= tmp+String.valueOf(cad.charAt(j));
+          }
+            return tmp+"...";
+         }
+
+        return tmp+cad;
     }
     
     
