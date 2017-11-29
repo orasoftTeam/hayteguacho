@@ -202,13 +202,14 @@ public class EmpresaController {
                 validationBean.validarSeleccion(empresa.getIdtipologia(), "warn", "titleEmpresa", "lblSelectRegTipologia")
                 &&
                 validationBean.validarLongitudCampo(empresa.getDescripcionempresa(), 15, 255,"warn", "titleEmpresa", "lblLongitudDescripcionEmpresa")
-                && validationBean.validarCampoVacio(captchaCode, "warn", "titleCandidato", "lblCaptchaReq")){
+                ){
             
             if (empresa.getPassword().equals(repass)) {
                  if(empresa.getIdempresa()==null || empresa.getIdempresa().equals("0")){
                //empresa.setPassword(validationBean.encriptar(empresa.getPassword(), empresa.getEmail()));
                empresa.setLogo(empresa.getLogo()==null?"":empresa.getLogo());
-               if (validarCaptcha()) {
+                     if (validationBean.validarCampoVacio(captchaCode, "warn", "titleCandidato", "lblCaptchaReq")) {
+                        if (validarCaptcha()) {
                     flag= empresaFacade.actualizarEmpresa(empresa, "A"); 
                     if(flag.equals("0")){
                         loginBean.setUsuario(empresa.getEmail());
@@ -232,7 +233,9 @@ public class EmpresaController {
                     }
                     }else{
                      validationBean.lanzarMensaje("error", "titleCandidato", "lblCaptchaError");
+                     } 
                      }
+               
             }
             UserForm usuario=loginBean.getUserLog();
             if(usuario!=null && usuario.getTipo().equals("E")){

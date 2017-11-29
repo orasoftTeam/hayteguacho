@@ -84,23 +84,27 @@
             </c:if>
         </h:form>
     </b:navBar>
-    <h:form>
+    <h:form id="recuperarForm">
              
              <b:modal title="#{bundle['lbltituloCuenta']}"  id="recuperarC"  styleClass="recuperarCuenta" size="380">
                 
           
-                 <b:panelGrid columns="1">
-                      <h:outputText value="#{bundle['lblMensaje']}" ></h:outputText>
+                 <b:panelGrid columns="1" id="btnCorreo" >
+                     <b:messages />
+                     <h:outputText rendered="#{!recuperar.mostrar}" value="#{bundle['lblMensaje']}" ></h:outputText>
                       <br/>
-                  <h:outputText value="#{bundle['lblcorreo']}" ></h:outputText>
-                  <b:inputText value="#{recuperar.usuario}" ></b:inputText>
-                  <h:outputText value="#{bundle['lblcodigo']}" ></h:outputText>
-                  <b:inputText value="#{recuperar.codigo}"></b:inputText>
+                  <h:outputText rendered="#{!recuperar.mostrar}" value="#{bundle['lblcorreo']}" ></h:outputText>
+                  <b:inputText rendered="#{!recuperar.mostrar}" value="#{recuperar.usuario}" ></b:inputText>
+                  <h:outputText rendered="#{recuperar.mostrar}" value="#{bundle['lblcodigo']}" ></h:outputText>
+                  <b:inputText rendered="#{recuperar.mostrar}" value="#{recuperar.codigo}"></b:inputText>
                   </b:panelGrid>
-                  <f:facet name="footer">
-                      <b:commandButton type="submit" ajax="false" look="info" action="#{recuperar.verificador()}" value="#{bundle['lblBCodigo']}"/>
-                      <b:commandButton type="submit" ajax="false" look="info" action="#{recuperar.cuenta()}" value="#{bundle['lblBCorreo']}" />
-                            
+                 <f:facet name="footer" >
+                     <b:panelGrid id="btnFooter" columns="1" >
+                      <b:commandButton   rendered="#{recuperar.mostrar}" type="submit"  look="info" action="#{recuperar.verificador()}" value="#{bundle['lblBCodigo']}"/>
+                      <b:commandButton rendered="#{!recuperar.mostrar}"  look="info" action="#{recuperar.cuenta()}" value="#{bundle['lblBCorreo']}" >
+                      <f:ajax execute="@form" render="@none" />
+                      </b:commandButton>
+                        </b:panelGrid>    
                   </f:facet>
                         
              

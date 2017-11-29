@@ -111,7 +111,7 @@ public class CandidatoxofertaMostrarFacade extends AbstractFacade<TblCandidatoxo
      public void enviarCorreo(String email, String asunto,String mensaje){
        Connection cn = em.unwrap(java.sql.Connection.class);
          try {
-             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ENVIAR_MAIL('hayteguachoprueba@gmail.com',?,?,?)}");
+             CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ENVIAR_MAIL('chambitajobs@gmail.com',?,?,?)}");
              cs.setString(1, email);
              cs.setString(2, asunto);
              cs.setString(3, mensaje);

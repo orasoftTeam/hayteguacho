@@ -49,7 +49,10 @@ public class RecuperarBean {
     @Setter UserForm usuariorec;
       @Inject 
       LoginController lc;
-       @PostConstruct
+      
+      private @Getter @Setter boolean mostrar = false;
+      
+    @PostConstruct
     public void init() {
        
          
@@ -63,14 +66,26 @@ public class RecuperarBean {
           codigoV=validationBean.generarCodigo();
          if (usuariorec.getCorreo() != null) {
             System.err.println("Enviado");
-           cxOm.enviarCorreo(usuariorec.getCorreo(), asunto,"Utilice este codigo para restablecer su cuenta"+"  "+ codigoV);
-            validationBean.lanzarMensaje("warn", "titleLogin", "lblExito");
+             try {
+                 cxOm.enviarCorreo(usuariorec.getCorreo(), asunto,"Utilice este codigo para restablecer su cuenta"+"  "+ codigoV);
+            validationBean.lanzarMensaje("info", "lblRecuperarCuenta", "lblExito");
+            mostrar = true;
+            validationBean.updateComponent("recuperarForm:btnCorreo");
+            validationBean.updateComponent("recuperarForm:btnFooter");
+                   // validationBean.updateComponent("formGrl:growl");
+                   
+             } catch (Exception e) {
+                 limpiar();
+                 e.printStackTrace();
+             }
         } else if (usuariorec.getCorreo() == null) {
             
             
             System.err.println("Entro nulo");
-            validationBean.lanzarMensaje("warn", "titleLogin", "lblCorreoV");
-            
+            validationBean.lanzarMensaje("warn", "lblRecuperarCuenta", "lblCorreoV");
+            limpiar();
+            validationBean.updateComponent("recuperarForm:btnCorreo");
+            //validationBean.updateComponent("formGrl:growl");
         }
          
          
@@ -79,16 +94,27 @@ public class RecuperarBean {
     
     public void verificador(){
          if(codigoV.equals(codigo)){
-             validationBean.lanzarMensaje("warn", "titleLogin", "lblExitoV");
+             validationBean.lanzarMensaje("info", "lblRecuperarCuenta", "lblExitoV");
             lc.setUsuario(usuariorec.getCorreo());
             lc.setPassword(usuariorec.getContrasena());
             lc.logearR();
-             
-             
+             mostrar = false;
+             limpiar();
+             //validationBean.updateComponent("formGrl:growl");
              //validationBean.redirecionar();
          }else{
-             validationBean.lanzarMensaje("warn", "titleLogin", "lblErrorV");
+             validationBean.lanzarMensaje("error", "lblRecuperarCuenta", "lblErrorV");
+             //validationBean.updateComponent("formGrl:growl");
+             mostrar = false;
+             limpiar();
          }
         
+    }
+    
+    public void limpiar(){
+    usuario = "";
+    codigoV = "";
+    codigo = "";
+    usuariorec = new UserForm();
     }
 }
