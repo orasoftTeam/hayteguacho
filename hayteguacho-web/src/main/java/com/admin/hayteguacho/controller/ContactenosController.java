@@ -7,6 +7,7 @@ package com.admin.hayteguacho.controller;
 
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.CandidatoxofertaMostrarFacade;
+import com.hayteguacho.facade.UserFacade;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
