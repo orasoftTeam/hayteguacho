@@ -427,7 +427,7 @@ public class ValidationBean {
        char[] chars = "Na1Pb3Qc5Rd7Se9Tf2Ug4Vh6Wi8XjkYlZmA3nBo0Cp9Dq7Er5Fs3Gt1Hu0Iv8Jw6Kx4Ly2Mz".toCharArray();
        StringBuilder sb = new StringBuilder();
        Random random = new Random();
-       for (int i = 0; i <= 10; i++) {
+       for (int i = 0; i <= 5; i++) {
        char c = chars[random.nextInt(chars.length)];
        sb.append(c);
        }

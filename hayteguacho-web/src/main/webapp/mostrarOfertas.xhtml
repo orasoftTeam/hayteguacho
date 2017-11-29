@@ -78,7 +78,9 @@
                                 <b:panel  title="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).nombreempresa}" collapsible="false" look="primary"  >
                                     <b:row>
                                         <b:column col-md="12"> 
-                                        <h4 style="text-align: center;font-weight: bolder;"><h:outputText value="#{mostrarController.cadenaConEnterT(oferta.tituloofertalaboral)}" escape="false"></h:outputText></h4>
+                                        <h4 style="text-align: center;font-weight: bolder;">
+                                            <h:outputText value="#{mostrarController.cadenaConEnterT(oferta.tituloofertalaboral)}" escape="false"></h:outputText>
+                                        </h4>
                                         </b:column>
                                         <b:column col-md="4">
                                             <h:graphicImage  style="margin-left: 20px;width:80%" library="images" name="usuario.png" height="100"  rendered="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo eq null}" />
