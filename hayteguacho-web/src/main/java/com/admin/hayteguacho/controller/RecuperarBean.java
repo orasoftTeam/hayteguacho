@@ -80,9 +80,11 @@ public class RecuperarBean {
     public void verificador(){
          if(codigoV.equals(codigo)){
              validationBean.lanzarMensaje("warn", "titleLogin", "lblExitoV");
-             lc.setUsuario(usuariorec.getCorreo());
-             lc.setPassword(usuariorec.getContrasena());
-             lc.logear();
+            lc.setUsuario(usuariorec.getCorreo());
+            lc.setPassword(usuariorec.getContrasena());
+            lc.logearR();
+             
+             
              //validationBean.redirecionar();
          }else{
              validationBean.lanzarMensaje("warn", "titleLogin", "lblErrorV");

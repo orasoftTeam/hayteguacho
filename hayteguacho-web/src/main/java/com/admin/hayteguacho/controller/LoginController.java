@@ -302,6 +302,37 @@ public class LoginController implements Serializable {
         }
     }
 
+    
+    //recuperacion cuenta
+    
+     public void logearR() {
+        System.err.println("Entro a logear");
+        String pag = "";
+        UserForm usuario = userFacade.getUser(getUsuario(), getPassword());
+       
+            if (usuario.getTipo().equals("E")) {
+               
+                    userLog = usuario;
+                    setUsuario("");
+                    setPassword("");
+                    loggedIn = true;
+                    isMembresia = true;
+                    listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
+                    validationBean.redirecionar("/pages/empresa/mantenimientoEmpresa.xhtml?faces-redirect=true");
+                 
+            } else if (usuario.getTipo().equals("C")) {
+                userLog = usuario;
+                setUsuario("");
+                //setPassword("");
+                loggedIn = true;
+                listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
+                validationBean.redirecionar("/pages/candidato/mantenimientoCandidato.xhtml?faces-redirect=true");
+            }
+            
+       
+        
+     }
+
     /*
     public void logearEmpresa() {
         //UserForm usuario = userFacade.getUser(getUsuario(), getPassword());
