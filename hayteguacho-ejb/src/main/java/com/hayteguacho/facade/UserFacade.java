@@ -54,6 +54,26 @@ public class UserFacade {
         List<UserForm> temp= q.getResultList();
         return temp.isEmpty()? new UserForm():temp.get(0);
     }
+    public UserForm getRecuperaacion(String user) {
+        String sql = "select usuario.tipo, usuario.identificador, usuario.nombre, usuario.correo, \n" +
+"(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(usuario.contrasena) FROM DUAL) contrasena,\n" +
+"rol.NOMBREROL, rol.IDROL, roluser.IDROLUSUARIO, usuario.imagen from tbl_rolusuario roluser,\n" +
+"(select 'E' tipo,  company.IDEMPRESA identificador, company.NOMBREEMPRESA nombre,\n" +
+"company.correocontactoempresa correo, company.contrasenacontactoempresa contrasena,\n" +
+"decode(company.logoempresa,NULL,'',company.logoempresa) imagen from tbl_empresa company \n" +
+"where company.correocontactoempresa=?\n" +
+"union select 'C' tipo, candidato.idcandidato identificador, (candidato.nombrecandidato || ' ' || candidato.apellidocandidato) as  nombre, \n" +
+"candidato.correocandidato correo, candidato.contrasenacandidato contrasena, '' imagen from tbl_candidato candidato\n" +
+"where candidato.correocandidato=? and candidato.estadocandidato='A') usuario, tbl_rol rol\n" +
+"where roluser.EMAILUSUARIO=usuario.correo and roluser.ESTADOROLUSUARIO='A'\n" +
+"and roluser.IDROL=rol.IDROL and rol.ESTADOROL='A'";
+        Query q= getEntityManager().createNativeQuery(sql, "UsuarioMapping");
+        q.setParameter(1, user);
+        q.setParameter(2, user);
+        List<UserForm> temp= q.getResultList();
+        return temp.isEmpty()? new UserForm():temp.get(0);
+    }
+    
     
     public String actualizarLogUser(UserForm uf, String tipoLog, String op) {
         String flag = "";

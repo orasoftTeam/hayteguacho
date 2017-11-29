@@ -21,7 +21,7 @@
             <b:navLink value="#{bundle['titleEmpresa']}" href="#{request.contextPath}/indexEmpresa.xhtml?opcion=2" style="margin-top: 15px;#{login.setearColor(2)}" rendered="#{(!login.loggedIn) and (login.pais.length() gt 0)}"></b:navLink>
             <b:navLink value="#{bundle['lblContactenos']}" href="#{request.contextPath}/contactenos.xhtml?opcion=3" style="margin-top: 15px;#{login.setearColor(3)}" ></b:navLink>
         </b:navbarLinks>
-        <b:navbarLinks style="margin-top: 15px;"  rendered="#{login.loggedIn}">
+        <b:navbarLinks style="margin-top: 12px;"  rendered="#{login.loggedIn}">
             <ui:repeat var="modulo" value="#{login.listaModulos}" varStatus="status" >
                 <b:navLink  value="#{modulo.nombremenu}" href="#{request.contextPath.concat('/pages/').concat(modulo.opcion)}"
                            rendered="#{login.obtenerListaOpciones(status.index).size() eq 0}"></b:navLink> 
@@ -33,8 +33,9 @@
             </ui:repeat>
          
         </b:navbarLinks>
+        
         <h:form styleClass="navbar-form navbar-right">
-            <b:navbarLinks  style="margin-top: 15px;"  rendered="#{login.loggedIn}">
+            <b:navbarLinks  style="margin-top: 1px;"  rendered="#{login.loggedIn}">
                 <b:dropMenu value="#{login.userLog.nombre.concat('    ').concat(login.pais)}">
                     <b:column col-md="12" style="text-align: center;" >
                         <h:panelGrid columns="1">
@@ -57,23 +58,54 @@
                 </b:dropMenu>
             </b:navbarLinks>
             <c:if test="#{!login.loggedIn}">
-                <div style="margin-top: 15px" >
+                <div style="margin-top: 12px" >
+                       
                      <div class="form-group" >
+                         
                     <b:inputText placeholder="Email" fieldSize="sm" value="#{login.usuario}"/>
+                   
                     <!--input type="text" class="form-control" placeholder="Search"/-->
                 </div>
                 <div class="form-group">
                     <b:inputSecret placeholder="Password" fieldSize="sm" value="#{login.password}"/>
                 </div> 
+                     
                 #{' '}
-                <b:commandButton action="#{login.logear}" value="#{bundle['lblBtnAcceder']}" look="success" icon="chevron-right" iconAlign="right"/>
+                <b:commandButton action="#{login.logear}" value="#{bundle['lblBtnAcceder']}" look="success" icon="chevron-right" iconAlign="right" style=" font-size: 12px"/>
                 <div class="form-group" >
-                    <p style="color: white; font-size: 16px;">#{login.pais}</p>
+                    <p style="color: white; font-size: 12px">#{login.pais}
+                  <br/>
+                  <p:commandLink actionListener="#{recuperar.modal()}" value="#{bundle['lblLink']}" style="color: #00CED1; font-size: 11px"></p:commandLink>
+                 </p>
                     <!--input type="text" class="form-control" placeholder="Search"/-->
                 </div>
+                   
+                    
                 </div>
             </c:if>
         </h:form>
     </b:navBar>
+    <h:form>
+             
+             <b:modal title="#{bundle['lbltituloCuenta']}"  id="recuperarC"  styleClass="recuperarCuenta" size="380">
+                
+          
+                 <b:panelGrid columns="1">
+                      <h:outputText value="#{bundle['lblMensaje']}" ></h:outputText>
+                      <br/>
+                  <h:outputText value="#{bundle['lblcorreo']}" ></h:outputText>
+                  <b:inputText value="#{recuperar.usuario}" ></b:inputText>
+                  <h:outputText value="#{bundle['lblcodigo']}" ></h:outputText>
+                  <b:inputText value="#{recuperar.codigo}"></b:inputText>
+                  </b:panelGrid>
+                  <f:facet name="footer">
+                      <b:commandButton type="submit" ajax="false" look="info" action="#{recuperar.verificador()}" value="#{bundle['lblBCodigo']}"/>
+                      <b:commandButton type="submit" ajax="false" look="info" action="#{recuperar.cuenta()}" value="#{bundle['lblBCorreo']}" />
+                            
+                  </f:facet>
+                        
+             
+        </b:modal>
+            </h:form>
 
 </ui:fragment>

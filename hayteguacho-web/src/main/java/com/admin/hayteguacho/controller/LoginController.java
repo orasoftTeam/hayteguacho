@@ -124,7 +124,10 @@ public class LoginController implements Serializable {
     private @Getter
     @Setter
     int indexNav = -1;
-
+    
+    private @Getter
+    @Setter
+    String codigo ;
     private @Getter
     @Setter
     String pais = "";
@@ -143,6 +146,7 @@ public class LoginController implements Serializable {
     }
 
     @PreDestroy
+   
     public void close() {
         //String pag = "/indexPaises.xhtml";
         if (userLog.getTipo().equals("E")) {
@@ -449,5 +453,6 @@ public class LoginController implements Serializable {
 
         return color;
     }
+ 
 
 }
