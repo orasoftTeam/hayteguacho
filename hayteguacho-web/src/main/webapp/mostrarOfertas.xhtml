@@ -11,6 +11,10 @@
     <ui:composition template="/template/template.xhtml">
         <ui:define name="content">
             <h:outputScript  target="body">
+                function habilitar(clase){
+                $('.'+clase).attr('disabled','disabled');
+                }
+                
                 function mostrar(){
                 alert('Hola');
                 }
@@ -87,7 +91,9 @@
                                             <h:graphicImage height="100" style="margin-left: 20px;width:80%" value="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo}" rendered="#{mostrarController.obtenerEmpresa(oferta.idempresa_tbl).logo.length() > 5}" />
                                             <br></br>
                                             <br></br>
-                                            <b:commandButton icon-awesome="fa-external-link" update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:80%;margin-left: 20px" />
+                                            
+                                            <b:commandButton class="desah#{oferta.idofertalaboral}" onclick="habilitar('desah#{oferta.idofertalaboral}');ajax:mostrarController.seleccionar(oferta);" icon-awesome="fa-external-link" update="@form" ajax="true"  value="#{bundle['lblBtnDetalles']}" look="warning" style="width:80%;margin-left: 20px" />
+                                            
                                             <br></br>
                                             <br></br>
                                             <b:commandButton icon-awesome="fa-pencil" update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}"  look="warning" style="width:80%;margin-left: 20px"/>
@@ -124,6 +130,8 @@
                             </b:column>
                         </b:row>
                     </b:row>
+                    
+                    <!-- MODAL APLICAR OFERTA-->
                     <b:modal title="#{bundle['titleAplicaOferta']}"  id="aplica"  styleClass="aplicarOferta" size="380">
                         <b:panelGrid columns="2" >
                             <h:outputText value="#{bundle['lblPretensionLaboral']}" ></h:outputText>
@@ -142,7 +150,11 @@
                                 type="submit" ajax="false" look="info" action="#{mostrarController.aplicarOferta}" value="#{bundle['lblAplicar']}"  />
                         </f:facet>
                     </b:modal>
-                    <b:modal  id="amodal"  styleClass="modalPseudoClass" size="lg">
+                    
+                    <!-- FIN MODAL APLICAR OFERTA-->
+                    
+                    <!-- MODAL DETALLES OPFERTA-->
+                    <b:modal  id="amodal"  styleClass="modalPseudoClass" size="lg" backdrop="false" closeOnEscape="false" closable="false" >
                         <b:panelGrid colSpans="3,9">
                             <h:outputText value="#{mostrarController.empresaForm.nombreempresa}" style="font-size: 18px; font-weight: bold;"></h:outputText>
                             <h:outputText value="#{mostrarController.empresaForm.descripcionempresa}" style="font-size: 14px;"></h:outputText>
@@ -195,9 +207,12 @@
                             </b:panelGrid>
                         </b:panelGrid>
                         <f:facet name="footer">
-                            <b:button value="#{bundle['lblBtnCerrar']}" dismiss="modal" />
+                            <b:button  value="#{bundle['lblBtnCerrar']}" dismiss="modal"/>
                         </f:facet>
                     </b:modal>
+                    
+                    <!-- FIN MODAL DETALLES OFERTA-->
+                    
                     <p:separator></p:separator>
                     <b:row>
                         <b:column col-md="2">
