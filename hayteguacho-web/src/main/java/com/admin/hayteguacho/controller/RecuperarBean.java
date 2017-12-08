@@ -61,6 +61,9 @@ public class RecuperarBean {
      public void modal(){
          validationBean.ejecutarJavascript("$('.recuperarCuenta').modal('show');");
      }
+     public void regis(){
+         validationBean.ejecutarJavascript("$('.seleccion').modal('show');");
+     }
     public void cuenta(){
           usuariorec = userFacade.getRecuperaacion(getUsuario());
           codigoV=validationBean.generarCodigo();

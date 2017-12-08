@@ -352,6 +352,7 @@ public class MostrarOfertaController implements Serializable {
     }
     
     public void seleccionar(OfertaForm oform){
+            
             ofertaForm= oform;
             empresaForm= obtenerEmpresa(oform.getIdempresa_tbl());
             deptoMun= deptoFacade.obtenerDepartamentoByIdCiudad(oform.getIdciudad()).get(0).getNombredepartamento();
@@ -364,12 +365,16 @@ public class MostrarOfertaController implements Serializable {
     }
     
     public void seleccionarAplicacion(OfertaForm oform){
+        String f =validationBean.obtenerFechaActual();
+       
         if(getPuedeAplicar()){
             ofertaForm= oform;
             validationBean.ejecutarJavascript("$('.aplicarOferta').modal('show');");
         }
         else{
-            validationBean.ejecutarJavascript("PF('growl').renderMessage({'summary':'" + validationBean.getMsgBundle("titleAplicaOferta")+"','detail':'" + validationBean.getMsgBundle("lblAutLogin")+"','severity':'warn'})");
+              validationBean.ejecutarJavascript("$('.sesion').modal('show');");
+              validationBean.lanzarMensaje("warn", "titleLogin", "lblErrorLogin");
+           // validationBean.ejecutarJavascript("PF('growl').renderMessage({'summary':'" + validationBean.getMsgBundle("titleAplicaOferta")+"','detail':'" + validationBean.getMsgBundle("lblAutLogin")+"','severity':'warn'})");
             //validationBean.lanzarMensaje("warning", "titleAplicaOferta", "lblAutLogin");
         }
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('destroy');");

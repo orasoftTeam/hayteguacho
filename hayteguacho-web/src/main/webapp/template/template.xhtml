@@ -59,8 +59,34 @@
         <h:form id="formGrl">
         <p:growl widgetVar="growl" id="growl"  showDetail="true"></p:growl>
         </h:form>
-        
-        
+        <!-- Ventana modal para logear si quiere aplicar a oferta sin estar autenticado -->
+        <h:form id="loginForm" >
+        <b:modal title="#{bundle['titleLogin']}"  id="res"  styleClass="sesion" size="380">
+                
+          
+                 <b:panelGrid columns="1" id="Correo" >
+                     
+                  <b:inputText placeholder="Email" fieldSize="sm" value="#{login.usuario}"/>
+                  
+                  <b:inputSecret placeholder="Password" fieldSize="sm" value="#{login.password}"/>
+                  
+                   <p:commandLink actionListener="#{recuperar.modal()}" value="#{bundle['lblLink']}" style="color: #00CED1; font-size: 11px"></p:commandLink>
+                   <p:commandLink actionListener="#{login.redireccionar('/registroCandidato.xhtml')}" value="#{bundle['lblLink2']}" style="color: #00CED1; font-size: 11px"></p:commandLink>
+                   
+                  </b:panelGrid>
+                 <f:facet name="footer" >
+                     <b:panelGrid id="btnFooter" columns="1" >
+                        
+                         <b:commandButton action="#{login.registrarse()}" value="#{bundle['lblBtnAcceder']}" look="success" icon="chevron-right" iconAlign="right" style=" font-size: 12px">
+                         
+                      </b:commandButton>
+                        </b:panelGrid>    
+                  </f:facet>
+                        
+             
+        </b:modal>
+                    
+        </h:form>
         <b:scrollUp distance="200" animation="fade" text=""  name="scrollUpCustom" />
         <!--
         <h:outputScript library="sh" name="js/shCore.js"         target="head"/>

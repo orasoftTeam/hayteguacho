@@ -80,12 +80,13 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
     }
 
     public List<OfertaForm> obtenerOfertas(String pais) {
-        String sql="select oferta.*  from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta \n" +
-"        where UPPER(nombrepais)= UPPER(?) \n" +
-"        and pais.idpais=depto.idpais \n" +
-"        and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
-"        and oferta.idciudad= ciudad.idciudad\n" +
-"        and oferta.estadoofertalaboral='A'";
+        String sql="select oferta. *  from tbl_pais pais, tbl_departamento depto, tbl_ciudad ciudad, tbl_ofertalaboral oferta     \n" +
+"where UPPER\n" +
+"(nombrepais)= UPPER(?) \n" +
+"and pais.idpais=depto.idpais \n" +
+"and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
+"and oferta.idciudad= ciudad.idciudad\n" +
+" and oferta.estadoofertalaboral='A'\n";
         Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
         q.setParameter(1, pais);
         List<TblOfertalaboral> listaEntity;

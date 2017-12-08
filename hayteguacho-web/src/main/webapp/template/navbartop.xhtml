@@ -21,7 +21,7 @@
             <b:navLink value="#{bundle['titleEmpresa']}" href="#{request.contextPath}/indexEmpresa.xhtml?opcion=2" style="margin-top: 15px;#{login.setearColor(2)}" rendered="#{(!login.loggedIn) and (login.pais.length() gt 0)}"></b:navLink>
             <b:navLink value="#{bundle['lblContactenos']}" href="#{request.contextPath}/contactenos.xhtml?opcion=3" style="margin-top: 15px;#{login.setearColor(3)}" ></b:navLink>
         </b:navbarLinks>
-        <b:navbarLinks style="margin-top: 12px;"  rendered="#{login.loggedIn}">
+        <b:navbarLinks style="margin-top: 15px;"  rendered="#{login.loggedIn}">
             <ui:repeat var="modulo" value="#{login.listaModulos}" varStatus="status" >
                 <b:navLink  value="#{modulo.nombremenu}" href="#{request.contextPath.concat('/pages/').concat(modulo.opcion)}"
                            rendered="#{login.obtenerListaOpciones(status.index).size() eq 0}"></b:navLink> 
@@ -35,7 +35,7 @@
         </b:navbarLinks>
         
         <h:form styleClass="navbar-form navbar-right">
-            <b:navbarLinks  style="margin-top: 1px;"  rendered="#{login.loggedIn}">
+            <b:navbarLinks  style="margin-top: 10px;"  rendered="#{login.loggedIn}">
                 <b:dropMenu value="#{login.userLog.nombre.concat('    ').concat(login.pais)}">
                     <b:column col-md="12" style="text-align: center;" >
                         <h:panelGrid columns="1">
@@ -58,7 +58,7 @@
                 </b:dropMenu>
             </b:navbarLinks>
             <c:if test="#{!login.loggedIn and login.mostrarLogin()}">
-                <div style="margin-top: 12px" >
+                <div style="margin-top:2px" >
                      <div class="form-group" >
                          
                     <b:inputText placeholder="Email" fieldSize="sm" value="#{login.usuario}"/>
@@ -70,12 +70,14 @@
                 </div> 
                      
                 #{' '}
-                <b:commandButton action="#{login.logear}" value="#{bundle['lblBtnAcceder']}" look="success" icon="chevron-right" iconAlign="right" style=" font-size: 12px"/>
-                <div class="form-group" >
+                <b:commandButton action="#{login.logear}" value="#{bundle['lblBtnAcceder']}" look="success" icon="chevron-right" iconAlign="right" style=" font-size: 12px"></b:commandButton>
+                <div class="form-group" style="margin-top: 15px">
                     <p style="color: white; font-size: 12px">#{login.pais}
                   <br/>
                   <p:commandLink actionListener="#{recuperar.modal()}" value="#{bundle['lblLink']}" style="color: #00CED1; font-size: 11px"></p:commandLink>
-                 </p>
+                  <br/>
+                 
+                    </p>
                     <!--input type="text" class="form-control" placeholder="Search"/-->
                 </div>
                    
@@ -84,6 +86,8 @@
             </c:if>
         </h:form>
     </b:navBar>
+    
+    
     <h:form id="recuperarForm">
              
              <b:modal title="#{bundle['lbltituloCuenta']}"  id="recuperarC"  styleClass="recuperarCuenta" size="380">
@@ -100,8 +104,9 @@
                   </b:panelGrid>
                  <f:facet name="footer" >
                      <b:panelGrid id="btnFooter" columns="1" >
-                      <b:commandButton   rendered="#{recuperar.mostrar}" type="submit"  look="info" action="#{recuperar.verificador()}" value="#{bundle['lblBCodigo']}"/>
-                      <b:commandButton rendered="#{!recuperar.mostrar}"  look="info" action="#{recuperar.cuenta()}" value="#{bundle['lblBCorreo']}" >
+                      <b:commandButton   rendered="#{recuperar.mostrar}" type="submit"  look="info" action="#{recuperar.verificador()}" value="#{bundle['lblBCodigo']}">
+                         </b:commandButton>
+                          <b:commandButton rendered="#{!recuperar.mostrar}"  look="info" action="#{recuperar.cuenta()}" value="#{bundle['lblBCorreo']}" >
                       <f:ajax execute="@form" render="@none" />
                       </b:commandButton>
                         </b:panelGrid>    

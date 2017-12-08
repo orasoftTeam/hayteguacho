@@ -108,7 +108,7 @@
                                             <h:panelGrid columns="1">
                                                 <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}" look="warning" style="width:100%"  /></p>
                                                 <p:separator></p:separator>
-                                                <p><b:commandButton update="@form" ajax="true" actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" /></p>
+                                                <p><b:commandButton update="@form" ajax="true"  actionListener="#{mostrarController.seleccionar(oferta)}" value="#{bundle['lblBtnDetalles']}" look="warning" style="width:100%" /></p>
                                             </h:panelGrid>
                                         </b:column>
                                     </b:row>                      
@@ -125,6 +125,12 @@
                             </b:column>
                         </b:row>
                     </b:row>
+                    
+                    
+                    
+                    
+                    
+                    
                     <b:modal title="#{bundle['titleAplicaOferta']}"  id="aplica"  styleClass="aplicarOferta" size="380">
                         <b:panelGrid colSpans="3,9">
                             <h:outputText value="#{bundle['lblPretensionLaboral']}" ></h:outputText>
@@ -213,5 +219,6 @@
             </h:form>
         </ui:define>
     </ui:composition>
+       
 
 </html>

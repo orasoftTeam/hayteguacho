@@ -71,6 +71,7 @@ public class LoginController implements Serializable {
     @EJB
 
     private ValidationBean validationBean;
+     
 
     @EJB
     private MembresiaFacade membresiaFacade;
@@ -138,6 +139,7 @@ public class LoginController implements Serializable {
     private @Getter
     @Setter
     MembresiaxEmpresaForm membresiaxEmpresaActual;
+     private @Getter @Setter OfertaForm ofertaForm;
 
     @PostConstruct
     public void init() {
@@ -332,6 +334,24 @@ public class LoginController implements Serializable {
        
         
      }
+     public void registrarse() {
+        System.err.println("Entro a logear");
+        
+        UserForm usuario = userFacade.getUser(getUsuario(), getPassword());
+       
+            if (usuario.getTipo().equals("E")) {
+               
+                   validationBean.lanzarMensaje("warn", "titleLogin", "lblcondicion");
+                    
+            } else {
+                    if (usuario.getTipo().equals("C")) {
+                         
+                              userLog = usuario;
+                              loggedIn = true;
+                
+                         }
+                    }
+    }
 
     /*
     public void logearEmpresa() {
