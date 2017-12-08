@@ -70,7 +70,8 @@ public class MostrarOfertaController implements Serializable {
     private @Getter @Setter List<TotalCategoriasForm> listaTotalCurriculum= new ArrayList<>();
     
     private @Getter @Setter int count=5;
-    
+   //private @Getter @Setter int cont = 0;
+   // private @Getter @Setter boolean disable = false;
     private @Getter @Setter int ini=0;
     
     private @Getter @Setter int numreg;
@@ -349,9 +350,14 @@ public class MostrarOfertaController implements Serializable {
         //limpiar();
         ofertaForm= new OfertaForm();
         validationBean.ejecutarJavascript("$('.modalPseudoClass').modal('hide'); ");
+        //count2=0;
+        //disable = false;
     }
-    
+   
     public void seleccionar(OfertaForm oform){
+            
+            //if(disable == true){
+            //disable = true;
             ofertaForm= oform;
             empresaForm= obtenerEmpresa(oform.getIdempresa_tbl());
             deptoMun= deptoFacade.obtenerDepartamentoByIdCiudad(oform.getIdciudad()).get(0).getNombredepartamento();
@@ -360,7 +366,9 @@ public class MostrarOfertaController implements Serializable {
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('destroy');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('index');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('jump',"+contador+");");
-           // validationBean.ejecutarJavascript("myFlipster.flipster('destroy'); myFlipster.flipster(); myFlipster.flipster('jump',"+contador+");");
+           // validationBean.ejecutarJavascript("myFlipster.flipster('destroy'); myFlipster.flipster(); myFlipster.flipster('jump',"+contador+");");}
+            //count2=1;
+            //}
     }
     
     public void seleccionarAplicacion(OfertaForm oform){
