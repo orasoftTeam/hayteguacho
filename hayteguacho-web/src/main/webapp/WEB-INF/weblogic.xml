@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-web-app xmlns="http://xmlns.oracle.com/weblogic/weblogic-web-app" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd http://xmlns.oracle.com/weblogic/weblogic-web-app http://xmlns.oracle.com/weblogic/weblogic-web-app/1.8/weblogic-web-app.xsd">
+  <!--<property name="alternatedocroot_1" value="from=/pdf/* dir=/base_domain" />
+  <property name="alternatedocroot_2" value="from=/logos/* dir=/base_domain" />-->
+    <virtual-directory-mapping>
+     <local-path>C:\oraora\user_projects\domains\base_domain</local-path>
+        <url-pattern>/logos/*</url-pattern>
+</virtual-directory-mapping>
+<virtual-directory-mapping>
+     <local-path>C:\oraora\user_projects\domains\base_domain</local-path>
+        <url-pattern>/pdf/*</url-pattern>
+</virtual-directory-mapping>
+    <jsp-descriptor>
+    <keepgenerated>true</keepgenerated>
+    <debug>true</debug>
+  </jsp-descriptor>
+  <context-root>/hayteguacho-web</context-root>
+</weblogic-web-app>
