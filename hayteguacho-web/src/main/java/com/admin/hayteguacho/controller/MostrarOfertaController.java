@@ -90,12 +90,12 @@ public class MostrarOfertaController implements Serializable {
     
     private @Getter @Setter String[] cssClases= new String[6];
     
-    private @Setter boolean puedeAplicar;
+    //private @Setter boolean puedeAplicar;
     
     private @Getter @Setter String pais;
     //private @Getter @Setter int contador=0;
     
-    //@PostConstruct
+    @PostConstruct
     public void init(){
         //pais= loginBean.getPais();
         listaOferta= ofertaFacade.obtenerOfertasByRange(pais,ini, count);
