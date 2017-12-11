@@ -5,6 +5,7 @@
  */
 package com.hayteguacho.entity;
 
+import com.admin.hayteguacho.form.CurriculumForm;
 import com.admin.hayteguacho.form.MenuForm;
 import com.admin.hayteguacho.form.TotalCategoriasForm;
 import java.io.Serializable;

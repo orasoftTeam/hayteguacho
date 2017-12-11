@@ -11,35 +11,36 @@
 
     <ui:composition template="/template/template.xhtml">
         <ui:define name="content">
-             <h:outputScript  target="body">
-                function mostrar(){
-                alert('Hola');
+            <h:outputScript  target="body">
+                var texto = 0;
+                var cadena = "";
+                window.setInterval(
+                function(){
+                texto = texto + 1;
+                if (texto == 1) {
+                cadena += "Bienvenido!";
                 }
-
-                function soloNumeros(obj) 
-                { 
-                obj.value = (obj.value + '').replace(/[^0-9]/g, '');
+                if (texto == 2) {
+                cadena += " Soy Chambita!";
                 }
-
-
-                $(function(){
-                $('.crsl-items').carousel({
-                visible: 3,
-                itemMinWidth: 180,
-                itemEqualHeight: 370,
-                itemMargin: 9,
-                });
-
-                $("a[href=#]").on('click', function(e) {
-                e.preventDefault();
-                });
-                });
+                if (texto == 3) {
+                cadena += '<br></br>Haz clic <a href="#">aqui</a>';
                 
-                $( window ).on( "load", function() {
-                    if(!((#{mostrarController.listaOferta.size()}) &#62; 0)){
-                        $("body").css('background-image', 'none');
-                    }
-                });
+                }
+                if (texto == 4) {
+                cadena += " para ver";
+                }
+                if (texto == 5) {
+                cadena += " tus postulaciones!";
+                }
+                if (texto == 6){
+                $('.chambixImg').attr('src','../../resources/images/cambita-no-habla.gif');
+                }
+                $('.chambix').html(cadena);
+                //document.getElementById("parrafo").innerHTML = cadena;
+                //"Han pasado " + texto + " segundos!";
+                }
+                , 1000	);
             </h:outputScript>
             <style>
                 body{
@@ -51,36 +52,135 @@
                 body a{
                     font-weight:bold;
                     color: #34495E;
-                    
+
                 }
             </style>
-            
+
             <b:row>
                 <b:column span="12">
                     <b:panel>
                         <b:row>
-                            <b:column span="3">
-                                <b:panel></b:panel>
-                                
+                            <b:column span="4">
+                                <b:panel>
+                                    <b:row>
+                                        <b:column span="4">
+                                            <h:graphicImage  library="images" name="usuario.png" height="100" width="100" />
+                                        </b:column>
+                                        <b:column span="8"> 
+                                            <h:outputText value="#{dashboardCandidato.fullName}" style="font-weight: bold;font-size: 20px" /><br></br>  
+                                            <h:outputText value="#{dashboardCandidato.puesto}" style="font-size: 18px" /><br></br>
+                                            <h:outputLink value="#{request.contextPath}/pages/candidato/mantenimientoCandidato.xhtml" style="font-size: 18px" >
+                                                Editar Perfil
+                                            </h:outputLink>
+                                        </b:column>
+                                    </b:row>
+                                    <p:separator/>
+                                    <b:row>
+                                        <b:column span="12">
+                                            <center>
+                                                <h:outputLink id="linkM" value="#{request.contextPath}/#{dashboardCandidato.loggedCand.archivocurriculum}"   target="_blank" >
+                                                    <p:graphicImage id="cvMostrar"  style="height: 42px;width: 42px"  library="images"  name="iconoCV.jpg"  />
+                                                    <b:label  text="Click para ver curriculum" style="font-size: 15px" ></b:label>
+                                                </h:outputLink>
+                                            </center>
+                                        </b:column>
+                                    </b:row>
+
+
+
+                                </b:panel>
+
                             </b:column>
-                            <b:column span="9">
-                                <b:panel></b:panel>
-                                
+                            <b:column span="8">
+                                <b:panel>
+                                       <img class="chambixImg" src="../../resources/images/chambita-habla-escritorio-mas-pc.gif"  
+                                         style="width:100%;
+                                                height: 100%" />
+                                    <h:outputText class="chambix"
+                                                  escape="false"
+                                                  style="font-size: 25px;
+                                                  position: absolute;
+                                                  top: 40%;
+                                                  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+                                                  left: 60%;
+                                                  transform: translate(-50%,-40%);
+                                                  color: black;"
+                                                  />
+                                    
+
+                                </b:panel>
+
                             </b:column>
                         </b:row>
                         <b:row>
                             <b:column span="12">
-                                <b:panel></b:panel>
+                                <b:panel>
+                                     <h:form id='empleosForm'>
+                                        <b:row>
+                                            <b:column span="12">
+                                                <center style="padding: 10px">
+                                                    <h:outputText value="Encuentra empleo ahora" style="font-weight: bold;font-size: 25px;" />
+                                                </center>
+                                            </b:column>
+                                        </b:row>
+                                        <b:row>
+                                            <b:column span="4"><b:selectOneMenu id="categoriaCmb" value="#{mostrarController.idcategoriafilter}"  label="#{bundle['lblNombreCategoriaEmpresa']}" 
+                                                                                onchange="ajax:mostrarController.cambiarCategoriaByFilter()"
+                                                                                >
+                                                    <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
+                                                    <f:selectItems value="#{empresaController.listaCategoria}" var="categoria" itemValue="#{categoria.idcategoria}" itemLabel="#{categoria.nombrecategoria}"/>
+                                                </b:selectOneMenu></b:column>
+                                            <b:column span="4">
+                                                <b:selectOneMenu value="#{mostrarController.iddeptofilter}"  label="#{bundle['lblNombreDepto']}" 
+                                                                 onchange="ajax:mostrarController.cambiarDeptoByFilter()"
+                                                                 >
+                                                    <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
+                                                    <f:selectItems value="#{ofertaController.listaDepto}" var="depto" itemValue="#{depto.iddepartamento}" itemLabel="#{depto.nombredepartamento}"/>
+                                                </b:selectOneMenu>
+                                            </b:column>  
+                                            <b:column span="4">
+                                                <b:button outcome="/mostrarOfertas.xhtml?opcion=0" value="#{bundle['lblBuscarEmpleos']}" style="margin-top:15px; opacity: 1 !important;width: 100%"  icon-awesome="fa-search" size="lg" look="warning"></b:button>
+                                            </b:column>
+                                        </b:row>
+
+
+
+
+                                    </h:form>
+                                
+                                </b:panel>
                             </b:column>
-                            
+
                         </b:row>
+                        
+                         <b:row>
+                <b:column span="12">
+                    <b:panel>
+                        <b:row><b:column span="12">
+                                                <center style="padding: 10px">
+                                                        <h:outputText value="Empresas que han visto tu Curriculum" style="font-weight: bold;font-size: 25px;" />
+                                                </center>
+                                            </b:column></b:row>
+                        <b:row><b:column span="12">
+                            <b:dataTable widgetVar="curriculumWidget"  custom-lang-url="//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                                    id="tblCurriculum"
+                                    value="#{dashboardCandidato.listaCV}"
+                                    var="cv">
+                           <b:dataTableColumn  value="#{cv.nombre}" label="Empresa"/>
+                           <b:dataTableColumn  value="#{cv.titulo}" label="Oferta Laboral"/>
+                           <b:dataTableColumn  value="#{cv.puesto}" label="Puesto"/>
+                       </b:dataTable>
+                                
+                            </b:column></b:row>
                     </b:panel>
                 </b:column>
-                
             </b:row>
-            
-            
-            
+                    </b:panel>
+                </b:column>
+
+            </b:row>
+           
+
         </ui:define>
     </ui:composition>
 </html>
