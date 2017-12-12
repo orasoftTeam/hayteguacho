@@ -287,7 +287,7 @@ public class LoginController implements Serializable {
                 setPassword("");
                 loggedIn = true;
                 listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
-                redireccionar("/mostrarOfertas.xhtml?faces-redirect=true");
+                redireccionar("/pages/candidato/dashboardCandidato.xhtml?faces-redirect=true");
             }
 
             System.err.println("la imagen es: " + userLog.getImagen());
