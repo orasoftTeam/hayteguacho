@@ -10,6 +10,11 @@
 
     <ui:composition template="/template/template.xhtml">
         <ui:define name="content">
+            <h:outputScript target="body">
+                function habilitar(clase){
+                $('.'+clase).attr('disabled','disabled');
+                }
+            </h:outputScript>
             <h:form id="CxempresaForm" >
                 <p:growl showDetail="true"/>
             <b:tabView tabPosition="left" contentStyle="border: 1px solid #ddd;padding:10px"> 
@@ -29,7 +34,8 @@
                         <b:dataTableColumn label="#{bundle.lblTelEmpresa1}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono1candidato} ,#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono2candidato} "/>
                         <b:dataTableColumn label="#{bundle.lblGenero}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).generocandidato}"/>
                            <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
-                                    <b:commandButton onclick="ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
+                               <b:commandButton class="desah#{cxempresa.idcandidatoxempresa}"
+                                                     onclick="habilitar('desah#{cxempresa.idcandidatoxempresa}');ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
                                                      icon-awesome="fa-external-link"
                                                      look="info" />
                                 </b:dataTableColumn>

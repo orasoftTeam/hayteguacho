@@ -10,7 +10,11 @@
 
     <ui:composition template="/template/template.xhtml">
         <ui:define name="content">
-
+            <h:outputScript target="body">
+                function habilitar(){
+                $('.desah').attr('disabled','disabled');
+                }
+            </h:outputScript>
 
 
 
@@ -121,7 +125,9 @@
                                 
                                 <b:dataTableColumn label="#{bundle['lblCxoEstado']}" value="#{mostrarCandxOfertaController.getEstadoCxoferta(cxoferta.estadocandidatoxofertalaboral)}" />
                                  <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
-                                    <b:commandButton onclick="ajax:mostrarCandxOfertaController.dialogo(mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato),cxoferta);" value="#{bundle.lblVer}"  ajax="true" 
+                                    <b:commandButton 
+                                        class="desah"
+                                        onclick="habilitar();ajax:mostrarCandxOfertaController.dialogo(mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato),cxoferta);" value="#{bundle.lblVer}"  ajax="true" 
                                                      look="info"  icon-awesome="fa-external-link" />
                                 </b:dataTableColumn>
                             </b:dataTable>
