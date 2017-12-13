@@ -34,7 +34,8 @@
                         <b:dataTableColumn label="#{bundle.lblTelEmpresa1}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono1candidato} ,#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono2candidato} "/>
                         <b:dataTableColumn label="#{bundle.lblGenero}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).generocandidato}"/>
                            <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
-                               <b:commandButton class="desah#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).idcandidato}" onclick="habilitar('desah#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).idcandidato}');ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
+                               <b:commandButton class="desah#{cxempresa.idcandidatoxempresa}"
+                                                     onclick="habilitar('desah#{cxempresa.idcandidatoxempresa}');ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
                                                      icon-awesome="fa-external-link"
                                                      look="info" />
                                 </b:dataTableColumn>

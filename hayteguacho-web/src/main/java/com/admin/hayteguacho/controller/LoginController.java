@@ -287,7 +287,7 @@ public class LoginController implements Serializable {
                 setPassword("");
                 loggedIn = true;
                 listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
-                redireccionar("/mostrarOfertas.xhtml?faces-redirect=true");
+                redireccionar("/pages/candidato/dashboardCandidato.xhtml?faces-redirect=true");
             }
 
             System.err.println("la imagen es: " + userLog.getImagen());
@@ -339,10 +339,14 @@ public class LoginController implements Serializable {
         
         UserForm usuario = userFacade.getUser(getUsuario(), getPassword());
        
+        if (usuario.getCorreo() == null) {
+            validationBean.lanzarMensaje("warn", "titleLogin", "lblErrorLogin");
+            } else if
+                (usuario.getCorreo() != null) {
             if (usuario.getTipo().equals("E")) {
                
                    validationBean.lanzarMensaje("warn", "titleLogin", "lblcondicion");
-                    
+                
             } else {
                     if (usuario.getTipo().equals("C")) {
                          
@@ -350,8 +354,11 @@ public class LoginController implements Serializable {
                               loggedIn = true;
                 
                          }
+            }      
                     }
+                    
     }
+     
 
     /*
     public void logearEmpresa() {

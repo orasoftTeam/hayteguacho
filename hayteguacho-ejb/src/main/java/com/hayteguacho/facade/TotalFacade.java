@@ -5,6 +5,7 @@
  */
 package com.hayteguacho.facade;
 
+import com.admin.hayteguacho.form.CurriculumForm;
 import com.admin.hayteguacho.form.TotalCategoriasForm;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,50 @@ public class TotalFacade {
 
     public TotalFacade() {
 
+    }
+    
+    public List<CurriculumForm> dashCandidato(String pais, String idcandidato){
+        String sql = "select aplica.IDCANDIDATOXOFERTALABORAL, \n" +
+"oferta.IDOFERTALABORAL,\n" +
+"categoria.NOMBRECATEGORIA as categoria,\n" +
+"oferta.TITULOOFERTALABORAL as titulo, "
+                + "empresa.NOMBREEMPRESA as nombre,\n" +
+"puesto.NOMBREPUESTOTRABAJO as puesto,\n" +
+"candidato.NOMBRECANDIDATO || ' ' || candidato.APELLIDOCANDIDATO as nombrecandidato\n" +
+"from TBL_CANDIDATOXOFERTALABORAL aplica\n" +
+"inner join TBL_OFERTALABORAL oferta\n" +
+"on oferta.IDOFERTALABORAL = aplica.IDOFERTALABORAL\n" +
+"inner join TBL_CIUDAD ciudad\n" +
+"on ciudad.IDCIUDAD = oferta.IDCIUDAD\n" +
+"inner join TBL_DEPARTAMENTO depto\n" +
+"on depto.IDDEPARTAMENTO = ciudad.IDDEPARTAMENTO\n" +
+"inner join TBL_PAIS pais\n" +
+"on pais.IDPAIS = depto.IDPAIS\n" +
+"inner join TBL_PUESTOTRABAJO puesto\n" +
+"on oferta.IDPUESTOTRABAJO = puesto.IDPUESTOTRABAJO\n" +
+"inner join tbl_categoriaempresa categoria\n" +
+"on categoria.idcategoria = puesto.IDCATEGORIA\n" +
+"inner join tbl_empresa empresa\n" +
+"on empresa.IDEMPRESA = oferta.IDEMPRESA\n" +
+"inner join TBL_CANDIDATOXOFERTALABORAL aplica\n" +
+"on aplica.IDOFERTALABORAL = oferta.IDOFERTALABORAL\n" +
+"inner join tbl_candidato candidato\n" +
+"on candidato.IDCANDIDATO = aplica.IDCANDIDATO\n" +
+"where oferta.estadoofertalaboral='A'\n" +
+"and categoria.idcategoria = categoria.idcategoria\n" +
+"and aplica.ESTADOCANDIDATOXOFERTALABORAL = 'CV'\n" +
+"AND UPPER(nombrepais)= UPPER(?)\n" +
+"and candidato.IDCANDIDATO = ?\n" +
+"group by aplica.IDCANDIDATOXOFERTALABORAL,oferta.IDOFERTALABORAL, categoria.NOMBRECATEGORIA, empresa.NOMBREEMPRESA,\n" +
+"puesto.NOMBREPUESTOTRABAJO, candidato.NOMBRECANDIDATO || ' ' || candidato.APELLIDOCANDIDATO, oferta.FECHAHORAOFERTALABORAL, oferta.TITULOOFERTALABORAL\n" +
+"order by oferta.FECHAHORAOFERTALABORAL desc";
+        Query q = em.createNativeQuery(sql, "DashCandidato");
+        q.setParameter(1, pais);
+        q.setParameter(2, idcandidato);
+        q.setMaxResults(5);
+        q.setFirstResult(0);
+        List<CurriculumForm> temp = q.getResultList();
+        return temp.isEmpty() ? new ArrayList<CurriculumForm>() : temp;
     }
 
     public List<TotalCategoriasForm> totalCategorias(String pais) {

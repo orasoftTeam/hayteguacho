@@ -272,7 +272,7 @@ public class MostrarOfertaController implements Serializable {
     public void aplicarOferta(){
         AplicarOfertaForm ao= new AplicarOfertaForm();
         String flag="";
-        ao.setIdaplica("0");
+                ao.setIdaplica("0");
         ao.setIdcandidato(loginBean.getUserLog().getIdentificador());
         ao.setIdoferta(ofertaForm.getIdofertalaboral());
         ao.setPretension(getPretension());
@@ -373,16 +373,26 @@ public class MostrarOfertaController implements Serializable {
     
     public void seleccionarAplicacion(OfertaForm oform){
         String f =validationBean.obtenerFechaActual();
-       
-        if(getPuedeAplicar()){
-            ofertaForm= oform;
-            validationBean.ejecutarJavascript("$('.aplicarOferta').modal('show');");
-        }
-        else{
-              validationBean.ejecutarJavascript("$('.sesion').modal('show');");
-              validationBean.lanzarMensaje("warn", "titleLogin", "lblErrorLogin");
-           // validationBean.ejecutarJavascript("PF('growl').renderMessage({'summary':'" + validationBean.getMsgBundle("titleAplicaOferta")+"','detail':'" + validationBean.getMsgBundle("lblAutLogin")+"','severity':'warn'})");
-            //validationBean.lanzarMensaje("warning", "titleAplicaOferta", "lblAutLogin");
+         
+        if(loginBean.isLoggedIn() && loginBean.getUserLog()!=null 
+               && loginBean.getUserLog().getIdentificador()!=null && loginBean.getUserLog().getTipo().equals("E")){
+              
+                validationBean.ejecutarJavascript("PF('growl').renderMessage({'summary':'" + validationBean.getMsgBundle("titleAplicaOferta")+"','detail':'" + validationBean.getMsgBundle("lblcondicion")+"','severity':'warn'})");
+
+                //validationBean.updateComponent("formGrl:growl");
+                
+        }else{
+              if(loginBean.isLoggedIn() && loginBean.getUserLog()!=null 
+               && loginBean.getUserLog().getIdentificador()!=null && loginBean.getUserLog().getTipo().equals("C")){
+            
+                ofertaForm= oform;
+                validationBean.ejecutarJavascript("$('.aplicarOferta').modal('show');");
+             
+            }else{
+                validationBean.ejecutarJavascript("$('.sesion').modal('show');");
+            }
+        
+        
         }
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('destroy');");
             //validationBean.ejecutarJavascript("$('#coverflow').flipster('index');");

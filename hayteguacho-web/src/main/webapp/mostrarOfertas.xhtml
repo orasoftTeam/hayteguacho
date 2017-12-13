@@ -96,7 +96,7 @@
                                             
                                             <br></br>
                                             <br></br>
-                                            <b:commandButton icon-awesome="fa-pencil" update="@form" ajax="true" actionListener="#{mostrarController.seleccionarAplicacion(oferta)}" value="#{bundle['lblAplicar']}"  look="warning" style="width:80%;margin-left: 20px"/>
+                                            <b:commandButton class="desahA#{oferta.idofertalaboral}" onclick="habilitar('desahA#{oferta.idofertalaboral}');ajax:mostrarController.seleccionarAplicacion(oferta);" icon-awesome="fa-pencil" update="@form" id="aplicar" ajax="true"  value="#{bundle['lblAplicar']}"  look="warning" style="width:80%;margin-left: 20px"/>
                                             
                                         </b:column>
          

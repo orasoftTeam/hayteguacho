@@ -7,17 +7,21 @@ package com.hayteguacho.entity;
 
 
 
+import com.admin.hayteguacho.form.CurriculumForm;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -28,9 +32,22 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "TBL_CATEGORIAEMPRESA")
+@SqlResultSetMapping(
+name = "DashCandidato",
+        classes = @ConstructorResult(
+        targetClass = CurriculumForm.class,
+                columns = {
+                @ColumnResult(name = "idcandidatoxofertalaboral", type = String.class),
+                @ColumnResult(name = "idofertalaboral", type = String.class),
+                @ColumnResult(name = "categoria", type = String.class),
+                @ColumnResult(name = "titulo", type = String.class),
+                @ColumnResult(name = "nombre", type = String.class),
+                @ColumnResult(name = "puesto", type = String.class),
+                @ColumnResult(name = "nombrecandidato", type = String.class)
+                }
+        ))
+
 @XmlRootElement
-
-
 @NamedQueries({
     @NamedQuery(name = "TblCategoriaempresa.findAll", query = "SELECT t FROM TblCategoriaempresa t"),
     @NamedQuery(name = "TblCategoriaempresa.findByIdcategoria", query = "SELECT t FROM TblCategoriaempresa t WHERE t.idcategoria = :idcategoria"),
