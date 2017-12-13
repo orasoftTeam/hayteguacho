@@ -14,7 +14,9 @@
                 function habilitar(clase){
                 $('.'+clase).attr('disabled','disabled');
                 }
-                
+                function habilitarSin(){
+                $('.desah').attr('disabled','disabled');
+                }
                 function mostrar(){
                 alert('Hola');
                 }
@@ -92,7 +94,7 @@
                                             <br></br>
                                             <br></br>
                                             
-                                            <b:commandButton class="desah#{oferta.idofertalaboral}" onclick="habilitar('desah#{oferta.idofertalaboral}');ajax:mostrarController.seleccionar(oferta);" icon-awesome="fa-external-link" update="@form" ajax="true"  value="#{bundle['lblBtnDetalles']}" look="warning" style="width:80%;margin-left: 20px" />
+                                            <b:commandButton class="desah" onclick="habilitarSin();ajax:mostrarController.seleccionar(oferta);" icon-awesome="fa-external-link" update="@form" ajax="true"  value="#{bundle['lblBtnDetalles']}" look="warning" style="width:80%;margin-left: 20px" />
                                             
                                             <br></br>
                                             <br></br>
