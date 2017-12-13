@@ -97,6 +97,8 @@ public class CandidatoxempresaController {
             //String res = "";
             pdfshow = true;
             vb.updateComponent("CxempresaForm:amodal");
+            wordRoot = "";
+            vb.updateComponent("CxempresaForm:archivo");
             vb.ejecutarJavascript("$('.modalPseudoClass').modal('show');");
         }
 
