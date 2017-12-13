@@ -217,7 +217,7 @@ public class EmpresaController {
                         loginBean.logear();
                         //loginBean.setLoggedIn(true);
                         //loginBean.redireccionarEnlaces("membresia/vistaMembresia.xhtml?faces-redirect=true");
-                            loginBean.redireccionarEnlaces("oferta/mantenimientoOferta.xhtml?faces-redirect=true");    
+                           // loginBean.redireccionarEnlaces("oferta/mantenimientoOferta.xhtml?faces-redirect=true");    
                       //  loginBean.logear();
                         //validationBean.lanzarMensaje("info", "titleEmpresa", "lblGuardarSuccess");
                         //limpiar();
