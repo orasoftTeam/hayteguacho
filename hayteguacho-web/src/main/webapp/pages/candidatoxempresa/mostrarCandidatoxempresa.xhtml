@@ -10,9 +10,9 @@
 
     <ui:composition template="/template/template.xhtml">
         <ui:define name="content">
-            <h:outputScript  target="body">
-                 function habilitar(clase){
-                $('.'+clase).attr('disabled','disabled');
+            <h:outputScript target="body">
+                function habilitar(){
+                $('.desah').attr('disabled','disabled');
                 }
             </h:outputScript>
             <h:form id="CxempresaForm" >
@@ -23,8 +23,7 @@
                         id="tblCxempresa"
                         value="#{CxempresaController.listaCxempresa}"
                         var="cxempresa"
-                        select="true"
-                        selectionMode="single"
+                        
                         paginated="true"
                         responsive="true"
                         >
@@ -34,15 +33,15 @@
                         <b:dataTableColumn label="#{bundle.lblTelEmpresa1}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono1candidato} ,#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).telefono2candidato} "/>
                         <b:dataTableColumn label="#{bundle.lblGenero}" value="#{CxempresaController.obtenerCandidato(cxempresa.idcandidato).generocandidato}"/>
                            <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
-                               <b:commandButton class="desah#{cxempresa.idcandidatoxempresa}"
-                                                     onclick="habilitar('desah#{cxempresa.idcandidatoxempresa}');ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
-                                                     icon-awesome="fa-external-link"
+                               <b:commandButton      class="desah"
+                                                     onclick="habilitar();ajax:CxempresaController.dialogo(CxempresaController.obtenerCandidato(cxempresa.idcandidato));" value="#{bundle.lblVer}"  ajax="true" 
+                                                     icon-awesome="fa-external-link" update="@form"
                                                      look="info" />
                                 </b:dataTableColumn>
                         <b:dataTableColumn label="#{bundle.lblCxoOperacion}" >
-                            <b:commandButton  
-                                icon-awesome="fa-close"
-                                look="danger" value="#{bundle.lblbtnEliminar}" ajax="true" update="@form" actionListener="#{CxempresaController.validarEliminar(cxempresa)}"  />
+                            <b:commandButton   
+                                icon-awesome="fa-close" class="desah"
+                                look="danger" value="#{bundle.lblbtnEliminar}" ajax="true" update="@form" onclick="habilitar();ajax:CxempresaController.validarEliminar(cxempresa);"  />
                         </b:dataTableColumn>
                     </b:dataTable>
                 

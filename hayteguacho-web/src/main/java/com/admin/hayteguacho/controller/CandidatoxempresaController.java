@@ -104,6 +104,8 @@ public class CandidatoxempresaController {
 
     public void validarEliminar(CandidatoxempresaForm coxf) {
         ideliminar = coxf.getIdcandidatoxempresa();
+        wordRoot = "";
+        vb.updateComponent("CxempresaForm:archivo");
         vb.ejecutarJavascript("$('.modalPseudoClass2').modal('show');");
     }
 
@@ -112,6 +114,7 @@ public class CandidatoxempresaController {
             cxef.remove(cxef.find(BigDecimal.valueOf(Double.parseDouble(ideliminar))));
             vb.lanzarMensaje("info", "lblCxEmpresa", "lblCxEmpresaEliminar");
             listaCxempresa = cxef.obtenerCandidatosxempresa(login.getUserLog().getIdentificador());
+            
             vb.updateComponent("CxempresaForm");
         } catch (Exception e) {
             System.out.println("com.admin.hayteguacho.controller.CandidatoxempresaController.eliminar()");
