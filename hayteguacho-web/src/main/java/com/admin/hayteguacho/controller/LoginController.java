@@ -264,7 +264,7 @@ public class LoginController implements Serializable {
                     loggedIn = true;
                     isMembresia = true;
                     listaModulos = menuFacade.obtenerModulos(usuario.getIdrol());
-                    redireccionar("/pages/oferta/mantenimientoOferta.xhtml?faces-redirect=true");
+                    redireccionar("/pages/empresa/dashboardEmpresa.xhtml?faces-redirect=true");
                 } else if (log.equals("-1")) {
                     validationBean.lanzarMensaje("warn", "titleLogin", "lblLimitUser");
                     System.err.println("Excedió el numero de usuarios");

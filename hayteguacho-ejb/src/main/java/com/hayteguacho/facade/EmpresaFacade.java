@@ -61,6 +61,26 @@ public class EmpresaFacade extends AbstractFacade<TblEmpresa, EmpresaForm> {
         return listaEntityForm;
     }
     
+    public EmpresaForm obtenerEmp(String idempresa) {
+        Query q = getEntityManager().createNativeQuery("select * from tbl_empresa where idempresa=?", TblEmpresa.class);
+        q.setParameter(1, new BigInteger(idempresa));
+        List<TblEmpresa> listaEntity;
+        List<EmpresaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<EmpresaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new EmpresaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<EmpresaForm>();
+        }
+
+        return listaEntityForm.get(0);
+    }
+    
     
     public List<EmpresaForm> obtenerEmpresaById(String idempresa) {
         String sql="select idempresa, idciudad, idcategoria, idtipologia, idcargoempresa,\n" +
