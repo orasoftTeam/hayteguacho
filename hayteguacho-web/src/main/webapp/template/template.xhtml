@@ -61,11 +61,17 @@
         </h:form>
         <!-- Ventana modal para logear si quiere aplicar a oferta sin estar autenticado -->
         <h:form id="loginForm" >
-        <b:modal title="#{bundle['titleLogin']}"  id="res"  styleClass="sesion" size="380">
-                
-          
-                 <b:panelGrid columns="1" id="Correo" >
-                     <h:outputText value="#{bundle['lblAutLogin']}" style=" font-size: 12px ;color: #007789;"></h:outputText><br></br>  
+            <b:modal title="#{bundle['titleLogin']}"  id="res"  styleClass="sesion"  >
+               <!-- <center>
+                    <p:graphicImage library="images" name="plantilla.png" style="width: 100%" /></center> -->
+            <b:panelGrid columns="1" id="Correo" style="
+                         background-image: url('#{resource['images/plantilla2.png']}');
+                         padding-top: 20px;
+                         padding-left: 120px;
+                         
+                         background-repeat: no-repeat;
+                         " >
+                     <h:outputText value="#{bundle['lblAutLogin']}" style=" font-size: 12px ;color: #007789;margin-left: 55px"></h:outputText><br></br> <br></br>
                   <b:inputText placeholder="Email" fieldSize="sm" value="#{login.usuario}"/>
                   
                   <b:inputSecret placeholder="Password" fieldSize="sm" value="#{login.password}"/>
