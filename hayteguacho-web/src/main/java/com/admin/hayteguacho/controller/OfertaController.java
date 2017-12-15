@@ -86,6 +86,8 @@ public class OfertaController {
     private @Getter @Setter List<DepartamentoForm> listaDepto= new ArrayList<>();
     private @Getter @Setter List<MunicipioForm> listaMunicipio= new ArrayList<>();
     
+    private @Getter @Setter boolean salarioConvenir = true;
+    
 
     @PostConstruct
     public void init() {
@@ -162,8 +164,32 @@ public class OfertaController {
         validationBean.updateComponent("ofertasForm:muniCmb");
     }
     
+    public void cambiarSalario(){ //no se usa guardado por referencia
+      validationBean.updateComponent("ofertasForm:salarioAConvenir");
+       // if (salarioConvenir) {
+            //oferta.setSalariomaxofertalaboral("0.00");
+            //oferta.setSalariominofertalaboral("0.00");
+            //salarioConvenir = false;
+            //System.out.println("si "+salarioConvenir + oferta.getSalariomaxofertalaboral() + oferta.getSalariominofertalaboral());
+       // }else{
+            //salarioConvenir = true;
+            /*oferta.setSalariomaxofertalaboral("");
+            oferta.setSalariominofertalaboral("");
+            validationBean.updateComponent("ofertasForm:salariominimo");
+            validationBean.updateComponent("ofertasForm:salariomaximo");*/
+            //System.out.println("no "+salarioConvenir+ oferta.getSalariomaxofertalaboral() + oferta.getSalariominofertalaboral());
+       // }
+    }
+    
+    
     public void actualizaOferta(){
         String flag="";
+        
+        if (salarioConvenir) {
+            oferta.setSalariomaxofertalaboral("0.00");
+            oferta.setSalariominofertalaboral("0.00");
+        }
+       
         if(validationBean.validarSeleccion(oferta.getIdjornadalaboral(), "warn", "titleOfertaEmpresa", "lblSelectRegJornada")
                 &&
                 validationBean.validarSeleccion(oferta.getIdtipocontrato(), "warn", "titleOfertaEmpresa", "lblSelectRegTipoContrato")
@@ -275,11 +301,22 @@ public class OfertaController {
 
     public void onSelect(OfertaForm obj) {
         oferta=obj;
-        oferta.setFechacontratacionofertalaboral(validationBean.cambiarFormatoFecha(validationBean.formatearFecha(oferta.getFechacontratacionofertalaboral())));
+        System.out.println("original: " + oferta.getFechacontratacionofertalaboral());
+        oferta.setFechacontratacionofertalaboral(validationBean.formatearFecha(oferta.getFechacontratacionofertalaboral()));
+        System.out.println("despues: " + oferta.getFechacontratacionofertalaboral());
         idcategoria= puestoFacade.obtenerPuestosByIdPuesto(oferta.getIdpuestotrabajo()).get(0).getIdcategoria();
         iddepto= deptoFacade.obtenerDepartamentoByIdCiudad(oferta.getIdciudad()).get(0).getIddepartamento();
         cambiarCategoria();
         cambiarDepto();
+        if (!oferta.getSalariomaxofertalaboral().equals("0.0") && !oferta.getSalariominofertalaboral().equals("0.0")) {
+            
+            salarioConvenir = false;
+            validationBean.ejecutarJavascript("$('.convenir').css('display','block');");
+        }else{
+        
+            salarioConvenir = true;
+            validationBean.ejecutarJavascript("$('.convenir').css('display','none');");
+        }
         /*
         cemp.setIdcategoria(obj.getIdcategoria());
         cemp.setNombrecategoria(obj.getNombrecategoria());
@@ -297,6 +334,8 @@ public class OfertaController {
         oferta.setIdofertalaboral("0");
         listaPuestos= new ArrayList<>();
         listaMunicipio= new ArrayList<>();
+        salarioConvenir = true;
+        validationBean.ejecutarJavascript("$('.convenir').css('display','none');");
         /*
        cemp.setIdcategoria("0");
        cemp.setNombrecategoria("");

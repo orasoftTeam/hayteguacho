@@ -141,6 +141,16 @@ public class MostrarOfertaController implements Serializable {
         return tmp;
     }
     
+    public boolean mostrarSalariosConvenir(){
+    boolean flag = true;
+    if (ofertaForm.getSalariomaxofertalaboral().equals("0.0") && ofertaForm.getSalariominofertalaboral().equals("0.0")) {
+        
+        flag = false;
+    }
+    
+    return flag;
+    }
+    
     public String cadenaConEnterT(String cad){
         String tmp="";
         int numSpaces = cad.replaceAll("[^ ]", "").length();

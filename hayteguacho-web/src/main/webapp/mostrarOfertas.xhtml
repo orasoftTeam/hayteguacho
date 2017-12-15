@@ -156,7 +156,7 @@
                     <!-- FIN MODAL APLICAR OFERTA-->
                     
                     <!-- MODAL DETALLES OPFERTA-->
-                    <b:modal  id="amodal"  styleClass="modalPseudoClass" size="lg" backdrop="false" closeOnEscape="false" closable="false" >
+                    <b:modal  id="amodal"  styleClass="modalPseudoClass" size="lg" closeOnEscape="false" rendered="#{mostrarController.ofertaForm != null}" >
                         <b:panelGrid colSpans="3,9">
                             <h:outputText value="#{mostrarController.empresaForm.nombreempresa}" style="font-size: 18px; font-weight: bold;"></h:outputText>
                             <h:outputText value="#{mostrarController.empresaForm.descripcionempresa}" style="font-size: 14px;"></h:outputText>
@@ -175,13 +175,17 @@
                         </b:row>
                         <br></br>
                         <b:panelGrid columns="1">
-                            <h:outputText value="#{bundle['lblSalarios']}" style="font-size: 16px; font-weight: bold;"></h:outputText>
-                            <b:panelGrid columns="4">
+                           <!-- salarios start -->
+                            <h:outputText rendered="#{mostrarController.mostrarSalariosConvenir()}" value="#{bundle['lblSalarios']}" style="font-size: 16px; font-weight: bold;"></h:outputText>
+                            <h:outputText rendered="#{!mostrarController.mostrarSalariosConvenir()}" value="Salario a convenir" style="font-size: 16px; font-weight: bold;"></h:outputText>
+                            <b:panelGrid columns="4"   rendered="#{mostrarController.mostrarSalariosConvenir()}">
                                 <h:outputText value="#{bundle['lblOfertaSalarioMinimo']}" style="font-size: 14px; font-weight: bold;"></h:outputText> 
                                 <h:outputText value="#{mostrarController.ofertaForm.salariominofertalaboral}" style="font-size: 14px;"></h:outputText>
                                 <h:outputText value="#{bundle['lblOfertaSalarioMaximo']}" style="font-size: 14px; font-weight: bold;"></h:outputText> 
                                 <h:outputText value="#{mostrarController.ofertaForm.salariomaxofertalaboral}" style="font-size: 14px;"></h:outputText>
                             </b:panelGrid>
+                            <!-- salarios end -->
+                            
                             <br></br>
                             <b:panelGrid columns="2">
                                 <h:outputText value="#{bundle['lblLocalizacion']}" style="font-size: 16px; font-weight: bold;"></h:outputText>

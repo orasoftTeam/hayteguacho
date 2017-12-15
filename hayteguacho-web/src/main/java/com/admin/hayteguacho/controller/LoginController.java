@@ -343,6 +343,7 @@ public class LoginController implements Serializable {
             validationBean.lanzarMensaje("warn", "titleLogin", "lblErrorLogin");
             } else if
                 (usuario.getCorreo() != null) {
+                
             if (usuario.getTipo().equals("E")) {
                
                    validationBean.lanzarMensaje("warn", "titleLogin", "lblcondicion");

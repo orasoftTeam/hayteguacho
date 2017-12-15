@@ -15,6 +15,25 @@
                 function mostrar(){
                 alert('Hola');
                 }
+                $( window ).load(function() {
+                if(#{ofertaController.salarioConvenir}){
+                $('.convenir').css('display','none');
+                alert('desaparece '+#{ofertaController.salarioConvenir});
+                }else{
+                $('.convenir').css('display','block');
+                alert('aparece '+#{ofertaController.salarioConvenir});
+                }
+                });
+                //var conv = true;
+                function convenir(conv){
+                if(conv){
+                $('.convenir').css('display','block');
+                //conv = false;
+                }else{
+                $('.convenir').css('display','none');
+                //conv = true;
+                }
+                }
 
                 function soloNumeros(obj) 
                 { 
@@ -68,8 +87,19 @@
                                 <br></br>
                                 <p:inputMask id="fechaContra" value="#{ofertaController.oferta.fechacontratacionofertalaboral}"   mask="99/99/9999" style="width: 100%;"/>
                                 <b:inputText size="10" onkeyup="soloNumeros(this)" id="cantidadVacante" fieldId="cantidadVacante" value="#{ofertaController.oferta.cantidadvacante}" label="#{bundle['lblOfertaCantidadVacante']}" placeholder="#{bundle['lblReqOfertaCantidadVacante']}"/>
+                                
+                                <!-- salarios -->
+                                <b:selectOneMenu id="salarioAConvenir" label="Salario a convenir" value="#{ofertaController.salarioConvenir}"
+                                                 onchange="convenir(#{ofertaController.salarioConvenir});ajax:ofertaController.cambiarSalario();"     >
+                                    <f:selectItem itemLabel="Si" itemValue="true"/>
+                                    <f:selectItem itemLabel="No" itemValue="false"/>
+                                </b:selectOneMenu>
+                                <div  class="convenir" style="display: none;">
                                 <b:inputText size="10" onkeyup="soloNumeros(this)" id="salariominimo" fieldId="salariominimo" value="#{ofertaController.oferta.salariominofertalaboral}" label="#{bundle['lblOfertaSalarioMinimo']}" placeholder="#{bundle['lblReqOfertaSalarioMinimo']}"/>
                                 <b:inputText size="10" onkeyup="soloNumeros(this)" id="salariomaximo" fieldId="salariomaximo" value="#{ofertaController.oferta.salariomaxofertalaboral}" label="#{bundle['lblOfertaSalarioMaximo']}" placeholder="#{bundle['lblReqOfertaSalarioMaximo']}"/>
+                                </div>
+                                <!-- salarios end -->
+                                
                                 <b:inputTextarea value="#{ofertaController.oferta.descripcionofertalaboral}"  label="#{bundle['lblOfertaDescripcion']}" placeholder="#{bundle['lblReqOfertaDescripcion']}" />
                                 <b:inputTextarea value="#{ofertaController.oferta.requerimientosofertalaboral}"  label="#{bundle['lblOfertaRequerimiento']}" placeholder="#{bundle['lblReqOfertaRequerimiento']}" />
                                 <b:inputTextarea value="#{ofertaController.oferta.habilidadesofertalaboral}"  label="#{bundle['lblOfertaHabilidades']}" placeholder="#{bundle['lblReqOfertaHabilidades']}" />
