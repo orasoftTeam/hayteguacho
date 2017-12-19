@@ -39,7 +39,7 @@
                 cadena += " tus postulaciones!";
                 }
                 if (texto == 6){
-                $('.chambixImg').attr('src','../../resources/images/cambita-no-habla.gif');
+                $('.chambixImg').attr('src','../../resources/images/chambita-parpadea-2.gif');
                 }
                 $('.chambix').html(cadena);
                 //document.getElementById("parrafo").innerHTML = cadena;
@@ -107,30 +107,21 @@
                                         <b:row>
                                             <b:column span="12">
                                                 <center style="padding: 10px">
-                                                    <h:outputText value="Encuentra empleo ahora" style="font-weight: bold;font-size: 25px;" />
+                                                    <h:outputText value="Ofertas Laborales" style="font-weight: bold;font-size: 25px;" />
                                                 </center>
                                             </b:column>
                                         </b:row>
                                         <b:row>
-                                            <b:column span="4"><b:selectOneMenu id="categoriaCmb" value="#{mostrarController.idcategoriafilter}"  label="#{bundle['lblNombreCategoriaEmpresa']}" 
-                                                                                onchange="ajax:mostrarController.cambiarCategoriaByFilter()"
-                                                                                >
-                                                    <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
-                                                    <f:selectItems value="#{empresaController.listaCategoria}" var="categoria" itemValue="#{categoria.idcategoria}" itemLabel="#{categoria.nombrecategoria}"/>
-                                                </b:selectOneMenu></b:column>
-                                            <b:column span="4">
-                                                <b:selectOneMenu value="#{mostrarController.iddeptofilter}"  label="#{bundle['lblNombreDepto']}" 
-                                                                 onchange="ajax:mostrarController.cambiarDeptoByFilter()"
-                                                                 >
-                                                    <f:selectItem itemLabel="#{bundle['lblCmbSelect']}" itemValue="" />
-                                                    <f:selectItems value="#{ofertaController.listaDepto}" var="depto" itemValue="#{depto.iddepartamento}" itemLabel="#{depto.nombredepartamento}"/>
-                                                </b:selectOneMenu>
-                                            </b:column>  
-                                            <b:column span="4">
-                                                <b:button outcome="/mostrarOfertas.xhtml?opcion=0" value="#{bundle['lblBuscarEmpleos']}" style="margin-top:15px; opacity: 1 !important;width: 100%"  icon-awesome="fa-search" size="lg" look="warning"></b:button>
+                                            <b:column span="8">
+                                                <p:chart type="pie" model="#{dashboardEmpresa.pie}" style="width:100%;height:100%" />
                                             </b:column>
+                                            <b:column span="4">
+                                               Ofertas activas
+                                               
+                                               Ofertas restantes
+                                            </b:column>  
+                                           
                                         </b:row>
-
 
 
 
@@ -145,7 +136,7 @@
                 <b:column span="12">
                     <b:panel>
                        <!-- estadisticas -->
-                               <img class="chambixImg" src="../../resources/images/chambita-habla-escritorio-mas-pc.gif"  
+                               <img class="chambixImg" src="../../resources/images/chambita-habla-2.gif"  
                                          style="width:100%;
                                                 height: 100%" />
                                     <h:outputText class="chambix"
@@ -154,7 +145,7 @@
                                                   position: absolute;
                                                   top: 40%;
                                                   font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-                                                  left: 60%;
+                                                  left: 30%;
                                                   transform: translate(-50%,-40%);
                                                   color: black;"
                                                   />
