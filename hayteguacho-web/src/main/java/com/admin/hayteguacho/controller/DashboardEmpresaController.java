@@ -7,10 +7,12 @@ package com.admin.hayteguacho.controller;
 
 import com.admin.hayteguacho.form.CategoriaEmpresaForm;
 import com.admin.hayteguacho.form.EmpresaForm;
+import com.admin.hayteguacho.form.MembresiaxEmpresaForm;
 import com.admin.hayteguacho.form.OfertaAplicaForm;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.CategoriaEmpresaFacade;
 import com.hayteguacho.facade.EmpresaFacade;
+import com.hayteguacho.facade.MembresiaxempresaFacade;
 import com.hayteguacho.facade.TotalFacade;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,49 +33,77 @@ import org.primefaces.model.chart.PieChartModel;
 @ViewScoped
 @ManagedBean(name = "dashboardEmpresa")
 public class DashboardEmpresaController {
+
     @EJB
     ValidationBean vb;
-    
+
+    @EJB
+    MembresiaxempresaFacade mexf;
+
     @EJB
     EmpresaFacade ef;
-    
+
     @Inject
     LoginController login;
-    
+
     @EJB
     CategoriaEmpresaFacade cef;
-    
+
     @EJB
     TotalFacade tf;
-    
+
     private @Getter
     @Setter
     EmpresaForm loggedEmp = new EmpresaForm();
-    
-    private @Getter @Setter PieChartModel pie;
-    
+
+    private @Getter
+    @Setter
+    PieChartModel pie;
+    private @Getter
+    @Setter
+    Integer totalOfertas;
+    private @Getter
+    @Setter
+    Integer restantes;
+    private @Getter
+    @Setter
+    Integer maximoOfertas;
+    private @Getter
+    @Setter
+    List<OfertaAplicaForm> listaOferta = new ArrayList<>();
+    private @Getter
+    @Setter
+    MembresiaxEmpresaForm membresia = new MembresiaxEmpresaForm();
+
     @PostConstruct
-    public void init(){
-    loggedEmp = ef.obtenerEmp(login.getUserLog().getIdentificador());
-    createPieModel();
-    }
-    
-    
-    public String getCat(){
-    CategoriaEmpresaForm catForm = cef.entityToDto(cef.find(new BigDecimal(loggedEmp.getIdcategoria())), new CategoriaEmpresaForm());
-    return catForm.getNombrecategoria();
-    }
-    
-    
-    public void createPieModel(){
-    pie = new PieChartModel();
-    List<OfertaAplicaForm> lista = new ArrayList<>();
+    public void init() {
         try {
-            lista = tf.dashEmpresa(login.getPais(), 
+            loggedEmp = ef.obtenerEmp(login.getUserLog().getIdentificador());
+            createPieModel();
+            totalOfertas = listaOferta.size();
+            membresia = mexf.obtenerMembresia(loggedEmp.getIdempresa());
+            maximoOfertas = Integer.parseInt(membresia.getCantidadcontratada());
+            restantes = maximoOfertas - totalOfertas;
+        } catch (Exception e) {
+            System.out.println("com.admin.hayteguacho.controller.DashboardEmpresaController.init()");
+            e.printStackTrace();
+        }
+    }
+
+    public String getCat() {
+        CategoriaEmpresaForm catForm = cef.entityToDto(cef.find(new BigDecimal(loggedEmp.getIdcategoria())), new CategoriaEmpresaForm());
+        return catForm.getNombrecategoria();
+    }
+
+    public void createPieModel() {
+        pie = new PieChartModel();
+
+        try {
+            listaOferta = tf.dashEmpresa(login.getPais(),
                     loggedEmp.getIdempresa());
-            
-            for (OfertaAplicaForm oaf : lista) {
-                pie.set(oaf.getTitulo(), 
+
+            for (OfertaAplicaForm oaf : listaOferta) {
+                pie.set(oaf.getTitulo(),
                         Integer.parseInt(oaf.getInscritos()));
             }
             pie.setTitle("Candidatos por Oferta");

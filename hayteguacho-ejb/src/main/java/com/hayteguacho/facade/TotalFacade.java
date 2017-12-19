@@ -36,22 +36,23 @@ public class TotalFacade {
     public List<OfertaAplicaForm> dashEmpresa(String pais, String idempresa){
         String sql = "select oferta.TITULOOFERTALABORAL as titulo, count(aplica.IDCANDIDATOXOFERTALABORAL)\n" +
 "as inscritos from tbl_ofertalaboral oferta\n" +
-"inner join tbl_candidatoxofertalaboral aplica\n" +
+"full join tbl_candidatoxofertalaboral aplica\n" +
 "on aplica.IDOFERTALABORAL = oferta.IDOFERTALABORAL\n" +
-"inner join tbl_ciudad ciudad\n" +
+"full join tbl_ciudad ciudad\n" +
 "on ciudad.IDCIUDAD = oferta.IDCIUDAD\n" +
-"inner join tbl_departamento depto\n" +
+"full join tbl_departamento depto\n" +
 "on depto.IDDEPARTAMENTO = ciudad.IDDEPARTAMENTO\n" +
-"inner join tbl_pais pais\n" +
+"full join tbl_pais pais\n" +
 "on pais.IDPAIS = depto.IDPAIS\n" +
 "where oferta.IDEMPRESA = ?\n" +
-"and upper(pais.NOMBREPAIS) = upper(?)\n" +
+"and upper(pais.NOMBREPAIS) = upper(?)\n"+ 
+" and oferta.estadoofertalaboral = 'A'" +
 "group by oferta.tituloofertalaboral";
         Query q = em.createNativeQuery(sql, "OfertaAplicaMapping");
         q.setParameter(2, pais);
         q.setParameter(1, idempresa);
-        q.setMaxResults(5);
-        q.setFirstResult(0);
+        //q.setMaxResults(5);
+        //q.setFirstResult(0);
         List<OfertaAplicaForm> temp = q.getResultList();
         return temp.isEmpty() ? new ArrayList<OfertaAplicaForm>() : temp;
     }
