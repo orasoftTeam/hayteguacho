@@ -5,6 +5,7 @@
  */
 package com.hayteguacho.entity;
 
+import com.admin.hayteguacho.form.InscritoForm;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -12,6 +13,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,11 +23,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import lombok.Getter;
 import lombok.Setter;
 
 /**
@@ -33,6 +36,19 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "TBL_EMPRESA")
+
+@SqlResultSetMapping(
+        name = "InscritoMapping",
+        classes = @ConstructorResult(
+                targetClass = InscritoForm.class,
+                columns = {
+                    @ColumnResult(name = "titulo", type = String.class),
+                    @ColumnResult(name = "candidato", type = String.class),
+                    @ColumnResult(name = "email", type = String.class),
+                    @ColumnResult(name = "tels", type = String.class),
+                    @ColumnResult(name = "curriculum", type = String.class)
+                   }))
+
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TblEmpresa.findAll", query = "SELECT t FROM TblEmpresa t"),

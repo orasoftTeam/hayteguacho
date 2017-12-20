@@ -306,7 +306,7 @@ public class MostrarOfertaController implements Serializable {
         validationBean.ejecutarJavascript("$('.aplicarOferta').modal('hide'); ");
         pretension="0";
         isTrabajando=false;
-        ofertaForm= new OfertaForm();
+        ofertaForm= null;
         
     }
     

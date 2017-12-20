@@ -7,6 +7,7 @@ package com.admin.hayteguacho.controller;
 
 import com.admin.hayteguacho.form.CategoriaEmpresaForm;
 import com.admin.hayteguacho.form.EmpresaForm;
+import com.admin.hayteguacho.form.InscritoForm;
 import com.admin.hayteguacho.form.MembresiaxEmpresaForm;
 import com.admin.hayteguacho.form.OfertaAplicaForm;
 import com.admin.hayteguacho.util.ValidationBean;
@@ -73,6 +74,9 @@ public class DashboardEmpresaController {
     List<OfertaAplicaForm> listaOferta = new ArrayList<>();
     private @Getter
     @Setter
+    List<InscritoForm> listaInscritos = new ArrayList<>();
+    private @Getter
+    @Setter
     MembresiaxEmpresaForm membresia = new MembresiaxEmpresaForm();
 
     @PostConstruct
@@ -84,6 +88,7 @@ public class DashboardEmpresaController {
             membresia = mexf.obtenerMembresia(loggedEmp.getIdempresa());
             maximoOfertas = Integer.parseInt(membresia.getCantidadcontratada());
             restantes = maximoOfertas - totalOfertas;
+            listaInscritos = tf.dashEmpresaInscrito(login.getPais(), loggedEmp.getIdempresa());
         } catch (Exception e) {
             System.out.println("com.admin.hayteguacho.controller.DashboardEmpresaController.init()");
             e.printStackTrace();
