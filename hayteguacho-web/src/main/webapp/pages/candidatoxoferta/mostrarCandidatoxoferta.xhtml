@@ -79,18 +79,51 @@
                                 value="#{mostrarCandxOfertaController.listaOferta}"
                                 var="oferta"
                                 responsive="true"
+                                style="text-align: center;font-weight: bold"
                                 >
 
-                                <b:dataTableColumn label="#{bundle['titleOfertaEmpresa']}" value="#{oferta.tituloofertalaboral}" />
-                                <b:dataTableColumn label="#{bundle['lblOfertaFechaVigencia']}" value="#{mostrarCandxOfertaController.obtenerFecha(oferta)}" />
-                                <b:dataTableColumn label="#{bundle['lblInscritos']}" value="#{mostrarCandxOfertaController.obtenerInscritos(oferta)}" />
-                                <b:dataTableColumn label="#{bundle['lblCxoOperacion']}" >
-                                    <b:commandButton ajax="true"   value="#{bundle['lblCxoVerCands']}" 
+                                <b:dataTableColumn label="#{bundle['titleOfertaEmpresa']}"  >
+                                    <b:panel style="font-size: 20px;color:blue;">
+                                        #{oferta.tituloofertalaboral}
+                                    </b:panel>
+                                </b:dataTableColumn>
+                                <b:dataTableColumn label="#{bundle['lblOfertaFechaVigencia']}"  >
+                                <b:panel>
+                                        #{mostrarCandxOfertaController.obtenerFecha(oferta.getFechavigenciaofertalaboral())}
+                                    </b:panel>
+                                </b:dataTableColumn>
+                                <b:dataTableColumn label="#{bundle['lblInscritos']}"   >
+                                    <b:panel rendered="#{mostrarCandxOfertaController.obtenerInscritos(oferta) == 0}" >
+                                    <h:outputText   value="#{bundle.lblNoHayInscritos}" 
+                                                    style="font-weight: bold;font-size: 20px;"
+                                                   />
+                                    
+                                    </b:panel>
+                                    <b:panel ajax="true" onclick="$('.wizardPseudoClass').carousel('next');
+                                                      $('.wizardPseudoClass').carousel('pause');
+                                                      ajax:mostrarCandxOfertaController.cargarCandidatosxoferta(oferta);"
+                                                     rendered="#{mostrarCandxOfertaController.obtenerInscritos(oferta) > 0}"
+                                                     style="font-weight: bold;font-size: 20px;margin-bottom: 1px"
+                                                      >
+                                       <h:outputLink   value="#" 
+                                                   
+                                                    >
+                                        
+                                        #{mostrarCandxOfertaController.obtenerInscritos(oferta)}
+                                    </h:outputLink>
+                                    </b:panel>
+                                </b:dataTableColumn>
+                                <b:dataTableColumn label="#{bundle['lblOfertaEstado']}" >
+                                    <p:panel>
+                                        <p:graphicImage library="images" name="#{mostrarCandxOfertaController.obtenerEstadoColor(oferta)}" width="16" height="16"/>
+                                        <h:outputText style="margin-left: 5px;color: blue" value="#{mostrarCandxOfertaController.obtenerEstado(oferta)}" />
+                                    </p:panel>
+                                   <!-- <b:commandButton ajax="true"   value="#{bundle['lblCxoVerCands']}" 
                                               onclick="$('.wizardPseudoClass').carousel('next');
                                                       $('.wizardPseudoClass').carousel('pause');
                                                       ajax:mostrarCandxOfertaController.cargarCandidatosxoferta(oferta);"
                                                           icon-awesome="fa-arrow-right" icon-align="right"
-                                              look="success" />
+                                              look="success" />-->
                                 </b:dataTableColumn>
                             </b:dataTable>
                         </b:panel>
@@ -123,7 +156,10 @@
                                 
                                 <b:dataTableColumn label="#{bundle['lblCxoSituation']}" value="#{mostrarCandxOfertaController.getSituation(cxoferta.situacionlaboral)}" />
                                 
-                                <b:dataTableColumn label="#{bundle['lblCxoEstado']}" value="#{mostrarCandxOfertaController.getEstadoCxoferta(cxoferta.estadocandidatoxofertalaboral)}" />
+                                <b:dataTableColumn label="#{bundle['lblCxoEstado']}"  >
+                                    <p:graphicImage library="images" name="#{mostrarCandxOfertaController.getEstadoCxofertaIcono(cxoferta.estadocandidatoxofertalaboral)}" width="16"  height="16" />
+                                    <h:outputText style="margin-left: 5px" value="#{mostrarCandxOfertaController.getEstadoCxoferta(cxoferta.estadocandidatoxofertalaboral)}" />
+                                </b:dataTableColumn>
                                  <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
                                     <b:commandButton 
                                         class="desah"

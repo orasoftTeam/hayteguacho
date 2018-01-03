@@ -205,6 +205,28 @@ public class MostrarCandidatoxofertalaboralController {
 
         return est;
     }
+    
+    public String getEstadoCxofertaIcono(String estado) {
+        String est = "";
+        switch (estado) {
+            case "PO":
+                est = "posted-item-icon-18551.png";
+                break;
+            case "CV":
+                est = "Green_check.svg.png";
+                break;
+            case "PR":
+                est = "load02-512.png";
+                break;
+            case "FI":
+                est = "finish-flag.png";
+                break;
+            default:
+                break;
+        }
+
+        return est;
+    }
 
     public String fullName(CandidatoForm cand) {
         return cand.getNombrecandidato() + ' ' + cand.getApellidocandidato();
@@ -351,8 +373,8 @@ public class MostrarCandidatoxofertalaboralController {
         return cxof.obtenerCandidatosxoferta(oferta.getIdofertalaboral(), false).size();
     }
 
-    public String obtenerFecha(OfertaForm oferta) {
-        String dateStr = oferta.getFechavigenciaofertalaboral();
+    public String obtenerFecha(String dateStr) {
+        //String dateStr = oferta.getFechavigenciaofertalaboral();
         DateFormat readFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
         DateFormat writeFormat = new SimpleDateFormat("dd MMMMM yyyy");
         Date date = null;
@@ -393,5 +415,31 @@ public class MostrarCandidatoxofertalaboralController {
         return titulo;
     }
     
+    public String obtenerEstado(OfertaForm oferta){
+    String res = "";
+    String bolita = "";
+    String estado = "";
     
+        if (oferta.getEstadoofertalaboral().toLowerCase().equals("a")) {
+            estado = vb.getMsgBundle("lblOfertaActivo");
+            bolita = "boton-verde.gif";
+        }else{
+           estado = vb.getMsgBundle("lblOfertaInactiva");
+            bolita = "boton-rojo.gif";
+        }
+        
+       res = estado;
+    
+    return res;
+    }
+    
+    public String obtenerEstadoColor(OfertaForm oferta){
+    String res = "";
+    if (oferta.getEstadoofertalaboral().toLowerCase().equals("a")) {
+    res = "boton-verde.gif";
+    }else{
+    res = "boton-rojo.gif";
+    }
+    return res;
+    }
 }
