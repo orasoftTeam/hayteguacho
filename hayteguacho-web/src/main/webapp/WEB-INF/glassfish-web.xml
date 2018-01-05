@@ -4,6 +4,7 @@
   <class-loader delegate="true"/>
   <property name="alternatedocroot_1" value="from=/pdf/* dir=/config"/>
   <property name="alternatedocroot_2" value="from=/logos/* dir=/config"/>
+  <property name="alternatedocroot_3" value="from=/fotosc/* dir=/config"/>
   <jsp-config>
     <property name="keepgenerated" value="true">
       <description>Keep a copy of the generated servlet class' java code.</description>

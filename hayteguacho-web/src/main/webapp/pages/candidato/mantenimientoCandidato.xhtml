@@ -34,15 +34,27 @@
                                         <b:inputText size="10" onkeyup="soloNumeros(this)" id="telefono2" fieldId="telefono2" value="#{candidatoController.candidato.telefono2candidato}" label="#{bundle['lblTelEmpresa']}" placeholder="#{bundle['lblTelReqEmpresa']}"/>
 
                                         <p:fileUpload label="#{bundle['lblDocUpload']}" invalidFileMessage="#{bundle['lblDocUploadInvalid']}" id="docUpload" fileUploadListener="#{candidatoController.handleFileUpload}" mode="advanced"
-                                                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(docx|pdf)$/" /><br />
+                                                      auto="true" sizeLimit="500000" allowTypes="/(\.|\/)(docx|pdf)$/" />
+                                        
+                                        <p:fileUpload label="#{bundle['lblSubirFoto']}" invalidFileMessage="#{bundle['lblFileInvalid']}" id="fotoCand" fileUploadListener="#{candidatoController.handleFotoUpload}" mode="advanced"
+                                       auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+                                        
                                         <h:outputLink id="linkM" value="#{request.contextPath}/#{candidatoController.candidato.archivocurriculum}"   target="_blank" >
                                             <p:graphicImage id="cvMostrar"  style="height: 32px;width: 32px"  library="images"  name="iconoCV.jpg"  />
                                         <b:label  text="#{bundle.lblCandEditarCV}"></b:label>
                                         </h:outputLink>
                                         
-                                        <br />
+                                        <b:panel id="candidatoFoto">
+                                        <p:graphicImage library="images" name="usuario.png" height="100" width="100"  rendered="#{candidatoController.candidato.foto == null}" />
+                                        <p:graphicImage value="#{candidatoController.candidato.foto}" height="100" width="72"  rendered="#{candidatoController.candidato.foto != null}" />
+                                        <b:label id="msgFoto" text="#{candidatoController.msgFoto}"></b:label>
+                                        </b:panel>
+                                       
+                                        
+                                       
                                       
                                         <b:label id="msgFile" text="#{candidatoController.msgFile}"></b:label>
+                                        
                                     </b:panelGrid>
                                     <p:separator></p:separator>
                                     <b:row>

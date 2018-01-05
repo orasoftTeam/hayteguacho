@@ -24,5 +24,6 @@ public class CandidatoForm {
     private @Getter @Setter String archivocurriculum;
     private @Getter @Setter String correocandidato;
     private @Getter @Setter String contrasenacandidato;
+    private @Getter @Setter String foto;
     
 }

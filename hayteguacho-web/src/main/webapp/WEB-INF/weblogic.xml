@@ -10,6 +10,10 @@
      <local-path>C:\oraora\user_projects\domains\base_domain</local-path>
         <url-pattern>/pdf/*</url-pattern>
 </virtual-directory-mapping>
+<virtual-directory-mapping>
+     <local-path>C:\oraora\user_projects\domains\base_domain</local-path>
+        <url-pattern>/fotosc/*</url-pattern>
+</virtual-directory-mapping>
     <jsp-descriptor>
     <keepgenerated>true</keepgenerated>
     <debug>true</debug>

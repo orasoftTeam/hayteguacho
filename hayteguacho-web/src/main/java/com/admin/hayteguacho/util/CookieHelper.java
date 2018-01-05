@@ -5,15 +5,17 @@
  */
 package com.admin.hayteguacho.util;
 
+import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.faces.context.ExternalContext;
 /**
  *
  * @author dell
  */
+@Stateless
 public class CookieHelper {
     
     public void setCookie(String name, String value, int expiry){
@@ -44,11 +46,13 @@ public class CookieHelper {
         
         HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
         response.addCookie(cookie);
+        System.out.println("se creo la cookie de prueba: " + cookie.getValue());
     }
     
     public Cookie getCookie(String name){
     
-        FacesContext fcontext = FacesContext.getCurrentInstance();
+        try {
+            FacesContext fcontext = FacesContext.getCurrentInstance();
         
         HttpServletRequest request = (HttpServletRequest)fcontext.getExternalContext().getRequest();
         Cookie cookie = null;
@@ -63,6 +67,12 @@ public class CookieHelper {
             }
         }
     
+        
+        } catch (Exception e) {
+            System.out.println("com.admin.hayteguacho.util.CookieHelper.getCookie()");
+            e.printStackTrace();
+            
+        }
         return null;
     }
 }

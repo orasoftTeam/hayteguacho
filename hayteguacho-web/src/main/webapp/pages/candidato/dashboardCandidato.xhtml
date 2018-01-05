@@ -64,7 +64,8 @@
                                 <b:panel>
                                     <b:row>
                                         <b:column span="4">
-                                            <h:graphicImage  library="images" name="usuario.png" height="100" width="100" />
+                                            <h:graphicImage  library="images" name="usuario.png" height="100" width="100" rendered="#{dashboardCandidato.loggedCand.foto == null}" />
+                                            <h:graphicImage  value="#{dashboardCandidato.loggedCand.foto}" height="100" width="72" rendered="#{dashboardCandidato.loggedCand.foto != null}" />
                                         </b:column>
                                         <b:column span="8"> 
                                             <h:outputText value="#{dashboardCandidato.fullName}" style="font-weight: bold;font-size: 20px" /><br></br>  

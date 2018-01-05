@@ -10,6 +10,7 @@ import com.admin.hayteguacho.form.MembresiaxEmpresaForm;
 import com.admin.hayteguacho.form.MenuForm;
 import com.admin.hayteguacho.form.OfertaForm;
 import com.admin.hayteguacho.form.UserForm;
+import com.admin.hayteguacho.util.CookieHelper;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.MembresiaFacade;
 import com.hayteguacho.facade.MembresiaxempresaFacade;
@@ -39,6 +40,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
@@ -71,6 +74,9 @@ public class LoginController implements Serializable {
     @EJB
 
     private ValidationBean validationBean;
+    
+    @EJB
+    private CookieHelper chelper;
      
 
     @EJB
@@ -145,6 +151,16 @@ public class LoginController implements Serializable {
     public void init() {
         loggedIn = false;
         System.err.println("El valor de logged in es: " + loggedIn);
+        //cookie
+        
+        
+        
+        /*Cookie galleta = chelper.getCookie("pais");
+        if (galleta != null) {
+            pais = galleta.getValue();
+            redireccionar("/mostrarOfertas.xhtml?opcion=0");
+        }*/
+       
     }
 
     @PreDestroy
@@ -410,6 +426,10 @@ public class LoginController implements Serializable {
     public void seleccionarPais(String pais) {
         this.pais = pais;
         ofertas.setPais(pais);
+        //CookieHelper chelper = new CookieHelper();
+        chelper.setCookie("pais", pais, 60 * 60 * 24 * 365 * 10); // creacion de cookie para reconocer pais
+        /*Cookie cookie = chelper.getCookie("pais");
+        System.out.println("se creo la galleta " + cookie.getValue());*/
         ofertas.init();
         redireccionar("/mostrarOfertas.xhtml?opcion=0");
     }

@@ -93,7 +93,7 @@ public class CandidatoFacade extends AbstractFacade<TblCandidato, CandidatoForm>
         try {
             Connection cn = em.unwrap(java.sql.Connection.class);
             //cn.setAutoCommit(false);
-            CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_CANDIDATO (?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement cs = cn.prepareCall("{call HAYTEGUACHO.PROC_ACTUALIZA_CANDIDATO (?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             cs.setInt(1, new Integer(candidato.getIdcandidato()));
             cs.setInt(2, new Integer(candidato.getIdpaistbl()));
             cs.setInt(3, new Integer(candidato.getIdpuestotrabajotbl()));
@@ -105,10 +105,11 @@ public class CandidatoFacade extends AbstractFacade<TblCandidato, CandidatoForm>
             cs.setString(9, candidato.getArchivocurriculum());
             cs.setString(10, candidato.getCorreocandidato());
             cs.setString(11, candidato.getContrasenacandidato());
-            cs.setString(12, op);
-            cs.registerOutParameter(13, Types.VARCHAR);
+            cs.setString(12, candidato.getFoto());
+            cs.setString(13, op);
+            cs.registerOutParameter(14, Types.VARCHAR);
             cs.execute();
-            flag = cs.getString(13);
+            flag = cs.getString(14);
             System.out.println(flag);
         } catch (Exception e) {
             flag="-2";

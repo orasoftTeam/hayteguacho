@@ -87,7 +87,7 @@ public class EmpresaController {
     LoginController loginBean;
     
     private @Getter @Setter UploadedFile archivo;
-    private @Getter @Setter BufferedImage archivo2;
+    //private @Getter @Setter BufferedImage archivo2;
      private @Getter @Setter InputStream archivo3;
     private @Getter @Setter String msgFile;
     private @Getter @Setter List<DepartamentoForm> listaDepto;

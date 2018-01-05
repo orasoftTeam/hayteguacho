@@ -7,8 +7,6 @@ package com.admin.hayteguacho.filter;
 
 import com.admin.hayteguacho.controller.LoginController;
 import java.io.IOException;
-import javax.el.ELContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -18,7 +16,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Filter checks if LoginBean has loginIn property set to true. If it is not set
@@ -31,7 +28,7 @@ public class LoginFilter implements Filter {
 
     @Inject
     LoginController loginBean;
-
+    
     /**
      * Checks if user is logged in. If not it redirects to the login.xhtml page.
      * @param request
@@ -55,9 +52,9 @@ public class LoginFilter implements Filter {
         resp.setDateHeader("Expires", 0);
         
         /*if (loginBean.getPais().equals("") && (!path.contains("/indexPaises.xhtml"))) {
-            ((HttpServletResponse) response).sendRedirect(contextPath + "/indexPaises.xhtml");
+        ((HttpServletResponse) response).sendRedirect(contextPath + "/indexPaises.xhtml");
         }*/
-        
+            
         if (path.contains("/pages/")) {
             url = path.split("/pages/");
 

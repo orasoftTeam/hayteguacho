@@ -88,6 +88,8 @@ public class TblCandidato implements Serializable {
     private String contrasenacandidato;
     @Basic(optional = false)
     private Character estadocandidato;
+    @Basic(optional = true)
+    private String foto;
     @JoinColumn(name = "IDPUESTOTRABAJO", referencedColumnName = "IDPUESTOTRABAJO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TblPuestotrabajo idpuestotrabajo;
@@ -105,7 +107,7 @@ public class TblCandidato implements Serializable {
         this.idcandidato = idcandidato;
     }
 
-    public TblCandidato(BigDecimal idcandidato, String nombrecandidato, String apellidocandidato, String telefono1candidato, String archivocurriculum, String correocandidato, String contrasenacandidato, Character estadocandidato) {
+    public TblCandidato(BigDecimal idcandidato, String nombrecandidato, String apellidocandidato, String telefono1candidato, String archivocurriculum, String correocandidato, String contrasenacandidato, Character estadocandidato, String foto) {
         this.idcandidato = idcandidato;
         this.nombrecandidato = nombrecandidato;
         this.apellidocandidato = apellidocandidato;
@@ -114,6 +116,15 @@ public class TblCandidato implements Serializable {
         this.correocandidato = correocandidato;
         this.contrasenacandidato = contrasenacandidato;
         this.estadocandidato = estadocandidato;
+        this.foto = foto;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public BigDecimal getIdcandidato() {
