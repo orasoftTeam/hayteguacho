@@ -69,6 +69,9 @@ public class CandidatoController {
     String nameFileFinal;
     private @Getter
     @Setter
+    String nameFotoFinal;
+    private @Getter
+    @Setter
     UploadedFile archivo;
     private @Getter
     @Setter
@@ -119,8 +122,8 @@ public class CandidatoController {
         candidato.setIdcandidato("0");
         UserForm usuario = loginBean.getUserLog();
         if (usuario != null && usuario.getTipo().equals("C")) {
-            candidato = candidatoFacade.obtenerCand(usuario.getIdentificador());
-            System.out.println("HEY AQUI!!!!foto: " + candidato.getFoto());
+            candidato = candidatoFacade.obtenerCandidatoById(usuario.getIdentificador()).get(0);
+            //System.out.println("HEY AQUI!!!!foto: " + candidato.getFoto());
         }
     }
 
@@ -228,27 +231,31 @@ public class CandidatoController {
         try {
             if (archivo == null) {
                 archivo = event.getFile();
-                validationBean.copyFile(event.getFile().getFileName(), destination, event.getFile().getInputstream());
+                String name = validationBean.generarRandom(event.getFile().getFileName());
+                validationBean.copyFile(name, destination, event.getFile().getInputstream());
                 msgFile = validationBean.getMsgBundle("lblFileSuccess");
                 validationBean.updateComponent("candidatoForm:msgFile");
-                String name = archivo.getContentType();
-                String[] pieces = name.split(".");
+                
+                /*String[] pieces = name.split(".");
                 RandomString rs = new RandomString(8, ThreadLocalRandom.current());
-                String random = rs.nextString();
-                candidato.setArchivocurriculum("/pdf/" + event.getFile().getFileName());
+                String random = rs.nextString();*/
+                candidato.setArchivocurriculum("/pdf/" + name);
                 imageConfirm = "resources/images/iconoCV.jpg";
                 //validationBean.updateComponent("candidatoForm:cvMostrar");
                 validationBean.updateComponent("candidatoForm:linkM");
-            } else if (validationBean.deleteFile(destination + archivo.getFileName())) {
+                nameFotoFinal = name;
+            } else if (validationBean.deleteFile(destination + nameFotoFinal)) {
                 archivo = event.getFile();
-                validationBean.copyFile(event.getFile().getFileName(), destination, event.getFile().getInputstream());
+                String name = validationBean.generarRandom(event.getFile().getFileName());
+                validationBean.copyFile(name, destination, event.getFile().getInputstream());
                 msgFile = validationBean.getMsgBundle("lblFileSuccess");
                 validationBean.updateComponent("candidatoForm:msgFile");
-                candidato.setArchivocurriculum("/pdf/" + event.getFile().getFileName());
+                candidato.setArchivocurriculum("/pdf/" + name);
                 imageConfirm = "resources/images/iconoCV.jpg";
                 //validationBean.updateComponent("candidatoForm:cvMostrar");
 
                 validationBean.updateComponent("candidatoForm:linkM");
+                nameFotoFinal = name;
             }
         } catch (IOException e) {
             msgFile = validationBean.getMsgBundle("lblFileUploadError");

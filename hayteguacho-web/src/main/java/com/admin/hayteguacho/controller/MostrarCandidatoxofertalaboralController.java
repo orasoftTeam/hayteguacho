@@ -118,6 +118,19 @@ public class MostrarCandidatoxofertalaboralController {
 
         return flag;
     }
+    
+    public String curriculumLogo(String curriculum){
+    String res = "";
+        if (curriculum.contains(".docx")) {
+            res = "docx-3.png";
+        }else{
+         res = "52ff0e80b07d28b590bbc4b30befde52.png";
+        }
+    
+    
+    return res;
+    }
+    
 
     public void dialogo(
             CandidatoForm cf,

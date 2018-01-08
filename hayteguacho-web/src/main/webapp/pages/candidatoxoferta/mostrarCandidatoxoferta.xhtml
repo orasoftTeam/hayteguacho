@@ -146,8 +146,24 @@
                                 onselect="ajax:mostrarCandxOfertaController.onSelect(indexes);"
                                 >
 
-                                
-                                <b:dataTableColumn label="#{bundle['lblCxoNombre']}" value="#{mostrarCandxOfertaController.fullName(mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato))}"   />
+                                <b:dataTableColumn label="#{bundle['lblFotoCand']}"    >
+                                <h:graphicImage  library="images" name="usuario.png" height="50" width="50" rendered="#{mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato).foto == null}" />
+                                <h:graphicImage  value="#{mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato).foto}" height="100" width="72" rendered="#{mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato).foto != null}" />
+                                </b:dataTableColumn>
+                                <b:dataTableColumn label="#{bundle['lblCxoNombre']}"   >
+                                    <h:outputText value="#{mostrarCandxOfertaController.fullName(mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato))}"/>
+                                    
+                                   <!-- <b:image library="images" name="#{mostrarCandxOfertaController.curriculumLogo(mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato).archivocurriculum)}" 
+                                             width="16" height="16"  style="margin-left: 15px"
+                                             tooltip="#{bundle.lblCurriculumCandidato}" tooltip-position="right"  id="curriculum"
+                                             onclick="habilitar();
+                                                 ajax:mostrarCandxOfertaController.dialogo
+                                                 (mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato),cxoferta);"
+                                             class="desah"
+                                             ajax="true"
+                                             /> -->
+                                    
+                                </b:dataTableColumn>
                                 
                                 <b:dataTableColumn label="#{bundle['lblCxoEmail']}" value="#{mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato).correocandidato}"   />
                                 <b:dataTableColumn label="#{bundle['lblCxoTel']}" value="#{mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato).telefono1candidato}"   />
@@ -160,7 +176,7 @@
                                     <p:graphicImage library="images" name="#{mostrarCandxOfertaController.getEstadoCxofertaIcono(cxoferta.estadocandidatoxofertalaboral)}" width="16"  height="16" />
                                     <h:outputText style="margin-left: 5px" value="#{mostrarCandxOfertaController.getEstadoCxoferta(cxoferta.estadocandidatoxofertalaboral)}" />
                                 </b:dataTableColumn>
-                                 <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
+                                <b:dataTableColumn label="#{bundle['lblCxoCVitae']}"   >
                                     <b:commandButton 
                                         class="desah"
                                         onclick="habilitar();ajax:mostrarCandxOfertaController.dialogo(mostrarCandxOfertaController.obtenerCandidato(cxoferta.idcandidato),cxoferta);" value="#{bundle.lblVer}"  ajax="true" 

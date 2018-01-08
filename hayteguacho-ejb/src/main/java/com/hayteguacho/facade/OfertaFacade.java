@@ -112,8 +112,8 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
 "        and pais.idpais=depto.idpais \n" +
 "        and ciudad.iddepartamento=depto.IDDEPARTAMENTO \n" +
 "        and oferta.idciudad= ciudad.idciudad\n" +
-"        and oferta.idempresa=?\n" +
-"        and oferta.estadoofertalaboral='A'";
+"        and oferta.idempresa=? order by oferta.fechavigenciaofertalaboral desc"; //+
+//"        and oferta.estadoofertalaboral='A'";
         Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
         q.setParameter(1, pais);
         q.setParameter(2, new BigInteger(idempresa));

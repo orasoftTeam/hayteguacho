@@ -64,7 +64,7 @@ public class CandidatoFacade extends AbstractFacade<TblCandidato, CandidatoForm>
     public List<CandidatoForm> obtenerCandidatoById(String id) {
         String sql="select idcandidato, idpais, idpuestotrabajo, nombrecandidato, apellidocandidato, telefono1candidato, telefono2candidato, \n" +
 "                generocandidato, fechanacimientocandidato, archivocurriculum, correocandidato,(SELECT QB_ENCRIPCION.FB_DESCENCRIPTAR(contrasenacandidato)from dual) contrasenacandidato,\n" +
-"                estadocandidato from tbl_candidato\n" +
+"                estadocandidato, foto from tbl_candidato\n" +
 "                where idcandidato=?";
         
         Query q = getEntityManager().createNativeQuery(sql, TblCandidato.class);
