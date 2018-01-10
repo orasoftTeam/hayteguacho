@@ -8,17 +8,20 @@ package com.admin.hayteguacho.controller;
 
 import com.admin.hayteguacho.form.CandidatoForm;
 import com.admin.hayteguacho.form.CandidatoxofertaForm;
+import com.admin.hayteguacho.form.CategoriaEmpresaForm;
 import com.admin.hayteguacho.form.MembresiaForm;
 import com.admin.hayteguacho.form.MembresiaxEmpresaForm;
 import com.admin.hayteguacho.form.OfertaForm;
+import com.admin.hayteguacho.form.PuestoTrabajoForm;
 import com.admin.hayteguacho.util.ValidationBean;
 import com.hayteguacho.facade.CandidatoFacade;
 import com.hayteguacho.facade.CandidatoxofertaMostrarFacade;
+import com.hayteguacho.facade.CategoriaEmpresaFacade;
 import com.hayteguacho.facade.MembresiaFacade;
 import com.hayteguacho.facade.MembresiaxempresaFacade;
 import com.hayteguacho.facade.OfertaFacade;
+import com.hayteguacho.facade.PuestoTrabajoFacade;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,8 +36,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -46,6 +47,12 @@ public class MostrarCandidatoxofertalaboralController {
 
     @EJB
     CandidatoFacade candidatoFacade;
+    
+    @EJB
+    CategoriaEmpresaFacade categoriaEmpresaFacade;
+    
+    @EJB
+    PuestoTrabajoFacade puestoTrabajoFacade;
 
     @EJB
     CandidatoxofertaMostrarFacade cxof;
@@ -98,7 +105,14 @@ public class MostrarCandidatoxofertalaboralController {
     boolean pdfshow = false;
     
     private @Getter @Setter String wordRoot = "";
-
+    //VARIABLES DE FILTROS
+    private @Getter @Setter String idCat;
+    private @Getter @Setter String idPue;
+    private @Getter @Setter String idEst;
+    
+    private @Getter @Setter List<CategoriaEmpresaForm> catList = new ArrayList<>();
+    private @Getter @Setter List<PuestoTrabajoForm> pueList = new ArrayList<>();
+    //FIN VARIABLES DE FILTROS
     @Inject
     LoginController login;
 
@@ -107,7 +121,7 @@ public class MostrarCandidatoxofertalaboralController {
         membresia = getMembresiaActual();
         mostrarGuardar = mostrarSave();
         listaOferta = ofertaFacade.obtenerOfertas(login.getPais(), login.getUserLog().getIdentificador());
-        System.out.println("com.admin.hayteguacho.controller.MostrarCandidatoxofertalaboralController.init()");
+        catList = categoriaEmpresaFacade.getCategoriasDeOfertasEmpresa(login.getUserLog().getIdentificador(), login.getPais());
     }
 
     public boolean mostrarSave() {
@@ -454,5 +468,50 @@ public class MostrarCandidatoxofertalaboralController {
     res = "boton-rojo.gif";
     }
     return res;
+    }
+    
+    public void aplicarFiltro(int op){
+        int opcion = 0;
+        if (!idCat.equals("") && op ==1) {
+            //popular lista puestos
+            pueList = puestoTrabajoFacade.getPuestoTrabajoPorOfertaEmpresa(login.getUserLog().getIdentificador(),
+                    login.getPais(),
+                    idCat);
+            idPue = "";
+            System.out.println("popular puestos");
+        }
+        if (idCat.equals("")) {
+            //vaciar lista de puestos
+            pueList = new ArrayList<>();
+            idPue = "";
+            System.out.println("vaciar puestos");
+        }
+        if (idPue.equals("") && !idCat.equals("") && idEst.equals("") ) {
+            //aplicar filtro solo con categoria
+            System.out.println("solo gategoria");
+            opcion = 1;
+        }else if (!idPue.equals("") && !idCat.equals("") && idEst.equals("")) {
+            //aplicar filtro solo con categoria y puesto
+            System.out.println("categoria y puesto");
+            opcion = 2;
+        }else if (idPue.equals("") && idCat.equals("") && !idEst.equals("")) {
+            //aplicar filtro solo con estado
+            System.out.println("estado");
+            opcion = 3;
+        }else if (idPue.equals("") && !idCat.equals("") && !idEst.equals("")) {
+            //aplicar filtro solo con categoria y estado
+            System.out.println("categoria y estado");
+            opcion = 4;
+        }else if (!idPue.equals("") && !idCat.equals("") && !idEst.equals("")) {
+            //aplicar filtro solo con categoria, puesto y estado
+            System.out.println("categoria, puesto y estado");
+            opcion = 5;
+        }else if (idPue.equals("") && idCat.equals("") && idEst.equals("")) {
+            //aplicar filtro sin nada
+            System.out.println("nada");
+            opcion = 0;
+        }
+        listaOferta = ofertaFacade.obtenerOfertasFiltros(login.getPais(), login.getUserLog().getIdentificador(),
+                idCat, idPue, idEst, opcion);
     }
 }

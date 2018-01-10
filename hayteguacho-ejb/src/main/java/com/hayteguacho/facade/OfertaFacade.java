@@ -133,6 +133,71 @@ public class OfertaFacade extends AbstractFacade<TblOfertalaboral, OfertaForm> {
 
         return listaEntityForm;
     }
+    
+    public List<OfertaForm> obtenerOfertasFiltros(String pais, String idempresa,String idcat,String idpue, String estado, int op) {
+        String sql="select * \n" +
+"from TBL_OFERTALABORAL oferta\n" +
+"inner join TBL_CIUDAD ciudad\n" +
+"on ciudad.IDCIUDAD = oferta.idciudad\n" +
+"inner join TBL_DEPARTAMENTO depto\n" +
+"on depto.IDDEPARTAMENTO = ciudad.IDDEPARTAMENTO\n" +
+"inner join TBL_PAIS pais\n" +
+"on pais.IDPAIS = depto.IDPAIS\n" +
+"inner join TBL_PUESTOTRABAJO puesto\n" +
+"on puesto.IDPUESTOTRABAJO = oferta.IDPUESTOTRABAJO\n" +
+"inner join TBL_CATEGORIAEMPRESA categoria\n" +
+"on categoria.IDCATEGORIA = puesto.IDCATEGORIA\n" +
+"where upper(pais.NOMBREPAIS) = upper(?)\n" +
+"and oferta.IDEMPRESA = ?"; //+
+//"        and oferta.estadoofertalaboral='A'";
+/*
+        valores de op:
+        0 = sin filtros
+        1= categoria
+        2= categoria y puesto
+        3= estado
+        4= categoria y estado
+        5= categoria, puesto y estado
+         */
+        switch (op) {
+            case 1:
+                sql += " and categoria.IDCATEGORIA = " + idcat;
+                break;
+            case 2:
+                sql += " and categoria.IDCATEGORIA = " + idcat + " and puesto.IDPUESTOTRABAJO = " + idpue;
+                break;
+            case 3:
+                sql += " and oferta.estadoofertalaboral = '" + estado + "'";
+                break;
+            case 4:
+                sql += " and categoria.IDCATEGORIA = " + idcat + " and oferta.estadoofertalaboral = '" + estado + "'";
+                break;
+            case 5:
+                sql += " and categoria.IDCATEGORIA = " + idcat + " and puesto.IDPUESTOTRABAJO = " + idpue + " and oferta.estadoofertalaboral = '" + estado + "'";
+                break;
+            default:
+                sql += " order by oferta.fechavigenciaofertalaboral desc";
+                break;
+        }
+        Query q = getEntityManager().createNativeQuery(sql, TblOfertalaboral.class);
+        q.setParameter(1, pais);
+        q.setParameter(2, idempresa);
+        List<TblOfertalaboral> listaEntity;
+        List<OfertaForm> listaEntityForm;
+
+        try {
+            listaEntity = q.getResultList();
+            if (listaEntity.isEmpty()) {
+                listaEntityForm = new ArrayList<OfertaForm>();
+            } else {
+                listaEntityForm = this.entityToDtoList(listaEntity, new OfertaForm());
+            }
+        } catch (Exception ex) {
+            listaEntityForm = new ArrayList<OfertaForm>();
+        }
+
+        return listaEntityForm;
+    }
 
     public List<OfertaForm> obtenerOfertasByCategoria(String pais,String idcategoria, String idempresa) {
         /*String sql = "select oferta.* from TBL_CATEGORIAEMPRESA cemp, TBL_PUESTOTRABAJO puesto, TBL_OFERTALABORAL oferta\n"

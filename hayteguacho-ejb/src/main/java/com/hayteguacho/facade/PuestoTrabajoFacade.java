@@ -109,4 +109,34 @@ public class PuestoTrabajoFacade extends AbstractFacade<TblPuestotrabajo, Puesto
         return flag;
     }
     
+    public List<PuestoTrabajoForm> getPuestoTrabajoPorOfertaEmpresa(String idempresa,String pais,String idcat){
+    List<PuestoTrabajoForm> pueLs = new ArrayList<>();
+    Query q = em.createNativeQuery("select puesto.IDCATEGORIA, puesto.IDPUESTOTRABAJO, puesto.NOMBREPUESTOTRABAJO\n" +
+"from TBL_CATEGORIAEMPRESA categoria\n" +
+"inner join TBL_PUESTOTRABAJO puesto\n" +
+"on puesto.IDCATEGORIA = categoria.IDCATEGORIA\n" +
+"inner join TBL_OFERTALABORAL oferta\n" +
+"on oferta.IDPUESTOTRABAJO = puesto.IDPUESTOTRABAJO\n" +
+"inner join TBL_CIUDAD ciudad\n" +
+"on ciudad.IDCIUDAD = oferta.IDCIUDAD\n" +
+"inner join TBL_DEPARTAMENTO depto\n" +
+"on  depto.IDDEPARTAMENTO = ciudad.IDDEPARTAMENTO\n" +
+"inner join TBL_PAIS pais \n" +
+"on pais.IDPAIS = depto.IDPAIS\n" +
+"where oferta.IDEMPRESA = ?\n" +
+"and upper(pais.NOMBREPAIS) = upper(?)"+ 
+" and puesto.IDCATEGORIA = ?", TblPuestotrabajo.class);
+    q.setParameter(1, idempresa);
+    q.setParameter(2, pais);
+    q.setParameter(3, idcat);
+        try {
+            pueLs = entityToDtoList(q.getResultList(), new PuestoTrabajoForm());
+        } catch (Exception e) {
+            System.out.println("com.hayteguacho.facade.PuestoTrabajoFacade.getPuestoTrabajoPorOfertaEmpresa()");
+            e.printStackTrace();
+        }
+    
+    return pueLs;
+    }
+    
 }
