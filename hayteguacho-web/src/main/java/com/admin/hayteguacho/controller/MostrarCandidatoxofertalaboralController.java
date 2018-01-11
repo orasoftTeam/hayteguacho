@@ -21,6 +21,7 @@ import com.hayteguacho.facade.MembresiaFacade;
 import com.hayteguacho.facade.MembresiaxempresaFacade;
 import com.hayteguacho.facade.OfertaFacade;
 import com.hayteguacho.facade.PuestoTrabajoFacade;
+import com.hayteguacho.facade.TotalFacade;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,6 +48,9 @@ public class MostrarCandidatoxofertalaboralController {
 
     @EJB
     CandidatoFacade candidatoFacade;
+    
+    @EJB
+    TotalFacade totalFacade;
     
     @EJB
     CategoriaEmpresaFacade categoriaEmpresaFacade;
@@ -513,5 +517,10 @@ public class MostrarCandidatoxofertalaboralController {
         }
         listaOferta = ofertaFacade.obtenerOfertasFiltros(login.getPais(), login.getUserLog().getIdentificador(),
                 idCat, idPue, idEst, opcion);
+    }
+    
+    public int getNoLeidosOferta(String idoferta){
+    
+    return totalFacade.dashEmpresaInscritosOferta(login.getUserLog().getIdentificador(), idoferta).size();
     }
 }

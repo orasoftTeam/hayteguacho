@@ -55,9 +55,42 @@ public class TotalFacade {
 "on pais.IDPAIS = depto.IDPAIS\n" +
 "where aplica.ESTADOCANDIDATOXOFERTALABORAL = 'PO'\n" +
 "and empresa.IDEMPRESA = ?\n" +
-"and upper(pais.NOMBREPAIS) = upper(?)";
+"and upper(pais.NOMBREPAIS) = upper(?)"
+                + " and oferta.ESTADOOFERTALABORAL = 'A'";
         Query q = em.createNativeQuery(sql, "InscritoMapping");
         q.setParameter(2, pais);
+        q.setParameter(1, idempresa);
+        //q.setMaxResults(5);
+        //q.setFirstResult(0);
+        List<InscritoForm> temp = q.getResultList();
+        return temp.isEmpty() ? new ArrayList<InscritoForm>() : temp;
+    }
+    
+    public List<InscritoForm> dashEmpresaInscritosOferta(String idempresa, String idoferta){
+        String sql = "select oferta.TITULOOFERTALABORAL as titulo, \n" +
+"candidato.NOMBRECANDIDATO || ' ' || candidato.APELLIDOCANDIDATO as candidato,\n" +
+"candidato.CORREOCANDIDATO as email,\n" +
+"candidato.TELEFONO1CANDIDATO || ', ' || candidato.TELEFONO2CANDIDATO as tels,\n" +
+"candidato.ARCHIVOCURRICULUM as curriculum\n" +
+"from tbl_candidatoxofertalaboral aplica\n" +
+"inner join tbl_ofertalaboral oferta\n" +
+"on oferta.IDOFERTALABORAL = aplica.IDOFERTALABORAL\n" +
+"inner join tbl_empresa empresa\n" +
+"on empresa.IDEMPRESA = oferta.IDEMPRESA\n" +
+"inner join tbl_candidato candidato\n" +
+"on aplica.IDCANDIDATO = candidato.IDCANDIDATO\n" +
+"inner join tbl_ciudad ciudad\n" +
+"on ciudad.IDCIUDAD = oferta.IDCIUDAD\n" +
+"inner join tbl_departamento depto\n" +
+"on depto.IDDEPARTAMENTO = ciudad.IDDEPARTAMENTO\n" +
+"inner join tbl_pais pais\n" +
+"on pais.IDPAIS = depto.IDPAIS\n" +
+"where aplica.ESTADOCANDIDATOXOFERTALABORAL = 'PO'\n" +
+"and empresa.IDEMPRESA = ?\n" +
+"and oferta.IDOFERTALABORAL = ?";
+               // + " and oferta.ESTADOOFERTALABORAL = 'A'";
+        Query q = em.createNativeQuery(sql, "InscritoMapping");
+        q.setParameter(2, idoferta);
         q.setParameter(1, idempresa);
         //q.setMaxResults(5);
         //q.setFirstResult(0);

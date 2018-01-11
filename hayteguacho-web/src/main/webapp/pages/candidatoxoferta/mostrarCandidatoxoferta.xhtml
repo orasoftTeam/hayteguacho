@@ -78,34 +78,34 @@
                             <b:panel id="filtros">
                                 <b:row>
                                     <b:column span="4">
-                                        <b:selectOneMenu id="Categoria" label="Categoria" value="#{mostrarCandxOfertaController.idCat}"
+                                        <b:selectOneMenu id="Categoria" label="#{bundle.lblNombreCategoriaEmpresa}" value="#{mostrarCandxOfertaController.idCat}"
                                                          onchange="ajax:mostrarCandxOfertaController.aplicarFiltro(1);"
                                                          ajax="true"
                                                          update="CxofertaForm:panelOfertas"
                                                          >
-                                            <f:selectItem itemLabel="-------Todas------" itemValue="" />
+                                            <f:selectItem itemLabel="#{bundle.lblTodasFiltro}" itemValue="" />
                                             <f:selectItems value="#{mostrarCandxOfertaController.catList}" var="categoria"
                                                            itemLabel="#{categoria.nombrecategoria}" itemValue="#{categoria.idcategoria}"/>
                                         </b:selectOneMenu>
                                     </b:column>
                                     <b:column span="4">
-                                        <b:selectOneMenu id="Puesto" label="Puesto" value="#{mostrarCandxOfertaController.idPue}"
+                                        <b:selectOneMenu id="Puesto" label="#{bundle.lblPuestoTrabajo}" value="#{mostrarCandxOfertaController.idPue}"
                                                          onchange="ajax:mostrarCandxOfertaController.aplicarFiltro(0);"
                                                          ajax="true"
                                                          update="CxofertaForm:panelOfertas">
-                                            <f:selectItem itemLabel="-------Todos-------" itemValue="" />
+                                            <f:selectItem itemLabel="#{bundle.lblTodasFiltro}" itemValue="" />
                                             <f:selectItems value="#{mostrarCandxOfertaController.pueList}" var="puesto"
                                                            itemLabel="#{puesto.nombrepuestotrabajo}" itemValue="#{puesto.idpuestotrabajo}"/>
                                         </b:selectOneMenu>
                                     </b:column>
                                     <b:column span="4">
-                                        <b:selectOneMenu id="Estado" label="Estado" value="#{mostrarCandxOfertaController.idEst}"
+                                        <b:selectOneMenu id="Estado" label="#{bundle.lblOfertaEstado}" value="#{mostrarCandxOfertaController.idEst}"
                                                          onchange="ajax:mostrarCandxOfertaController.aplicarFiltro(0);"
                                                          ajax="true"
                                                          update="CxofertaForm:panelOfertas">
-                                            <f:selectItem itemLabel="-------Todos-------" itemValue=""  />
-                                            <f:selectItem itemLabel="Activa" itemValue="A"  />
-                                            <f:selectItem itemLabel="Inactiva" itemValue="I"  />
+                                            <f:selectItem itemLabel="#{bundle.lblTodasFiltro}" itemValue=""  />
+                                            <f:selectItem itemLabel="#{bundle.lblOfertaActivo}" itemValue="A"  />
+                                            <f:selectItem itemLabel="#{bundle.lblOfertaInactiva}" itemValue="I"  />
                                         </b:selectOneMenu>
                                     </b:column>
                                 </b:row>
@@ -119,7 +119,10 @@
 
                                 <b:dataTableColumn label="#{bundle['titleOfertaEmpresa']}"  >
                                     <b:panel style="font-size: 20px;color:blue;">
-                                        #{oferta.tituloofertalaboral}
+                                        #{oferta.tituloofertalaboral} 
+                                        <b:badge value="#{mostrarCandxOfertaController.getNoLeidosOferta(oferta.idofertalaboral)}"
+                                                 rendered="#{mostrarCandxOfertaController.getNoLeidosOferta(oferta.idofertalaboral) != 0}"
+                                                 style="background-color: red;" />
                                     </b:panel>
                                 </b:dataTableColumn>
                                 <b:dataTableColumn label="#{bundle['lblOfertaFechaVigencia']}"  >
@@ -169,7 +172,7 @@
                             <b:commandButton ajax="true" value="#{bundle['lblCxoRegresar']}" icon="chevron-left" iconAlign="left"
                                       onclick="$('.wizardPseudoClass').carousel('prev');$('.wizardPseudoClass').carousel('pause');
                                       ajax:mostrarCandxOfertaController.limpiar();"
-                                      look="info" />
+                                  look="info" update="CxofertaForm:panelOfertas" />
                             <b:dataTable
                                 widgetVar="CxofertaWidget"
                                 value="#{mostrarCandxOfertaController.listaCandidatoxoferta}"

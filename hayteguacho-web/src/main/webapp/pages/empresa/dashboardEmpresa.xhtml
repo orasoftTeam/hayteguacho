@@ -92,10 +92,10 @@
                                         <h:outputText value="#{dashboardEmpresa.loggedEmp.nombreempresa}"  /></h2>
                                         <p:separator />
                                         <h3 style="text-align: justify">
-                                            <h:outputText value="Categoria: #{dashboardEmpresa.cat}"  /><br></br>
+                                            <h:outputText value="#{bundle.lblNombreCategoriaEmpresa}: #{dashboardEmpresa.cat}"  /><br></br>
                                             <h:outputText escape="false" value="Web: "  /><a href='#{dashboardEmpresa.loggedEmp.paginaweb}'>#{dashboardEmpresa.loggedEmp.paginaweb}</a><br></br>
                                             <h:outputLink value="#{request.contextPath}/pages/empresa/mantenimientoEmpresa.xhtml"  >
-                                                Editar Perfil
+                                                #{bundle.lblEditarPerfil}
                                             </h:outputLink></h3>
                                 </b:panel>
 
